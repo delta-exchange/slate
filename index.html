@@ -242,6 +242,17 @@
               </ul>
           </li>
           <li>
+            <a href="#rate-limits" class="toc-h1 toc-link" data-title="Rate Limits">Rate Limits</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#rest-api" class="toc-h2 toc-link" data-title="REST API">REST API</a>
+                  </li>
+                  <li>
+                    <a href="#increasing-your-rate-limits" class="toc-h2 toc-link" data-title="Increasing your rate limits">Increasing your rate limits</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#ApiSection" class="toc-h1 toc-link" data-title="API">API</a>
           </li>
           <li>
@@ -530,7 +541,15 @@ timestamp: A timestamp for your request.</p>
   <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span>
 <span class="p">}</span>
 
-</code></pre><h1 id="ApiSection" class="section-header">API</h1>
+</code></pre><h1 id='rate-limits'>Rate Limits</h1>
+<p>When a rate limit is exceeded, a status of 429 Too Many Requests will be returned.</p>
+<h3 id='rest-api'>REST API</h3><h4 id='public-endpoints'>PUBLIC ENDPOINTS</h4>
+<p>We throttle public endpoints by IP: 600 requests for a 5 minute rolling window.</p>
+<h4 id='private-endpoints'>PRIVATE ENDPOINTS</h4>
+<p>We throttle private endpoints by user ID: 300 requests for a 5 minute rolling window.</p>
+<h3 id='increasing-your-rate-limits'>Increasing your rate limits</h3>
+<p>If you are running up against our limits and believe that you have a legitimate need, please email us at support@delta.exchange to discuss increasing your rate limits.</p>
+<h1 id="ApiSection" class="section-header">API</h1>
 
 <p>The REST API has endpoints for account and order management as well as public market data.</p>
 
