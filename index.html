@@ -384,13 +384,18 @@
             <a href="#websocket-feed" class="toc-h1 toc-link" data-title="Websocket Feed">Websocket Feed</a>
           </li>
           <li>
-            <a href="#overview" class="toc-h1 toc-link" data-title="Overview">Overview</a>
-          </li>
-          <li>
             <a href="#subscribing-to-channels" class="toc-h1 toc-link" data-title="Subscribing to Channels">Subscribing to Channels</a>
-          </li>
-          <li>
-            <a href="#unsubscribing" class="toc-h1 toc-link" data-title="Unsubscribing">Unsubscribing</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#subscribe" class="toc-h2 toc-link" data-title="Subscribe">Subscribe</a>
+                  </li>
+                  <li>
+                    <a href="#unsubscribe" class="toc-h2 toc-link" data-title="Unsubscribe">Unsubscribe</a>
+                  </li>
+                  <li>
+                    <a href="#authenticating-a-connection" class="toc-h2 toc-link" data-title="Authenticating a connection">Authenticating a connection</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#public-channels" class="toc-h1 toc-link" data-title="Public Channels">Public Channels</a>
@@ -399,10 +404,16 @@
                     <a href="#ticker" class="toc-h2 toc-link" data-title="ticker">ticker</a>
                   </li>
                   <li>
-                    <a href="#orderbookl2" class="toc-h2 toc-link" data-title="orderbookl2">orderbookl2</a>
+                    <a href="#l2_orderbook" class="toc-h2 toc-link" data-title="l2_orderbook">l2_orderbook</a>
                   </li>
                   <li>
                     <a href="#trades" class="toc-h2 toc-link" data-title="trades">trades</a>
+                  </li>
+                  <li>
+                    <a href="#mark_price" class="toc-h2 toc-link" data-title="mark_price">mark_price</a>
+                  </li>
+                  <li>
+                    <a href="#spot_price" class="toc-h2 toc-link" data-title="spot_price">spot_price</a>
                   </li>
               </ul>
           </li>
@@ -4937,7 +4948,7 @@ This operation does not require authentication.
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
-<h1 id='websocket-feed'>Websocket Feed</h1><h1 id='overview'>Overview</h1>
+<h1 id='websocket-feed'>Websocket Feed</h1>
 <p>Websocket api can be used for the following use cases</p>
 
 <ul>
@@ -4946,13 +4957,16 @@ This operation does not require authentication.
 <li>Get account specific notifications like fills, liquidations, ADL and PnL updates.</li>
 </ul>
 
-<p>Base url</p>
+<p>Access url</p>
 
-<p>wss://api.delta.exchange:3091</p>
-<h1 id='subscribing-to-channels'>Subscribing to Channels</h1>
-<p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to receive. This message is mandatory — you will be disconnected if no subscribe has been received within 5 seconds.</p>
+<ul>
+<li>Production - wss://api.delta.exchange:3091</li>
+<li>Testnet - wss://testnet-api.delta.exchange:3091</li>
+</ul>
+<h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
+<p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to subscribe for. This message is mandatory — you will be disconnected if no subscribe has been received within 5 seconds.</p>
 
-<p>To specify contracts to listen for within each channel, just pass a list of symbols inside the channel payload.</p>
+<p>To specify contracts within each channel, just pass a list of symbols inside the channel payload.</p>
 
 <p>Once a subscribe message is received the server will respond with a subscriptions message that lists all channels you are subscribed to. Subsequent subscribe messages will add to the list of subscriptions.</p>
 
@@ -4963,21 +4977,23 @@ This operation does not require authentication.
 // Subscribe to BTCUSD_28Dec and ETHBTC_28Dec with the ticker and orderbookL2 channels,
 {
     "type": "subscribe",
-    "channels": [
-        {
-            "name": "ticker",
-            "symbols": [
-                "BTCUSD_28Dec",
-                "ETHBTC_28Dec"
-            ]
-        },
-        {
-            "name": "orderBookL2",
-            "symbols": [
-                "BTCUSD_28Dec"
-            ]
-        }
-    ]
+    "payload": {
+        "channels": [
+            {
+                "name": "ticker",
+                "symbols": [
+                    "BTCUSD_28Dec",
+                    "ETHBTC_28Dec"
+                ]
+            },
+            {
+                "name": "l2_orderbook",
+                "symbols": [
+                    "BTCUSD_28Dec"
+                ]
+            }
+        ]
+    }
 }
 
 // Response
@@ -4985,7 +5001,7 @@ This operation does not require authentication.
     "type": "subscriptions",
     "channels": [
         {
-            "name": "orderBookL2",
+            "name": "l2_orderbook",
             "symbols": [
                 "BTCUSD_28Dec"
             ],
@@ -4999,7 +5015,7 @@ This operation does not require authentication.
         }
     ]
 }
-</code></pre><h1 id='unsubscribing'>Unsubscribing</h1>
+</code></pre><h2 id='unsubscribe'>Unsubscribe</h2>
 <p>If you want to unsubscribe from channel/contracts pairs, send an &quot;unsubscribe&quot; message. The structure is equivalent to subscribe messages. As a shorthand you can also provide no symbols for a channel, which will unsubscribe you from the channel entirely.</p>
 
 <p>As a response to an unsubscribe message you will receive a subscriptions response.</p>
@@ -5010,13 +5026,220 @@ This operation does not require authentication.
 <pre class="highlight plaintext"><code>// Request
 {
     "type": "unsubscribe",
-    "channels": [
-       {
-         "name": "ticker"
-       }
-    ]
+    "payload": {
+        "channels": [
+            {
+                "name": "ticker"
+            }
+        ]
+    }
 }
-</code></pre><h1 id='public-channels'>Public Channels</h1><h2 id='ticker'>ticker</h2><h2 id='orderbookl2'>orderbookl2</h2><h2 id='trades'>trades</h2><h1 id='private-channels'>Private Channels</h1><h2 id='trading_notifications'>trading_notifications</h2>
+</code></pre><h2 id='authenticating-a-connection'>Authenticating a connection</h2>
+<p>Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, adl and pnl updates.</p>
+
+<p>To authenticate, you need to send a signed request of type &#39;auth&#39; on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.</p>
+
+<p>The payload for the signed request will be
+&#39;GET&#39; + timestamp + &#39;/live&#39;</p>
+
+<blockquote>
+<p>Authentication sample</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="o">//</span> <span class="n">auth</span> <span class="n">message</span> <span class="k">with</span> <span class="n">signed</span> <span class="n">request</span>
+<span class="kn">import</span> <span class="nn">websocket</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">api_key</span> <span class="o">=</span> <span class="s">'a207900b7693435a8fa9230a38195d'</span>
+<span class="n">api_secret</span> <span class="o">=</span> <span class="s">'7b6f39dcf660ec1c7c664f612c60410a2bd0c258416b498bf0311f94228f'</span>
+
+<span class="k">def</span> <span class="nf">generate_signature</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s">'utf-8'</span><span class="p">)</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="s">'utf-8'</span><span class="p">)</span>
+    <span class="nb">hash</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">get_time_stamp</span><span class="p">():</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">d</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
+
+<span class="c"># Get open orders</span>
+<span class="n">method</span> <span class="o">=</span> <span class="s">'GET'</span>
+<span class="n">timestamp</span> <span class="o">=</span> <span class="n">get_time_stamp</span><span class="p">()</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">'/live'</span>
+<span class="n">signature_data</span> <span class="o">=</span> <span class="n">method</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">path</span>
+<span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="n">api_secret</span><span class="p">,</span> <span class="n">signature_data</span><span class="p">)</span>
+
+
+<span class="n">ws</span> <span class="o">=</span> <span class="n">websocket</span><span class="o">.</span><span class="n">WebSocketApp</span><span class="p">(</span><span class="s">'wss://api.delta.exchange:3091'</span><span class="p">)</span>
+<span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="s">"type"</span><span class="p">:</span> <span class="s">"auth"</span><span class="p">,</span>
+    <span class="s">"payload"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">"api-key"</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span>
+        <span class="s">"signature"</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
+        <span class="s">"timestamp"</span><span class="p">:</span> <span class="n">timestamp</span>
+    <span class="p">}</span>
+<span class="p">}))</span>
+</code></pre><pre class="highlight plaintext"><code>
+</code></pre>
+<p>To unsubscribe from all private channels, just send a &#39;unauth&#39; message on the socket. This will automatically unsubscribe the connection from all authenticated channels.</p>
+<pre class="highlight python tab-python"><code><span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="s">"type"</span><span class="p">:</span> <span class="s">'unauth'</span><span class="p">,</span>
+    <span class="s">"payload"</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">}))</span>
+
+</code></pre><h1 id='public-channels'>Public Channels</h1><h2 id='ticker'>ticker</h2>
+<p>The ticker channel provides price change data for the last 24 hrs (rolling window). It is published every 5 seconds.</p>
+
+<p>On subscribing to <strong>ticker</strong> channel, socket server will emit messages with type &#39;ticker&#39; in response.</p>
+
+<blockquote>
+<p>Ticker Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>// Response
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "type": "ticker",
+    "timestamp": 1542108684,
+    "open": 0.0014622,
+    "high": 0.0014622,
+    "low": 0.0014622,
+    "close": 0.0014622,
+    "volume": 1
+}
+</code></pre><h2 id='l2_orderbook'>l2_orderbook</h2>
+<p><strong>l2_orderbook</strong> channel provides snapshot of the latest level2 orderbook.</p>
+
+<blockquote>
+<p>L2 Orderbook Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>// Snapshot Response
+{
+    "symbol": "BTCUSD_28Dec",
+    "product_id": 3,
+    "type": "snapshot",
+    "timestamp": 1542108684,
+    "buy": [{"price":"0.0014577","size":62},{"price":"0.0014571","size":28},{"price":"0.0014562","size":54},{"price":"0.001455","size":34}],
+    "sell": [{"price":"6229.0","size":15964},{"price":"6229.5","size":3504},{"price":"6230.0","size":15964},{"price":"6231.0","size":15957}]
+}
+</code></pre><h2 id='trades'>trades</h2>
+<p><strong>trades</strong> channel provides a real time feed of all recent trades (fills).</p>
+<pre class="highlight plaintext"><code>// Trades Response
+{
+    symbol: "BNBBTC_30Nov",
+    price: "0.0014579",
+    size: 100,
+    buyer_role: "maker",
+    seller_role: "taker",
+    timestamp: 1542108684
+}
+</code></pre><h2 id='mark_price'>mark_price</h2>
+<p><strong>mark_price</strong> channel provides a real time feed of mark price. This is the price on which all open positions are marked for liquidation.</p>
+
+<p>Please note that the product symbol is prepended with a &quot;MARK:&quot; to subscribe for mark price.</p>
+<pre class="highlight plaintext"><code>// Mark Price Response
+{
+    symbol: "MARK:BNBBTC_30Nov",
+    product_id: 7,
+    type: "mark_price",
+    price: "0.00401010",
+    annualized_basis: 25.12,    // in %
+    timestamp: 1542108684
+}
+</code></pre><h2 id='spot_price'>spot_price</h2>
+<p><strong>spot_price</strong> channel provides a real time feed of the underlying index prices.</p>
+<pre class="highlight plaintext"><code>// Spot Price Response
+{
+    symbol: "BNB/BTC",
+    price: "0.0014579",
+    type: "spot_price
+}
+</code></pre><h1 id='private-channels'>Private Channels</h1>
+<p>Private channels require clients to authenticate.</p>
+<h2 id='trading_notifications'>trading_notifications</h2>
+<p><strong>trading_notifications</strong> channel provides updates of all the private trade notifications.</p>
+<h3 id='fill'>fill</h3><pre class="highlight plaintext"><code>// Fill
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "type": "fill",
+    "user_id": 1998,
+    "side": "buy",
+    "size": 190,
+    "price": "0.00145791",
+    "timestamp": 1542108684
+}
+</code></pre><h3 id='adl'>adl</h3><pre class="highlight plaintext"><code>// ADL
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "type": "adl",
+    "timestamp": 1542108684
+
+}
+</code></pre><h3 id='self_trade'>self_trade</h3><pre class="highlight plaintext"><code>// Self Trade
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "type": "self_trade",
+    "user_id": 1998,
+    "size": 199,
+    "price": "0.00145791",
+    "timestamp": 1542108684
+}
+</code></pre><h3 id='pnl'>pnl</h3><pre class="highlight plaintext"><code>// PNL
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "type": "pnl",
+    "user_id": 1998,
+    "side": "sell",
+    "size": 180",
+    "entry_price": "0.00145797",
+    "exit_price": "0.00145791",
+    "realized_pnl": "0.00102121",
+    "timestamp": 1542108684
+
+}
+</code></pre><h3 id='liquidation'>liquidation</h3><pre class="highlight plaintext"><code>// Liquidation
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "type": "liquidation",
+    "user_id": 1998,
+    "timestamp": 1542108684,
+    "side": "buy",
+    "size": 180,
+    "liquidation_price": "0.00145791",
+    "bankruptcy_price": "0.00145700",
+
+}
+</code></pre><h3 id='stop_trigger'>stop_trigger</h3><pre class="highlight plaintext"><code>// Stop Trigger
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "user_id": 1998
+    "type": "stop_trigger",
+    "timestamp": 1542108684,
+    "side": "buy",
+    "size": 180
+
+}
+</code></pre><h3 id='stop_cancel'>stop_cancel</h3><pre class="highlight plaintext"><code>// Stop Cancel
+{
+    "symbol": "BNBBTC_30Nov",
+    "product_id": 7,
+    "user_id": 1998
+    "type": "stop_cancel",
+    "timestamp": 1542108684,
+    "side": "buy",
+    "message": "",
+    "size": 180
+}
+</code></pre>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
