@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;python&quot;,&quot;shell&quot;,&quot;ruby&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;python&quot;,&quot;shell&quot;,&quot;ruby&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -214,7 +214,6 @@
               <a href="#" data-language-name="python">Python</a>
               <a href="#" data-language-name="shell">Shell</a>
               <a href="#" data-language-name="ruby">Ruby</a>
-              <a href="#" data-language-name="javascript">NodeJs</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -260,6 +259,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#get-live-products" class="toc-h2 toc-link" data-title="Get live products">Get live products</a>
+                  </li>
+                  <li>
+                    <a href="#get-24hr-ticker" class="toc-h2 toc-link" data-title="Get 24hr ticker">Get 24hr ticker</a>
                   </li>
               </ul>
           </li>
@@ -382,6 +384,9 @@
                   </li>
                   <li>
                     <a href="#tocSarrayoftransactions" class="toc-h2 toc-link" data-title="ArrayOfTransactions">ArrayOfTransactions</a>
+                  </li>
+                  <li>
+                    <a href="#tocS24hrticker" class="toc-h2 toc-link" data-title="24hrTicker">24hrTicker</a>
                   </li>
                   <li>
                     <a href="#tocSohlcdata" class="toc-h2 toc-link" data-title="OHLCData">OHLCData</a>
@@ -562,7 +567,7 @@ timestamp: A timestamp for your request.</p>
 
 <h1 id="delta-exchange-api-products">Products</h1>
 
-<p>Get Products</p>
+<p>Get Product List, 24hr Ticker</p>
 <h2 id='get-live-products'>Get live products</h2>
 <p><a id="opIdgetProducts"></a></p>
 
@@ -596,25 +601,6 @@ curl -X GET https://api.delta.exchange/products <span class="se">\</span>
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-
-};
-
-fetch('https://api.delta.exchange/products',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
 
 </code></pre>
 <p><code>GET /products</code></p>
@@ -679,6 +665,79 @@ fetch('https://api.delta.exchange/products',
 <aside class="success">
 This operation does not require authentication.
 </aside>
+<h2 id='get-24hr-ticker'>Get 24hr ticker</h2>
+<p><a id="opIdget24hrTicker"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/products/ticker/24hr'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.delta.exchange/products/ticker/24hr <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/products/ticker/24hr'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+<p><code>GET /products/ticker/24hr</code></p>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="get-24hr-ticker-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Ticker Date</td>
+<td><a href="#schema24hrticker">24hrTicker</a></td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+This operation does not require authentication.
+</aside>
 
 <h1 id="delta-exchange-api-orders">Orders</h1>
 
@@ -728,39 +787,6 @@ curl -X POST https://api.delta.exchange/orders <span class="se">\</span>
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-const inputBody = '{
-  "product_id": 0,
-  "size": 0,
-  "side": "buy",
-  "order_type": "limit_order",
-  "limit_price": "string",
-  "post_only": "true",
-  "stop_order_type": "stop_loss_order",
-  "stop_price": "string",
-  "close_on_trigger": "true"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/orders',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
 
 </code></pre>
 <p><code>POST /orders</code></p>
@@ -1104,32 +1130,6 @@ curl -X DELETE https://api.delta.exchange/orders <span class="se">\</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-const inputBody = '{
-  "id": 0,
-  "product_id": 0
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/orders',
-{
-  method: 'DELETE',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>DELETE /orders</code></p>
 
@@ -1345,28 +1345,6 @@ curl -X GET https://api.delta.exchange/orders <span class="se">\</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/orders',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>GET /orders</code></p>
 
@@ -1562,32 +1540,6 @@ curl -X POST https://api.delta.exchange/orders/leverage <span class="se">\</span
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-const inputBody = '{
-  "product_id": 0,
-  "leverage": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'*/*',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/orders/leverage',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>POST /orders/leverage</code></p>
 
@@ -1755,28 +1707,6 @@ curl -X GET https://api.delta.exchange/orders/leverage?product_id<span class="o"
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'*/*',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/orders/leverage?product_id=0',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>GET /orders/leverage</code></p>
 
@@ -1873,28 +1803,6 @@ curl -X GET https://api.delta.exchange/positions <span class="se">\</span>
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/positions',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
 
 </code></pre>
 <p><code>GET /positions</code></p>
@@ -2013,32 +1921,6 @@ curl -X POST https://api.delta.exchange/positions/change_margin <span class="se"
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-const inputBody = '{
-  "product_id": 0,
-  "delta_margin": "string"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/positions/change_margin',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
 
 </code></pre>
 <p><code>POST /positions/change_margin</code></p>
@@ -2256,32 +2138,6 @@ curl -X POST https://api.delta.exchange/positions/close <span class="se">\</span
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-const inputBody = '{
-  "product_id": 0,
-  "cancel_orders_accepted": "true"
-}';
-const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/positions/close',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
 
 </code></pre>
 <p><code>POST /positions/close</code></p>
@@ -2534,28 +2390,6 @@ curl -X GET https://api.delta.exchange/orders/history <span class="se">\</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/orders/history',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>GET /orders/history</code></p>
 
@@ -2703,28 +2537,6 @@ curl -X GET https://api.delta.exchange/fills <span class="se">\</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/fills',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>GET /fills</code></p>
 
@@ -2862,25 +2674,6 @@ curl -X GET https://api.delta.exchange/orderbook/<span class="o">{</span>product
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-
-};
-
-fetch('https://api.delta.exchange/orderbook/{product_id}/l2',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>GET /orderbook/{product_id}/l2</code></p>
 
@@ -3003,28 +2796,6 @@ curl -X GET https://api.delta.exchange/wallet/balances <span class="se">\</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/wallet/balances',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>GET /wallet/balances</code></p>
 
@@ -3111,28 +2882,6 @@ curl -X GET https://api.delta.exchange/wallet/transactions <span class="se">\</s
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json',
-  'api-key':'****',
-  'signature':'****',
-  'timestamp':'****'
-
-};
-
-fetch('https://api.delta.exchange/wallet/transactions',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
 
 </code></pre>
 <p><code>GET /wallet/transactions</code></p>
@@ -3275,25 +3024,6 @@ curl -X GET https://api.delta.exchange/chart/history <span class="se">\</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-</code></pre><pre class="highlight plaintext"><code>const fetch = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-
-};
-
-fetch('https://api.delta.exchange/chart/history',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 </code></pre>
 <p><code>GET /chart/history</code></p>
 
@@ -3376,12 +3106,24 @@ fetch('https://api.delta.exchange/chart/history',
 <p>200 Response</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"t"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"o"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"h"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"l"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"v"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">
+  </span><span class="s2">"t"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="mi">0</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"o"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"h"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"l"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"v"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="mi">0</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id="get-ohlc-candles-responses">Responses</h3>
@@ -3414,6 +3156,7 @@ This operation does not require authentication.
   </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre><h3 id='properties'>Properties</h3>
 <table><thead>
 <tr>
@@ -3481,6 +3224,7 @@ This operation does not require authentication.
     </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre><h3 id='properties-2'>Properties</h3>
 <table><thead>
 <tr>
@@ -3676,6 +3420,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
+
 </span></code></pre><h3 id='properties-3'>Properties</h3>
 <table><thead>
 <tr>
@@ -3743,6 +3488,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre>
 <p><em>An Order object</em></p>
 <h3 id='properties-4'>Properties</h3>
@@ -3950,6 +3696,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
+
 </span></code></pre><h3 id='properties-5'>Properties</h3>
 <table><thead>
 <tr>
@@ -4012,6 +3759,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre>
 <p><em>A position object</em></p>
 <h3 id='properties-6'>Properties</h3>
@@ -4127,6 +3875,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
+
 </span></code></pre><h3 id='properties-7'>Properties</h3>
 <table><thead>
 <tr>
@@ -4189,6 +3938,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre>
 <p><em>A fill object</em></p>
 <h3 id='properties-8'>Properties</h3>
@@ -4328,6 +4078,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
+
 </span></code></pre><h3 id='properties-9'>Properties</h3>
 <table><thead>
 <tr>
@@ -4355,6 +4106,7 @@ This operation does not require authentication.
   </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre>
 <p><em>Order Leverage for a product</em></p>
 <h3 id='properties-10'>Properties</h3>
@@ -4418,6 +4170,7 @@ This operation does not require authentication.
   </span><span class="s2">"mark_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre>
 <p><em>L2 orderbook</em></p>
 <h3 id='properties-11'>Properties</h3>
@@ -4561,6 +4314,7 @@ This operation does not require authentication.
     </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre><h3 id='properties-12'>Properties</h3>
 <table><thead>
 <tr>
@@ -4632,6 +4386,7 @@ This operation does not require authentication.
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
+
 </span></code></pre><h3 id='properties-13'>Properties</h3>
 <table><thead>
 <tr>
@@ -4693,6 +4448,7 @@ This operation does not require authentication.
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre><h3 id='properties-14'>Properties</h3>
 <table><thead>
 <tr>
@@ -4846,6 +4602,7 @@ This operation does not require authentication.
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
+
 </span></code></pre><h3 id='properties-15'>Properties</h3>
 <table><thead>
 <tr>
@@ -4865,18 +4622,105 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocS24hrticker">24hrTicker</h2>
+
+<p><a id="schema24hrticker"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='properties-16'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>open</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>high</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>low</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>close</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>volume</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSohlcdata">OHLCData</h2>
 
 <p><a id="schemaohlcdata"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"t"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"o"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"h"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"l"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">],</span><span class="w">
-  </span><span class="s2">"v"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">
+  </span><span class="s2">"t"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="mi">0</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"o"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"h"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"l"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"v"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="mi">0</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-16'>Properties</h3>
+
+</span></code></pre><h3 id='properties-17'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -5269,7 +5113,6 @@ This operation does not require authentication.
                 <a href="#" data-language-name="python">Python</a>
                 <a href="#" data-language-name="shell">Shell</a>
                 <a href="#" data-language-name="ruby">Ruby</a>
-                <a href="#" data-language-name="javascript">NodeJs</a>
           </div>
       </div>
     </div>
