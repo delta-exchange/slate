@@ -677,13 +677,13 @@ This operation does not require authentication.
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/products/ticker/24hr'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-
+  <span class="s">'symbol'</span><span class="p">:</span> <span class="s">'string'</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/products/ticker/24hr <span class="se">\</span>
+curl -X GET https://api.delta.exchange/products/ticker/24hr?symbol<span class="o">=</span>string <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
@@ -695,7 +695,8 @@ curl -X GET https://api.delta.exchange/products/ticker/24hr <span class="se">\</
 
 <span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/products/ticker/24hr'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
-  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+  <span class="s1">'symbol'</span> <span class="o">=&gt;</span> <span class="s1">'string'</span>
+<span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
@@ -717,7 +718,7 @@ curl -X GET https://api.delta.exchange/products/ticker/24hr <span class="se">\</
 <td>symbol</td>
 <td>query</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>product symbol</td>
 </tr>
 </tbody></table>
