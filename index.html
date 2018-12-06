@@ -5090,23 +5090,38 @@ This operation does not require authentication.
 <p>Private channels require clients to authenticate.</p>
 <h2 id='trading_notifications'>trading_notifications</h2>
 <p><strong>trading_notifications</strong> channel provides updates of all the private trade notifications.</p>
-<h3 id='fill'>fill</h3><pre class="highlight plaintext"><code>// Fill
+<h3 id='orderupdate'>orderUpdate</h3><pre class="highlight plaintext"><code>// orderUpdate
+{
+    "type": "orderUpdate",
+    "action": "fill",
+    "product_id": 3,
+    "symbol": "BTCUSD_28Dec",
+    "order_id": 3283999,
+    "side": "buy",
+    "size": 1,
+    "filled_size": 1,
+    "price": "4500.0",
+    "state": "open",
+    "timestamp": 1544091555086559
+}
+</code></pre><h3 id='fill'>fill</h3><pre class="highlight plaintext"><code>// Fill
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
     "type": "fill",
     "user_id": 1998,
+    "order_id": 3283999,
     "side": "buy",
     "size": 190,
     "price": "0.00145791",
-    "timestamp": 1542108684
+    "timestamp": 1544091555086559
 }
 </code></pre><h3 id='adl'>adl</h3><pre class="highlight plaintext"><code>// ADL
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
     "type": "adl",
-    "timestamp": 1542108684
+    "timestamp": 1544091555086559
 
 }
 </code></pre><h3 id='self_trade'>self_trade</h3><pre class="highlight plaintext"><code>// Self Trade
@@ -5117,7 +5132,7 @@ This operation does not require authentication.
     "user_id": 1998,
     "size": 199,
     "price": "0.00145791",
-    "timestamp": 1542108684
+    "timestamp": 1544091555086559
 }
 </code></pre><h3 id='pnl'>pnl</h3><pre class="highlight plaintext"><code>// PNL
 {
@@ -5130,7 +5145,7 @@ This operation does not require authentication.
     "entry_price": "0.00145797",
     "exit_price": "0.00145791",
     "realized_pnl": "0.00102121",
-    "timestamp": 1542108684
+    "timestamp": 1544091555086559
 
 }
 </code></pre><h3 id='liquidation'>liquidation</h3><pre class="highlight plaintext"><code>// Liquidation
