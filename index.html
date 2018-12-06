@@ -247,6 +247,9 @@
                     <a href="#rest-api" class="toc-h2 toc-link" data-title="REST API">REST API</a>
                   </li>
                   <li>
+                    <a href="#limits" class="toc-h2 toc-link" data-title="Limits">Limits</a>
+                  </li>
+                  <li>
                     <a href="#increasing-your-rate-limits" class="toc-h2 toc-link" data-title="Increasing your rate limits">Increasing your rate limits</a>
                   </li>
               </ul>
@@ -548,10 +551,48 @@ timestamp: A timestamp for your request.</p>
 
 </code></pre><h1 id='rate-limits'>Rate Limits</h1>
 <p>When a rate limit is exceeded, a status of 429 Too Many Requests will be returned.</p>
-<h3 id='rest-api'>REST API</h3><h4 id='public-endpoints'>PUBLIC ENDPOINTS</h4>
-<p>We throttle public endpoints by IP: 600 requests for a 5 minute rolling window.</p>
-<h4 id='private-endpoints'>PRIVATE ENDPOINTS</h4>
-<p>We throttle private endpoints by user ID: 300 requests for a 5 minute rolling window.</p>
+<h3 id='rest-api'>REST API</h3><h3 id='limits'>Limits</h3>
+<p>We throttle unauthenticated api requests by IP and authenticated requests by user ID.
+These are the limits for different categories of requests in a 5 minute rolling window.</p>
+
+<table><thead>
+<tr>
+<th>Request Type</th>
+<th>Limit</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Chart data</td>
+<td>600</td>
+<td>Requests for chart data</td>
+</tr>
+<tr>
+<td>Public read requests</td>
+<td>200</td>
+<td>Requests to get list of live products, L2 orderbook etc</td>
+</tr>
+<tr>
+<td>Private read requests</td>
+<td>200</td>
+<td>Requests to get open orders, fills, positions etc</td>
+</tr>
+<tr>
+<td>Private write requests</td>
+<td>150</td>
+<td>Requests to place orders, change leverage, cancel orders etc</td>
+</tr>
+<tr>
+<td>Account requests</td>
+<td>200</td>
+<td>Requests to change password, create api keys etc</td>
+</tr>
+<tr>
+<td>Others</td>
+<td>300</td>
+<td>All other requests</td>
+</tr>
+</tbody></table>
 <h3 id='increasing-your-rate-limits'>Increasing your rate limits</h3>
 <p>If you are running up against our limits and believe that you have a legitimate need, please email us at support@delta.exchange to discuss increasing your rate limits.</p>
 <h1 id="ApiSection" class="section-header">API</h1>
