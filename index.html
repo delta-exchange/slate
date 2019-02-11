@@ -440,7 +440,13 @@
             <a href="#private-channels" class="toc-h1 toc-link" data-title="Private Channels">Private Channels</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#trading_notifications" class="toc-h2 toc-link" data-title="trading_notifications">trading_notifications</a>
+                    <a href="#margins" class="toc-h2 toc-link" data-title="Margins">Margins</a>
+                  </li>
+                  <li>
+                    <a href="#positions" class="toc-h2 toc-link" data-title="Positions">Positions</a>
+                  </li>
+                  <li>
+                    <a href="#trading-notitifications" class="toc-h2 toc-link" data-title="Trading Notitifications">Trading Notitifications</a>
                   </li>
               </ul>
           </li>
@@ -5088,7 +5094,32 @@ This operation does not require authentication.
 }
 </code></pre><h1 id='private-channels'>Private Channels</h1>
 <p>Private channels require clients to authenticate.</p>
-<h2 id='trading_notifications'>trading_notifications</h2>
+<h2 id='margins'>Margins</h2>
+<p><strong>margins</strong> Channel provides updates for margin blocked for different assets</p>
+<pre class="highlight plaintext"><code>// margin update
+{
+    "type": "margins",
+    "balance": "1.0012",
+    "order_margin": "0.121212",     // Margin blocked in open orders
+    "position_margin: "0.101212",   // Margin blocked in position
+    "commission": "0.00012",        // commissions blocked in position and order
+    "asset_id": 2                   // BTC
+}
+</code></pre><h2 id='positions'>Positions</h2>
+<p><strong>positions</strong> Channel provides updates for change in position. Need to pass list of product symbols while subscribing.</p>
+<pre class="highlight plaintext"><code>// Position update
+{
+    "type": "positions",
+    "symbol": "BTCUSD_29Mar",           // Product Symbol
+    "product_id": 1,                    // Product ID
+    "size": -100,                       // Position size, if &gt; 0 -&gt; long else short
+    "margin": "0.0121",                 // Margin blocked in the position
+    "entry_price": "3500.0",            // Avg Entry price of the position
+    "liquidation_price": "3356.0",      // Liquidation trigger price
+    "bankruptcy_price": "3300.0",       // Bankruptcy Price
+    "commission": "0.00001212"          // Commissions blocked for closing the position
+}
+</code></pre><h2 id='trading-notitifications'>Trading Notitifications</h2>
 <p><strong>trading_notifications</strong> channel provides updates of all the private trade notifications.</p>
 <h3 id='orderupdate'>orderUpdate</h3><pre class="highlight plaintext"><code>// orderUpdate
 {
