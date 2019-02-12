@@ -281,10 +281,16 @@
                     <a href="#get-orders" class="toc-h2 toc-link" data-title="Get Orders">Get Orders</a>
                   </li>
                   <li>
-                    <a href="#change-leverage-for-open-orders" class="toc-h2 toc-link" data-title="Change leverage for open orders">Change leverage for open orders</a>
+                    <a href="#create-batch-orders" class="toc-h2 toc-link" data-title="Create batch orders">Create batch orders</a>
                   </li>
                   <li>
-                    <a href="#get-leverage-for-all-open-orders" class="toc-h2 toc-link" data-title="Get leverage for all open orders">Get leverage for all open orders</a>
+                    <a href="#delele-batch-orders" class="toc-h2 toc-link" data-title="Delele batch orders">Delele batch orders</a>
+                  </li>
+                  <li>
+                    <a href="#change-order-leverage" class="toc-h2 toc-link" data-title="Change order leverage">Change order leverage</a>
+                  </li>
+                  <li>
+                    <a href="#get-order-leverage" class="toc-h2 toc-link" data-title="Get order leverage">Get order leverage</a>
                   </li>
               </ul>
           </li>
@@ -357,6 +363,18 @@
                   </li>
                   <li>
                     <a href="#tocSarrayoforders" class="toc-h2 toc-link" data-title="ArrayOfOrders">ArrayOfOrders</a>
+                  </li>
+                  <li>
+                    <a href="#tocScreateorderrequest" class="toc-h2 toc-link" data-title="CreateOrderRequest">CreateOrderRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSarrayofcreateorderrequest" class="toc-h2 toc-link" data-title="ArrayOfCreateOrderRequest">ArrayOfCreateOrderRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSdeleteorderrequest" class="toc-h2 toc-link" data-title="DeleteOrderRequest">DeleteOrderRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSarrayofdeleteorderrequest" class="toc-h2 toc-link" data-title="ArrayOfDeleteOrderRequest">ArrayOfDeleteOrderRequest</a>
                   </li>
                   <li>
                     <a href="#tocSposition" class="toc-h2 toc-link" data-title="Position">Position</a>
@@ -809,7 +827,7 @@ This operation does not require authentication.
 
 <h1 id="delta-exchange-api-orders">Orders</h1>
 
-<p>Placing Orders, Cancelling Orders, Get Open orders, Change Orders Leverage</p>
+<p>Placing Orders, Cancelling Orders, Placing batch orders, Cancelling batch orders, Get Open orders, Change Orders Leverage</p>
 <h2 id='place-order'>Place Order</h2>
 <p><a id="opIdplaceOrder"></a></p>
 
@@ -864,14 +882,10 @@ curl -X POST https://api.delta.exchange/orders <span class="se">\</span>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id="place-order-parameters">Parameters</h3>
@@ -888,116 +902,9 @@ curl -X POST https://api.delta.exchange/orders <span class="se">\</span>
 <tr>
 <td>body</td>
 <td>body</td>
-<td>object</td>
+<td><a href="#schemacreateorderrequest">CreateOrderRequest</a></td>
 <td>true</td>
 <td>Order which needs to be created</td>
-</tr>
-<tr>
-<td>» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>true</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» size</td>
-<td>body</td>
-<td>integer</td>
-<td>true</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» side</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» order_type</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» limit_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>Limit Price for limit order, its a bigdecimal and needs to be passed as a string</td>
-</tr>
-<tr>
-<td>» post_only</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>Flag for placing orders in post only mode</td>
-</tr>
-<tr>
-<td>» stop_order_type</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» stop_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>Stop Price for stop orders</td>
-</tr>
-<tr>
-<td>» close_on_trigger</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>Flag for placing orders that should close positions (only for stop orders)</td>
-</tr>
-</tbody></table>
-<h4 id='enumerated-values'>Enumerated Values</h4>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>» side</td>
-<td>buy</td>
-</tr>
-<tr>
-<td>» side</td>
-<td>sell</td>
-</tr>
-<tr>
-<td>» order_type</td>
-<td>limit_order</td>
-</tr>
-<tr>
-<td>» order_type</td>
-<td>market_order</td>
-</tr>
-<tr>
-<td>» post_only</td>
-<td>true</td>
-</tr>
-<tr>
-<td>» post_only</td>
-<td>false</td>
-</tr>
-<tr>
-<td>» stop_order_type</td>
-<td>stop_loss_order</td>
-</tr>
-<tr>
-<td>» close_on_trigger</td>
-<td>true</td>
-</tr>
-<tr>
-<td>» close_on_trigger</td>
-<td>false</td>
 </tr>
 </tbody></table>
 
@@ -1104,7 +1011,7 @@ curl -X POST https://api.delta.exchange/orders <span class="se">\</span>
 <td>A more verbose error message</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-2'>Enumerated Values</h4>
+<h4 id='enumerated-values'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -1223,23 +1130,9 @@ curl -X DELETE https://api.delta.exchange/orders <span class="se">\</span>
 <tr>
 <td>body</td>
 <td>body</td>
-<td>object</td>
+<td><a href="#schemadeleteorderrequest">DeleteOrderRequest</a></td>
 <td>true</td>
 <td>Order which needs to be cancelled</td>
-</tr>
-<tr>
-<td>» id</td>
-<td>body</td>
-<td>integer</td>
-<td>true</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>true</td>
-<td>none</td>
 </tr>
 </tbody></table>
 
@@ -1346,7 +1239,7 @@ curl -X DELETE https://api.delta.exchange/orders <span class="se">\</span>
 <td>A more verbose error message</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-3'>Enumerated Values</h4>
+<h4 id='enumerated-values-2'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -1463,7 +1356,7 @@ curl -X GET https://api.delta.exchange/orders <span class="se">\</span>
 <td>page size for pagination</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-4'>Enumerated Values</h4>
+<h4 id='enumerated-values-3'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1562,7 +1455,438 @@ curl -X GET https://api.delta.exchange/orders <span class="se">\</span>
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
-<h2 id='change-leverage-for-open-orders'>Change leverage for open orders</h2>
+<h2 id='create-batch-orders'>Create batch orders</h2>
+<p><a id="opIdbatchCreate"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.delta.exchange/orders/batch'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.delta.exchange/orders/batch <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.delta.exchange/orders/batch'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+<p><code>POST /orders/batch</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<h3 id="create-batch-orders-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemaarrayofcreateorderrequest">ArrayOfCreateOrderRequest</a></td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"unfilled_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"future"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"initial_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"maintenance_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"impact_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pricing_source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"position_size_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"maker_commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"underlying_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"quoting_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"settling_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="create-batch-orders-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>returns the orders placed</td>
+<td><a href="#schemaorder">Order</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>returns error if orders couldnt be placed</td>
+<td>Inline</td>
+</tr>
+</tbody></table>
+
+<h3 id="create-batch-orders-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>400</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>» error</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>» message</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>A more verbose error message</td>
+</tr>
+</tbody></table>
+<h4 id='enumerated-values-4'>Enumerated Values</h4>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>error</td>
+<td>InsufficientMargin</td>
+</tr>
+<tr>
+<td>error</td>
+<td>OrderSizeExceededAvailable</td>
+</tr>
+<tr>
+<td>error</td>
+<td>OrderExceedsSizeLimit</td>
+</tr>
+<tr>
+<td>error</td>
+<td>OrderLeverageNotSet</td>
+</tr>
+<tr>
+<td>error</td>
+<td>InvalidProduct</td>
+</tr>
+<tr>
+<td>error</td>
+<td>ImmediateLiquidationOrder</td>
+</tr>
+<tr>
+<td>error</td>
+<td>LowerthanBankruptcy</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+<h2 id='delele-batch-orders'>Delele batch orders</h2>
+<p><a id="opIdbatchDelete"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'https://api.delta.exchange/orders/batch'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X DELETE https://api.delta.exchange/orders/batch <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">delete</span> <span class="s1">'https://api.delta.exchange/orders/batch'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+<p><code>DELETE /orders/batch</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<h3 id="delele-batch-orders-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemaarrayofdeleteorderrequest">ArrayOfDeleteOrderRequest</a></td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"unfilled_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"future"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"initial_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"maintenance_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"impact_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pricing_source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"position_size_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"maker_commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"underlying_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"quoting_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"settling_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="delele-batch-orders-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>returns the orders deleted</td>
+<td><a href="#schemaorder">Order</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>returns error if orders couldnt be deleted</td>
+<td>Inline</td>
+</tr>
+</tbody></table>
+
+<h3 id="delele-batch-orders-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>400</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>» error</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>» message</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>A more verbose error message</td>
+</tr>
+</tbody></table>
+<h4 id='enumerated-values-5'>Enumerated Values</h4>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>error</td>
+<td>ALREADY_FILLED</td>
+</tr>
+<tr>
+<td>error</td>
+<td>InvalidOrder</td>
+</tr>
+<tr>
+<td>error</td>
+<td>InvalidProduct</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+<h2 id='change-order-leverage'>Change order leverage</h2>
 <p><a id="opIdchangeOrderLeverage"></a></p>
 
 <blockquote>
@@ -1619,7 +1943,7 @@ curl -X POST https://api.delta.exchange/orders/leverage <span class="se">\</span
   </span><span class="s2">"leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<h3 id="change-leverage-for-open-orders-parameters">Parameters</h3>
+<h3 id="change-order-leverage-parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -1659,7 +1983,7 @@ curl -X POST https://api.delta.exchange/orders/leverage <span class="se">\</span
 <p>200 Response</p>
 </blockquote>
 
-<h3 id="change-leverage-for-open-orders-responses">Responses</h3>
+<h3 id="change-order-leverage-responses">Responses</h3>
 
 <table><thead>
 <tr>
@@ -1683,7 +2007,7 @@ curl -X POST https://api.delta.exchange/orders/leverage <span class="se">\</span
 </tr>
 </tbody></table>
 
-<h3 id="change-leverage-for-open-orders-responseschema">Response Schema</h3>
+<h3 id="change-order-leverage-responseschema">Response Schema</h3>
 
 <p>Status Code <strong>400</strong></p>
 
@@ -1711,7 +2035,7 @@ curl -X POST https://api.delta.exchange/orders/leverage <span class="se">\</span
 <td>A more verbose error message</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-5'>Enumerated Values</h4>
+<h4 id='enumerated-values-6'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -1731,7 +2055,7 @@ curl -X POST https://api.delta.exchange/orders/leverage <span class="se">\</span
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
-<h2 id='get-leverage-for-all-open-orders'>Get leverage for all open orders</h2>
+<h2 id='get-order-leverage'>Get order leverage</h2>
 <p><a id="opIdgetOrderLeverage"></a></p>
 
 <blockquote>
@@ -1778,7 +2102,7 @@ curl -X GET https://api.delta.exchange/orders/leverage?product_id<span class="o"
 </code></pre>
 <p><code>GET /orders/leverage</code></p>
 
-<h3 id="get-leverage-for-all-open-orders-parameters">Parameters</h3>
+<h3 id="get-order-leverage-parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -1804,7 +2128,7 @@ curl -X GET https://api.delta.exchange/orders/leverage?product_id<span class="o"
 <p>200 Response</p>
 </blockquote>
 
-<h3 id="get-leverage-for-all-open-orders-responses">Responses</h3>
+<h3 id="get-order-leverage-responses">Responses</h3>
 
 <table><thead>
 <tr>
@@ -2133,7 +2457,7 @@ curl -X POST https://api.delta.exchange/positions/change_margin <span class="se"
 <td>A more verbose error message</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-6'>Enumerated Values</h4>
+<h4 id='enumerated-values-7'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -2251,7 +2575,7 @@ curl -X POST https://api.delta.exchange/positions/close <span class="se">\</span
 <td>Flag to choose whether to cancel open orders in case they end up with insufficient margin after closing position</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-7'>Enumerated Values</h4>
+<h4 id='enumerated-values-8'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2371,7 +2695,7 @@ curl -X POST https://api.delta.exchange/positions/close <span class="se">\</span
 <td>A more verbose error message</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-8'>Enumerated Values</h4>
+<h4 id='enumerated-values-9'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -3135,7 +3459,7 @@ curl -X GET https://api.delta.exchange/chart/history <span class="se">\</span>
 <td>resolution for the candles</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-9'>Enumerated Values</h4>
+<h4 id='enumerated-values-10'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3423,7 +3747,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-10'>Enumerated Values</h4>
+<h4 id='enumerated-values-11'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -3661,7 +3985,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-11'>Enumerated Values</h4>
+<h4 id='enumerated-values-12'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -3784,6 +4108,187 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocScreateorderrequest">CreateOrderRequest</h2>
+
+<p><a id="schemacreateorderrequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>A create order object</em></p>
+<h3 id='properties-6'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>product_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>limit_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>size</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>side</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>side for which to place order</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+<h4 id='enumerated-values-13'>Enumerated Values</h4>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>side</td>
+<td>buy</td>
+</tr>
+<tr>
+<td>side</td>
+<td>sell</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>limit_order</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>market_order</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSarrayofcreateorderrequest">ArrayOfCreateOrderRequest</h2>
+
+<p><a id="schemaarrayofcreateorderrequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='properties-7'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>[<a href="#schemacreateorderrequest">CreateOrderRequest</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>[A create order object]</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
+
+<p><a id="schemadeleteorderrequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><em>A delete order object</em></p>
+<h3 id='properties-8'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>product_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSarrayofdeleteorderrequest">ArrayOfDeleteOrderRequest</h2>
+
+<p><a id="schemaarrayofdeleteorderrequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='properties-9'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>[<a href="#schemadeleteorderrequest">DeleteOrderRequest</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>[A delete order object]</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSposition">Position</h2>
 
 <p><a id="schemaposition"></a></p>
@@ -3830,7 +4335,7 @@ This operation does not require authentication.
 
 </span></code></pre>
 <p><em>A position object</em></p>
-<h3 id='properties-6'>Properties</h3>
+<h3 id='properties-10'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -3944,7 +4449,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-7'>Properties</h3>
+</span></code></pre><h3 id='properties-11'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4009,7 +4514,7 @@ This operation does not require authentication.
 
 </span></code></pre>
 <p><em>A fill object</em></p>
-<h3 id='properties-8'>Properties</h3>
+<h3 id='properties-12'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4076,7 +4581,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-12'>Enumerated Values</h4>
+<h4 id='enumerated-values-14'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -4147,7 +4652,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-9'>Properties</h3>
+</span></code></pre><h3 id='properties-13'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4177,7 +4682,7 @@ This operation does not require authentication.
 
 </span></code></pre>
 <p><em>Order Leverage for a product</em></p>
-<h3 id='properties-10'>Properties</h3>
+<h3 id='properties-14'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4241,7 +4746,7 @@ This operation does not require authentication.
 
 </span></code></pre>
 <p><em>L2 orderbook</em></p>
-<h3 id='properties-11'>Properties</h3>
+<h3 id='properties-15'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4350,7 +4855,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-13'>Enumerated Values</h4>
+<h4 id='enumerated-values-15'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -4383,7 +4888,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-12'>Properties</h3>
+</span></code></pre><h3 id='properties-16'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4455,7 +4960,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-13'>Properties</h3>
+</span></code></pre><h3 id='properties-17'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4517,7 +5022,7 @@ This operation does not require authentication.
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-14'>Properties</h3>
+</span></code></pre><h3 id='properties-18'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4577,7 +5082,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-14'>Enumerated Values</h4>
+<h4 id='enumerated-values-16'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -4671,7 +5176,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-15'>Properties</h3>
+</span></code></pre><h3 id='properties-19'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4703,7 +5208,7 @@ This operation does not require authentication.
   </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-16'>Properties</h3>
+</span></code></pre><h3 id='properties-20'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -4788,7 +5293,7 @@ This operation does not require authentication.
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-17'>Properties</h3>
+</span></code></pre><h3 id='properties-21'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
