@@ -109,7 +109,7 @@
               "properties" : {
                 "error" : {
                   "type" : "string",
-                  "enum" : [ "InsufficientMargin", "OrderSizeExceededAvailable", "OrderExceedsSizeLimit", "OrderLeverageNotSet", "InvalidProduct", "ImmediateLiquidationOrder", "LowerthanBankruptcy", "SelfMatchingPostOnlyMode", "ImmediateExecutionPostOnlyOrder" ]
+                  "enum" : [ "InsufficientMargin", "OrderSizeExceededAvailable", "OrderExceedsSizeLimit", "OrderLeverageNotSet", "InvalidProduct", "ImmediateLiquidationOrder", "LowerthanBankruptcy", "SelfMatchingPostOnlyMode", "ImmediateExecutionPostOnlyOrder" , "BracketOrderPositionExists", "InvalidBracketOrder" ]
                 },
                 "message" : {
                   "type" : "string",
@@ -994,6 +994,20 @@
           "type" : "string",
           "enum" : [ "gtc", "ioc", "fok" ],
           "required": false
+        },
+        "bracket_order": {
+          "type": "object",
+          "properties": {
+            "stop_loss_price": {
+              "type": "string"
+            },
+            "take_profit_price":{
+              "type": "string"
+            },
+            "trail_amount": {
+              "type": "string"
+            }
+          }
         }
       }
     },
