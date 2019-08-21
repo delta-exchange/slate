@@ -6645,6 +6645,23 @@ This operation does not require authentication.
         }
     ]
 }
+
+// Error Response 
+{
+    "type": "subscriptions",
+    "channels": [
+        {
+            "name": "l2_orderbook",
+            "symbols": [
+                "BTCUSD_28Dec"
+            ],
+        },
+        {
+            "name": "trading_notifications",
+            "error": "subscription forbidden on trading_notifications. Unauthorized user"
+        }
+    ]
+}
 </code></pre><h2 id='unsubscribe'>Unsubscribe</h2>
 <p>If you want to unsubscribe from channel/contracts pairs, send an &quot;unsubscribe&quot; message. The structure is equivalent to subscribe messages. As a shorthand you can also provide no symbols for a channel, which will unsubscribe you from the channel entirely.</p>
 
