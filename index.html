@@ -6648,8 +6648,6 @@ This operation does not require authentication.
 </code></pre><h2 id='unsubscribe'>Unsubscribe</h2>
 <p>If you want to unsubscribe from channel/contracts pairs, send an &quot;unsubscribe&quot; message. The structure is equivalent to subscribe messages. As a shorthand you can also provide no symbols for a channel, which will unsubscribe you from the channel entirely.</p>
 
-<p>As a response to an unsubscribe message you will receive a subscriptions response.</p>
-
 <blockquote>
 <p>Unsubscribe Sample</p>
 </blockquote>
@@ -6912,6 +6910,7 @@ In case no pong frame is returned, the client will be disconnected in 1 minute.<
 </code></pre><h3 id='fill'>fill</h3><pre class="highlight plaintext"><code>// Fill
 {
     "symbol": "BNBBTC_30Nov",
+    "fill_id": "1234-abcd-qwer-3456",
     "product_id": 7,
     "type": "fill",
     "user_id": 1998,
@@ -6919,6 +6918,8 @@ In case no pong frame is returned, the client will be disconnected in 1 minute.<
     "side": "buy",
     "size": 190,
     "price": "0.00145791",
+    "role": "taker",
+    "client_order_id": "GA123",
     "timestamp": 1544091555086559
 }
 </code></pre><h3 id='adl'>adl</h3><pre class="highlight plaintext"><code>// ADL
