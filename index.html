@@ -474,7 +474,7 @@
                     <a href="#l2_orderbook" class="toc-h2 toc-link" data-title="l2_orderbook">l2_orderbook</a>
                   </li>
                   <li>
-                    <a href="#recent-trades" class="toc-h2 toc-link" data-title="Recent trades">Recent trades</a>
+                    <a href="#recent_trade" class="toc-h2 toc-link" data-title="recent_trade">recent_trade</a>
                   </li>
                   <li>
                     <a href="#mark_price" class="toc-h2 toc-link" data-title="mark_price">mark_price</a>
@@ -523,6 +523,9 @@
 <p>Api endpoints that place orders or fetch account related information needs to authenticated using api key and api secret.</p>
 <h2 id='generating-an-api-key'>Generating an API Key</h2>
 <p>Before being able to sign any requests, you must create an API key via the Delta website. Upon creating a key you will receive api key and api secret, which you must remember and secure at your end. The Key and Secret will be randomly generated.</p>
+
+<p>You can create a new API key from here :
+https://www.delta.exchange/app/account/manageapikeys</p>
 <h2 id='api-key-permissions'>API Key Permissions</h2>
 <p>You can restrict the functionality of API keys. Before creating the key, you must choose what permissions you would like the key to have. The permissions are:</p>
 
@@ -533,9 +536,11 @@
 <h2 id='creating-a-request'>Creating a Request</h2>
 <p>All Authenticated requests must contain the following headers:</p>
 
-<p>api-key: The api key as a string.
-signature: The base64-encoded signature (see Signing a Message).
-timestamp: A timestamp for your request.</p>
+<p>api-key: The api key as a string.</p>
+
+<p>signature: The hex-encoded signature (see Signing a Message).</p>
+
+<p>timestamp: A timestamp for your request.</p>
 
 <p>All request bodies should have content type application/json and be valid JSON.</p>
 <h2 id='signing-a-message'>Signing a Message</h2>
@@ -6544,11 +6549,11 @@ This operation does not require authentication.
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
+<td>Not Found -- The specified resource could not be found.</td>
 </tr>
 <tr>
 <td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+<td>Method Not Allowed -- You tried to access a resource with an invalid method.</td>
 </tr>
 <tr>
 <td>406</td>
@@ -6582,7 +6587,7 @@ This operation does not require authentication.
 <p>Websocket api can be used for the following use cases</p>
 
 <ul>
-<li>Get real time feed of market data, this includes l2 and l3 orderbook and recent trades.</li>
+<li>Get real time feed of market data, this includes L2 and L3 orderbook and recent trades.</li>
 <li>Get price feeds - Mark prices of different contracts, price feed of underlying indexes etc.</li>
 <li>Get account specific notifications like fills, liquidations, ADL and PnL updates.</li>
 </ul>
@@ -6663,7 +6668,7 @@ This operation does not require authentication.
     ]
 }
 </code></pre><h2 id='unsubscribe'>Unsubscribe</h2>
-<p>If you want to unsubscribe from channel/contracts pairs, send an &quot;unsubscribe&quot; message. The structure is equivalent to subscribe messages. As a shorthand you can also provide no symbols for a channel, which will unsubscribe you from the channel entirely.</p>
+<p>If you want to unsubscribe from channel/contracts pairs, send an &quot;unsubscribe&quot; message. The structure is equivalent to subscribe messages. If you want to unsubscribe for specific symbols in a channel, you can pass it in the symbol list. As a shorthand you can also provide no symbols for a channel, which will unsubscribe you from the channel entirely.</p>
 
 <blockquote>
 <p>Unsubscribe Sample</p>
@@ -6674,7 +6679,13 @@ This operation does not require authentication.
     "payload": {
         "channels": [
             {
-                "name": "ticker"
+                "name": "ticker",          // unsubscribe from ticker channel only for BTCUSD_28Dec
+                "symbols": [
+                    "BTCUSD_28Dec"
+                ]
+            },
+            {
+                "name": "l2_orderbook"      // unsubscribe from all symbols for l2_orderbook channel
             }
         ]
     }
@@ -6686,6 +6697,8 @@ This operation does not require authentication.
 
 <p>The payload for the signed request will be
 &#39;GET&#39; + timestamp + &#39;/live&#39;</p>
+
+<p>To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. </p>
 
 <blockquote>
 <p>Authentication sample</p>
@@ -6735,12 +6748,7 @@ This operation does not require authentication.
     <span class="s">"payload"</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}))</span>
 
-</code></pre>
-<p>To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. </p>
-
-<p>You can create a new API key from here :
-https://www.delta.exchange/app/account/manageapikeys</p>
-<h2 id='heartbeats'>Heartbeats</h2>
+</code></pre><h2 id='heartbeats'>Heartbeats</h2>
 <p>Delta websocket server sends ping frame every 30 secs, to which it expects a pong frame.
 In case no pong frame is returned, the client will be disconnected in 1 minute.</p>
 <h1 id='public-channels'>Public Channels</h1><h2 id='ticker'>ticker</h2>
@@ -6778,7 +6786,7 @@ In case no pong frame is returned, the client will be disconnected in 1 minute.<
     "buy": [{"limit_price":"0.0014577","size":62},{"limit_price":"0.0014571","size":28}],
     "sell": [{"limit_price":"6229.0","size":15964},{"limit_price":"6229.5","size":3504},{"limit_price":"6230.0","size":15964},{"limit_price":"6231.0","size":15957}]
 }
-</code></pre><h2 id='recent-trades'>Recent trades</h2>
+</code></pre><h2 id='recent_trade'>recent_trade</h2>
 <p><strong>recent_trade</strong> channel provides a real time feed of all recent trades (fills).</p>
 <pre class="highlight plaintext"><code>// Trades Response
 {
@@ -6807,9 +6815,9 @@ In case no pong frame is returned, the client will be disconnected in 1 minute.<
 <p><strong>spot_price</strong> channel provides a real time feed of the underlying index prices.</p>
 <pre class="highlight plaintext"><code>// Spot Price Response
 {
-    symbol: "BNB/BTC",
+    symbol: ".DEBNBBTC",
     price: "0.0014579",
-    type: "spot_price,
+    type: "spot_price",
     timestamp: 1561634049751430
 }
 </code></pre><h2 id='product_updates'>product_updates</h2>
@@ -6945,7 +6953,11 @@ In case no pong frame is returned, the client will be disconnected in 1 minute.<
     "product_id": 7,
     "type": "adl",
     "timestamp": 1544091555086559
-
+    "side": 'buy',          // Position side
+    "size": 32,             // size by which your position was reduced
+    "entry_price": "0.000121",
+    "exit_price": "0.0001222",
+    "realized_pnl": "0.1",
 }
 </code></pre><h3 id='self_trade'>self_trade</h3><pre class="highlight plaintext"><code>// Self Trade
 {
