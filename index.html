@@ -224,6 +224,14 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
+            <a href="#general-information" class="toc-h1 toc-link" data-title="General Information">General Information</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#definitions" class="toc-h2 toc-link" data-title="Definitions">Definitions</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
               <ul class="toc-list-h2">
                   <li>
@@ -530,6 +538,34 @@
 <blockquote>
 <p>Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.</p>
 </blockquote>
+<h1 id='general-information'>General Information</h1><h2 id='definitions'>Definitions</h2>
+<p><strong>Assets:</strong> are cryptocurrencies or fiat currencies. Each asset has a 3/4 letter code (e.g. BTC, USDC). A derivative contract on Delta Exchange will entail multiple assets, namely:</p>
+
+<ul>
+<li><p><strong>Underlying Asset:</strong> This is the asset over which a futures or perpetual contract is defined. For e.g. the underlying asset of the BTCUSD perpetual contract is BTC. </p></li>
+<li><p><strong>Quoting Asset:</strong> The asset in which price of the quoting is called the quoting asset. For e.g. the BTCUSD contract is quoted in USD. Therefore, the quoting asset of the contract is USD.</p></li>
+<li><p><strong>Settling Asset:</strong> The asset in which the margin and Profit/ Loss of a contract is denominated. For e.g. the BTCUSD contract is margined and settled in BTC. Therefore, the settling asset of the contract is BTC.</p></li>
+</ul>
+
+<p><strong>Products</strong>: are the derivative contracts listed on Delta Exchange. Each contract can be referred by either its Product ID (e.g. xx is the Product ID of BTCUSD contract) or Symbol (yy is the symbol for BTCUD contract). It is worth noting that xx APIs expect Product IDs. All other APIs work with Symbols.</p>
+
+<p><strong>Symbology</strong></p>
+
+<p><strong>Contract symbol:</strong> has the following format</p>
+
+<p>Underlying Asset| Quoting Asset|Q (optional; applicable only to quanto contracts)|_|Matruity Date (optional, applicable only for futures contracts)</p>
+
+<p>e.g. BTCUSD, BTCUSD_27Dec, LEOUSDQ</p>
+
+<p><strong>Mark Price:</strong> Each contract has a unique <a href="https://www.delta.exchange/user-guide/">Mark Price</a>  which can be referred to by: <strong>MARK: Contract_Symbol (MARK:BTCUSD)</strong> </p>
+
+<p><strong>Index Price:</strong> The prices of the underlying assets for the contracts listed on Delta Exchange are obtained from various spot exchanges, and are computed by averaging prices from multiple exchanges. Details of all the indices are available on this <a href="https://www.delta.exchange/indices/">page</a>.</p>
+
+<p>For a given Underlying Asset/ Quoting Asset pair, the Index price symbol is: <strong><em>.DE|Underlying Asset|Quoting Asset|</em></strong> 
+e.g. <strong>.DEBNBXBT</strong>
+It is important to note that the BTCUSD Index price doesn&#39;t follow this convention as its symbol is <strong>.DEXBTUSD</strong>.</p>
+
+<p><strong>Data Centers:</strong> Delta Exchange data centers are in AWS Ireland</p>
 <h1 id='authentication'>Authentication</h1>
 <p>Api endpoints that place orders or fetch account related information needs to authenticated using api key and api secret.</p>
 <h2 id='generating-an-api-key'>Generating an API Key</h2>
