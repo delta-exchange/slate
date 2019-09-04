@@ -229,6 +229,12 @@
                   <li>
                     <a href="#definitions" class="toc-h2 toc-link" data-title="Definitions">Definitions</a>
                   </li>
+                  <li>
+                    <a href="#symbology" class="toc-h2 toc-link" data-title="Symbology">Symbology</a>
+                  </li>
+                  <li>
+                    <a href="#data-centers" class="toc-h2 toc-link" data-title="Data Centers">Data Centers</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -548,9 +554,7 @@
 </ul>
 
 <p><strong>Products</strong>: are the derivative contracts listed on Delta Exchange. Each contract can be referred by either its Product ID (e.g. xx is the Product ID of BTCUSD contract) or Symbol (yy is the symbol for BTCUD contract). It is worth noting that xx APIs expect Product IDs. All other APIs work with Symbols.</p>
-
-<p><strong>Symbology</strong></p>
-
+<h2 id='symbology'>Symbology</h2>
 <p><strong>Contract symbol:</strong> has the following format</p>
 
 <p>Underlying Asset| Quoting Asset|Q (optional; applicable only to quanto contracts)|_|Matruity Date (optional, applicable only for futures contracts)</p>
@@ -564,8 +568,8 @@
 <p>For a given Underlying Asset/ Quoting Asset pair, the Index price symbol is: <strong><em>.DE|Underlying Asset|Quoting Asset|</em></strong> 
 e.g. <strong>.DEBNBXBT</strong>
 It is important to note that the BTCUSD Index price doesn&#39;t follow this convention as its symbol is <strong>.DEXBTUSD</strong>.</p>
-
-<p><strong>Data Centers:</strong> Delta Exchange data centers are in AWS Ireland</p>
+<h2 id='data-centers'>Data Centers</h2>
+<p>Delta Exchange data centers are in AWS Ireland</p>
 <h1 id='authentication'>Authentication</h1>
 <p>Api endpoints that place orders or fetch account related information needs to authenticated using api key and api secret.</p>
 <h2 id='generating-an-api-key'>Generating an API Key</h2>
