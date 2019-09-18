@@ -269,6 +269,20 @@
               </ul>
           </li>
           <li>
+            <a href="#types" class="toc-h1 toc-link" data-title="Types">Types</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#timestamps" class="toc-h2 toc-link" data-title="Timestamps">Timestamps</a>
+                  </li>
+                  <li>
+                    <a href="#numbers" class="toc-h2 toc-link" data-title="Numbers">Numbers</a>
+                  </li>
+                  <li>
+                    <a href="#ids" class="toc-h2 toc-link" data-title="IDs">IDs</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#ApiSection" class="toc-h1 toc-link" data-title="API">API</a>
           </li>
           <li>
@@ -711,6 +725,20 @@ These are the limits for different categories of requests in a 5 minute rolling 
 </tbody></table>
 <h3 id='increasing-your-rate-limits'>Increasing your rate limits</h3>
 <p>If you are running up against our limits and believe that you have a legitimate need, please email us at support@delta.exchange to discuss increasing your rate limits.</p>
+<h1 id='types'>Types</h1><h2 id='timestamps'>Timestamps</h2>
+<p>Unless otherwise specified, all timestamps from API are returned in  <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>  with microseconds. Make sure you can parse the following ISO 8601 format. Most modern languages and libraries will handle this without issues.</p>
+<pre class="highlight plaintext"><code>2019-09-18T10:41:20Z
+
+</code></pre><h2 id='numbers'>Numbers</h2>
+<p>Big Decimal numbers are returned as strings to save full precision. When making a API request, it is suggested to convert numbers to strings to avoid truncation and precision errors.</p>
+
+<p>e.g. Limit price, stop loss price, trail_amount</p>
+
+<p>Integer numbers (like contract size, product_id and impact size) are unquoted.</p>
+<h2 id='ids'>IDs</h2>
+<p>Most identifiers are UUID unless otherwise specified. When making a request which requires a UUID, both forms (with and without dashes) are accepted.</p>
+
+<p><code>167ja7cg-678e-6876-d6g3-f803ce49qsc9</code>  or  <code>167ja7cg678e6876d6g3f803ce49qsc9</code></p>
 <h1 id="ApiSection" class="section-header">API</h1>
 
 <p>The REST API has endpoints for account and order management as well as public market data.</p>
