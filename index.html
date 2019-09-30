@@ -4354,13 +4354,13 @@ To perform this operation, you must be sign the request using your api key and s
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/chart/history'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-
+  <span class="s">'symbol'</span><span class="p">:</span> <span class="s">'string'</span><span class="p">,</span>  <span class="s">'from'</span><span class="p">:</span> <span class="s">'0'</span><span class="p">,</span>  <span class="s">'to'</span><span class="p">:</span> <span class="s">'0'</span><span class="p">,</span>  <span class="s">'resolution'</span><span class="p">:</span> <span class="s">'1'</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/chart/history <span class="se">\</span>
+curl -X GET https://api.delta.exchange/chart/history?symbol<span class="o">=</span>string&amp;from<span class="o">=</span>0&amp;to<span class="o">=</span>0&amp;resolution<span class="o">=</span>1 <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
@@ -4372,7 +4372,11 @@ curl -X GET https://api.delta.exchange/chart/history <span class="se">\</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/chart/history'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
-  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+  <span class="s1">'symbol'</span> <span class="o">=&gt;</span> <span class="s1">'string'</span><span class="p">,</span>
+<span class="s1">'from'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span><span class="p">,</span>
+<span class="s1">'to'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span><span class="p">,</span>
+<span class="s1">'resolution'</span> <span class="o">=&gt;</span> <span class="s1">'string'</span>
+<span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
@@ -4394,28 +4398,28 @@ curl -X GET https://api.delta.exchange/chart/history <span class="se">\</span>
 <td>symbol</td>
 <td>query</td>
 <td>string</td>
-<td>false</td>
-<td>product symbol</td>
+<td>true</td>
+<td>symbol should be anyone of following  1. product symbol to get OHLC for given product e.g <strong>BTCUSD</strong> 2. Spot index symbol to get spot index price. e.g. <strong>.DEXBTUSD</strong> 3. Mark and symbol to get mark price OHLC data e.g. <strong>MARK:BTCUSD</strong> 4. Funding and product symbol to get Funding data for given product e.g. <strong>FUNDING:BTCUSD</strong></td>
 </tr>
 <tr>
 <td>from</td>
 <td>query</td>
 <td>integer</td>
-<td>false</td>
+<td>true</td>
 <td>start time for the interval ( in seconds )</td>
 </tr>
 <tr>
 <td>to</td>
 <td>query</td>
 <td>integer</td>
-<td>false</td>
+<td>true</td>
 <td>end time for the interval ( in seconds )</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>query</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>resolution for the candles</td>
 </tr>
 </tbody></table>
