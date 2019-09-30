@@ -1093,7 +1093,8 @@
       "description": "A create order object",
       "properties": {
         "product_id": {
-          "type": "integer" 
+          "type": "integer",
+          "required": true
         },
         "limit_price": {
           "type": "string" 
