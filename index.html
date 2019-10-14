@@ -501,8 +501,16 @@
                   <li>
                     <a href="#authenticating-a-connection" class="toc-h2 toc-link" data-title="Authenticating a connection">Authenticating a connection</a>
                   </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#detecting-connection-drops" class="toc-h1 toc-link" data-title="Detecting Connection Drops">Detecting Connection Drops</a>
+              <ul class="toc-list-h2">
                   <li>
-                    <a href="#heartbeats" class="toc-h2 toc-link" data-title="Heartbeats">Heartbeats</a>
+                    <a href="#heartbeat-recommended" class="toc-h2 toc-link" data-title="Heartbeat (Recommended)">Heartbeat (Recommended)</a>
+                  </li>
+                  <li>
+                    <a href="#ping-pong" class="toc-h2 toc-link" data-title="Ping/Pong">Ping/Pong</a>
                   </li>
               </ul>
           </li>
@@ -787,21 +795,6 @@ These are the limits for different categories of requests in a 5 minute rolling 
 <p>Most identifiers are UUID unless otherwise specified. When making a request which requires a UUID, both forms (with and without dashes) are accepted.</p>
 
 <p><code>167ja7cg-678e-6876-d6g3-f803ce49qsc9</code>  or  <code>167ja7cg678e6876d6g3f803ce49qsc9</code></p>
-<hr>
-
-<p>title: Delta Exchange Api
-language_tabs:
-  - python: Python
-  - shell: Shell
-  - ruby: Ruby
-toc_footers: []
-includes: []
-search: true
-highlight_theme: darkula
-headingLevel: 2</p>
-
-<hr>
-
 <h1 id="ApiSection" class="section-header">API</h1>
 
 <p>The REST API has endpoints for account and order management as well as public market data.</p>
@@ -952,6 +945,9 @@ curl -X GET https://api.delta.exchange/products <span class="se">\</span>
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -1227,6 +1223,9 @@ curl -X POST https://api.delta.exchange/orders <span class="se">\</span>
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -1482,6 +1481,9 @@ curl -X DELETE https://api.delta.exchange/orders <span class="se">\</span>
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -1747,6 +1749,9 @@ curl -X GET https://api.delta.exchange/orders <span class="se">\</span>
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -1918,6 +1923,9 @@ curl -X PUT https://api.delta.exchange/orders <span class="se">\</span>
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -2326,6 +2334,9 @@ curl -X POST https://api.delta.exchange/orders/bracket <span class="se">\</span>
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -2390,6 +2401,9 @@ curl -X POST https://api.delta.exchange/orders/bracket <span class="se">\</span>
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -2585,7 +2599,7 @@ curl -X POST https://api.delta.exchange/orders/batch <span class="se">\</span>
 <td>body</td>
 <td><a href="#schemaarrayofcreateorderrequest">ArrayOfCreateOrderRequest</a></td>
 <td>true</td>
-<td>Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders</td>
+<td>none</td>
 </tr>
 </tbody></table>
 
@@ -2625,6 +2639,9 @@ curl -X POST https://api.delta.exchange/orders/batch <span class="se">\</span>
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -2866,6 +2883,9 @@ curl -X DELETE https://api.delta.exchange/orders/batch <span class="se">\</span>
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -3321,6 +3341,9 @@ curl -X GET https://api.delta.exchange/positions <span class="se">\</span>
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -3499,6 +3522,9 @@ curl -X POST https://api.delta.exchange/positions/change_margin <span class="se"
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -3727,6 +3753,9 @@ curl -X GET https://api.delta.exchange/orders/history <span class="se">\</span>
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -3909,6 +3938,9 @@ curl -X GET https://api.delta.exchange/fills <span class="se">\</span>
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -4315,6 +4347,9 @@ curl -X GET https://api.delta.exchange/wallet/transactions?asset_id<span class="
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -4497,6 +4532,9 @@ curl -X GET https://api.delta.exchange/wallet/download/transactions?asset_id<spa
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -4843,6 +4881,9 @@ This operation does not require authentication.
   </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="mi">0</span><span class="w">
+  </span><span class="p">],</span><span class="w">
   </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -4891,105 +4932,105 @@ This operation does not require authentication.
 <td>integer(int64)</td>
 <td>false</td>
 <td>none</td>
-<td>id of a product or a contract</td>
+<td>none</td>
 </tr>
 <tr>
 <td>symbol</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>symbol of a product or a contract e.g. LINKBTC, XRPUSDQ</td>
+<td>none</td>
 </tr>
 <tr>
 <td>description</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>description of a product or a contract</td>
+<td>none</td>
 </tr>
 <tr>
 <td>created_at</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>product/contract creation date and time</td>
+<td>none</td>
 </tr>
 <tr>
 <td>updated_at</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>product/contract update date and time</td>
+<td>none</td>
 </tr>
 <tr>
 <td>settlement_time</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>settlement Timestamp of futures contract</td>
+<td>none</td>
 </tr>
 <tr>
 <td>product_type</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>contract type &#39;future&#39; or &#39;inverse_future&#39;</td>
+<td>none</td>
 </tr>
 <tr>
 <td>pricing_source</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>source and method of contract pricing</td>
+<td>none</td>
 </tr>
 <tr>
 <td>impact_size</td>
 <td>integer</td>
 <td>false</td>
 <td>none</td>
-<td>size of a typical trade. Used in the computation of mark price</td>
+<td>none</td>
 </tr>
 <tr>
 <td>initial_margin</td>
 <td>integer</td>
 <td>false</td>
 <td>none</td>
-<td>The amount required to enter into a new position</td>
+<td>none</td>
 </tr>
 <tr>
 <td>maintenance_margin</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>The amount necessary when a loss on a futures position requires you to allocate more funds to return the margin to the initial margin level.</td>
+<td>none</td>
 </tr>
 <tr>
 <td>contract_value</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>The notional value of a futures contract is simply the spot price of the asset multiplied by the amount of the asset specified in the contract</td>
+<td>none</td>
 </tr>
 <tr>
 <td>contract_unit_currency</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>This is the unit of  1 contract, for vanilla futures, its underlying asset. for inverse, it is settling asset. for quanto, its settling asset / quoting asset</td>
+<td>none</td>
 </tr>
 <tr>
 <td>tick_size</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>The minimum gap between 2 consecutive prices.</td>
+<td>none</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>trading status of the contract e.g. &#39;operational&#39;,&#39;disrupted_cancel_only&#39; or &#39;disrupted_post_only&#39;</td>
+<td>none</td>
 </tr>
 <tr>
 <td>max_leverage_notional</td>
@@ -5001,6 +5042,13 @@ This operation does not require authentication.
 <tr>
 <td>default_leverage</td>
 <td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>leverage_slider_values</td>
+<td>[integer]</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
@@ -5176,6 +5224,9 @@ This operation does not require authentication.
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -5263,6 +5314,9 @@ This operation does not require authentication.
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -5489,6 +5543,9 @@ This operation does not require authentication.
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -5578,6 +5635,9 @@ This operation does not require authentication.
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -5642,6 +5702,9 @@ This operation does not require authentication.
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -6217,6 +6280,9 @@ This operation does not require authentication.
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -6351,6 +6417,9 @@ This operation does not require authentication.
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -6434,6 +6503,9 @@ This operation does not require authentication.
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -6592,6 +6664,9 @@ This operation does not require authentication.
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -6981,6 +7056,9 @@ This operation does not require authentication.
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -7153,6 +7231,9 @@ This operation does not require authentication.
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"leverage_slider_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -7577,10 +7658,43 @@ This operation does not require authentication.
     <span class="s">"payload"</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}))</span>
 
-</code></pre><h2 id='heartbeats'>Heartbeats</h2>
-<p>Delta websocket server sends ping frame every 30 secs, to which it expects a pong frame.
-In case no pong frame is returned, the client will be disconnected in 1 minute.</p>
-<h1 id='public-channels'>Public Channels</h1><h2 id='ticker'>ticker</h2>
+</code></pre><h1 id='detecting-connection-drops'>Detecting Connection Drops</h1>
+<p>Some client libraries might not detect connection drops properly. We provide two methods for the clients to ensure they are connected and getting subscribed data.</p>
+<h2 id='heartbeat-recommended'>Heartbeat (Recommended)</h2>
+<p>The client can enable heartbeat on the socket. If heartbeat is enabled, the server is expected to periodically send a heartbeat message to the client. Right now, the heartbeat time is set to 30 seconds. </p>
+<h3 id='how-to-implement-on-client-side'>How to Implement on client side</h3>
+<ul>
+<li>Enable heartbeat (check sample code) after each successful socket connection</li>
+<li>Set a timer with duration of 35 seconds (We take 5 seconds buffer for heartbeat to arrive).</li>
+<li>When you receive a new heartbeat message, you reset the timer</li>
+<li>If the timer is called, that means the client didn&#39;t receive any heartbeat in last 35 seconds. In this case, the client should exit the existing connection and try to reconnect. </li>
+</ul>
+<pre class="highlight plaintext"><code>// Enable Heartbeat on successful connection
+ws.send({
+    "type": "enable_heartbeat"
+})
+
+// Disable Heartbeat
+ws.send({
+    "type": "disable_heartbeat"
+})
+
+// Sample Heartbeat message received periodically by client
+{
+    "type": "heartbeat"
+}
+</code></pre><h2 id='ping-pong'>Ping/Pong</h2>
+<p>The client can periodically (~ every 30 seconds) send a ping frame or a raw ping message and the server will respond back with a pong frame or a raw pong response. If the client doesn&#39;t receive a pong response in next 5 seconds, the client should exit the existing connection and try to reconnect. </p>
+<pre class="highlight plaintext"><code>// Ping Request
+ws.send({
+    "type": "ping"
+})
+
+// Pong Response
+ws.send({
+    "type": "pong"
+})
+</code></pre><h1 id='public-channels'>Public Channels</h1><h2 id='ticker'>ticker</h2>
 <p>The ticker channel provides price change data for the last 24 hrs (rolling window). It is published every 5 seconds.</p>
 
 <p>On subscribing to <strong>ticker</strong> channel, socket server will emit messages with type &#39;ticker&#39; in response.</p>
