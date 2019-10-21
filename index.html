@@ -533,6 +533,9 @@
                     <a href="#spot_price" class="toc-h2 toc-link" data-title="spot_price">spot_price</a>
                   </li>
                   <li>
+                    <a href="#funding_rate" class="toc-h2 toc-link" data-title="funding_rate">funding_rate</a>
+                  </li>
+                  <li>
                     <a href="#product_updates" class="toc-h2 toc-link" data-title="product_updates">product_updates</a>
                   </li>
                   <li>
@@ -7689,6 +7692,16 @@ ws.send({
     price: "0.0014579",
     type: "spot_price",
     timestamp: 1561634049751430
+}
+</code></pre><h2 id='funding_rate'>funding_rate</h2>
+<p><strong>funding_rate</strong> channel provides a real time feed of funding rates for perpetual contracts.</p>
+<pre class="highlight plaintext"><code>// Mark Price Response
+{
+    symbol: "BNBBTC_30Nov",
+    product_id: 7,
+    type: "funding_rate",
+    funding_rate: "-0.00401010",  // in %
+    timestamp: 1561634049751430   // in us
 }
 </code></pre><h2 id='product_updates'>product_updates</h2>
 <p>This channel provides updates when markets are disrupted and resumed. On opening, we conduct a single price auction and auction starting and finish events are also published on this channel. To subscribe, you dont need to pass the symbol list. This channel automatically subscribes to all markets by default.</p>
