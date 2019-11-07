@@ -656,18 +656,30 @@ Pagination can be called in following APIs</p>
 </tr>
 </tbody></table>
 
-<p><strong>Pagination parameters</strong>
-- page_num 
-  - page number for pagination
-  - Default value: 1
-- page_size
-  - page size for pagination
-  - Default value: 25</p>
+<p><strong>Pagination parameters</strong></p>
 
-<p>In API response following headers will be received
-- x-pagination-page-size : page size specified in API request
-- x-pagination-page-num: page number specified in API request
-- x-pagination-total : total number of records </p>
+<ul>
+<li>page_num 
+
+<ul>
+<li>page number for pagination</li>
+<li>Default value: 1</li>
+</ul></li>
+<li>page_size
+
+<ul>
+<li>page size for pagination</li>
+<li>Default value: 25</li>
+</ul></li>
+</ul>
+
+<p>In API response following headers will be received</p>
+
+<ul>
+<li>x-pagination-page-size : page size specified in API request</li>
+<li>x-pagination-page-num: page number specified in API request</li>
+<li>x-pagination-total : total number of records </li>
+</ul>
 
 <p><strong>Example</strong></p>
 
