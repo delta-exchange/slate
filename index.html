@@ -233,6 +233,9 @@
                     <a href="#symbology" class="toc-h2 toc-link" data-title="Symbology">Symbology</a>
                   </li>
                   <li>
+                    <a href="#pagination" class="toc-h2 toc-link" data-title="Pagination">Pagination</a>
+                  </li>
+                  <li>
                     <a href="#data-centers" class="toc-h2 toc-link" data-title="Data Centers">Data Centers</a>
                   </li>
               </ul>
@@ -625,6 +628,50 @@ e.g</p>
 <p>For a given Underlying Asset/ Quoting Asset pair, the Index price symbol is: <strong><em>.DE|Underlying Asset|Quoting Asset|</em></strong> 
 e.g. <strong>.DEBNBXBT</strong>
 It is important to note that the BTCUSD Index price doesn&#39;t follow this convention as its symbol is <strong>.DEXBTUSD</strong>.</p>
+<h2 id='pagination'>Pagination</h2>
+<p>Pagination allows to fetch data page-wise.
+Pagination can be called in following APIs</p>
+
+<table><thead>
+<tr>
+<th>API</th>
+<th>End ponint</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Orders</td>
+<td>/orders</td>
+</tr>
+<tr>
+<td>Orders History</td>
+<td>/orders/history</td>
+</tr>
+<tr>
+<td>Fills</td>
+<td>/fills</td>
+</tr>
+<tr>
+<td>Wallet transactions</td>
+<td>/wallet/transactions</td>
+</tr>
+</tbody></table>
+
+<p><strong>Pagination parameters</strong>
+- page_num 
+  - page number for pagination
+  - Default value: 1
+- page_size
+  - page size for pagination
+  - Default value: 25</p>
+
+<p>In API response following headers will be received
+- x-pagination-page-size : page size specified in API request
+- x-pagination-page-num: page number specified in API request
+- x-pagination-total : total number of records </p>
+
+<p><strong>Example</strong></p>
+
+<p>https://api.delta.exchange/orders?state=open&amp;page_num=1&amp;page_size=30</p>
 <h2 id='data-centers'>Data Centers</h2>
 <p>Delta Exchange data centers are in <strong>AWS Ireland</strong></p>
 <h1 id='authentication'>Authentication</h1>
