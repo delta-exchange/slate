@@ -289,6 +289,9 @@
               </ul>
           </li>
           <li>
+            <a href="#place-order-error-description" class="toc-h1 toc-link" data-title="Place order error description">Place order error description</a>
+          </li>
+          <li>
             <a href="#ApiSection" class="toc-h1 toc-link" data-title="API">API</a>
           </li>
           <li>
@@ -807,7 +810,9 @@ You should use ntp timestamp to sync local clocks inorder to avoid following iss
 <span class="p">}</span>
 
 </code></pre><h1 id='rate-limits'>Rate Limits</h1>
-<p>When a rate limit is exceeded, a status of 429 Too Many Requests will be returned.</p>
+<p>When a rate limit is exceeded, a status of 429 Too Many Requests will be returned.
+&#39;X-RATE-LIMIT-RESET&#39; is returned in response header with time left in milisecond
+after which next API request can be hit.</p>
 <h3 id='rest-api'>REST API</h3><h3 id='limits'>Limits</h3>
 <p>We throttle unauthenticated api requests by IP and authenticated requests by user ID.
 These are the limits for different categories of requests in a 5 minute rolling window.</p>
@@ -821,12 +826,12 @@ These are the limits for different categories of requests in a 5 minute rolling 
 </thead><tbody>
 <tr>
 <td>Chart data</td>
-<td>600</td>
+<td>1000</td>
 <td>Requests for chart data</td>
 </tr>
 <tr>
 <td>Public read requests</td>
-<td>200</td>
+<td>500</td>
 <td>Requests to get list of live products, L2 orderbook etc</td>
 </tr>
 <tr>
@@ -851,7 +856,7 @@ These are the limits for different categories of requests in a 5 minute rolling 
 </tr>
 </tbody></table>
 <h3 id='increasing-your-rate-limits'>Increasing your rate limits</h3>
-<p>If you are running up against our limits and believe that you have a legitimate need, please email us at support@delta.exchange to discuss increasing your rate limits.</p>
+<p>If you are running up against our limits and believe that you have a legitimate need, please email us at (support@delta.exchange)[mailto:support@delta.exchange] to discuss increasing your rate limits.</p>
 <h1 id='types'>Types</h1><h2 id='timestamps'>Timestamps</h2>
 <p>Unless otherwise specified, all timestamps from API are returned in  <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>  with microseconds. Make sure you can parse the following ISO 8601 format. Most modern languages and libraries will handle this without issues.</p>
 <pre class="highlight plaintext"><code>2019-09-18T10:41:20Z
@@ -866,6 +871,60 @@ These are the limits for different categories of requests in a 5 minute rolling 
 <p>Most identifiers are UUID unless otherwise specified. When making a request which requires a UUID, both forms (with and without dashes) are accepted.</p>
 
 <p><code>167ja7cg-678e-6876-d6g3-f803ce49qsc9</code>  or  <code>167ja7cg678e6876d6g3f803ce49qsc9</code></p>
+<h1 id='place-order-error-description'>Place order error description</h1>
+<p>various errors returned by system while placing order</p>
+
+<table><thead>
+<tr>
+<th>error</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>InsufficientMargin</td>
+<td>Margin required to place order with selected leverage and quantity is insufficient.</td>
+</tr>
+<tr>
+<td>OrderSizeExceededAvailable</td>
+<td>order size more than available, the order book doesn&#39;t have sufficient liquidity.</td>
+</tr>
+<tr>
+<td>OrderExceedsSizeLimit</td>
+<td>orders couldn&#39;t be placed as it will breach allowed risk limits.</td>
+</tr>
+<tr>
+<td>OrderLeverageNotSet</td>
+<td>Order leverage is not set for this order, set any order leverage.</td>
+</tr>
+<tr>
+<td>InvalidProduct</td>
+<td>The contract/product is either doesn\&#39;t exist or has already expired.</td>
+</tr>
+<tr>
+<td>ImmediateLiquidationOrder</td>
+<td>Order will cause immediate liquidation.</td>
+</tr>
+<tr>
+<td>LowerthanBankruptcy</td>
+<td>Order prices are out of position bankruptcy limits.</td>
+</tr>
+<tr>
+<td>SelfMatchingPostOnlyMode</td>
+<td>Self matching is not allowed in post only mode.</td>
+</tr>
+<tr>
+<td>ImmediateExecutionPostOnlyOrder</td>
+<td>orders couldn&#39;t be placed as it includes post only orders which will be immediately executed.</td>
+</tr>
+<tr>
+<td>BracketOrderPositionExists</td>
+<td>Cannot add bracket order when position already exists.</td>
+</tr>
+<tr>
+<td>InvalidBracketOrder</td>
+<td>Cannot add bracket order because either the stop loss price or take profit price is incorrect.</td>
+</tr>
+</tbody></table>
 <h1 id="ApiSection" class="section-header">API</h1>
 
 <p>The REST API has endpoints for account and order management as well as public market data.</p>
@@ -1336,7 +1395,7 @@ curl -X POST https://api.delta.exchange/orders <span class="se">\</span>
 <tr>
 <td>400</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
-<td>Returns error if order could not be placed</td>
+<td>Returns <a href="#place-order-error-description">error</a> if order could not be placed</td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -2015,7 +2074,7 @@ curl -X PUT https://api.delta.exchange/orders <span class="se">\</span>
 <tr>
 <td>400</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
-<td>Returns error if order could not be placed</td>
+<td>Returns <a href="#place-order-error-description">error</a> if order could not be placed</td>
 <td>Inline</td>
 </tr>
 </tbody></table>
