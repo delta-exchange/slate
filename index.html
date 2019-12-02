@@ -570,6 +570,33 @@
                   <li>
                     <a href="#trading-notitifications" class="toc-h2 toc-link" data-title="Trading Notitifications">Trading Notitifications</a>
                   </li>
+                  <li>
+                    <a href="#orderupdate" class="toc-h2 toc-link" data-title="orderUpdate">orderUpdate</a>
+                  </li>
+                  <li>
+                    <a href="#fill" class="toc-h2 toc-link" data-title="fill">fill</a>
+                  </li>
+                  <li>
+                    <a href="#adl" class="toc-h2 toc-link" data-title="adl">adl</a>
+                  </li>
+                  <li>
+                    <a href="#self_trade" class="toc-h2 toc-link" data-title="self_trade">self_trade</a>
+                  </li>
+                  <li>
+                    <a href="#pnl" class="toc-h2 toc-link" data-title="pnl">pnl</a>
+                  </li>
+                  <li>
+                    <a href="#liquidation" class="toc-h2 toc-link" data-title="liquidation">liquidation</a>
+                  </li>
+                  <li>
+                    <a href="#stop_trigger" class="toc-h2 toc-link" data-title="stop_trigger">stop_trigger</a>
+                  </li>
+                  <li>
+                    <a href="#stop_cancel" class="toc-h2 toc-link" data-title="stop_cancel">stop_cancel</a>
+                  </li>
+                  <li>
+                    <a href="#auto_topup" class="toc-h2 toc-link" data-title="auto_topup">auto_topup</a>
+                  </li>
               </ul>
           </li>
       </ul>
@@ -925,6 +952,21 @@ These are the limits for different categories of requests in a 5 minute rolling 
 <td>Cannot add bracket order because either the stop loss price or take profit price is incorrect.</td>
 </tr>
 </tbody></table>
+<hr>
+
+<p>title: Delta Exchange Api
+language_tabs:
+  - python: Python
+  - shell: Shell
+  - ruby: Ruby
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2</p>
+
+<hr>
+
 <h1 id="ApiSection" class="section-header">API</h1>
 
 <p>The REST API has endpoints for account and order management as well as public market data.</p>
@@ -5459,7 +5501,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Determines liquidation charge as per the following formula: liquidation_penalty_factor * minimum maintenance margin</td>
 </tr>
 <tr>
 <td>contract_type</td>
@@ -5480,7 +5522,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Maximum allowed value of annualized basis</td>
 </tr>
 <tr>
 <td>is_quanto</td>
@@ -5501,14 +5543,14 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Maximum allowed value of funding, expressed as annual rate.</td>
 </tr>
 <tr>
 <td>price_band</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>he range around mark price in which trading is allowed. This number is in percentage.</td>
 </tr>
 <tr>
 <td>underlying_asset</td>
@@ -8201,7 +8243,7 @@ ws.send({
 </code></pre><h1 id='private-channels'>Private Channels</h1>
 <p>Private channels require clients to authenticate.</p>
 <h2 id='margins'>Margins</h2>
-<p><strong>margins</strong> Channel provides updates for margin blocked for different assets</p>
+<p>Channel provides updates for margin blocked for different assets, these updates are provided only on change of margin.</p>
 <pre class="highlight plaintext"><code>// margin update
 {
     "type": "margins",
@@ -8212,7 +8254,7 @@ ws.send({
     "asset_id": 2                   // BTC
 }
 </code></pre><h2 id='positions'>Positions</h2>
-<p><strong>positions</strong> Channel provides updates for change in position. Need to pass list of product symbols while subscribing.</p>
+<p>Channel provides updates for change in position. Need to pass list of product symbols while subscribing. these updates are provided only on change of position.</p>
 <pre class="highlight plaintext"><code>// Position update
 {
     "type": "positions",
@@ -8227,7 +8269,9 @@ ws.send({
 }
 </code></pre><h2 id='trading-notitifications'>Trading Notitifications</h2>
 <p><strong>trading_notifications</strong> channel provides updates of all the private trade notifications.</p>
-<h3 id='orderupdate'>orderUpdate</h3><pre class="highlight plaintext"><code>// orderUpdate
+<h2 id='orderupdate'>orderUpdate</h2>
+<p>Channel provides updates when any order is updated for any action such as fill, quantity change.</p>
+<pre class="highlight plaintext"><code>// orderUpdate
 {
     "type": "orderUpdate",
     "action": "fill",
@@ -8241,7 +8285,9 @@ ws.send({
     "state": "open",
     "timestamp": 1544091555086559
 }
-</code></pre><h3 id='fill'>fill</h3><pre class="highlight plaintext"><code>// Fill
+</code></pre><h2 id='fill'>fill</h2>
+<p>Channel provides updates when any order is executed.</p>
+<pre class="highlight plaintext"><code>// Fill
 {
     "symbol": "BNBBTC_30Nov",
     "fill_id": "1234-abcd-qwer-3456",
@@ -8256,7 +8302,9 @@ ws.send({
     "client_order_id": "GA123",
     "timestamp": 1544091555086559
 }
-</code></pre><h3 id='adl'>adl</h3><pre class="highlight plaintext"><code>// ADL
+</code></pre><h2 id='adl'>adl</h2>
+<p>Channel provides updates when open position get auto deleveraged.</p>
+<pre class="highlight plaintext"><code>// ADL
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
@@ -8268,7 +8316,9 @@ ws.send({
     "exit_price": "0.0001222",
     "realized_pnl": "0.1",
 }
-</code></pre><h3 id='self_trade'>self_trade</h3><pre class="highlight plaintext"><code>// Self Trade
+</code></pre><h2 id='self_trade'>self_trade</h2>
+<p>Channel provide updates when any of your order get matched with your open order.</p>
+<pre class="highlight plaintext"><code>// Self Trade
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
@@ -8278,7 +8328,9 @@ ws.send({
     "price": "0.00145791",
     "timestamp": 1544091555086559
 }
-</code></pre><h3 id='pnl'>pnl</h3><pre class="highlight plaintext"><code>// PNL
+</code></pre><h2 id='pnl'>pnl</h2>
+<p>Channel provides pnl updates when any position gets close.</p>
+<pre class="highlight plaintext"><code>// PNL
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
@@ -8292,41 +8344,51 @@ ws.send({
     "timestamp": 1544091555086559
 
 }
-</code></pre><h3 id='liquidation'>liquidation</h3><pre class="highlight plaintext"><code>// Liquidation
+</code></pre><h2 id='liquidation'>liquidation</h2>
+<p>Channel provide updates when any position gets liquidated.</p>
+<pre class="highlight plaintext"><code>// Liquidation
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
     "type": "liquidation",
     "user_id": 1998,
-    "timestamp": 1542108684,
+    "timestamp": 1542108684000000,
     "side": "buy",              // side of the position which got liquidated
     "size": 180,            // size of the position which got liquidated, always positive
     "liquidation_price": "0.00145791",
     "bankruptcy_price": "0.00145700",
 
 }
-</code></pre><h3 id='stop_trigger'>stop_trigger</h3><pre class="highlight plaintext"><code>// Stop Trigger
+</code></pre><h2 id='stop_trigger'>stop_trigger</h2>
+<p>Channel provide updates when stop order gets triggered.</p>
+<pre class="highlight plaintext"><code>// Stop Trigger
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
     "user_id": 1998
     "type": "stop_trigger",
-    "timestamp": 1542108684,
+    "timestamp": 1542108684000000,
     "side": "buy",
     "size": 180
 
 }
-</code></pre><h3 id='stop_cancel'>stop_cancel</h3><pre class="highlight plaintext"><code>// Stop Cancel
+</code></pre><h2 id='stop_cancel'>stop_cancel</h2>
+<p>Channel provide updates when stop order gets cancelled.</p>
+<pre class="highlight plaintext"><code>// Stop Cancel
 {
     "symbol": "BNBBTC_30Nov",
     "product_id": 7,
     "user_id": 1998
     "type": "stop_cancel",
-    "timestamp": 1542108684,
+    "timestamp": 1542108684000000,
     "side": "buy",
     "message": "",
     "size": 180
 }
+</code></pre><h2 id='auto_topup'>auto_topup</h2>
+<p>Channel provide updates when margin get updated due to auto_topup istrue for that open position.</p>
+<pre class="highlight plaintext"><code>// Auto Topup
+
 </code></pre>
       </div>
       <div class="dark-box">
