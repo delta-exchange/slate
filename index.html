@@ -807,6 +807,7 @@ You should use ntp timestamp to sync local clocks inorder to avoid following iss
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 
 <span class="n">api_key</span> <span class="o">=</span> <span class="s">'a207900b7693435a8fa9230a38195d'</span>
 <span class="n">api_secret</span> <span class="o">=</span> <span class="s">'7b6f39dcf660ec1c7c664f612c60410a2bd0c258416b498bf0311f94228f'</span>
@@ -822,13 +823,17 @@ You should use ntp timestamp to sync local clocks inorder to avoid following iss
     <span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">d</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://testnet-api.delta.exchange/orders"</span>
+
 <span class="c"># Get open orders</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">''</span>
 <span class="n">method</span> <span class="o">=</span> <span class="s">'GET'</span>
 <span class="n">timestamp</span> <span class="o">=</span> <span class="n">get_time_stamp</span><span class="p">()</span>
 <span class="n">path</span> <span class="o">=</span> <span class="s">'/orders'</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s">'?product_id=1&amp;state=open'</span>
-<span class="n">signature_data</span> <span class="o">=</span> <span class="n">method</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="n">payload</span>
+<span class="n">query_string</span> <span class="o">=</span> <span class="s">'?product_id=1&amp;state=open'</span>
+<span class="n">signature_data</span> <span class="o">=</span> <span class="n">method</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="n">query_string</span> <span class="o">+</span> <span class="n">payload</span>
 <span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="n">api_secret</span><span class="p">,</span> <span class="n">signature_data</span><span class="p">)</span>
+
 <span class="n">req_headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'api-key'</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span>
   <span class="s">'timestamp'</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
@@ -836,15 +841,21 @@ You should use ntp timestamp to sync local clocks inorder to avoid following iss
   <span class="s">'User-Agent'</span><span class="p">:</span> <span class="s">'rest-client'</span><span class="p">,</span>
   <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span>
 <span class="p">}</span>
+<span class="n">query</span> <span class="o">=</span> <span class="p">{</span><span class="s">"product_id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"state"</span><span class="p">:</span> <span class="s">'open'</span><span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+    <span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">27</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">req_headers</span>
+<span class="p">)</span>
 
 <span class="c"># Place new order</span>
 <span class="n">method</span> <span class="o">=</span> <span class="s">'POST'</span>
 <span class="n">timestamp</span> <span class="o">=</span> <span class="n">get_time_stamp</span><span class="p">()</span>
 <span class="n">path</span> <span class="o">=</span> <span class="s">'/orders'</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s">''</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">order_type</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">limit_order</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">size</span><span class="se">\"</span><span class="s">:3,</span><span class="se">\"</span><span class="s">side</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">buy</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">limit_price</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">0.0005</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">product_id</span><span class="se">\"</span><span class="s">:1}"</span>
-
+<span class="n">query_string</span> <span class="o">=</span> <span class="s">''</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">order_type</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">limit_order</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">size</span><span class="se">\"</span><span class="s">:3,</span><span class="se">\"</span><span class="s">side</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">buy</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">limit_price</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">0.0005</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">product_id</span><span class="se">\"</span><span class="s">:16}"</span>
+<span class="n">signature_data</span> <span class="o">=</span> <span class="n">method</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="n">query_string</span> <span class="o">+</span> <span class="n">payload</span>
 <span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="n">api_secret</span><span class="p">,</span> <span class="n">signature_data</span><span class="p">)</span>
+
 <span class="n">req_headers</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s">'api-key'</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span>
   <span class="s">'timestamp'</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
@@ -852,6 +863,10 @@ You should use ntp timestamp to sync local clocks inorder to avoid following iss
   <span class="s">'User-Agent'</span><span class="p">:</span> <span class="s">'rest-client'</span><span class="p">,</span>
   <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span>
 <span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+    <span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">27</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="n">req_headers</span>
+<span class="p">)</span>
 
 </code></pre><h1 id='rate-limits'>Rate Limits</h1>
 <p>When a rate limit is exceeded, a status of 429 Too Many Requests will be returned.
