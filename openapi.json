@@ -1,0 +1,2075 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Delta Exchange Api V2",
+    "description": "## REST API for Delta Exchange\nFind out more on [https://delta.exchange](https://delta.exchange)\n",
+    "termsOfService": "https://docs.google.com/document/d/e/2PACX-1vSDARn3b_VlmGZjJjlROm0MFpxX6KoLzVrqPZLSD4rh7sBhpP6kDP8WMSgUlaitwjCBUBd3-fV-MDId/pub",
+    "contact": {
+      "email": "support@delta.exchange"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3010/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Assets",
+      "description": "Get Asset List"
+    },
+    {
+      "name": "Products",
+      "description": "Get Product List"
+    },
+    {
+      "name": "Orders",
+      "description": "Placing Orders, Cancelling Orders, Placing batch orders, Cancelling batch orders, Get Open orders, Change Orders Leverage"
+    },
+    {
+      "name": "Positions",
+      "description": "Get Open positions, Change Position Margin, Close Position"
+    },
+    {
+      "name": "Trade History",
+      "description": "Get Orders History, Get Fill History"
+    },
+    {
+      "name": "Orderbook",
+      "description": "L2Orderbook"
+    },
+    {
+      "name": "Wallet",
+      "description": "Get balances, Get transaction history"
+    },
+    {
+      "name": "OHLC Candles"
+    }
+  ],
+  "paths": {
+    "/assets": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Get list of all assets",
+        "operationId": "getAssets",
+        "responses": {
+          "200": {
+            "description": "List of all assets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfAssets"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get live products",
+        "operationId": "getProducts",
+        "responses": {
+          "200": {
+            "description": "List of live products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfProducts"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get Orders - V2",
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "name": "product_ids",
+            "in": "query",
+            "description": "comma separated product ids",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contract_types",
+            "in": "query",
+            "description": "comma separated product ids",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "futures",
+                "perpetual_futures",
+                "call_options",
+                "put_options",
+                "interest_rate_swaps",
+                "move_options",
+                "spreads"
+              ]
+            }
+          },
+          {
+            "name": "order_types",
+            "in": "query",
+            "description": "comma separated order types",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "market",
+                "limit",
+                "stop_market",
+                "stop_limit",
+                "all_stop"
+              ]
+            }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "number of records per page",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of orders as per the query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfOrders"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Edit Order",
+        "operationId": "editOrder",
+        "requestBody": {
+          "description": "Order which needs to be edited",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EditOrderRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Returns back the order object with assigned id and latest state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Returns [error](#place-order-error-description) if order could not be placed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "InsufficientMargin",
+                        "OrderSizeExceededAvailable",
+                        "OrderExceedsSizeLimit",
+                        "OrderLeverageNotSet",
+                        "InvalidProduct",
+                        "ImmediateLiquidationOrder",
+                        "LowerthanBankruptcy",
+                        "SelfMatchingPostOnlyMode",
+                        "ImmediateExecutionPostOnlyOrder"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "order"
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Place Order",
+        "operationId": "placeOrder",
+        "requestBody": {
+          "description": "Order which needs to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CreateOrderRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Returns back the order object with assigned id and latest state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Returns [error](#place-order-error-description) if order could not be placed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "InsufficientMargin",
+                        "OrderSizeExceededAvailable",
+                        "OrderExceedsSizeLimit",
+                        "OrderLeverageNotSet",
+                        "InvalidProduct",
+                        "ImmediateLiquidationOrder",
+                        "LowerthanBankruptcy",
+                        "SelfMatchingPostOnlyMode",
+                        "ImmediateExecutionPostOnlyOrder",
+                        "BracketOrderPositionExists",
+                        "InvalidBracketOrder"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "order"
+      },
+      "delete": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Cancel Order",
+        "operationId": "cancelOrder",
+        "requestBody": {
+          "description": "Order which needs to be cancelled",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeleteOrderRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Returns back the order object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Returns error if order could not be cancelled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "ALREADY_FILLED",
+                        "InvalidOrder",
+                        "InvalidProduct"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "order"
+      }
+    },
+    "/orders/all": {
+      "delete": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Cancel all open orders",
+        "operationId": "cancelAllOrders",
+        "requestBody": {
+          "description": "Filters for selecting orders that needs to be cancelled",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CancelAllFilterObject"
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "returns back success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Returns error if orders could not be cancelled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "InvalidProduct"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "filters"
+      }
+    },
+    "/orders/batch": {
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Edit batch orders",
+        "description": "batch order edit ",
+        "operationId": "batchEdit",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditBatchOrders"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          },
+          "400": {
+            "description": "returns error if orders couldnt be edited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "InsufficientMargin",
+                        "OrderSizeExceededAvailable",
+                        "OrderExceedsSizeLimit",
+                        "OrderLeverageNotSet",
+                        "InvalidProduct",
+                        "ImmediateLiquidationOrder",
+                        "LowerthanBankruptcy"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "orders"
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Create batch orders",
+        "operationId": "batchCreate",
+        "requestBody": {
+          "description": "Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArrayOfCreateOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns the orders placed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "returns error if orders couldnt be placed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "InsufficientMargin",
+                        "OrderSizeExceededAvailable",
+                        "OrderExceedsSizeLimit",
+                        "OrderLeverageNotSet",
+                        "InvalidProduct",
+                        "ImmediateLiquidationOrder",
+                        "LowerthanBankruptcy"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "orders"
+      },
+      "delete": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Delele batch orders",
+        "operationId": "batchDelete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ArrayOfDeleteOrderRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns the orders deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "returns error if orders couldnt be deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "ALREADY_FILLED",
+                        "InvalidOrder",
+                        "InvalidProduct"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "orders"
+      }
+    },
+    "/orders/leverage": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order leverage",
+        "operationId": "getOrderLeverage",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the OrderLeverage object",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderLeverage"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Change order leverage",
+        "operationId": "changeOrderLeverage",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "required": [
+                  "leverage",
+                  "product_id"
+                ],
+                "type": "object",
+                "properties": {
+                  "product_id": {
+                    "type": "integer"
+                  },
+                  "leverage": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns the OrderLeverage object",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderLeverage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Returns error if leverage couldnt be changed",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "InsufficientMargin",
+                        "LeverageLimitExceeded"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "order_leverage"
+      }
+    },
+    "/orders/history": {
+      "get": {
+        "tags": [
+          "TradeHistory"
+        ],
+        "summary": "Get order history (cancelled and closed)",
+        "operationId": "getOrderHistory",
+        "parameters": [
+          {
+            "name": "page_num",
+            "in": "query",
+            "description": "page number for pagination",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "page size for pagination",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfOrders"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/fills": {
+      "get": {
+        "tags": [
+          "TradeHistory"
+        ],
+        "summary": "GET user fills by filters",
+        "operationId": "getUserFillsByFilters",
+        "parameters": [
+          {
+            "name": "product_ids",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contract_types",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "number of records per page",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/fills/history/download/csv": {
+      "get": {
+        "tags": [
+          "TradeHistory"
+        ],
+        "summary": "TradeHistory",
+        "operationId": "downloadFillsHistory",
+        "parameters": [
+          {
+            "name": "product_ids",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contract_types",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "futures",
+                "perpetual_futures",
+                "call_options",
+                "put_options",
+                "interest_rate_swaps",
+                "move_options",
+                "spreads"
+              ]
+            }
+          },
+          {
+            "name": "start_time",
+            "in": "query",
+            "description": "Start time for the transaction query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "description": "End time for the transaction query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "csv of transactions for that wallet",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/positions": {
+      "get": {
+        "tags": [
+          "Positions"
+        ],
+        "summary": "Get open positions",
+        "operationId": "getPositions",
+        "responses": {
+          "200": {
+            "description": "List of all open positions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfPositions"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/positions/change_margin": {
+      "post": {
+        "tags": [
+          "Positions"
+        ],
+        "summary": "Add/Remove position margin",
+        "operationId": "changePositionMargin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "product_id": {
+                    "type": "integer"
+                  },
+                  "delta_margin": {
+                    "type": "string",
+                    "description": "Delta in the position margin, positive in case of adding margin & negative in case of removing margin"
+                  }
+                },
+                "required": [
+                  "delta_margin",
+                  "product_id"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "returns the position object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Position"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Returns error if position margin could not be changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "enum": [
+                        "PositionNotSet",
+                        "LeverageLimitExceeded",
+                        "InsufficientMargin",
+                        "ExistingOrderWithLowerThanBankruptcy"
+                      ]
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A more verbose error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "x-codegen-request-body-name": "position_margin"
+      }
+    },
+    "/orderbook/{product_id}/l2": {
+      "get": {
+        "tags": [
+          "Orderbook"
+        ],
+        "summary": "Get L2 orderbook",
+        "operationId": "getL2Orderbook",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "description": "number of levels on each side",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "L2 orderbook for the product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/L2Orderbook"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallet/balances": {
+      "get": {
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "Get Wallet Balances",
+        "operationId": "getBalances",
+        "responses": {
+          "200": {
+            "description": "List of wallets attached to the user account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfWallets"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/wallet/transactions": {
+      "get": {
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "Get Wallet transactions",
+        "operationId": "getTransactions",
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "description": "from time in micro-seconds in epoc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "number of records per page",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of transactions for that wallet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfTransactions"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/wallet/transactions/download": {
+      "get": {
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "Download Wallet transactions",
+        "operationId": "downloadTransactions",
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "query",
+            "description": "Start time for the transaction query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "end_time",
+            "in": "query",
+            "description": "End time for the transaction query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "csv of transactions for that wallet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfTransactions"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ]
+      }
+    },
+    "/spot_indices": {
+      "get": {
+        "tags": [
+          "SpotIndice"
+        ],
+        "summary": "Get spot indices",
+        "operationId": "getSpotIndices",
+        "responses": {
+          "200": {
+            "description": "List of spot spot indices",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Asset": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "precision": {
+            "type": "integer"
+          }
+        }
+      },
+      "ArrayOfAssets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Asset"
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id of a product or a contract",
+            "format": "int64"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "symbol of a product or a contract e.g. LINKBTC, XRPUSDQ"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of a product or a contract"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "product/contract creation date and time"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "product/contract update date and time"
+          },
+          "settlement_time": {
+            "type": "string",
+            "description": "settlement Timestamp of futures contract"
+          },
+          "product_type": {
+            "type": "string",
+            "description": "contract type 'future' or 'inverse_future'",
+            "enum": [
+              "future",
+              "inverse_future"
+            ]
+          },
+          "pricing_source": {
+            "type": "string",
+            "description": "source and method of contract pricing"
+          },
+          "impact_size": {
+            "type": "integer",
+            "description": "size of a typical trade. Used in the computation of mark price"
+          },
+          "initial_margin": {
+            "type": "integer",
+            "description": "The amount required to enter into a new position"
+          },
+          "maintenance_margin": {
+            "type": "string",
+            "description": "The amount necessary when a loss on a futures position requires you to allocate more funds to return the margin to the initial margin level. "
+          },
+          "contract_value": {
+            "type": "string",
+            "description": "The notional value of a futures contract is simply the spot price of the asset multiplied by the amount of the asset specified in the contract"
+          },
+          "contract_unit_currency": {
+            "type": "string",
+            "description": "This is the unit of  1 contract, for vanilla futures, its underlying asset. for inverse, it is settling asset. for quanto, its settling asset / quoting asset"
+          },
+          "tick_size": {
+            "type": "string",
+            "description": "The minimum gap between 2 consecutive prices."
+          },
+          "trading_status": {
+            "type": "string",
+            "description": "trading status of the contract e.g. 'operational','disrupted_cancel_only' or 'disrupted_post_only' ",
+            "enum": [
+              "operational",
+              "disrupted_cancel_only",
+              "disrupted_post_only"
+            ]
+          },
+          "max_leverage_notional": {
+            "type": "string",
+            "description": "maximum notional position size (in settling asset terms) that can be acquired at highest allowed leverage for a given contract."
+          },
+          "default_leverage": {
+            "type": "string",
+            "description": "default leverage"
+          },
+          "initial_margin_scaling_factor": {
+            "type": "string"
+          },
+          "maintenance_margin_scaling_factor": {
+            "type": "string"
+          },
+          "commission_rate": {
+            "type": "string",
+            "description": "rate at which commission fee will be calculated for a trade in given contract"
+          },
+          "maker_commission_rate": {
+            "type": "string",
+            "description": "rate at which maker rebate will be calculated"
+          },
+          "liquidation_penalty_factor": {
+            "type": "string",
+            "description": "Determines liquidation charge as per the following formula: liquidation_penalty_factor * minimum maintenance margin"
+          },
+          "contract_type": {
+            "type": "string",
+            "description": " Type of contracts e.g. futures, perpetual futures, "
+          },
+          "position_size_limit": {
+            "type": "integer",
+            "description": "Maximum size of contracts in a single order can be placed"
+          },
+          "basis_factor_max_limit": {
+            "type": "string",
+            "description": "Maximum allowed value of annualized basis"
+          },
+          "is_quanto": {
+            "type": "boolean",
+            "description": "Flag which denotes whether future contract is quanto or not"
+          },
+          "funding_method": {
+            "type": "string",
+            "description": "Method used to calculate funding for given contract. e.g. Fixed or mark price"
+          },
+          "annualized_funding": {
+            "type": "string",
+            "description": "Maximum allowed value of funding, expressed as annual rate."
+          },
+          "price_band": {
+            "type": "string",
+            "description": "he range around mark price in which trading is allowed. This number is in percentage."
+          },
+          "underlying_asset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "quoting_asset": {
+            "$ref": "#/components/schemas/Asset"
+          },
+          "settling_asset": {
+            "$ref": "#/components/schemas/Asset"
+          }
+        }
+      },
+      "ArrayOfProducts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Product"
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "unfilled_size": {
+            "type": "integer"
+          },
+          "side": {
+            "type": "string",
+            "description": "side for which to place order",
+            "enum": [
+              "buy",
+              "sell"
+            ]
+          },
+          "order_type": {
+            "type": "string",
+            "enum": [
+              "limit_order",
+              "market_order"
+            ]
+          },
+          "limit_price": {
+            "type": "string"
+          },
+          "stop_order_type": {
+            "type": "string",
+            "enum": [
+              "stop_loss_order"
+            ]
+          },
+          "stop_price": {
+            "type": "string"
+          },
+          "close_on_trigger": {
+            "type": "string",
+            "enum": [
+              "false",
+              "true"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "description": "Order Status",
+            "enum": [
+              "open",
+              "pending",
+              "closed",
+              "cancelled"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          }
+        },
+        "description": "An Order object"
+      },
+      "ArrayOfOrders": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Order"
+        }
+      },
+      "CreateOrderRequest": {
+        "required": [
+          "product_id"
+        ],
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "integer"
+          },
+          "limit_price": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "side": {
+            "type": "string",
+            "description": "side for which to place order",
+            "enum": [
+              "buy",
+              "sell"
+            ]
+          },
+          "order_type": {
+            "type": "string",
+            "enum": [
+              "limit_order",
+              "market_order"
+            ]
+          },
+          "time_in_force": {
+            "type": "string",
+            "enum": [
+              "gtc",
+              "ioc",
+              "fok"
+            ]
+          },
+          "post_only": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          "reduce_only": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        },
+        "description": "A create order object"
+      },
+      "ArrayOfCreateOrderRequest": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CreateOrderRequest"
+        }
+      },
+      "EditOrderRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "integer"
+          },
+          "limit_price": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer",
+            "description": "total size after editing order"
+          }
+        },
+        "description": "edit order object"
+      },
+      "ArrayOfEditOrderRequest": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/EditOrderRequest"
+        }
+      },
+      "DeleteOrderRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "product_id": {
+            "type": "integer"
+          }
+        },
+        "description": "A delete order object"
+      },
+      "CancelAllFilterObject": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "integer",
+            "description": "cancel all orders for particular product, cancels orders for all products if not provided"
+          },
+          "cancel_limit_orders": {
+            "type": "string",
+            "description": "set as true to cancel open limit orders",
+            "enum": [
+              "true",
+              "false"
+            ]
+          },
+          "cancel_stop_orders": {
+            "type": "string",
+            "description": "set as true to cancel stop orders",
+            "enum": [
+              "true",
+              "false"
+            ]
+          }
+        },
+        "description": "Cancel all request filter object"
+      },
+      "ArrayOfDeleteOrderRequest": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DeleteOrderRequest"
+        }
+      },
+      "Position": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "integer"
+          },
+          "size": {
+            "type": "integer",
+            "description": "Position size, negative for short and positive for long"
+          },
+          "entry_price": {
+            "type": "string"
+          },
+          "margin": {
+            "type": "string"
+          },
+          "liquidation_price": {
+            "type": "string"
+          },
+          "bankruptcy_price": {
+            "type": "string"
+          },
+          "adl_level": {
+            "type": "integer"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          }
+        },
+        "description": "A position object"
+      },
+      "ArrayOfPositions": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Position"
+        }
+      },
+      "Fill": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "side": {
+            "type": "integer"
+          },
+          "price": {
+            "type": "string",
+            "description": "Price at which the fill happened, BigDecimal sent as string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "taker",
+              "maker"
+            ]
+          },
+          "commission": {
+            "type": "string",
+            "description": "Commission paid on this fill, negative value means commission was earned because of maker role"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          }
+        },
+        "description": "A fill object"
+      },
+      "ArrayOfFills": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Fill"
+        }
+      },
+      "OrderLeverage": {
+        "type": "object",
+        "properties": {
+          "leverage": {
+            "type": "string",
+            "description": "Leverage of all open orders for this product"
+          },
+          "order_margin": {
+            "type": "string",
+            "description": "Margin blocked in open orders for this product"
+          },
+          "product_id": {
+            "type": "integer"
+          }
+        },
+        "description": "Order Leverage for a product"
+      },
+      "L2Orderbook": {
+        "type": "object",
+        "properties": {
+          "buy_book": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "price": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "sell_book": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "price": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "recent_trades": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "side": {
+                  "type": "string",
+                  "enum": [
+                    "buy",
+                    "sell"
+                  ]
+                },
+                "size": {
+                  "type": "integer"
+                },
+                "price": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "spot_price": {
+            "type": "string"
+          },
+          "mark_price": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "integer"
+          }
+        },
+        "description": "L2 orderbook"
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "string",
+            "description": "Total wallet balance"
+          },
+          "order_margin": {
+            "type": "string",
+            "description": "Margin blocked in open orders"
+          },
+          "position_margin": {
+            "type": "string",
+            "description": "Margin blocked in open positions"
+          },
+          "commission": {
+            "type": "string",
+            "description": "Commissions blocked in open orders and open positions"
+          },
+          "available_balance": {
+            "type": "string",
+            "description": "Amount available for withdrawals"
+          },
+          "asset": {
+            "$ref": "#/components/schemas/Asset"
+          }
+        }
+      },
+      "ArrayOfWallets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Wallet"
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "amount": {
+            "type": "string",
+            "description": "amount credited/debited in this transaction (+ for credited, - for debited)"
+          },
+          "balance": {
+            "type": "string",
+            "description": "net wallet balance after this transaction"
+          },
+          "transaction_type": {
+            "type": "string",
+            "enum": [
+              "pnl",
+              "deposit",
+              "withdrawal",
+              "commission",
+              "conversion",
+              "perpetual_futures_funding",
+              "withdrawal_cancellation",
+              "referral_bonus",
+              "commission_rebate",
+              "promo_credit"
+            ]
+          },
+          "meta_data": {
+            "type": "object",
+            "properties": {}
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "created_at": {
+            "type": "string"
+          }
+        }
+      },
+      "ArrayOfTransactions": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Transaction"
+        }
+      },
+      "24hrTicker": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "open": {
+            "type": "number"
+          },
+          "high": {
+            "type": "number"
+          },
+          "low": {
+            "type": "number"
+          },
+          "close": {
+            "type": "number"
+          },
+          "volume": {
+            "type": "integer"
+          }
+        }
+      },
+      "OHLCData": {
+        "type": "object",
+        "properties": {
+          "t": {
+            "type": "array",
+            "description": "array of timestamps for which candles are returned",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "o": {
+            "type": "array",
+            "description": "open prices for candles",
+            "items": {
+              "type": "string"
+            }
+          },
+          "h": {
+            "type": "array",
+            "description": "high prices for candles",
+            "items": {
+              "type": "string"
+            }
+          },
+          "l": {
+            "type": "array",
+            "description": "low prices for candles",
+            "items": {
+              "type": "string"
+            }
+          },
+          "c": {
+            "type": "array",
+            "description": "close prices for candles",
+            "items": {
+              "type": "string"
+            }
+          },
+          "v": {
+            "type": "array",
+            "description": "volumes for candles",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "WithdrawalsResponse": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "BTC Destination Address"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Amount to be Withdrawn"
+          },
+          "fee": {
+            "type": "string",
+            "description": "Withdrawal Fee"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Trasaction id",
+            "format": "int64"
+          },
+          "state": {
+            "type": "string",
+            "description": "state of withdrawal request"
+          },
+          "transaction_meta": {
+            "type": "string",
+            "description": "Amount to be Withdrawn"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "User id",
+            "format": "int64"
+          }
+        }
+      },
+      "EditBatchOrders": {
+        "required": [
+          "orders",
+          "product_id"
+        ],
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BatchEditOrders"
+            }
+          }
+        }
+      },
+      "BatchEditOrders": {
+        "required": [
+          "id",
+          "limit_price",
+          "product_id",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Order id to be edited",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "limit_price": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api-key": {
+        "type": "apiKey",
+        "name": "api-key",
+        "in": "header"
+      },
+      "signature": {
+        "type": "apiKey",
+        "name": "signature",
+        "in": "header"
+      },
+      "timestamp": {
+        "type": "apiKey",
+        "name": "timestamp",
+        "in": "header"
+      }
+    }
+  }
+}
