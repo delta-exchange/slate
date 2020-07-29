@@ -596,6 +596,9 @@
                   <li>
                     <a href="#announcements" class="toc-h2 toc-link" data-title="announcements">announcements</a>
                   </li>
+                  <li>
+                    <a href="#ohlc-candles" class="toc-h2 toc-link" data-title="ohlc candles">ohlc candles</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -8210,7 +8213,38 @@ ws.send({
     "event":"maintenance_finished",
     "timestamp": 1561634049751430,
 }
-</code></pre><h1 id='private-channels'>Private Channels</h1>
+</code></pre><h2 id='ohlc-candles'>ohlc candles</h2>
+<p>This channel provides ohlc updated for given time resolution
+Subscribe to <strong>ohlc_candle</strong> channel for updates</p>
+
+<p>Subscription payload sample
+<code>
+{
+  &quot;name&quot;: &quot;candlestick_1m&quot;,
+  &quot;symbols&quot;: [&quot;BTCUSD_P&quot;]
+}
+</code></p>
+
+<p>name = &quot;candlestick_&quot; + resolution
+resolutions = [&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;,&quot;2w&quot;,&quot;30d&quot;]
+symbols= product symbol</p>
+
+<p>Sample response
+<code>
+{
+    &quot;candle_start_time&quot;: 1596015240000000,
+    &quot;close&quot;: 9223,
+    &quot;high&quot;: 9228,
+    &quot;low&quot;: 9220,
+    &quot;open&quot;: 9221,
+    &quot;resolution&quot;: &quot;1m&quot;,
+    &quot;symbol&quot;: &quot;BTCUSD_P&quot;,
+    &quot;timestamp&quot;: 1596015289339699,
+    &quot;type&quot;: &quot;candlestick_1m&quot;,
+    &quot;volume&quot;: 1.2
+}
+</code></p>
+<h1 id='private-channels'>Private Channels</h1>
 <p>Private channels require clients to authenticate.</p>
 <h2 id='margins'>Margins</h2>
 <p>Channel provides updates for margin blocked for different assets, these updates are provided only on change of margin.</p>
