@@ -629,6 +629,17 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#v2-rest-api" class="toc-h2 toc-link" data-title="V2 Rest Api">V2 Rest Api</a>
+                  </li>
+                  <li>
+                    <a href="#new-socket-channels" class="toc-h2 toc-link" data-title="New Socket Channels">New Socket Channels</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
         </ul>
@@ -8214,8 +8225,12 @@ ws.send({
     "timestamp": 1561634049751430,
 }
 </code></pre><h2 id='candlesticks'>candlesticks</h2>
-<p>This channel provides last ohlc candle for given time resolution
-Subscribe to <strong>candlestick_${resolution}</strong> channel for updates</p>
+<p>This channel provides last ohlc candle for given time resolution.</p>
+
+<p>Subscribe to <strong>candlestick_${resolution}</strong> channel for updates. </p>
+
+<p>List of supported resolutions
+[&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;,&quot;2w&quot;,&quot;30d&quot;]</p>
 
 <blockquote>
 <p>OHLC candles update sample</p>
@@ -8223,10 +8238,10 @@ Subscribe to <strong>candlestick_${resolution}</strong> channel for updates</p>
 <pre class="highlight plaintext"><code>Sample Subscribe Request
 {
   "name": "candlestick_1m",                 // "candlestick_" + resolution
-  "symbols": [ "BTCUSD", "ETHUSDT" ]                   // product symbol
+  "symbols": [ "BTCUSD", "ETHUSDT" ]        // product symbol
 }
 
-supported_resolutions = ["1m","3m","5m","15m","30m","1h","2h","4h","6h","12h","1d","1w","2w","30d"]
+
 
 Sample feed response
 
@@ -8591,6 +8606,82 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 }
 </code></pre><h2 id='response-message'>Response Message</h2>
 <p>The response message will be similar to the REST API.</p></p>
+
+<p><h1 id='changelog'>Changelog</h1><h2 id='v2-rest-api'>V2 Rest Api</h2>
+<p>Our v2 api is significantly faster than the v1 api. Our focus while rebuilding v2 apis was on the following</p></p>
+
+<ol>
+<li>Remove api gateway overheads as much as possible.</li>
+<li>Remove overheads due to deep nesting in response payload.</li>
+<li>Better api structure to query only required data.</li>
+</ol>
+
+<blockquote>
+<p>New Response Format</p>
+</blockquote>
+
+<p><pre class="highlight plaintext"><code>// The new format supports sending meta data alongside response body. 
+// Success format
+{
+  success: true,
+  result: ....,         // response body
+  meta: {
+    after: &quot;...&quot;,       // cursor for pagination, is returned in meta
+    before: null,
+  },
+}</p>
+
+<p>// Error Format
+{
+  success: false,
+  error: {
+    code: :insufficient_margin,             // error code
+    context: {                              // error context
+      additional_margin_required: &quot;0.121&quot;
+    }
+  }
+}
+</code></pre><h3 id='key-api-changes'>Key Api changes</h3>
+<ul>
+<li>We have completely removed nested product/asset payloads from live orders and live positions. This ensures the payload is light.</li>
+<li>Rate limiting now works on a fixed window instead of a rolling window.</li>
+<li>Ticker api - now includes turnover in usd, mark price, spot price.</li>
+<li>Orderbook and trades are now separate apis.</li>
+<li>For supporting trading strategies which require latest positions, Now we have two different apis to query position. </li>
+</ul></p>
+
+<p>/v2/positions - returns only size and entry price. This should be when you want to get the latest position, but dont need the margin dependent fields like liquidation price, bankruptcy price etc</p>
+
+<p>/v2/positions/margined - returns all fields including margin dependent fields. When the position is updated due to a fill, changes might take some time to reflect in this api.</p>
+
+<ul>
+<li>All apis that support pagination now use cursor based pagination, instead of fixed page size pagination. Check more details in our <a href="https://github.com/delta-exchange/python-rest-client">python rest client docs</a></li>
+</ul>
+
+<h2 id='new-socket-channels'>New Socket Channels</h2>
+
+<ul>
+<li>The socket api interface hasn&#39;t changed much in terms of connection management and authentication. </li>
+<li>We have deprecated old channels and created new channels which make integration easier. </li>
+<li>To support easy management of live data, all private data channels now support initial snapshots and sequence numbers.</li>
+</ul>
+
+<h3 id='list-of-new-public-channels'>List of new public channels</h3>
+
+<ul>
+<li>v2/ticker - now includes turnover in usd, mark price, spot price</li>
+<li>candlesticks - subscribe to ohlc candle updates for different resolutions</li>
+<li>all_trades - subscribe to all public trades for a symbol</li>
+</ul>
+
+<h3 id='list-of-new-private-channels'>List of new private channels</h3>
+
+<ul>
+<li>orders - subscribe to lifecycle of live orders</li>
+<li>user_trades - subscribe to live user trades/fills feed</li>
+<li>positions - subscribe to position updates</li>
+<li>margins - get margin/wallet updates</li>
+</ul>
 
       </div>
       <div class="dark-box">
