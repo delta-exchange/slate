@@ -8608,12 +8608,12 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 <p>The response message will be similar to the REST API.</p></p>
 
 <p><h1 id='changelog'>Changelog</h1><h2 id='v2-rest-api'>V2 Rest Api</h2>
-<p>Our v2 api is significantly faster than the v1 api. Our focus while rebuilding v2 apis was on the following</p></p>
+<p>Our v2 Api is significantly faster than the v1 api. Our focus while rebuilding v2 Apis was on the following</p></p>
 
 <ol>
-<li>Remove api gateway overheads as much as possible.</li>
+<li>Remove Api gateway overheads as much as possible.</li>
 <li>Remove overheads due to deep nesting in response payload.</li>
-<li>Better api structure to query only required data.</li>
+<li>Better Api structure to query only required data.</li>
 </ol>
 
 <blockquote>
@@ -8645,23 +8645,23 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 <ul>
 <li>We have completely removed nested product/asset payloads from live orders and live positions. This ensures the payload is light.</li>
 <li>Rate limiting now works on a fixed window instead of a rolling window.</li>
-<li>Ticker api - now includes turnover in usd, mark price, spot price.</li>
-<li>Orderbook and trades are now separate apis.</li>
-<li>For supporting trading strategies which require latest positions, Now we have two different apis to query position. </li>
+<li>Ticker Api - now includes turnover in USD, mark price, spot price.</li>
+<li>Orderbook and trades are now returned in separate Apis.</li>
+<li>For supporting trading strategies which require latest positions, Now we have two different Apis to query position. </li>
 </ul></p>
 
-<p>/v2/positions - returns only size and entry price. This should be when you want to get the latest position, but dont need the margin dependent fields like liquidation price, bankruptcy price etc</p>
+<p>/v2/positions - returns only size and entry price. This should be used when you want to get the latest position, but dont need the margin dependent fields like liquidation price, bankruptcy price etc</p>
 
-<p>/v2/positions/margined - returns all fields including margin dependent fields. When the position is updated due to a fill, changes might take some time to reflect in this api.</p>
+<p>/v2/positions/margined - returns all fields including margin dependent fields. When the position is updated due to a fill, changes might take some time to reflect in this Api.</p>
 
 <ul>
-<li>All apis that support pagination now use cursor based pagination, instead of fixed page size pagination. Check more details in our <a href="https://github.com/delta-exchange/python-rest-client">python rest client docs</a></li>
+<li>All Apis that support pagination now use cursor based pagination, instead of fixed page size pagination. Check more details in our <a href="https://github.com/delta-exchange/python-rest-client">python rest client docs</a></li>
 </ul>
 
 <h2 id='new-socket-channels'>New Socket Channels</h2>
 
 <ul>
-<li>The socket api interface hasn&#39;t changed much in terms of connection management and authentication. </li>
+<li>Socket Api interface hasn&#39;t changed much in terms of connection management and authentication. </li>
 <li>We have deprecated old channels and created new channels which make integration easier. </li>
 <li>To support easy management of live data, all private data channels now support initial snapshots and sequence numbers.</li>
 </ul>
@@ -8669,7 +8669,7 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 <h3 id='list-of-new-public-channels'>List of new public channels</h3>
 
 <ul>
-<li>v2/ticker - now includes turnover in usd, mark price, spot price</li>
+<li>v2/ticker - now includes turnover in USD, mark price, spot price</li>
 <li>candlesticks - subscribe to ohlc candle updates for different resolutions</li>
 <li>all_trades - subscribe to all public trades for a symbol</li>
 </ul>
