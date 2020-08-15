@@ -640,6 +640,32 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#security" class="toc-h1 toc-link" data-title="Security">Security</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#targets-in-scope" class="toc-h2 toc-link" data-title="Targets In scope">Targets In scope</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-access" class="toc-h2 toc-link" data-title="How to access">How to access</a>
+                  </li>
+                  <li>
+                    <a href="#reward-range" class="toc-h2 toc-link" data-title="Reward range">Reward range</a>
+                  </li>
+                  <li>
+                    <a href="#rules-of-engagement" class="toc-h2 toc-link" data-title="Rules of engagement">Rules of engagement</a>
+                  </li>
+                  <li>
+                    <a href="#rules-of-reporting" class="toc-h2 toc-link" data-title="Rules of reporting">Rules of reporting</a>
+                  </li>
+                  <li>
+                    <a href="#recommended-reporting-format" class="toc-h2 toc-link" data-title="Recommended Reporting format">Recommended Reporting format</a>
+                  </li>
+                  <li>
+                    <a href="#ineligible-issues" class="toc-h2 toc-link" data-title="Ineligible issues">Ineligible issues</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
         </ul>
@@ -8607,8 +8633,8 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 </code></pre><h2 id='response-message'>Response Message</h2>
 <p>The response message will be similar to the REST API.</p></p>
 
-<p><h1 id='changelog'>Changelog</h1><h2 id='v2-rest-api'>V2 Rest Api</h2>
-<p>Our v2 Api is significantly faster than the v1 api. Our focus while rebuilding v2 Apis was on the following</p></p>
+<h1 id='changelog'>Changelog</h1><h2 id='v2-rest-api'>V2 Rest Api</h2>
+<p>Our v2 Api is significantly faster than the v1 api. Our focus while rebuilding v2 Apis was on the following</p>
 
 <ol>
 <li>Remove Api gateway overheads as much as possible.</li>
@@ -8619,25 +8645,24 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 <blockquote>
 <p>New Response Format</p>
 </blockquote>
-
-<p><pre class="highlight plaintext"><code>// The new format supports sending meta data alongside response body. 
+<pre class="highlight plaintext"><code>// The new format supports sending meta data alongside response body. 
 // Success format
 {
   success: true,
   result: ....,         // response body
   meta: {
-    after: &quot;...&quot;,       // cursor for pagination, is returned in meta
+    after: "...",       // cursor for pagination, is returned in meta
     before: null,
   },
-}</p>
+}
 
-<p>// Error Format
+// Error Format
 {
   success: false,
   error: {
     code: :insufficient_margin,             // error code
     context: {                              // error context
-      additional_margin_required: &quot;0.121&quot;
+      additional_margin_required: "0.121"
     }
   }
 }
@@ -8648,7 +8673,7 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 <li>Ticker Api - now includes turnover in USD, mark price, spot price.</li>
 <li>Orderbook and trades are now returned in separate Apis.</li>
 <li>For supporting trading strategies which require latest positions, Now we have two different Apis to query position. </li>
-</ul></p>
+</ul>
 
 <p>/v2/positions - returns only size and entry price. This should be used when you want to get the latest position, but dont need the margin dependent fields like liquidation price, bankruptcy price etc</p>
 
@@ -8657,31 +8682,199 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 <ul>
 <li>All Apis that support pagination now use cursor based pagination, instead of fixed page size pagination. Check more details in our <a href="https://github.com/delta-exchange/python-rest-client">python rest client docs</a></li>
 </ul>
-
 <h2 id='new-socket-channels'>New Socket Channels</h2>
-
 <ul>
 <li>Socket Api interface hasn&#39;t changed much in terms of connection management and authentication. </li>
 <li>We have deprecated old channels and created new channels which make integration easier. </li>
 <li>To support easy management of live data, all private data channels now support initial snapshots and sequence numbers.</li>
 </ul>
-
 <h3 id='list-of-new-public-channels'>List of new public channels</h3>
-
 <ul>
 <li>v2/ticker - now includes turnover in USD, mark price, spot price</li>
 <li>candlesticks - subscribe to ohlc candle updates for different resolutions</li>
 <li>all_trades - subscribe to all public trades for a symbol</li>
 </ul>
-
 <h3 id='list-of-new-private-channels'>List of new private channels</h3>
-
 <ul>
 <li>orders - subscribe to lifecycle of live orders</li>
 <li>user_trades - subscribe to live user trades/fills feed</li>
 <li>positions - subscribe to position updates</li>
 <li>margins - get margin/wallet updates</li>
 </ul>
+
+<h1 id='security'>Security</h1>
+
+<p>We take the security, integrity, availability of our services, and the privacy of our users seriously. We appreciate all security concerns brought forth and are constantly striving to keep on top of the latest threats. Being proactive rather than reactive to emerging security issues is a fundamental belief at Delta Exchange. Every day new security issues and attack vectors are created. Delta Exchange strives to keep abreast of the latest state-of-the-art security developments by working with independent security researchers. We appreciate the community&#39;s efforts in creating a more secure world.</p>
+
+<h2 id='targets-in-scope'>Targets In scope</h2>
+
+<ul>
+<li>https://*.delta.exchange</li>
+</ul>
+
+<p>Any domain/property of Delta Exchange Network not listed in the targets section is out of scope. This includes any/all subdomains not listed above.</p>
+
+<h2 id='how-to-access'>How to access</h2>
+
+<ul>
+<li>You will access the Delta Exchange service using test accounts and unauthenticated guests.</li>
+<li>Please create a Delta Exchange test account on your own using your test email address. Your email must contain keyword &#39;test&#39; for example <em>test</em>@gmail.com. </li>
+<li>All emails will go to the email address associated with your account. You will need to activate your account by confirming receipt of the activation email.</li>
+<li>NOTE: Once a vulnerability is found please file a submission immediately. Our security team will investigate and assess the impact.</li>
+</ul>
+
+<h2 id='reward-range'>Reward range</h2>
+
+<p><b>Focus Areas</b></p>
+
+<ul>
+<li>User Data / User information Leaks</li>
+<li>Injection attacks (Server/Client side)</li>
+<li>RCE(Remote Code Execution)</li>
+<li>Authentication bypass/validation (Client/Server side)</li>
+<li>Privilege escalation (Vertical/Horizontal)</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Technical</th>
+<th>Severity</th>
+<th>Reward</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>P1</td>
+<td>Critical</td>
+<td>Decided by internal team, can be from ($10-$1000)</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Severe</td>
+<td>Decided by internal team, can be from ($10-$1000)</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>Moderate</td>
+<td>$10 - $100</td>
+</tr>
+</tbody></table>
+
+<h2 id='rules-of-engagement'>Rules of engagement</h2>
+
+<p>We are interested in hearing about security issues in Production/Dev Delta Exchange environments. 
+There are some things we explicitly ask you not to do</p>
+
+<ul>
+<li>Do not run automated scans without checking with us first. They are often very noisy.(If running any automated testing tools, be sure to keep well under 75-100 requests per second - otherwise you&#39;re likely to get locked out.)</li>
+<li>Do not test the physical security of Delta Exchange offices, employees, equipment, etc.</li>
+<li>Do not run Full fledged exploits which can cause application crashes and affect integrity of our active services. (If you believe you have a exploit that need serious fixes please email us, and we will provide you with said instance for said service.)</li>
+<li>Do not test using social engineering techniques (phishing, vishing, etc.)</li>
+<li>Do not test against any type of customer account without explicit permission from our side.</li>
+<li>Do not access, Destroy or otherwise negatively impact any residential or business customers, or customer data in any way. </li>
+<li>Do not perform DoS or DDoS attacks (Application level, Network Level DOS / DDOS / port flooding attacks are strictly not appreciated as this can cause delay in delivery of our services to our users we suggest you to not to use such methodologies).</li>
+<li>Do not engage In any way attack our end users, or in the trade of stolen user credentials.</li>
+<li>Interacting with real customers or real customer accounts is forbidden.</li>
+</ul>
+
+<h2 id='rules-of-reporting'>Rules of reporting</h2>
+
+<p>We take our Internal process and workflow seriously, We have a dedicated security team working and testing round the clock, so we would like you to send your reports to only security@delta.exchange and follow below said rules or not following will void you from our bug bounty benefits, Also we would like you to encrypt emails sent to us with a PGP key provided below if the Vulnerability is Severe or Critical.</p>
+
+<ul>
+<li>We recommend you to use emails which contain test as a keyword in the email address for example <em>test</em>@gmail.com.</li>
+<li>For testing and reporting so that we can identify your activity on our environments, also whitelist for IDS/FDS blocks)</li>
+<li>Do not CC or tag other staff while reporting.</li>
+<li>Do not callout on social media or make blog posts to report or without reporting (this can lead to legal actions to be taken against you.)</li>
+<li>Do not discuss this with any, but only Delta Exchange technical staff.</li>
+<li>Do not send us external-links/executable/scripts in report if possible attach a text file or pdf. Without zipp&#39;ing or rar&#39;ing it.</li>
+<li>Screenshots are accepted if only in PNG and JIF formats for internal security reasons.</li>
+<li>POC Videos are accepted if only in MP4,AVI, WEBM, MOV formats for internal security reasons.</li>
+<li>Any or All reports must only reach security@delta.exchange.</li>
+</ul>
+
+<h2 id='recommended-reporting-format'>Recommended Reporting format</h2>
+
+<p><b>Summary</b></p>
+
+<p>Help us get an idea of what this vulnerability is about.</p>
+
+<p>(eg. &quot;hey i have found a xss on your server&quot;)</p>
+
+<p><b>Target</b></p>
+
+<p>Select the vulnerable target Domain name / Subdomain name</p>
+
+<p>(eg. &quot;so and so on https://example.delta.exchange&quot;)</p>
+
+<p><b>Vulnerability details</b></p>
+
+<p>What is the Bug/Vulnerability. And URL / Location of vulnerability .</p>
+
+<p>(eg. because of unfiltered characters the url [/search.php?q=<here>] path /search.php on q parameter)</p>
+
+<p><b>Description of Technical severity</b></p>
+
+<p>Help us understand the bug/vulnerability technical details
+Describe the vulnerability and its impact.</p>
+
+<p>(eg. client side executes the javascript which is rendering through /search.php?q=somescript)</p>
+
+<p><b>Recreation</b></p>
+
+<p>Provide a proof of concept or replication steps.</p>
+
+<p>(eg. steps to be used by our team in order to recreate the attack scenario)</p>
+
+<p><b>Additional information</b></p>
+
+<p>Provide us with Request and Response dump / trace dump / HTTP request </p>
+
+<p><b>Attachments (recommended)</b></p>
+
+<p>Attach proof-of-concept scripts, screenshots, screen recordings, etc.</p>
+
+<h2 id='ineligible-issues'>Ineligible issues</h2>
+
+<p>These issues Will be closed as out of scope hence not rewardable.</p>
+
+<ul>
+<li>Theoretical vulnerabilities without actual proof of concept</li>
+<li>Open redirects (through headers and parameters) / Lack of security speed bump when leaving the site.</li>
+<li>Internal IP address / version disclosure.</li>
+<li>Email verification deficiencies, expiration of password reset links, and password complexity policies</li>
+<li>Invalid or missing SPF (Sender Policy Framework) records (incomplete or missing SPF/DKIM/DMARC)</li>
+<li>Click jacking/UI redressing with minimal security impact</li>
+<li>Text/code injection without any impact.</li>
+<li>Email or mobile enumeration (E.g. the ability to identify emails via password reset)</li>
+<li>Information disclosure with minimal security impact (E.g. stack traces, path disclosure, directory listings, logs)</li>
+<li>Internally known issues, duplicate issues, or issues which have already been made public</li>
+<li>Rate limiting issues / Tab-nabbing</li>
+<li>Non url Selfless / HTMLi </li>
+<li>Known CVE without proper testing.</li>
+<li>Vulnerabilities only exploitable on out-of-date browsers or platforms</li>
+<li>CSRF issues that don&#39;t impact the integrity of an account (e.g. log in or out, contact forms and other publicly accessible forms)</li>
+<li>Vulnerabilities related to auto-fill web forms</li>
+<li>Use of known vulnerable libraries without actual proof of concept</li>
+<li>Lack of security flags in cookies</li>
+<li>Issues related to unsafe SSL/TLS cipher suites or protocol version</li>
+<li>Session expiry / Cookie issues / Content spoofing</li>
+<li>Cache-control related issues</li>
+<li>Exposure of internal IP address or domains</li>
+<li>Missing security headers that do not lead to direct exploitation</li>
+<li>CSRF with negligible security impact (E.g. adding to favorites, adding to cart, subscribing to a non-critical feature)</li>
+<li>Vulnerabilities that require root/jailbreak</li>
+<li>Vulnerabilities that require physical access to a user&#39;s device</li>
+<li>Issues that have no security impact (E.g. Failure to load a web page)</li>
+<li>Assets that do not belong to Finance</li>
+<li>Phishing (E.g. HTTP Basic Authentication Phishing)</li>
+<li>Any activity (like DoS/DDoS) that disrupts our services</li>
+<li>Installation Path Permissions</li>
+<li>Reports from automated tools or scans</li>
+</ul>
+
+<p>Not following any one of the above rule will disqualify you from our bug bounty program.</p>
+
+<p>If any doubts related to your submissions or creative dialogue please feel free to email saurabh.goyal@delta.exchange or venkatesh.sharma@delta.exchange.</p>
 
       </div>
       <div class="dark-box">
