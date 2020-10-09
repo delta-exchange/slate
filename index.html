@@ -8413,6 +8413,8 @@ Sample feed response
 <pre class="highlight plaintext"><code>// Position update
 {
     "type": "positions",
+    "action": "",                       // "create"/"update"/"delete"
+    "reason": "",                       // null, "auto_topup"
     "symbol": "BTCUSD_29Mar",           // Product Symbol
     "product_id": 1,                    // Product ID
     "size": -100,                       // Position size, if &gt; 0 -&gt; long else short
@@ -8428,76 +8430,82 @@ Sample feed response
 <p>A snapshot of all open/pending orders will be sent after subscribing a symbol. And all incremental updates will be sent on create/update/delete of orders</p>
 
 <p>All updates including snapshot will have incremental seq_id. seq_id is separate for each symbol.</p>
-<pre class="highlight plaintext"><code>// Order update
-type: "orders",
-      timestamp: System.system_time(:microsecond)
-{
-    "type": "orders",
-    "action": "create",                 // "create"/"update"/"delete"
-    "reason": "",                       // ""/"fill"/"stop_update"/"stop_trigger"/"stop_cancel"
-    "symbol": "BTCUSD_29Mar",           // Product Symbol
-    "product_id": 1,                    // Product ID
-    "order_id": 1234                    // Order id
-    "client_order_id": ""               // Client order id
-    "size": 100,                        // Order size
-    "unfilled_size": 55,                // Unfilled size
-    "price": "9000.00"                  // Price of the order
-    "side": "buy"                       // Order side (buy or sell)
-    "cancellation_reason": "cancelled_by_user"        // Cancellation reason in case of cancelled order, null otherwise
-    "stop_order_type": "stop_loss_order",             // If a Stop Order -&gt; "stop_loss_order"/"take_profit_order", null otherwise
-    "bracket_order": false              // true for a bracket_order, false otherwise
-    "state": "open"                     // "open"/"pending"/"closed"/"cancelled"
-    "seq_no": 1                         // Incremental sequence number
-    "timestamp": 1594105083998848       // Unix timestamp in microseconds
-}
 
-// Stop Order or Bracket orders will include these extra fields, refer bracket order documentation for more details
-{  
-    "stop_price": "9010.00"                     
-    "trigger_price_max_or_min": "9020.00"
-    "bracket_stop_loss_price": "8090.00"
-    "bracket_stop_loss_limit_price": "8090.00"
-    "bracket_take_profit_price": "9020"
-    "bracket_take_profit_limit_price": "9020"
-    "bracket_trail_amount": "10.00"
-}
+<p>Any of the following events can be tracked by the reason field in this channel
+- fill
+- stop_update
+- stop_trigger
+- stop_cancel
+- liquidation
+- self_trade
+```
+// Order update</p>
 
-// Snapshot
+<p>{
+    &quot;type&quot;: &quot;orders&quot;,
+    &quot;action&quot;: &quot;create&quot;,                 // &quot;create&quot;/&quot;update&quot;/&quot;delete&quot;
+    &quot;reason&quot;: &quot;&quot;,                       // &quot;fill&quot;/&quot;stop_update&quot;/&quot;stop_trigger&quot;/&quot;stop_cancel&quot;/&quot;liquidation&quot;/&quot;self_trade&quot;/null
+    &quot;symbol&quot;: &quot;BTCUSD_29Mar&quot;,           // Product Symbol
+    &quot;product_id&quot;: 1,                    // Product ID
+    &quot;order_id&quot;: 1234                    // Order id
+    &quot;client_order_id&quot;: &quot;&quot;               // Client order id
+    &quot;size&quot;: 100,                        // Order size
+    &quot;unfilled_size&quot;: 55,                // Unfilled size
+    &quot;price&quot;: &quot;9000.00&quot;                  // Price of the order
+    &quot;side&quot;: &quot;buy&quot;                       // Order side (buy or sell)
+    &quot;cancellation_reason&quot;: &quot;cancelled_by_user&quot;        // Cancellation reason in case of cancelled order, null otherwise
+    &quot;stop_order_type&quot;: &quot;stop_loss_order&quot;,             // If a Stop Order -&gt; &quot;stop_loss_order&quot;/&quot;take_profit_order&quot;, null otherwise
+    &quot;bracket_order&quot;: false              // true for a bracket_order, false otherwise
+    &quot;state&quot;: &quot;open&quot;                     // &quot;open&quot;/&quot;pending&quot;/&quot;closed&quot;/&quot;cancelled&quot;
+    &quot;seq_no&quot;: 1                         // Incremental sequence number
+    &quot;timestamp&quot;: 1594105083998848       // Unix timestamp in microseconds
+    &quot;stop_price&quot;: &quot;9010.00&quot;                             // stop_price of stop order<br>
+    &quot;trigger_price_max_or_min&quot;: &quot;9020.00&quot;               // for trailing stop orders
+    &quot;bracket_stop_loss_price&quot;: &quot;8090.00&quot;
+    &quot;bracket_stop_loss_limit_price&quot;: &quot;8090.00&quot;
+    &quot;bracket_take_profit_price&quot;: &quot;9020&quot;<br>
+    &quot;bracket_take_profit_limit_price&quot;: &quot;9020&quot;
+    &quot;bracket_trail_amount&quot;: &quot;10.00&quot;
+}</p>
+
+<p>// Snapshot
 {
-  "meta": {
-    "seq_no": 7,
-    "timestamp": 1594149235554045
+  &quot;meta&quot;: {
+    &quot;seq_no&quot;: 7,
+    &quot;timestamp&quot;: 1594149235554045
   },
-  "result": [
+  &quot;result&quot;: [
     {
-      "id": 1592130,
-      "limit_price": "9000",
-      "order_type": "limit_order",
-      "product_id": 13,
-      "reduce_only": false,
-      "side": "buy",
-      "size": 1,
-      "state": "open",
-      "stop_order_type": null,
-      "stop_price": null,
-      "time_in_force": "gtc",
-      "trail_amount": null,
-      "unfilled_size": 1,
-      "user_id": 1132
+      &quot;id&quot;: 1592130,
+      &quot;limit_price&quot;: &quot;9000&quot;,
+      &quot;order_type&quot;: &quot;limit_order&quot;,
+      &quot;product_id&quot;: 13,
+      &quot;reduce_only&quot;: false,
+      &quot;side&quot;: &quot;buy&quot;,
+      &quot;size&quot;: 1,
+      &quot;state&quot;: &quot;open&quot;,
+      &quot;stop_order_type&quot;: null,
+      &quot;stop_price&quot;: null,
+      &quot;time_in_force&quot;: &quot;gtc&quot;,
+      &quot;trail_amount&quot;: null,
+      &quot;unfilled_size&quot;: 1,
+      &quot;user_id&quot;: 1132
     }
   ],
-  "success": true,
-  "symbol": "BTCUSD",
-  "type": "orders",
-  "action": "snapshot"
+  &quot;success&quot;: true,
+  &quot;symbol&quot;: &quot;BTCUSD&quot;,
+  &quot;type&quot;: &quot;orders&quot;,
+  &quot;action&quot;: &quot;snapshot&quot;
 }
-</code></pre><h2 id='usertrades'>UserTrades</h2>
+```</p>
+<h2 id='usertrades'>UserTrades</h2>
 <p>Channel provides updates for fills. Need to pass list of product symbols while subscribing.</p>
 
 <p>All updates will have incremental seq_id. seq_id is separate for each symbol.</p>
+
+<p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot; in the user_trades channel.</p>
 <pre class="highlight plaintext"><code>// user_trades
 {
-
     "symbol": "BNBBTC_30Nov",
     "fill_id": "1234-abcd-qwer-3456",
     "reason": "normal"                      // "normal" or "adl"
