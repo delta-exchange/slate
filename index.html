@@ -314,7 +314,7 @@
             <a href="#delta-exchange-api-v2-products" class="toc-h1 toc-link" data-title="Products">Products</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-live-products" class="toc-h2 toc-link" data-title="Get live products">Get live products</a>
+                    <a href="#get-list-of-products" class="toc-h2 toc-link" data-title="Get list of products">Get list of products</a>
                   </li>
                   <li>
                     <a href="#get-tickers-for-products" class="toc-h2 toc-link" data-title="Get tickers for products">Get tickers for products</a>
@@ -1237,7 +1237,7 @@ This operation does not require authentication.
 
 <p>Get Product List</p>
 
-<h2 id='get-live-products'>Get live products</h2>
+<h2 id='get-list-of-products'>Get list of products</h2>
 
 <p><a id="opIdgetProducts"></a></p>
 
@@ -1277,6 +1277,33 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 
 <p><code>GET /products</code></p>
 
+<h3 id="get-list-of-products-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contract_types</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>Comma separated list of contract types</td>
+</tr>
+<tr>
+<td>states</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>Comma separated list of states</td>
+</tr>
+</tbody></table>
+
 <blockquote>
 <p>Example responses</p>
 
@@ -1300,6 +1327,7 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
       </span><span class="s2">"contract_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"contract_unit_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -1342,7 +1370,7 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="get-live-products-responses">Responses</h3>
+<h3 id="get-list-of-products-responses">Responses</h3>
 
 <table><thead>
 <tr>
@@ -1355,12 +1383,12 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>List of live products</td>
+<td>List of products</td>
 <td>Inline</td>
 </tr>
 </tbody></table>
 
-<h3 id="get-live-products-responseschema">Response Schema</h3>
+<h3 id="get-list-of-products-responseschema">Response Schema</h3>
 
 <h4 id='enumerated-values'>Enumerated Values</h4>
 
@@ -1377,6 +1405,18 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 <tr>
 <td>notional_type</td>
 <td>inverse</td>
+</tr>
+<tr>
+<td>state</td>
+<td>live</td>
+</tr>
+<tr>
+<td>state</td>
+<td>expired</td>
+</tr>
+<tr>
+<td>state</td>
+<td>upcoming</td>
 </tr>
 <tr>
 <td>trading_status</td>
@@ -5797,6 +5837,7 @@ This operation does not require authentication.
   </span><span class="s2">"contract_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"contract_unit_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -5936,6 +5977,13 @@ This operation does not require authentication.
 <td>false</td>
 <td>none</td>
 <td>The minimum gap between 2 consecutive prices.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>current state of the product</td>
 </tr>
 <tr>
 <td>trading_status</td>
@@ -6087,6 +6135,18 @@ This operation does not require authentication.
 <td>inverse</td>
 </tr>
 <tr>
+<td>state</td>
+<td>live</td>
+</tr>
+<tr>
+<td>state</td>
+<td>expired</td>
+</tr>
+<tr>
+<td>state</td>
+<td>upcoming</td>
+</tr>
+<tr>
 <td>trading_status</td>
 <td>operational</td>
 </tr>
@@ -6118,6 +6178,7 @@ This operation does not require authentication.
     </span><span class="s2">"contract_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"contract_unit_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -8013,8 +8074,8 @@ This operation does not require authentication.
 <p>Access url</p>
 
 <ul>
-<li>Production - wss://api.delta.exchange:2096</li>
-<li>Testnet - wss://testnet-api.delta.exchange:2096</li>
+<li>Production - wss://socket.delta.exchange</li>
+<li>Testnet - wss://testnet-socket.delta.exchange</li>
 </ul>
 
 <h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
