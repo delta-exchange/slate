@@ -264,10 +264,7 @@
             <a href="#rate-limits" class="toc-h1 toc-link" data-title="Rate Limits">Rate Limits</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#rest-api" class="toc-h2 toc-link" data-title="REST API">REST API</a>
-                  </li>
-                  <li>
-                    <a href="#limits" class="toc-h2 toc-link" data-title="Limits">Limits</a>
+                    <a href="#rest-api-cost-structure" class="toc-h2 toc-link" data-title="REST API Cost Structure">REST API Cost Structure</a>
                   </li>
                   <li>
                     <a href="#increasing-your-rate-limits" class="toc-h2 toc-link" data-title="Increasing your rate limits">Increasing your rate limits</a>
@@ -315,6 +312,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#get-list-of-products" class="toc-h2 toc-link" data-title="Get list of products">Get list of products</a>
+                  </li>
+                  <li>
+                    <a href="#get-product-by-symbol" class="toc-h2 toc-link" data-title="Get product by symbol">Get product by symbol</a>
                   </li>
                   <li>
                     <a href="#get-tickers-for-products" class="toc-h2 toc-link" data-title="Get tickers for products">Get tickers for products</a>
@@ -543,6 +543,11 @@
           </li>
           <li>
             <a href="#rest-clients" class="toc-h1 toc-link" data-title="Rest Clients">Rest Clients</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#ccxt" class="toc-h2 toc-link" data-title="CCXT">CCXT</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#websocket-feed" class="toc-h1 toc-link" data-title="Websocket Feed">Websocket Feed</a>
@@ -739,8 +744,9 @@ e.g</p>
 e.g. <strong>.DEBNBXBT</strong>
 It is important to note that the BTCUSD Index price doesn&#39;t follow this convention as its symbol is <strong>.DEXBTUSD</strong>.</p>
 <h2 id='pagination'>Pagination</h2>
-<p>Pagination allows to fetch data page-wise.
-Pagination can be called in following APIs</p>
+<p>Pagination allows to fetch data page-wise. We use cursor based pagination where each response metadata contains a before and after cursor. The cursor needs to passed on with the next request to paginate over the result. Please note that the cursors are updated with each new page.</p>
+
+<p>Pagination can be called in following APIs</p>
 
 <table><thead>
 <tr>
@@ -748,6 +754,10 @@ Pagination can be called in following APIs</p>
 <th>End point</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>Products</td>
+<td>/products</td>
+</tr>
 <tr>
 <td>Orders</td>
 <td>/orders</td>
@@ -769,31 +779,38 @@ Pagination can be called in following APIs</p>
 <p><strong>Pagination parameters</strong></p>
 
 <ul>
-<li>page_num 
+<li>after 
 
 <ul>
-<li>page number for pagination</li>
-<li>Default value: 1</li>
+<li>after cursor to fetch the next page</li>
+</ul></li>
+<li>before 
+
+<ul>
+<li>before cursor to fetch the previous page</li>
 </ul></li>
 <li>page_size
 
 <ul>
 <li>page size for pagination</li>
-<li>Default value: 25</li>
 </ul></li>
 </ul>
 
-<p>In API response following headers will be received</p>
-
-<ul>
-<li>x-pagination-page-size : page size specified in API request</li>
-<li>x-pagination-page-num: page number specified in API request</li>
-<li>x-pagination-total : total number of records </li>
-</ul>
-
+<p>In API response, meta data will contain the cursors as show below</p>
+<pre class="highlight plaintext"><code>{
+  success: true,
+  result: [ {}, {}, .....],
+  meta: {
+    after: "an_arbitary_string",
+    before: "another_arbitary_string"
+  }
+}
+</code></pre>
 <p><strong>Example</strong></p>
 
-<p>https://api.delta.exchange/orders?state=open&amp;page_num=1&amp;page_size=30</p>
+<p>https://api.delta.exchange/v2/products?page_size=30</p>
+
+<p>https://api.delta.exchange/v2/products?page_size=30&amp;after=after_cursor_from_last_request</p>
 <h2 id='data-centers'>Data Centers</h2>
 <p>Delta Exchange data centers are in <strong>AWS Ireland</strong></p>
 
@@ -941,55 +958,45 @@ You should use ntp timestamp to sync local clocks inorder to avoid following iss
 
 <p>When a rate limit is exceeded, a status of 429 Too Many Requests will be returned.
 &#39;X-RATE-LIMIT-RESET&#39; is returned in response header with time left in milisecond
-after which next API request can be hit.</p>
+after which next API request can be hit. </p>
 
-<h3 id='rest-api'>REST API</h3><h3 id='limits'>Limits</h3>
+<p>We throttle unauthenticated api requests by IP and authenticated requests by user ID. </p>
 
-<p>We throttle unauthenticated api requests by IP and authenticated requests by user ID.
-These are the limits for different categories of requests in a 5 minute rolling window.</p>
+<p>Default Quota is 5000 for a fixed 5 minute window.</p>
+
+<h3 id='rest-api-cost-structure'>REST API Cost Structure</h3>
+
+<p>Every rest endpoint has been assigned a cost (weight). When you make an api call, the cost incurred is deducted from your 5 min quota. So, Apis related to reading public data are cheaper whereas Apis related to writing private data (like placing an order) are the costliest. </p>
+
+<p>Here is the cost structure for various endpoints. Please note that any endpoint not mentioned here has a cost of 1 unit.</p>
 
 <table><thead>
 <tr>
-<th>Request Type</th>
-<th>Limit</th>
-<th>Description</th>
+<th>Cost Slab</th>
+<th>API Endpoints</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>Chart data</td>
-<td>1000</td>
-<td>Requests for chart data</td>
+<td>3</td>
+<td>Get Products, Get Orderbook, Get Tickers, Get Open Orders, Get Open Postions, Get Balances, OHLC Candles</td>
 </tr>
 <tr>
-<td>Public read requests</td>
-<td>500</td>
-<td>Requests to get list of live products, L2 orderbook etc</td>
+<td>5</td>
+<td>Place/Edit/Delete Order, Add Position Margin</td>
 </tr>
 <tr>
-<td>Private read requests</td>
-<td>200</td>
-<td>Requests to get open orders, fills, positions etc</td>
+<td>10</td>
+<td>Get Order History, Get Fills, Get Txn Logs</td>
 </tr>
 <tr>
-<td>Private write requests</td>
-<td>150</td>
-<td>Requests to place orders, change leverage, cancel orders etc</td>
-</tr>
-<tr>
-<td>Account requests</td>
-<td>200</td>
-<td>Requests to change password, create api keys etc</td>
-</tr>
-<tr>
-<td>Others</td>
-<td>300</td>
-<td>All other requests</td>
+<td>25</td>
+<td>Batch Order Apis</td>
 </tr>
 </tbody></table>
 
 <h3 id='increasing-your-rate-limits'>Increasing your rate limits</h3>
 
-<p>If you are running up against our limits and believe that you have a legitimate need, please email us at (support@delta.exchange)[mailto:support@delta.exchange] to discuss increasing your rate limits.</p>
+<p>If you are running up against our limits and believe that you have a legitimate need, please email us at <a href="mailto:support@delta.exchange">support@delta.exchange</a> to discuss increasing your rate limits.</p>
 
 <h1 id='types'>Types</h1><h2 id='timestamps'>Timestamps</h2>
 <p>Unless otherwise specified, all timestamps from API are returned in  <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>  with microseconds. Make sure you can parse the following ISO 8601 format. Most modern languages and libraries will handle this without issues.</p>
@@ -1115,7 +1122,11 @@ curl -X GET https://api.delta.exchange/v2/assets <span class="se">\</span>
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -1140,6 +1151,32 @@ curl -X GET https://api.delta.exchange/v2/assets <span class="se">\</span>
 </tbody></table>
 
 <h3 id="get-list-of-all-assets-responseschema">Response Schema</h3>
+
+<h4 id='enumerated-values'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>deposit_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>deposit_status</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>disabled</td>
+</tr>
+</tbody></table>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -1203,7 +1240,10 @@ curl -X GET https://api.delta.exchange/v2/indices <span class="se">\</span>
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"constituent_exchanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -1228,6 +1268,28 @@ curl -X GET https://api.delta.exchange/v2/indices <span class="se">\</span>
 </tbody></table>
 
 <h3 id="get-indices-responseschema">Response Schema</h3>
+
+<h4 id='enumerated-values-2'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>index_type</td>
+<td>spot_pair</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>fixed_interest_rate</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>floating_interest_rate</td>
+</tr>
+</tbody></table>
 
 <aside class="success">
 This operation does not require authentication.
@@ -1302,6 +1364,27 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 <td>false</td>
 <td>Comma separated list of states</td>
 </tr>
+<tr>
+<td>after</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>after cursor for paginated request</td>
+</tr>
+<tr>
+<td>before</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>before cursor for paginated request</td>
+</tr>
+<tr>
+<td>page_size</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>size of a single page for paginated request, default: 100</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -1327,6 +1410,7 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
       </span><span class="s2">"contract_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"contract_unit_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
       </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -1346,24 +1430,39 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
       </span><span class="s2">"underlying_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"quoting_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"settling_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"spot_index"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"constituent_exchanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
           </span><span class="p">{}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -1390,7 +1489,7 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 
 <h3 id="get-list-of-products-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values'>Enumerated Values</h4>
+<h4 id='enumerated-values-3'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -1429,6 +1528,268 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 <tr>
 <td>trading_status</td>
 <td>disrupted_post_only</td>
+</tr>
+<tr>
+<td>deposit_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>deposit_status</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>spot_pair</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>fixed_interest_rate</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>floating_interest_rate</td>
+</tr>
+</tbody></table>
+
+<aside class="success">
+This operation does not require authentication.
+</aside>
+
+<h2 id='get-product-by-symbol'>Get product by symbol</h2>
+
+<p><a id="opIdgetProduct"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/products/{symbol}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.delta.exchange/v2/products/<span class="o">{</span>symbol<span class="o">}</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/products/{symbol}'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>GET /products/{symbol}</code></p>
+
+<h3 id="get-product-by-symbol-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>symbol of the desired product</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"notional_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vanilla"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"impact_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"initial_margin"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"maintenance_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contract_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contract_unit_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"default_leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"initial_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"maintenance_margin_scaling_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"taker_commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"maker_commission_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"liquidation_penalty_factor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contract_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"position_size_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"basis_factor_max_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_quanto"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"funding_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"annualized_funding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"price_band"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"underlying_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"quoting_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"settling_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"spot_index"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"constituent_exchanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="get-product-by-symbol-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>List of products</td>
+<td>Inline</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-product-by-symbol-responseschema">Response Schema</h3>
+
+<h4 id='enumerated-values-4'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>notional_type</td>
+<td>vanilla</td>
+</tr>
+<tr>
+<td>notional_type</td>
+<td>inverse</td>
+</tr>
+<tr>
+<td>state</td>
+<td>live</td>
+</tr>
+<tr>
+<td>state</td>
+<td>expired</td>
+</tr>
+<tr>
+<td>state</td>
+<td>upcoming</td>
+</tr>
+<tr>
+<td>trading_status</td>
+<td>operational</td>
+</tr>
+<tr>
+<td>trading_status</td>
+<td>disrupted_cancel_only</td>
+</tr>
+<tr>
+<td>trading_status</td>
+<td>disrupted_post_only</td>
+</tr>
+<tr>
+<td>deposit_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>deposit_status</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>spot_pair</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>fixed_interest_rate</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>floating_interest_rate</td>
 </tr>
 </tbody></table>
 
@@ -1486,6 +1847,7 @@ curl -X GET https://api.delta.exchange/v2/tickers <span class="se">\</span>
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -1497,7 +1859,8 @@ curl -X GET https://api.delta.exchange/v2/tickers <span class="se">\</span>
       </span><span class="s2">"spot_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"turnover"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"turnover_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contract_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -1596,6 +1959,7 @@ curl -X GET https://api.delta.exchange/v2/tickers/<span class="o">{</span>symbol
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -1607,7 +1971,8 @@ curl -X GET https://api.delta.exchange/v2/tickers/<span class="o">{</span>symbol
     </span><span class="s2">"spot_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"turnover"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"turnover_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contract_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -1702,9 +2067,13 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+  </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1738,7 +2107,9 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -1777,7 +2148,7 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
 
 <h3 id="place-order-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-2'>Enumerated Values</h4>
+<h4 id='enumerated-values-5'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -1927,7 +2298,9 @@ curl -X DELETE https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -1966,7 +2339,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders <span class="se">\</span>
 
 <h3 id="cancel-order-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-3'>Enumerated Values</h4>
+<h4 id='enumerated-values-6'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -2118,7 +2491,9 @@ curl -X PUT https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -2157,7 +2532,7 @@ curl -X PUT https://api.delta.exchange/v2/orders <span class="se">\</span>
 
 <h3 id="edit-order-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-4'>Enumerated Values</h4>
+<h4 id='enumerated-values-7'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -2283,11 +2658,18 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
 <td>comma separated product ids</td>
 </tr>
 <tr>
+<td>states</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>comma separated list of states - open,pending</td>
+</tr>
+<tr>
 <td>contract_types</td>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated product ids</td>
+<td>comma separated list of desired contract types</td>
 </tr>
 <tr>
 <td>order_types</td>
@@ -2333,7 +2715,7 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-5'>Enumerated Values</h4>
+<h4 id='enumerated-values-8'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -2341,34 +2723,6 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
 <th>Value</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>contract_types</td>
-<td>futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>perpetual_futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>call_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>put_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>interest_rate_swaps</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>move_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>spreads</td>
-</tr>
 <tr>
 <td>order_types</td>
 <td>market</td>
@@ -2402,7 +2756,9 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -2440,7 +2796,7 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
 
 <h3 id="get-active-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-6'>Enumerated Values</h4>
+<h4 id='enumerated-values-9'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -2556,6 +2912,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders/all <span class="se">\</span
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cancel_limit_orders"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cancel_stop_orders"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -2684,9 +3041,13 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
       </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
@@ -2754,6 +3115,27 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <td>none</td>
 </tr>
 <tr>
+<td>»» stop_order_type</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+</tr>
+<tr>
+<td>»» stop_price</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+</tr>
+<tr>
+<td>»» stop_trigger_method</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+</tr>
+<tr>
 <td>»» time_in_force</td>
 <td>body</td>
 <td>string</td>
@@ -2775,6 +3157,13 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <td>none</td>
 </tr>
 <tr>
+<td>»» client_order_id</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+</tr>
+<tr>
 <td>» product_id</td>
 <td>body</td>
 <td>integer</td>
@@ -2783,7 +3172,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-7'>Enumerated Values</h4>
+<h4 id='enumerated-values-10'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -2806,6 +3195,26 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <tr>
 <td>»» order_type</td>
 <td>market_order</td>
+</tr>
+<tr>
+<td>»» stop_order_type</td>
+<td>stop_loss_order</td>
+</tr>
+<tr>
+<td>»» stop_order_type</td>
+<td>take_profit_order</td>
+</tr>
+<tr>
+<td>»» stop_trigger_method</td>
+<td>mark_price</td>
+</tr>
+<tr>
+<td>»» stop_trigger_method</td>
+<td>last_traded_price</td>
+</tr>
+<tr>
+<td>»» stop_trigger_method</td>
+<td>spot_price</td>
 </tr>
 <tr>
 <td>»» time_in_force</td>
@@ -2848,7 +3257,9 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -2888,7 +3299,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 
 <h3 id="create-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-8'>Enumerated Values</h4>
+<h4 id='enumerated-values-11'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -3090,7 +3501,9 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -3130,7 +3543,7 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 
 <h3 id="edit-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-9'>Enumerated Values</h4>
+<h4 id='enumerated-values-12'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -3314,7 +3727,9 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -3354,7 +3769,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 
 <h3 id="delele-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-10'>Enumerated Values</h4>
+<h4 id='enumerated-values-13'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -3806,6 +4221,33 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 
 <p><code>GET /positions/margined</code></p>
 
+<h3 id="get-margined-positions-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>product_ids</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>comma separated product ids</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>comma separated list of desired contract types</td>
+</tr>
+</tbody></table>
+
 <blockquote>
 <p>Example responses</p>
 
@@ -3823,7 +4265,11 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
       </span><span class="s2">"liquidation_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"bankruptcy_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"adl_level"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"realized_pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"realized_funding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -3965,7 +4411,11 @@ curl -X POST https://api.delta.exchange/v2/positions/change_margin <span class="
     </span><span class="s2">"liquidation_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bankruptcy_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"adl_level"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"realized_pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"realized_funding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -4076,7 +4526,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated product ids</td>
+<td>comma separated list of desired contract types</td>
 </tr>
 <tr>
 <td>order_types</td>
@@ -4122,7 +4572,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-11'>Enumerated Values</h4>
+<h4 id='enumerated-values-14'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4130,34 +4580,6 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 <th>Value</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>contract_types</td>
-<td>futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>perpetual_futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>call_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>put_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>interest_rate_swaps</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>move_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>spreads</td>
-</tr>
 <tr>
 <td>order_types</td>
 <td>market</td>
@@ -4191,7 +4613,9 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -4229,7 +4653,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 
 <h3 id="get-order-history-(cancelled-and-closed)-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-12'>Enumerated Values</h4>
+<h4 id='enumerated-values-15'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4343,35 +4767,42 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>none</td>
+<td>comma separated product ids</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>none</td>
+<td>comma separated list of desired contract types</td>
 </tr>
 <tr>
 <td>start_time</td>
 <td>query</td>
 <td>integer</td>
 <td>false</td>
-<td>Start time for the fills query</td>
+<td>from time in micro-seconds in epoc</td>
 </tr>
 <tr>
 <td>end_time</td>
 <td>query</td>
 <td>integer</td>
 <td>false</td>
-<td>End time for the fills query</td>
+<td>from time in micro-seconds in epoc</td>
+</tr>
+<tr>
+<td>after</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>after cursor for pagination</td>
 </tr>
 <tr>
 <td>before</td>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>from time in micro-seconds in epoc</td>
+<td>before cursor for pagination</td>
 </tr>
 <tr>
 <td>page_size</td>
@@ -4379,44 +4810,6 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 <td>integer</td>
 <td>false</td>
 <td>number of records per page</td>
-</tr>
-</tbody></table>
-
-<h4 id='enumerated-values-13'>Enumerated Values</h4>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>contract_types</td>
-<td>futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>perpetual_futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>call_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>put_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>interest_rate_swaps</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>move_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>spreads</td>
 </tr>
 </tbody></table>
 
@@ -4437,7 +4830,8 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
       </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"taker"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4467,7 +4861,7 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 
 <h3 id="get-user-fills-by-filters-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-14'>Enumerated Values</h4>
+<h4 id='enumerated-values-16'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4513,13 +4907,13 @@ This operation does not require authentication.
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/fills/history/download/csv'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-  <span class="s">'start_time'</span><span class="p">:</span> <span class="s">'0'</span><span class="p">,</span>  <span class="s">'end_time'</span><span class="p">:</span> <span class="s">'0'</span>
+
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/v2/fills/history/download/csv?start_time<span class="o">=</span>0&amp;end_time<span class="o">=</span>0 <span class="se">\</span>
+curl -X GET https://api.delta.exchange/v2/fills/history/download/csv <span class="se">\</span>
   -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
   -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
   -H <span class="s1">'timestamp: ****'</span>
@@ -4535,9 +4929,7 @@ curl -X GET https://api.delta.exchange/v2/fills/history/download/csv?start_time<
 
 <span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/fills/history/download/csv'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
-  <span class="s1">'start_time'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span><span class="p">,</span>
-<span class="s1">'end_time'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span>
-<span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
@@ -4561,66 +4953,28 @@ curl -X GET https://api.delta.exchange/v2/fills/history/download/csv?start_time<
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>none</td>
+<td>comma separated product ids</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>none</td>
+<td>comma separated list of desired contract types</td>
 </tr>
 <tr>
 <td>start_time</td>
 <td>query</td>
 <td>integer</td>
-<td>true</td>
-<td>Start time for the fills query</td>
+<td>false</td>
+<td>from time in micro-seconds in epoc</td>
 </tr>
 <tr>
 <td>end_time</td>
 <td>query</td>
 <td>integer</td>
-<td>true</td>
-<td>End time for the fills query</td>
-</tr>
-</tbody></table>
-
-<h4 id='enumerated-values-15'>Enumerated Values</h4>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>contract_types</td>
-<td>futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>perpetual_futures</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>call_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>put_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>interest_rate_swaps</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>move_options</td>
-</tr>
-<tr>
-<td>contract_types</td>
-<td>spreads</td>
+<td>false</td>
+<td>from time in micro-seconds in epoc</td>
 </tr>
 </tbody></table>
 
@@ -4871,7 +5225,7 @@ curl -X GET https://api.delta.exchange/v2/trades/<span class="o">{</span>symbol<
 
 <h3 id="get-public-trades-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-16'>Enumerated Values</h4>
+<h4 id='enumerated-values-17'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4961,11 +5315,9 @@ curl -X GET https://api.delta.exchange/v2/wallet/balances <span class="se">\</sp
       </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-      </span><span class="p">}</span><span class="w">
+      </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -5056,18 +5408,25 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 </tr>
 </thead><tbody>
 <tr>
-<td>asset_id</td>
+<td>asset_ids</td>
 <td>query</td>
 <td>integer</td>
 <td>false</td>
-<td>asset_id for which to get txns logs</td>
+<td>comma separated list of asset_ids for which to get txns logs</td>
+</tr>
+<tr>
+<td>start_time</td>
+<td>query</td>
+<td>integer</td>
+<td>false</td>
+<td>from time in micro-seconds in epoc</td>
 </tr>
 <tr>
 <td>end_time</td>
 <td>query</td>
 <td>integer</td>
 <td>false</td>
-<td>end time in micro-seconds in epoc</td>
+<td>from time in micro-seconds in epoc</td>
 </tr>
 <tr>
 <td>after</td>
@@ -5109,6 +5468,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
       </span><span class="s2">"meta_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
@@ -5139,7 +5499,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 
 <h3 id="get-wallet-transactions-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-17'>Enumerated Values</h4>
+<h4 id='enumerated-values-18'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5169,7 +5529,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 </tr>
 <tr>
 <td>transaction_type</td>
-<td>perpetual_futures_funding</td>
+<td>funding</td>
 </tr>
 <tr>
 <td>transaction_type</td>
@@ -5186,6 +5546,26 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 <tr>
 <td>transaction_type</td>
 <td>promo_credit</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>trading_credits</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>trading_credits_forfeited</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>trading_credits_paid</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>liquidation_fee</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>interest_credit</td>
 </tr>
 </tbody></table>
 
@@ -5251,25 +5631,46 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions/download <span cla
 </tr>
 </thead><tbody>
 <tr>
-<td>asset_id</td>
+<td>asset_ids</td>
 <td>query</td>
 <td>integer</td>
 <td>false</td>
-<td>asset_id for which to get txns logs</td>
+<td>comma separated list of asset_ids</td>
 </tr>
 <tr>
 <td>start_time</td>
 <td>query</td>
 <td>integer</td>
 <td>false</td>
-<td>Start time for the transaction query</td>
+<td>from time in micro-seconds in epoc</td>
 </tr>
 <tr>
 <td>end_time</td>
 <td>query</td>
 <td>integer</td>
 <td>false</td>
-<td>End time for the transaction query</td>
+<td>from time in micro-seconds in epoc</td>
+</tr>
+<tr>
+<td>after</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>after cursor for pagination</td>
+</tr>
+<tr>
+<td>before</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>before cursor for pagination</td>
+</tr>
+<tr>
+<td>page_size</td>
+<td>query</td>
+<td>integer</td>
+<td>false</td>
+<td>number of records per page</td>
 </tr>
 </tbody></table>
 
@@ -5384,7 +5785,7 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-18'>Enumerated Values</h4>
+<h4 id='enumerated-values-19'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5680,7 +6081,10 @@ This operation does not require authentication.
   </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"constituent_exchanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='properties-3'>Properties</h3>
@@ -5714,6 +6118,47 @@ This operation does not require authentication.
 <td>none</td>
 <td>none</td>
 </tr>
+<tr>
+<td>underlying_asset_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>Asset ID for base symbol</td>
+</tr>
+<tr>
+<td>quoting_asset_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>Asset ID for quoting symbol</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Type of index</td>
+</tr>
+</tbody></table>
+<h4 id='enumerated-values-20'>Enumerated Values</h4>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>index_type</td>
+<td>spot_pair</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>fixed_interest_rate</td>
+</tr>
+<tr>
+<td>index_type</td>
+<td>floating_interest_rate</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSarrayofindices">ArrayOfIndices</h2>
@@ -5725,7 +6170,10 @@ This operation does not require authentication.
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"constituent_exchanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -5754,7 +6202,11 @@ This operation does not require authentication.
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='properties-5'>Properties</h3>
@@ -5788,6 +6240,58 @@ This operation does not require authentication.
 <td>none</td>
 <td>none</td>
 </tr>
+<tr>
+<td>deposit_status</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>base_withdrawal_fee</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>min_withdrawal_amount</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Minimum value of allowed withdrawal</td>
+</tr>
+</tbody></table>
+<h4 id='enumerated-values-21'>Enumerated Values</h4>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>deposit_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>deposit_status</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>withdrawal_status</td>
+<td>disabled</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSarrayofassets">ArrayOfAssets</h2>
@@ -5797,7 +6301,11 @@ This operation does not require authentication.
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -5837,6 +6345,7 @@ This operation does not require authentication.
   </span><span class="s2">"contract_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"contract_unit_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
   </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -5856,24 +6365,39 @@ This operation does not require authentication.
   </span><span class="s2">"underlying_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"quoting_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"settling_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"spot_index"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"constituent_exchanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">{}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -5977,6 +6501,13 @@ This operation does not require authentication.
 <td>false</td>
 <td>none</td>
 <td>The minimum gap between 2 consecutive prices.</td>
+</tr>
+<tr>
+<td>product_specs</td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>Specs related to specific contract types (IRS indices, options volatility limits)</td>
 </tr>
 <tr>
 <td>state</td>
@@ -6088,7 +6619,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>he range around mark price in which trading is allowed. This number is in percentage.</td>
+<td>the range around mark price in which trading is allowed. This number is in percentage.</td>
 </tr>
 <tr>
 <td>underlying_asset</td>
@@ -6119,7 +6650,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-19'>Enumerated Values</h4>
+<h4 id='enumerated-values-22'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -6178,6 +6709,7 @@ This operation does not require authentication.
     </span><span class="s2">"contract_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"contract_unit_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"trading_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"operational"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"max_leverage_notional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -6197,24 +6729,39 @@ This operation does not require authentication.
     </span><span class="s2">"underlying_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"quoting_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"settling_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deposit_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"withdrawal_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"base_withdrawal_fee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"min_withdrawal_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"spot_index"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"constituent_exchanges"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -6243,7 +6790,9 @@ This operation does not require authentication.
 <p><a id="schemaorder"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -6333,11 +6882,25 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 <tr>
+<td>paid_commission</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>net commission paid for the order</td>
+</tr>
+<tr>
 <td>close_on_trigger</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>client order id provided by the user while creating order</td>
 </tr>
 <tr>
 <td>state</td>
@@ -6360,9 +6923,16 @@ This operation does not require authentication.
 <td>none</td>
 <td>none</td>
 </tr>
+<tr>
+<td>product_symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
 </tbody></table>
 
-<h4 id='enumerated-values-20'>Enumerated Values</h4>
+<h4 id='enumerated-values-23'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6423,7 +6993,9 @@ This operation does not require authentication.
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ashb1212"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asbasa"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9200"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -6463,9 +7035,13 @@ This operation does not require authentication.
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+  </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -6519,6 +7095,27 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 <tr>
+<td>stop_order_type</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>stop_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
 <td>time_in_force</td>
 <td>string</td>
 <td>false</td>
@@ -6539,9 +7136,16 @@ This operation does not require authentication.
 <td>none</td>
 <td>none</td>
 </tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
 </tbody></table>
 
-<h4 id='enumerated-values-21'>Enumerated Values</h4>
+<h4 id='enumerated-values-24'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6564,6 +7168,26 @@ This operation does not require authentication.
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+</tr>
+<tr>
+<td>stop_order_type</td>
+<td>stop_loss_order</td>
+</tr>
+<tr>
+<td>stop_order_type</td>
+<td>take_profit_order</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>mark_price</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>last_traded_price</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>spot_price</td>
 </tr>
 <tr>
 <td>time_in_force</td>
@@ -6606,9 +7230,13 @@ This operation does not require authentication.
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -6763,6 +7391,7 @@ This operation does not require authentication.
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cancel_limit_orders"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cancel_stop_orders"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -6790,6 +7419,13 @@ This operation does not require authentication.
 <td>cancel all orders for particular product, cancels orders for all products if not provided</td>
 </tr>
 <tr>
+<td>contract_types</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>comma separated list of desired contract types</td>
+</tr>
+<tr>
 <td>cancel_limit_orders</td>
 <td>string</td>
 <td>false</td>
@@ -6805,7 +7441,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-22'>Enumerated Values</h4>
+<h4 id='enumerated-values-25'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6872,7 +7508,11 @@ This operation does not require authentication.
   </span><span class="s2">"liquidation_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bankruptcy_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"adl_level"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"realized_pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"realized_funding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -6946,6 +7586,34 @@ This operation does not require authentication.
 <td>none</td>
 <td>none</td>
 </tr>
+<tr>
+<td>product_symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>commission</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>commissions blocked in the position</td>
+</tr>
+<tr>
+<td>realized_pnl</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Net realized pnl since the position was opened</td>
+</tr>
+<tr>
+<td>realized_funding</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Net realized funding since the position was opened</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSarrayofpositions">ArrayOfPositions</h2>
@@ -6961,7 +7629,11 @@ This operation does not require authentication.
     </span><span class="s2">"liquidation_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bankruptcy_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"adl_level"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"realized_pnl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"realized_funding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -6995,7 +7667,8 @@ This operation does not require authentication.
   </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"taker"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -7069,9 +7742,16 @@ This operation does not require authentication.
 <td>none</td>
 <td>none</td>
 </tr>
+<tr>
+<td>product_symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
 </tbody></table>
 
-<h4 id='enumerated-values-23'>Enumerated Values</h4>
+<h4 id='enumerated-values-26'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -7110,7 +7790,8 @@ This operation does not require authentication.
     </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"taker"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -7325,7 +8006,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-24'>Enumerated Values</h4>
+<h4 id='enumerated-values-27'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -7353,11 +8034,9 @@ This operation does not require authentication.
   </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='properties-25'>Properties</h3>
@@ -7406,8 +8085,22 @@ This operation does not require authentication.
 <td>Amount available for withdrawals</td>
 </tr>
 <tr>
-<td>asset</td>
-<td><a href="#schemaasset">Asset</a></td>
+<td>interest_credit</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Interest credit earned till now</td>
+</tr>
+<tr>
+<td>asset_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>asset_symbol</td>
+<td>string</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
@@ -7424,11 +8117,9 @@ This operation does not require authentication.
     </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"precision"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -7462,6 +8153,7 @@ This operation does not require authentication.
   </span><span class="s2">"meta_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -7525,6 +8217,13 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 <tr>
+<td>asset_symbol</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
 <td>created_at</td>
 <td>string</td>
 <td>false</td>
@@ -7532,7 +8231,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-25'>Enumerated Values</h4>
+<h4 id='enumerated-values-28'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -7561,7 +8260,7 @@ This operation does not require authentication.
 </tr>
 <tr>
 <td>transaction_type</td>
-<td>perpetual_futures_funding</td>
+<td>funding</td>
 </tr>
 <tr>
 <td>transaction_type</td>
@@ -7579,6 +8278,26 @@ This operation does not require authentication.
 <td>transaction_type</td>
 <td>promo_credit</td>
 </tr>
+<tr>
+<td>transaction_type</td>
+<td>trading_credits</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>trading_credits_forfeited</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>trading_credits_paid</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>liquidation_fee</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>interest_credit</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSarrayoftransactions">ArrayOfTransactions</h2>
@@ -7593,6 +8312,7 @@ This operation does not require authentication.
     </span><span class="s2">"meta_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -7620,6 +8340,7 @@ This operation does not require authentication.
 
 <p><a id="schematicker"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -7631,7 +8352,8 @@ This operation does not require authentication.
   </span><span class="s2">"spot_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"turnover"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"turnover_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contract_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='properties-29'>Properties</h3>
@@ -7644,6 +8366,13 @@ This operation does not require authentication.
 <th>Description</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>product_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
 <tr>
 <td>symbol</td>
 <td>string</td>
@@ -7728,6 +8457,13 @@ This operation does not require authentication.
 <td>none</td>
 <td>none</td>
 </tr>
+<tr>
+<td>contract_type</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSarrayoftickers">ArrayOfTickers</h2>
@@ -7735,6 +8471,7 @@ This operation does not require authentication.
 <p><a id="schemaarrayoftickers"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -7746,7 +8483,8 @@ This operation does not require authentication.
     </span><span class="s2">"spot_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"turnover"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"turnover_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contract_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -8060,6 +8798,12 @@ This operation does not require authentication.
 <li><a href="https://www.npmjs.com/package/delta-rest-client">Nodejs</a></li>
 <li><a href="https://pypi.org/project/delta-rest-client">Python</a></li>
 </ul>
+
+<h2 id='ccxt'>CCXT</h2>
+
+<p>CCXT is our authorized SDK provider and you may access our API through CCXT. </p>
+
+<p>For more information, please visit <a href="https://ccxt.trade">ccxt website</a>.</p>
 
 <h1 id='websocket-feed'>Websocket Feed</h1>
 
