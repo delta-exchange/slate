@@ -962,7 +962,7 @@ after which next API request can be hit. </p>
 
 <p>We throttle unauthenticated api requests by IP and authenticated requests by user ID. </p>
 
-<p>Default Quota is 5000 for a fixed 5 minute window.</p>
+<p>Default Quota is 10000 for a fixed 5 minute window.</p>
 
 <h3 id='rest-api-cost-structure'>REST API Cost Structure</h3>
 
@@ -9076,7 +9076,7 @@ ws.send({
     product_id: 7,
     type: "mark_price",
     price: "0.00401010",
-    annualized_basis: 25.12,    // in %
+    annualized_basis: "25.12",    // in %
     timestamp: 1561634049751430
 }
 </code></pre><h2 id='spot_price'>spot_price</h2>
@@ -9258,7 +9258,7 @@ Sample feed response
     "client_order_id": ""               // Client order id
     "size": 100,                        // Order size
     "unfilled_size": 55,                // Unfilled size
-    "price": "9000.00"                  // Price of the order
+    "limit_price": "9000.00"                  // Price of the order
     "side": "buy"                       // Order side (buy or sell)
     "cancellation_reason": "cancelled_by_user"        // Cancellation reason in case of cancelled order, null otherwise
     "stop_order_type": "stop_loss_order",             // If a Stop Order -&gt; "stop_loss_order"/"take_profit_order", null otherwise
