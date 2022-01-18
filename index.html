@@ -2669,7 +2669,7 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated list of desired contract types</td>
+<td>comma separated list of desired contract types, if not specified any parameters then, all the orders will be returned</td>
 </tr>
 <tr>
 <td>order_types</td>
@@ -2723,6 +2723,22 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
 <th>Value</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>contract_types</td>
+<td>futures</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>perpetual_futures</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>call_options</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>put_options</td>
+</tr>
 <tr>
 <td>order_types</td>
 <td>market</td>
@@ -4242,7 +4258,33 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated list of desired contract types</td>
+<td>comma separated list of desired contract types, if not specified any parameters then, all the open positions will be returned</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-14'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contract_types</td>
+<td>futures</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>perpetual_futures</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>call_options</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>put_options</td>
 </tr>
 </tbody></table>
 
@@ -4570,7 +4612,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-14'>Enumerated Values</h4>
+<h4 id='enumerated-values-15'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4651,7 +4693,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 
 <h3 id="get-order-history-(cancelled-and-closed)-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-15'>Enumerated Values</h4>
+<h4 id='enumerated-values-16'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4859,7 +4901,7 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 
 <h3 id="get-user-fills-by-filters-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-16'>Enumerated Values</h4>
+<h4 id='enumerated-values-17'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5223,7 +5265,7 @@ curl -X GET https://api.delta.exchange/v2/trades/<span class="o">{</span>symbol<
 
 <h3 id="get-public-trades-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-17'>Enumerated Values</h4>
+<h4 id='enumerated-values-18'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5497,7 +5539,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 
 <h3 id="get-wallet-transactions-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-18'>Enumerated Values</h4>
+<h4 id='enumerated-values-19'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5783,7 +5825,7 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-19'>Enumerated Values</h4>
+<h4 id='enumerated-values-20'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6138,7 +6180,7 @@ This operation does not require authentication.
 <td>Type of index</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-20'>Enumerated Values</h4>
+<h4 id='enumerated-values-21'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -6267,7 +6309,7 @@ This operation does not require authentication.
 <td>Minimum value of allowed withdrawal</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-21'>Enumerated Values</h4>
+<h4 id='enumerated-values-22'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -6648,7 +6690,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-22'>Enumerated Values</h4>
+<h4 id='enumerated-values-23'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -6930,7 +6972,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-23'>Enumerated Values</h4>
+<h4 id='enumerated-values-24'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -7143,7 +7185,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-24'>Enumerated Values</h4>
+<h4 id='enumerated-values-25'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -7439,7 +7481,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-25'>Enumerated Values</h4>
+<h4 id='enumerated-values-26'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -7749,7 +7791,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-26'>Enumerated Values</h4>
+<h4 id='enumerated-values-27'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8004,7 +8046,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-27'>Enumerated Values</h4>
+<h4 id='enumerated-values-28'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8229,7 +8271,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-28'>Enumerated Values</h4>
+<h4 id='enumerated-values-29'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
