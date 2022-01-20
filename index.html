@@ -1044,6 +1044,21 @@ after which next API request can be hit. </p>
 }
 </code></pre>
 
+<p><hr></p>
+
+<p>title: Delta Exchange Api V2
+language_tabs:
+  - python: Python
+  - shell: Shell
+  - ruby: Ruby
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2</p>
+
+<p><hr></p>
+
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 
 <p>This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.</p>
@@ -5807,7 +5822,7 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 <td>query</td>
 <td>string</td>
 <td>true</td>
-<td>product symbol</td>
+<td>product symbol needs to pass to get data, to get funding history in the same api pass symbol as FUNDING:${symbol} and for mark price MARK:${symbol}</td>
 </tr>
 <tr>
 <td>start</td>
