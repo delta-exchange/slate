@@ -212,7 +212,7 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="python">Python</a>
-              <a href="#" data-language-name="shell">Shell</a>
+              <a href="#" data-language-name="shell">cURL</a>
               <a href="#" data-language-name="ruby">Ruby</a>
         </div>
         <div class="search">
@@ -8999,8 +8999,10 @@ This operation does not require authentication.
 <li>Testnet - wss://testnet-socket.delta.exchange</li>
 </ul>
 
+<p>You will be disconnected, if there is no activity within 60 after making connection.</p>
+
 <h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
-<p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to subscribe for. This message is mandatory — you will be disconnected if no subscribe has been received within 60 seconds.</p>
+<p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to subscribe for.</p>
 
 <p>To specify contracts within each channel, just pass a list of symbols inside the channel payload.</p>
 
@@ -9704,7 +9706,8 @@ Channel provide updates when margin get updated due to auto_topup istrue for tha
 
 <p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer in a network without having to understand network details. RPC uses the client/server model. The requesting program is a client and the service-providing program is the server.</p>
 
-<p>The client sends request message to the server and then waits for the response. </p>
+<p>The client sends request message to the server and then waits for the response. 
+Socket connection needs to be <a href="/#authenticating-a-connection">authenticated</a> to make RPC requests.</p>
 
 <h2 id='request-message'>Request Message</h2>
 
@@ -10007,10 +10010,13 @@ Describe the vulnerability and its impact.</p>
 <p>If any doubts related to your submissions or creative dialogue please feel free to email saurabh.goyal@delta.exchange or venkatesh.sharma@delta.exchange.</p>
 
       </div>
+      
       <div class="dark-box">
+        
           <div class="lang-selector">
+          <input type=button value="Show/Hide" onclick="showHideDiv('foo');">
                 <a href="#" data-language-name="python">Python</a>
-                <a href="#" data-language-name="shell">Shell</a>
+                <a href="#" data-language-name="shell">cURL</a>
                 <a href="#" data-language-name="ruby">Ruby</a>
           </div>
       </div>
