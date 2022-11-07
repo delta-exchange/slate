@@ -661,6 +661,9 @@
                   <li>
                     <a href="#usertrades" class="toc-h2 toc-link" data-title="UserTrades">UserTrades</a>
                   </li>
+                  <li>
+                    <a href="#portfoliomargins" class="toc-h2 toc-link" data-title="PortfolioMargins">PortfolioMargins</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -10522,7 +10525,8 @@ Sample feed response
     "type": "margins",
     "balance": "1.0012",
     "order_margin": "0.121212",     // Margin blocked in open orders
-    "position_margin: "0.101212",   // Margin blocked in position
+    "position_margin": "0.101212",  // Margin blocked in position
+    "portfolio_margin": "2.333"     // Margin blocked for current portfolio
     "commission": "0.00012",        // commissions blocked in position and order
     "asset_id": 2                   // BTC
 }
@@ -10668,6 +10672,90 @@ Sample feed response
     "client_order_id": "GA123",
     "timestamp": 1544091555086559,
     "seq_no": 1
+}
+
+</code></pre><h2 id='portfoliomargins'>PortfolioMargins</h2>
+<p>Channel provides updates for details of margin values for portfolio, these updates are provided every 2 seconds.</p>
+
+<p>Keys - </p>
+
+<dl>
+    <dt>im_w_ucf</dt>
+    <dd>This is the final initial margin requirement of the portfolio.</dd>
+    <dd>im_w_ucf = max(risk_margin, margin_floor) - ucf</dd>
+    <dt>im_wo_ucf</dt>
+    <dd>This is the initial margin requirement of the portfolio without UCF.</dd>
+    <dd>im_wo_ucf = max(risk_margin, margin_floor)</dd>
+    <dt>mm_w_ucf</dt>
+    <dd>This is the final maintenance margin requirement of the portfolio.</dd>
+    <dd>mm_w_ucf = 80% * max(risk_margin, margin_floor) - ucf</dd>
+    <dt>mm_wo_ucf</dt>
+    <dd>This is the maintenance margin requirement of the portfolio without ucf.</dd>
+    <dd>mm_wo_ucf = 80% * max(risk_margin, margin_floor)</dd>
+    <dt>commission</dt>
+    <dd>This is the commission required for the portfolio. It is added on top of the initial margin requirement.</dd>
+    <dt>blocked_margin</dt>
+    <dd>This is the actual blocked margin that we were able to block from the wallet balance to fullfill the initial margin and commissions requirement of the portfolio.</dd>
+    <dt>futures_margin_floor</dt>
+    <dd>This is the Margin Floor requirement contributed by futures position/orders.</dd>
+    <dt>long_options_margin_floor</dt>
+    <dd>This is the Margin Floor requirement contributed by long options position/orders.</dd>
+    <dt>short_options_margin_floor</dt>
+    <dd>This is the Margin Floor requirement contributed by short options position/orders.</dd>
+    <dt>margin_floor</dt>
+    <dd>margin_floor = long_options_margin_floor + short_options_margin_floor</dd>
+    <dt>risk_margin</dt>
+    <dd>This is the Risk Margin requirement calculated as per our stress scenarios.</dd>
+    <dt>risk_matrix</dt>
+    <dd>Matrix showing details for all the stress scenarios.</dd>
+    <dt>positions_upl</dt>
+    <dd>This is the UCF which is summations of all positions marked at mark price. More details in user guide.</dd>
+    <dt>liquidation_risk</dt>
+    <dd>This is a flag showing if the portfolio is in liquidation risk.</dd>
+    <dd>
+    <dl>
+    ideally when -
+    <dd>
+    <dl>
+    <dt>blocked_margin < im_w_ucf + commissions</dt>
+    <dd>In such situation the portfolio is not sufficiently margined. After some cusion we start sending liquidation_risk as true indicating a potential liquidation.</dd>
+    <dd>So while placing new orders this deficit also needs to be fulfilled along with any additional margin requirement for the order.</dd>
+    <dt>blocked_margin < mm_w_ucf</dt>
+    <dd>This is our liquidation condition</dd>
+    </dl>
+    </dd>
+    </dl>
+    </dd>
+    <dt>under_liquidation</dt>
+    <dd>This is a flag showing if the portfolio is under liquidation.</dd>
+    <dd>During this process we follow all our liquidation steps which can be seen in user docs.</dd>
+    <dt>margin_shortfall</dt>
+    <dd>This is the shortfall value in margin to be topped up to not be under liquidation risk.</dd>
+</dl>
+<pre class="highlight plaintext"><code>// portfolio margin update
+
+{
+    "type": "portfolio_margins",
+    "user_id": 1,
+    "asset_id": 2,                   // BTC
+    "index_symbol": ".DEXBTUSDT",
+    liquidation_risk: false,
+    "blocked_margin": "100",
+    "mm_wo_ucf": "80",
+    "mm_w_ucf": "80",
+    "im_wo_ucf": "100",
+    "im_w_ucf": "100",
+    "positions_upl": "0",
+    "risk_margin": "100",
+    "risk_matrix":{"down":[{"is_worst":false,"pnl":"230.03686162","price_shock":"10"}],"unchanged":[{"is_worst":false,"pnl":"230.03686162","price_shock":"10"}],"up":[]},
+    "futures_margin_floor": "20",
+    "short_options_margin_floor": "20",
+    "long_options_margin_floor": "20",
+    "under_liquidation": false,
+    "commission": "3.444",
+    "margin_floor": "60",
+    "timestamp": 1544091555086559,
+    "margin_shortfall": "4.5"             // key sent when liquidation_risk is true 
 }
 
 </code></pre>
