@@ -432,6 +432,25 @@
               </ul>
           </li>
           <li>
+            <a href="#delta-exchange-api-v2-mmp" class="toc-h1 toc-link" data-title="MMP">MMP</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#update-mmp-config" class="toc-h2 toc-link" data-title="Update MMP config">Update MMP config</a>
+                  </li>
+                  <li>
+                    <a href="#reset-mmp" class="toc-h2 toc-link" data-title="Reset MMP">Reset MMP</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#delta-exchange-api-v2-dead-man-s-switch-auto-cancel-" class="toc-h1 toc-link" data-title="Dead Man's Switch (Auto Cancel)">Dead Man's Switch (Auto Cancel)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#cancel-after" class="toc-h2 toc-link" data-title="Cancel After">Cancel After</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#delta-exchange-api-v2-settlement-prices" class="toc-h1 toc-link" data-title="Settlement Prices">Settlement Prices</a>
               <ul class="toc-list-h2">
                   <li>
@@ -570,6 +589,21 @@
                   <li>
                     <a href="#tocSstats" class="toc-h2 toc-link" data-title="Stats">Stats</a>
                   </li>
+                  <li>
+                    <a href="#tocSmmpconfigupdaterequest" class="toc-h2 toc-link" data-title="MMPConfigUpdateRequest">MMPConfigUpdateRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSmmpresetrequest" class="toc-h2 toc-link" data-title="MMPResetRequest">MMPResetRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSuserpreference" class="toc-h2 toc-link" data-title="UserPreference">UserPreference</a>
+                  </li>
+                  <li>
+                    <a href="#tocScancelafterrequest" class="toc-h2 toc-link" data-title="CancelAfterRequest">CancelAfterRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocScancelafterresponse" class="toc-h2 toc-link" data-title="CancelAfterResponse">CancelAfterResponse</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -663,6 +697,9 @@
                   </li>
                   <li>
                     <a href="#portfoliomargins" class="toc-h2 toc-link" data-title="PortfolioMargins">PortfolioMargins</a>
+                  </li>
+                  <li>
+                    <a href="#mmp-trigger" class="toc-h2 toc-link" data-title="MMP Trigger">MMP Trigger</a>
                   </li>
               </ul>
           </li>
@@ -2194,6 +2231,7 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
@@ -2581,7 +2619,8 @@ curl -X PUT https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -3316,6 +3355,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
       </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
@@ -3450,6 +3490,13 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <td>none</td>
 </tr>
 <tr>
+<td>»» mmp</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+</tr>
+<tr>
 <td>»» post_only</td>
 <td>body</td>
 <td>string</td>
@@ -3541,6 +3588,14 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <tr>
 <td>»» time_in_force</td>
 <td>fok</td>
+</tr>
+<tr>
+<td>»» mmp</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>»» mmp</td>
+<td>disabled</td>
 </tr>
 <tr>
 <td>»» post_only</td>
@@ -3743,7 +3798,8 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
@@ -3804,11 +3860,36 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 <td>total size after editing order</td>
 </tr>
 <tr>
+<td>»» mmp</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+</tr>
+<tr>
 <td>» product_id</td>
 <td>body</td>
 <td>integer</td>
 <td>false</td>
 <td>none</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-12'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>»» mmp</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>»» mmp</td>
+<td>disabled</td>
 </tr>
 </tbody></table>
 
@@ -3865,7 +3946,7 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 
 <h3 id="edit-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-12'>Enumerated Values</h4>
+<h4 id='enumerated-values-13'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4091,7 +4172,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 
 <h3 id="delele-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-13'>Enumerated Values</h4>
+<h4 id='enumerated-values-14'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4459,7 +4540,7 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-14'>Enumerated Values</h4>
+<h4 id='enumerated-values-15'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5061,7 +5142,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-15'>Enumerated Values</h4>
+<h4 id='enumerated-values-16'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5142,7 +5223,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 
 <h3 id="get-order-history-(cancelled-and-closed)-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-16'>Enumerated Values</h4>
+<h4 id='enumerated-values-17'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5350,7 +5431,7 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 
 <h3 id="get-user-fills-by-filters-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-17'>Enumerated Values</h4>
+<h4 id='enumerated-values-18'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5718,7 +5799,7 @@ curl -X GET https://api.delta.exchange/v2/trades/<span class="o">{</span>symbol<
 
 <h3 id="get-public-trades-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-18'>Enumerated Values</h4>
+<h4 id='enumerated-values-19'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5992,7 +6073,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 
 <h3 id="get-wallet-transactions-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-19'>Enumerated Values</h4>
+<h4 id='enumerated-values-20'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6273,6 +6354,411 @@ curl -X GET https://api.delta.exchange/v2/stats <span class="se">\</span>
 This operation does not require authentication.
 </aside>
 
+<h1 id="delta-exchange-api-v2-mmp">MMP</h1>
+
+<p>Market maker protection</p>
+
+<h2 id='update-mmp-config'>Update MMP config</h2>
+
+<p><a id="opIdupdateMMP"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/users/update_mmp'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X PUT https://api.delta.exchange/v2/users/update_mmp <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">put</span> <span class="s1">'https://api.delta.exchange/v2/users/update_mmp'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>PUT /users/update_mmp</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"window_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"freeze_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trade_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"delta_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"vega_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="update-mmp-config-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemammpconfigupdaterequest">MMPConfigUpdateRequest</a></td>
+<td>true</td>
+<td>mmp config for a given underlying asset</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"default_auto_topup"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mmp_config"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="update-mmp-config-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns back the User Preference which contains mmp config</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Returns error if mmp is not enabled on the account</td>
+<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="update-mmp-config-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h2 id='reset-mmp'>Reset MMP</h2>
+
+<p><a id="opIdresetMMP"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/users/reset_mmp'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X PUT https://api.delta.exchange/v2/users/reset_mmp <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">put</span> <span class="s1">'https://api.delta.exchange/v2/users/reset_mmp'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>PUT /users/reset_mmp</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="reset-mmp-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemammpresetrequest">MMPResetRequest</a></td>
+<td>true</td>
+<td>reset mmp config for a given underlying asset</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="reset-mmp-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns back the User Preference which contains mmp config</td>
+<td><a href="#schemaapisuccessresponse">ApiSuccessResponse</a></td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Returns error if mmp is not enabled on the account</td>
+<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h1 id="delta-exchange-api-v2-dead-man-s-switch-auto-cancel-">Dead Man's Switch (Auto Cancel)</h1>
+
+<p>Set up timers for auto orders cancel in case of network malfunctions </p>
+
+<h2 id='cancel-after'>Cancel After</h2>
+
+<p><a id="opIdcancelAfter"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/orders/cancel_after'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.delta.exchange/v2/orders/cancel_after <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.delta.exchange/v2/orders/cancel_after'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>POST /orders/cancel_after</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_after"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5000"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="cancel-after-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacancelafterrequest">CancelAfterRequest</a></td>
+<td>true</td>
+<td>cancel after details</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"cancel_after_enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cancel_after_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1669119262000"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="cancel-after-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns back the cancel_after configs set</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Returns if configs couldnt be set</td>
+<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="cancel-after-responseschema">Response Schema</h3>
+
+<h4 id='enumerated-values-21'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cancel_after_enabled</td>
+<td>false</td>
+</tr>
+<tr>
+<td>cancel_after_enabled</td>
+<td>true</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
 <h1 id="delta-exchange-api-v2-settlement-prices">Settlement Prices</h1>
 
 <h2 id='get-product-settlement-prices'>Get product settlement prices</h2>
@@ -6295,7 +6781,7 @@ This operation does not require authentication.
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/v2/products/?states<span class="o">=</span>expired?states<span class="o">=</span>expired <span class="se">\</span>
+curl -X GET https://api.delta.exchange/v2/products/?states<span class="o">=</span>expired <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
@@ -6442,7 +6928,7 @@ curl -X GET https://api.delta.exchange/v2/products/?states<span class="o">=</spa
 
 <h3 id="get-product-settlement-prices-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-20'>Enumerated Values</h4>
+<h4 id='enumerated-values-22'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6603,7 +7089,7 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-21'>Enumerated Values</h4>
+<h4 id='enumerated-values-23'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6958,7 +7444,7 @@ This operation does not require authentication.
 <td>Type of index</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-22'>Enumerated Values</h4>
+<h4 id='enumerated-values-24'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -7087,7 +7573,7 @@ This operation does not require authentication.
 <td>Minimum value of allowed withdrawal</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-23'>Enumerated Values</h4>
+<h4 id='enumerated-values-25'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -7468,7 +7954,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-24'>Enumerated Values</h4>
+<h4 id='enumerated-values-26'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -7750,7 +8236,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-25'>Enumerated Values</h4>
+<h4 id='enumerated-values-27'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -7862,6 +8348,7 @@ This operation does not require authentication.
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
@@ -7982,6 +8469,13 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 <tr>
+<td>mmp</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
 <td>post_only</td>
 <td>string</td>
 <td>false</td>
@@ -8011,7 +8505,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-26'>Enumerated Values</h4>
+<h4 id='enumerated-values-28'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8068,6 +8562,14 @@ This operation does not require authentication.
 <td>fok</td>
 </tr>
 <tr>
+<td>mmp</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>disabled</td>
+</tr>
+<tr>
 <td>post_only</td>
 <td>true</td>
 </tr>
@@ -8113,6 +8615,7 @@ This operation does not require authentication.
     </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
@@ -8146,7 +8649,8 @@ This operation does not require authentication.
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -8192,6 +8696,31 @@ This operation does not require authentication.
 <td>none</td>
 <td>total size after editing order</td>
 </tr>
+<tr>
+<td>mmp</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-29'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>mmp</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>disabled</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSarrayofeditorderrequest">ArrayOfEditOrderRequest</h2>
@@ -8203,7 +8732,8 @@ This operation does not require authentication.
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"enabled"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -8401,7 +8931,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-27'>Enumerated Values</h4>
+<h4 id='enumerated-values-30'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8711,7 +9241,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-28'>Enumerated Values</h4>
+<h4 id='enumerated-values-31'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8998,7 +9528,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-29'>Enumerated Values</h4>
+<h4 id='enumerated-values-32'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -9223,7 +9753,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-30'>Enumerated Values</h4>
+<h4 id='enumerated-values-33'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -10001,8 +10531,259 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocSmmpconfigupdaterequest">MMPConfigUpdateRequest</h2>
+
+<p><a id="schemammpconfigupdaterequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"window_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"freeze_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trade_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"delta_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"vega_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>MMP config for an underlying</em></p>
+
+<h3 id='properties-40'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>asset</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>window_interval</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>freeze_interval</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>trade_limit</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>delta_limit</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>vega_limit</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSmmpresetrequest">MMPResetRequest</h2>
+
+<p><a id="schemammpresetrequest"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>MMP config for an underlying</em></p>
+
+<h3 id='properties-41'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>asset</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSuserpreference">UserPreference</h2>
+
+<p><a id="schemauserpreference"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"default_auto_topup"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mmp_config"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>User trading preferences</em></p>
+
+<h3 id='properties-42'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>default_auto_topup</td>
+<td>boolean</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>mmp_config</td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocScancelafterrequest">CancelAfterRequest</h2>
+
+<p><a id="schemacancelafterrequest"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_after"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5000"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Cancel After Request Object</em></p>
+
+<h3 id='properties-43'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>cancel_after</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>timer value in milliseconds after which orders are to be cancelled. To cancel any previous timeout and keep your orders open, pass a cancel_after of 0</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocScancelafterresponse">CancelAfterResponse</h2>
+
+<p><a id="schemacancelafterresponse"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"cancel_after_enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_after_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1669119262000"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Cancel After Response Object</em></p>
+
+<h3 id='properties-44'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cancel_after_enabled</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>cancel_after_timestamp</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>timestamp after which orders will get cancelled</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-34'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cancel_after_enabled</td>
+<td>false</td>
+</tr>
+<tr>
+<td>cancel_after_enabled</td>
+<td>true</td>
+</tr>
+</tbody></table>
+
 <h1 id='place-order-errors'>Place order errors</h1>
+
 <p>This section lists various errors returned by the system while placing order. The error format looks like this </p>
+
 <pre class="highlight plaintext"><code>{
   success: false,
   error: {
@@ -10754,167 +11535,17 @@ Sample feed response
     <dd>It is comprised of sum of futures_margin_floor, long_options_margin_floor, short_options_margin_floor</dd>
 </dl>
 
-<!-- 
-## Trading Notitifications
+<h2 id='mmp-trigger'>MMP Trigger</h2>
 
-**trading_notifications** channel provides updates of all the private trade notifications.
+<p>Channel provides updates when MMP is triggered. MMP should be enabled by the Delta team for this channel to work. </p>
 
-## orderUpdate
-Channel provides updates when any order is updated for any action such as fill, quantity change.
-
-```
-// orderUpdate
+<pre class="highlight plaintext"><code>// mmp_trigger
 {
-    "type": "orderUpdate",
-    "action": "fill",
-    "product_id": 3,
-    "symbol": "BTCUSD_28Dec",
-    "order_id": 3283999,
-    "side": "buy",
-    "unfilled_size": 1,
-    "filled_size": 1,
-    "price": "4500.0",
-    "state": "open",
-    "timestamp": 1544091555086559
+    user_id: 1,
+    asset: "BTC",
+    frozen_till: 1561634049751430     # timestamp is microseconds, will be -1 if manual reset is enabled 
 }
-```
-
-
-## fill
-Channel provides updates when any order is executed.
-
-```
-// Fill
-{
-    "symbol": "BNBBTC_30Nov",
-    "fill_id": "1234-abcd-qwer-3456",
-    "product_id": 7,
-    "type": "fill",
-    "user_id": 1998,
-    "order_id": 3283999,
-    "side": "buy",
-    "size": 190,
-    "price": "0.00145791",
-    "role": "taker",
-    "client_order_id": "GA123",
-    "timestamp": 1544091555086559
-}
-```
-
-## adl
-Channel provides updates when open position get auto deleveraged.
-
-```
-// ADL
-{
-    "symbol": "BNBBTC_30Nov",
-    "product_id": 7,
-    "type": "adl",
-    "timestamp": 1544091555086559
-    "side": 'buy',          // Position side
-    "size": 32,             // size by which your position was reduced
-    "entry_price": "0.000121",
-    "exit_price": "0.0001222",
-    "realized_pnl": "0.1",
-}
-```
-
-## self_trade
-Channel provide updates when any of your order get matched with your open order.
-
-```
-// Self Trade
-{
-    "symbol": "BNBBTC_30Nov",
-    "product_id": 7,
-    "type": "self_trade",
-    "user_id": 1998,
-    "size": 199,
-    "price": "0.00145791",
-    "timestamp": 1544091555086559
-}
-```
-
-## pnl
-Channel provides pnl updates when any position gets close.
-
-```
-// PNL
-{
-    "symbol": "BNBBTC_30Nov",
-    "product_id": 7,
-    "type": "pnl",
-    "user_id": 1998,
-    "side": "sell",
-    "size": 180",
-    "entry_price": "0.00145797",
-    "exit_price": "0.00145791",
-    "realized_pnl": "0.00102121",
-    "timestamp": 1544091555086559
-
-}
-```
-
-## liquidation
-Channel provide updates when any position gets liquidated.
-
-```
-// Liquidation
-{
-    "symbol": "BNBBTC_30Nov",
-    "product_id": 7,
-    "type": "liquidation",
-    "user_id": 1998,
-    "timestamp": 1542108684000000,
-    "side": "buy",              // side of the position which got liquidated
-    "size": 180,            // size of the position which got liquidated, always positive
-    "liquidation_price": "0.00145791",
-    "bankruptcy_price": "0.00145700",
-
-}
-```
-
-## stop_trigger
-Channel provide updates when stop order gets triggered.
-
-```
-// Stop Trigger
-{
-    "symbol": "BNBBTC_30Nov",
-    "product_id": 7,
-    "user_id": 1998
-    "type": "stop_trigger",
-    "timestamp": 1542108684000000,
-    "side": "buy",
-    "size": 180
-
-}
-```
-
-## stop_cancel
-Channel provide updates when stop order gets cancelled.
-
-```
-// Stop Cancel
-{
-    "symbol": "BNBBTC_30Nov",
-    "product_id": 7,
-    "user_id": 1998
-    "type": "stop_cancel",
-    "timestamp": 1542108684000000,
-    "side": "buy",
-    "message": "",
-    "size": 180
-}
-```
-## auto_topup
-Channel provide updates when margin get updated due to auto_topup istrue for that open position.
-
-```
-// Auto Topup
-
-```
- -->
+</code></pre>
 
 <h1 id='web-socket-rpc'>Web Socket RPC</h1>
 
