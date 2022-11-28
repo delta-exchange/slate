@@ -667,6 +667,9 @@
                     <a href="#spot_price" class="toc-h2 toc-link" data-title="spot_price">spot_price</a>
                   </li>
                   <li>
+                    <a href="#spot_30mtwap_price" class="toc-h2 toc-link" data-title="spot_30mtwap_price">spot_30mtwap_price</a>
+                  </li>
+                  <li>
                     <a href="#funding_rate" class="toc-h2 toc-link" data-title="funding_rate">funding_rate</a>
                   </li>
                   <li>
@@ -11174,6 +11177,15 @@ ws.send({
     symbol: ".DEBNBBTC",
     price: "0.0014579",
     type: "spot_price",
+    timestamp: 1561634049751430
+}
+</code></pre><h2 id='spot_30mtwap_price'>spot_30mtwap_price</h2>
+<p><strong>spot_30mtwap_price</strong> channel provides a real time feed of the 30 min twap of underlying index prices. This is the price used for settlement of options.</p>
+<pre class="highlight plaintext"><code>// Spot 30 minutes twap Price Response
+{
+    symbol: ".DEXBTUSDT",
+    price: "0.0014579",
+    type: "spot_30mtwap_price",
     timestamp: 1561634049751430
 }
 </code></pre><h2 id='funding_rate'>funding_rate</h2>
