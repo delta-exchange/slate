@@ -993,13 +993,13 @@ You should use ntp timestamp to sync local clocks in order to avoid following is
     <span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1970</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="n">d</span> <span class="o">-</span> <span class="n">epoch</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://testnet-api.delta.exchange/orders"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://testnet-api.delta.exchange/v2/orders"</span>
 
 <span class="c"># Get open orders</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="s">''</span>
 <span class="n">method</span> <span class="o">=</span> <span class="s">'GET'</span>
 <span class="n">timestamp</span> <span class="o">=</span> <span class="n">get_time_stamp</span><span class="p">()</span>
-<span class="n">path</span> <span class="o">=</span> <span class="s">'/orders'</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">'/v2/orders'</span>
 <span class="n">query_string</span> <span class="o">=</span> <span class="s">'?product_id=1&amp;state=open'</span>
 <span class="n">signature_data</span> <span class="o">=</span> <span class="n">method</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="n">query_string</span> <span class="o">+</span> <span class="n">payload</span>
 <span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="n">api_secret</span><span class="p">,</span> <span class="n">signature_data</span><span class="p">)</span>
