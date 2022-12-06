@@ -3370,7 +3370,8 @@ To perform this operation, you must be sign the request using your api key and s
 
 <h2 id='cancel-all-open-orders'>Cancel all open orders</h2>
 
-<p><a id="opIdcancelAllOrders"></a></p>
+<p>Cancels all orders for a given product id. If product id is not provided, it cancels orders for provided contract types. If none of them are provided, it cancels all the orders.
+<a id="opIdcancelAllOrders"></a></p>
 
 <blockquote>
 <p>Code samples</p>
@@ -9256,14 +9257,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>false</td>
 <td>none</td>
-<td>cancel all orders for particular product, cancels orders for all products if not provided</td>
+<td>cancel all orders for particular product.</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>comma separated list of desired contract types</td>
+<td>comma separated list of contract types e.g. futures,perpetual_futures,call_options, put_options, interest_rate_swaps etc.</td>
 </tr>
 <tr>
 <td>cancel_limit_orders</td>
