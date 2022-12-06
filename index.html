@@ -369,10 +369,10 @@
             <a href="#delta-exchange-api-v2-positions" class="toc-h1 toc-link" data-title="Positions">Positions</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-position" class="toc-h2 toc-link" data-title="Get position">Get position</a>
+                    <a href="#get-margined-positions" class="toc-h2 toc-link" data-title="Get margined positions">Get margined positions</a>
                   </li>
                   <li>
-                    <a href="#get-margined-positions" class="toc-h2 toc-link" data-title="Get margined positions">Get margined positions</a>
+                    <a href="#get-position" class="toc-h2 toc-link" data-title="Get position">Get position</a>
                   </li>
                   <li>
                     <a href="#add-remove-position-margin" class="toc-h2 toc-link" data-title="Add/Remove position margin">Add/Remove position margin</a>
@@ -521,10 +521,10 @@
                     <a href="#tocSbracketorderrequest" class="toc-h2 toc-link" data-title="EditBracketOrderRequest">EditBracketOrderRequest</a>
                   </li>
                   <li>
-                    <a href="#tocStakeprofitorder" class="toc-h2 toc-link" data-title="TakeProfitOrder">TakeProfitOrder</a>
+                    <a href="#tocStakeprofitorder" class="toc-h2 toc-link" data-title="Bracket: TakeProfitOrder">Bracket: TakeProfitOrder</a>
                   </li>
                   <li>
-                    <a href="#tocSstoplossorder" class="toc-h2 toc-link" data-title="StopLossOrder">StopLossOrder</a>
+                    <a href="#tocSstoplossorder" class="toc-h2 toc-link" data-title="Bracket: StopLossOrder">Bracket: StopLossOrder</a>
                   </li>
                   <li>
                     <a href="#tocSdeleteorderrequest" class="toc-h2 toc-link" data-title="DeleteOrderRequest">DeleteOrderRequest</a>
@@ -3047,7 +3047,8 @@ To perform this operation, you must be sign the request using your api key and s
 
 <h2 id='place-bracket-order'>Place Bracket Order</h2>
 
-<p><a id="opIdplaceBracketOrder"></a></p>
+<p>A bracket order is a set of TP and SL order. For a bracket order , size need not be specified as it closes the entire position. For a given contract, you can have multiple bracket orders for open orders but only a single bracket order for any open position.
+<a id="opIdplaceBracketOrder"></a></p>
 
 <blockquote>
 <p>Code samples</p>
@@ -3139,14 +3140,14 @@ curl -X POST https://api.delta.exchange/v2/orders/bracket <span class="se">\</sp
 <tr>
 <td>take_profit_order</td>
 <td>body</td>
-<td><a href="#schematakeprofitorder">Take Profit Order</a></td>
+<td><a href="#schematakeprofitorder">Bracket: Take Profit Order</a></td>
 <td>false</td>
 <td>Take profit order which needs to be created</td>
 </tr>
 <tr>
 <td>stop_loss_order</td>
 <td>body</td>
-<td><a href="#schemastoplossorder">Stop Loss Order</a></td>
+<td><a href="#schemastoplossorder">Bracket: Stop Loss Order</a></td>
 <td>false</td>
 <td>Stop loss order which needs to be created</td>
 </tr>
@@ -3370,7 +3371,7 @@ To perform this operation, you must be sign the request using your api key and s
 
 <h2 id='cancel-all-open-orders'>Cancel all open orders</h2>
 
-<p>Cancels all orders for a given product id. If product id is not provided, it cancels orders for provided contract types. If none of them are provided, it cancels all the orders.
+<p>Cancels all orders for a given product id. If product id is not provided, it cancels orders for provided contract types. If none of them are provided, it cancels all the orders. Provide either product id or list of contract types at a time. If both are provided, contract types will be ignored.
 <a id="opIdcancelAllOrders"></a></p>
 
 <blockquote>
@@ -3544,7 +3545,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 
 <p><code>POST /orders/batch</code></p>
 
-<p>Orders in a batch should belong to the same contract. </p>
+<p>Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50.</p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -4676,115 +4677,6 @@ To perform this operation, you must be sign the request using your api key and s
 
 <p>Get Open positions, Change Position Margin, Close Position, Close All Position</p>
 
-<h2 id='get-position'>Get position</h2>
-
-<p><a id="opIdgetPositions"></a></p>
-
-<blockquote>
-<p>Code samples</p>
-</blockquote>
-
-<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
-  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
-  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
-  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
-<span class="p">}</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/positions'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-  <span class="s">'product_id'</span><span class="p">:</span> <span class="s">'0'</span>
-<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
-
-<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/v2/positions?product_id<span class="o">=</span>0 <span class="se">\</span>
-  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
-  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
-  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
-  -H <span class="s1">'timestamp: ****'</span>
-
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
-<span class="nb">require</span> <span class="s1">'json'</span>
-
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
-  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
-  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
-  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
-<span class="p">}</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/positions'</span><span class="p">,</span>
-  <span class="ss">params: </span><span class="p">{</span>
-  <span class="s1">'product_id'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span>
-<span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
-
-<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre>
-
-<p><code>GET /positions</code></p>
-
-<h3 id="get-position-parameters">Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>In</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>product_id</td>
-<td>query</td>
-<td>integer</td>
-<td>true</td>
-<td>id of the product</td>
-</tr>
-</tbody></table>
-
-<blockquote>
-<p>Example responses</p>
-
-<p>200 Response</p>
-</blockquote>
-
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"entry_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<h3 id="get-position-responses">Responses</h3>
-
-<table><thead>
-<tr>
-<th>Status</th>
-<th>Meaning</th>
-<th>Description</th>
-<th>Schema</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>Open position for the give product id</td>
-<td>Inline</td>
-</tr>
-</tbody></table>
-
-<h3 id="get-position-responseschema">Response Schema</h3>
-
-<aside class="warning">
-To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
-</aside>
-
 <h2 id='get-margined-positions'>Get margined positions</h2>
 
 <p><a id="opIdgetMarginedPositions"></a></p>
@@ -4933,6 +4825,115 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 </tbody></table>
 
 <h3 id="get-margined-positions-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h2 id='get-position'>Get position</h2>
+
+<p><a id="opIdgetPositions"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/positions'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+  <span class="s">'product_id'</span><span class="p">:</span> <span class="s">'0'</span>
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.delta.exchange/v2/positions?product_id<span class="o">=</span>0 <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/positions'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="s1">'product_id'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span>
+<span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>GET /positions</code></p>
+
+<h3 id="get-position-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>product_id</td>
+<td>query</td>
+<td>integer</td>
+<td>true</td>
+<td>id of the product</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"entry_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="get-position-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Open position for the give product id</td>
+<td>Inline</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-position-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -9046,7 +9047,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocStakeprofitorder">TakeProfitOrder</h2>
+<h2 id="tocStakeprofitorder">Bracket: TakeProfitOrder</h2>
 
 <p><a id="schematakeprofitorder"></a></p>
 
@@ -9058,7 +9059,7 @@ This operation does not require authentication.
 
 </span></code></pre>
 
-<p><em>take profit order</em></p>
+<p><em>bracket: take profit order</em></p>
 
 <h3 id='properties-16'>Properties</h3>
 
@@ -9112,7 +9113,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSstoplossorder">StopLossOrder</h2>
+<h2 id="tocSstoplossorder">Bracket: StopLossOrder</h2>
 
 <p><a id="schemastoplossorder"></a></p>
 
@@ -9125,7 +9126,7 @@ This operation does not require authentication.
 
 </span></code></pre>
 
-<p><em>stop loss order</em></p>
+<p><em>bracket: stop loss order</em></p>
 
 <h3 id='properties-17'>Properties</h3>
 
