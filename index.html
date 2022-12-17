@@ -11467,6 +11467,7 @@ This operation does not require authentication.
 <li>Get real time feed of market data, this includes L2 and L3 orderbook and recent trades.</li>
 <li>Get price feeds - Mark prices of different contracts, price feed of underlying indexes etc.</li>
 <li>Get account specific notifications like fills, liquidations, <a href="https://www.delta.exchange/user-guide/docs/trading-guide/ADL/">ADL</a> and PnL updates.</li>
+<li>Get account specific updates on orders ,positions and wallets.</li>
 </ul>
 
 <p>Access url</p>
@@ -11481,9 +11482,9 @@ This operation does not require authentication.
 <h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
 <p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to subscribe for.</p>
 
-<p>To specify contracts within each channel, just pass a list of symbols inside the channel payload.</p>
+<p>To specify contracts within each channel, just pass a list of symbols inside the channel payload. Mention &quot;all&quot; in the list of symbols if you want to receive updates across all the contracts. Please note that snapshots are sent only for specified symbols,meaning no snapshots are sent for symbol: &quot;all&quot;.</p>
 
-<p>Once a subscribe message is received the server will respond with a subscriptions message that lists all channels you are subscribed to. Subsequent subscribe messages will add to the list of subscriptions.</p>
+<p>Once a subscribe message is received the server will respond with a subscriptions message that lists all channels you are subscribed to. Subsequent subscribe messages will add to the list of subscriptions. </p>
 
 <blockquote>
 <p>Subscription Sample</p>
@@ -11506,6 +11507,12 @@ This operation does not require authentication.
                 "symbols": [
                     "BTCUSD_28Dec"
                 ]
+            },
+            {
+                "name": "funding_rate",
+                "symbols": [
+                    "all"
+                ]
             }
         ]
     }
@@ -11526,6 +11533,12 @@ This operation does not require authentication.
             "symbols": [
                 "BTCUSD_28Dec",
                 "ETHBTC_28Dec"
+            ]
+        },
+        {
+            "name": "funding_rate",
+            "symbols": [
+                "all"
             ]
         }
     ]
@@ -11673,12 +11686,26 @@ ws.send({
 </code></pre><h1 id='public-channels'>Public Channels</h1><h2 id='v2-ticker'>v2 ticker</h2>
 <p>The ticker channel provides price change data for the last 24 hrs (rolling window). It is published every 5 seconds.</p>
 
-<p>On subscribing to <strong>v2/ticker</strong> channel, socket server will emit messages with type &#39;ticker&#39; in response.</p>
+<p>On subscribing to <strong>v2/ticker</strong> channel, socket server will emit messages with type &#39;ticker&#39; in response. To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>Ticker Sample</p>
 </blockquote>
-<pre class="highlight plaintext"><code>// Response
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "v2/ticker",
+                "symbols": [
+                    "BTCUSD_28Dec"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Response
 {
     "close": 0.00001327,
     "high": 0.00001359,
@@ -11688,7 +11715,7 @@ ws.send({
     "product_id": 56,
     "size": 1254631,                        // num of contracts traded
     "spot_price": "0.00001326",             
-    "symbol": "ADABTC",
+    "symbol": "BTCUSD_28Dec",
     timestamp: 1595242187705121,            // in us
     "turnover": 16.805033569999996,         // turnover reported in settling symbol
     "turnover_symbol": "BTC",               // settling symbol
@@ -11696,12 +11723,26 @@ ws.send({
     "volume": 1254631                       // volume is defined as contract_value * size 
 }
 </code></pre><h2 id='l2_orderbook'>l2_orderbook</h2>
-<p><strong>l2_orderbook</strong> channel provides snapshot of the latest level2 orderbook.</p>
+<p><strong>l2_orderbook</strong> channel provides snapshot of the latest level2 orderbook.Specifying symbols when subscribing to l2_orderbook is necessary to receive updates. No updates are sent for symbol: <strong><em>&quot;all&quot;</em></strong></p>
 
 <blockquote>
 <p>L2 Orderbook Sample</p>
 </blockquote>
-<pre class="highlight plaintext"><code>// l2 orderbook Response
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "l2_orderbook",
+                "symbols": [
+                    "BTCUSD_28Dec"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// l2 orderbook Response
 {
     "symbol": "BTCUSD_28Dec",
     "product_id": 3,
@@ -11711,10 +11752,28 @@ ws.send({
     "sell": [{"limit_price":"6229.0","size":15964},{"limit_price":"6229.5","size":3504},{"limit_price":"6230.0","size":15964},{"limit_price":"6231.0","size":15957}]
 }
 </code></pre><h2 id='all_trades'>all_trades</h2>
-<p><strong>all_trades</strong> channel provides a real time feed of all trades (fills).</p>
-<pre class="highlight plaintext"><code>// All Trades Response
+<p><strong>all_trades</strong> channel provides a real time feed of all trades (fills). To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+
+<blockquote>
+<p>All Trades Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
 {
-    symbol: "BNBBTC_30Nov",
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "all_trades",
+                "symbols": [
+                    "BTCUSD_28Dec"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// All Trades Response
+{
+    symbol: "BTCUSD_28Dec",
     price: "0.0014579",
     size: 100,
     type: "all_trades",
@@ -11723,12 +11782,29 @@ ws.send({
     timestamp: 1561634049751430
 }
 </code></pre><h2 id='mark_price'>mark_price</h2>
-<p><strong>mark_price</strong> channel provides a real time feed of mark price. This is the price on which all open positions are marked for liquidation.</p>
+<p><strong>mark_price</strong> channel provides a real time feed of mark price. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a &quot;MARK:&quot; to subscribe for mark price.
+To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
 
-<p>Please note that the product symbol is prepended with a &quot;MARK:&quot; to subscribe for mark price.</p>
-<pre class="highlight plaintext"><code>// Mark Price Response
+<blockquote>
+<p>Mark Price Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
 {
-    symbol: "MARK:BNBBTC_30Nov",
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "mark_price",
+                "symbols": [
+                    "MARK:BTCUSD_28Dec"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Mark Price Response
+{
+    symbol: "MARK:BTCUSD_28Dec",
     product_id: 7,
     type: "mark_price",
     price: "0.00401010",
@@ -11736,8 +11812,26 @@ ws.send({
     timestamp: 1561634049751430
 }
 </code></pre><h2 id='spot_price'>spot_price</h2>
-<p><strong>spot_price</strong> channel provides a real time feed of the underlying index prices.</p>
-<pre class="highlight plaintext"><code>// Spot Price Response
+<p><strong>spot_price</strong> channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: <strong><em>&quot;all&quot;</em></strong></p>
+
+<blockquote>
+<p>Spot Price Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "spot_price",
+                "symbols": [
+                    ".DEBNBBTC"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Spot Price Response
 {
     symbol: ".DEBNBBTC",
     price: "0.0014579",
@@ -11745,8 +11839,27 @@ ws.send({
     timestamp: 1561634049751430
 }
 </code></pre><h2 id='spot_30mtwap_price'>spot_30mtwap_price</h2>
-<p><strong>spot_30mtwap_price</strong> channel provides a real time feed of the 30 min twap of underlying index prices. This is the price used for settlement of options.</p>
-<pre class="highlight plaintext"><code>// Spot 30 minutes twap Price Response
+<p><strong>spot_30mtwap_price</strong> channel provides a real time feed of the 30 min twap of underlying index prices. 
+This is the price used for settlement of options. Specifying symbols when subscribing to spot_30mtwap_price is necessary to receive updates. No updates are sent for symbol: <strong><em>&quot;all&quot;</em></strong></p>
+
+<blockquote>
+<p>Spot Price 30mtwap Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "spot_30mtwap_price",
+                "symbols": [
+                    ".DEXBTUSDT"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Spot 30 minutes twap Price Response
 {
     symbol: ".DEXBTUSDT",
     price: "0.0014579",
@@ -11754,10 +11867,29 @@ ws.send({
     timestamp: 1561634049751430
 }
 </code></pre><h2 id='funding_rate'>funding_rate</h2>
-<p><strong>funding_rate</strong> channel provides a real time feed of funding rates for perpetual contracts.</p>
-<pre class="highlight plaintext"><code>// Funding Rate Response
+<p><strong>funding_rate</strong> channel provides a real time feed of funding rates for perpetual contracts.
+To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+
+<blockquote>
+<p>Funding Rate Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
 {
-    symbol: "BNBBTC_30Nov",
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "funding_rate",
+                "symbols": [
+                    "BTCUSD_28Dec"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Funding Rate Response
+{
+    symbol: "BTCUSD_28Dec",
     product_id: 7,
     type: "funding_rate",
     funding_rate: "-0.00401010",  // in %
@@ -11769,7 +11901,18 @@ ws.send({
 <blockquote>
 <p>Product Updates Sample</p>
 </blockquote>
-<pre class="highlight plaintext"><code>// Market Disruption Response
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "product_updates"
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Market Disruption Response
 {
     "type":"product_updates",
     "event":"market_disruption",
@@ -11818,7 +11961,18 @@ ws.send({
 <blockquote>
 <p>Announcements Sample</p>
 </blockquote>
-<pre class="highlight plaintext"><code>// Maintenance Started Response
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "announcements"
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Maintenance Started Response
 {
     "type":"announcements",
     "event":"maintenance_started",
@@ -11839,6 +11993,8 @@ ws.send({
 
 <p>List of supported resolutions
 [&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;,&quot;2w&quot;,&quot;30d&quot;]</p>
+
+<p>To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>OHLC candles update sample</p>
@@ -11869,7 +12025,22 @@ Sample feed response
 <p>Private channels require clients to authenticate.</p>
 <h2 id='margins'>Margins</h2>
 <p>Channel provides updates for margin blocked for different assets, these updates are provided only on change of margin.</p>
-<pre class="highlight plaintext"><code>// margin update
+
+<blockquote>
+<p>Margins Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "margins"
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// margin update
 {
     "type": "margins",
     "balance": "1.0012",            // wallet balance = deposits - withdrawals + realised_cashflows
@@ -11886,8 +12057,25 @@ Sample feed response
 </code></pre><h2 id='positions'>Positions</h2>
 <p>Channel provides updates for change in position. Need to pass list of product symbols while subscribing. these updates are provided only on change of position.</p>
 
-<p>A snapshot of current open position will be sent after subscribing a symbol, incremental updates will be sent on trade executions.</p>
-<pre class="highlight plaintext"><code>// Position update
+<p>A snapshot of current open position will be sent after subscribing a symbol, incremental updates will be sent on trade executions.
+To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+
+<blockquote>
+<p>Positions Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "positions",
+                "symbols": ["BTCUSD_29Mar"]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Position update
 {
     "type": "positions",
     "action": "",                       // "create"/"update"/"delete"
@@ -11945,7 +12133,25 @@ Sample feed response
 <li>liquidation</li>
 <li>self_trade</li>
 </ul>
-<pre class="highlight plaintext"><code>// Order update
+
+<p>To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+
+<blockquote>
+<p>Orders Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "orders",
+                "symbols": ["BTCUSD_29Mar"]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Order update
 
 {
     "type": "orders",
@@ -11957,6 +12163,7 @@ Sample feed response
     "client_order_id": ""               // Client order id
     "size": 100,                        // Order size
     "unfilled_size": 55,                // Unfilled size
+    "average_fill_price": "8999.00"     // nil for unfilled orders
     "limit_price": "9000.00"                  // Price of the order
     "side": "buy"                       // Order side (buy or sell)
     "cancellation_reason": "cancelled_by_user"        // Cancellation reason in case of cancelled order, null otherwise
@@ -11995,6 +12202,7 @@ Sample feed response
       "time_in_force": "gtc",
       "trail_amount": null,
       "unfilled_size": 1,
+      "average_fill_price": "8999.00",
       "user_id": 1132
     }
   ],
@@ -12008,8 +12216,25 @@ Sample feed response
 
 <p>All updates will have incremental seq_id. seq_id is separate for each symbol.</p>
 
-<p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot; in the user_trades channel.</p>
-<pre class="highlight plaintext"><code>// user_trades
+<p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot; in the user_trades channel.
+To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+
+<blockquote>
+<p>User Trades Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "user_trades",
+                "symbols": ["BNBBTC_30Nov"]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// user_trades
 {
     "symbol": "BNBBTC_30Nov",
     "fill_id": "1234-abcd-qwer-3456",
@@ -12033,7 +12258,25 @@ Sample feed response
 <p>For detailed description of portfolio magrgin please see <a href="https://guides.delta.exchange/delta-exchange-user-guide/trading-guide/margin-explainer/portfolio-margin">user guide</a></p>
 
 <p>UCF: is unrealised cashflows of your portfolio. These are the cashflows (negative for outgoing and positive for incoming) that will take place if all the positions in your portfolio are closed at prevailing mark prices.</p>
-<pre class="highlight plaintext"><code>// portfolio margin update
+
+<p>To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+
+<blockquote>
+<p>Portfolio Margin Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "portfolio_margins",
+                "symbols": [".DEXBTUSDT"]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// portfolio margin update
 
 {
     "type": "portfolio_margins",
@@ -12107,7 +12350,22 @@ Sample feed response
 
 <p>Channel provides updates when MMP is triggered. MMP should be enabled by the Delta team for this channel to work. </p>
 
-<pre class="highlight plaintext"><code>// mmp_trigger
+<blockquote>
+<p>MMP Trigger Sample</p>
+</blockquote>
+
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "mmp_trigger"
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// mmp_trigger response
 {
     user_id: 1,
     asset: "BTC",
