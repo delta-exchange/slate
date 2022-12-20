@@ -11482,7 +11482,7 @@ This operation does not require authentication.
 <h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
 <p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to subscribe for.</p>
 
-<p>To specify contracts within each channel, just pass a list of symbols inside the channel payload. Mention &quot;all&quot; in the list of symbols if you want to receive updates across all the contracts. Please note that snapshots are sent only for specified symbols,meaning no snapshots are sent for symbol: &quot;all&quot;.</p>
+<p>To specify contracts within each channel, just pass a list of symbols inside the channel payload. Mention <strong><em>[&quot;all&quot;]</em></strong> in symbols if you want to receive updates across all the contracts. Please note that snapshots are sent only for specified symbols,meaning no snapshots are sent for symbol: <strong><em>&quot;all&quot;</em></strong>.</p>
 
 <p>Once a subscribe message is received the server will respond with a subscriptions message that lists all channels you are subscribed to. Subsequent subscribe messages will add to the list of subscriptions. </p>
 
@@ -11686,7 +11686,7 @@ ws.send({
 </code></pre><h1 id='public-channels'>Public Channels</h1><h2 id='v2-ticker'>v2 ticker</h2>
 <p>The ticker channel provides price change data for the last 24 hrs (rolling window). It is published every 5 seconds.</p>
 
-<p>On subscribing to <strong>v2/ticker</strong> channel, socket server will emit messages with type &#39;ticker&#39; in response. To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+<p>On subscribing to <strong>v2/ticker</strong> channel, socket server will emit messages with type &#39;ticker&#39; in response. To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong>  in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>Ticker Sample</p>
@@ -11700,6 +11700,20 @@ ws.send({
                 "name": "v2/ticker",
                 "symbols": [
                     "BTCUSD_28Dec"
+                ]
+            }
+        ]
+    }
+}
+// Subscribe to all the symbols
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "v2/ticker",
+                "symbols": [
+                    "all"
                 ]
             }
         ]
@@ -11752,7 +11766,7 @@ ws.send({
     "sell": [{"limit_price":"6229.0","size":15964},{"limit_price":"6229.5","size":3504},{"limit_price":"6230.0","size":15964},{"limit_price":"6231.0","size":15957}]
 }
 </code></pre><h2 id='all_trades'>all_trades</h2>
-<p><strong>all_trades</strong> channel provides a real time feed of all trades (fills). To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+<p><strong>all_trades</strong> channel provides a real time feed of all trades (fills). To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong> in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>All Trades Sample</p>
@@ -11783,7 +11797,7 @@ ws.send({
 }
 </code></pre><h2 id='mark_price'>mark_price</h2>
 <p><strong>mark_price</strong> channel provides a real time feed of mark price. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a &quot;MARK:&quot; to subscribe for mark price.
-To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong> in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>Mark Price Sample</p>
@@ -11868,7 +11882,7 @@ This is the price used for settlement of options. Specifying symbols when subscr
 }
 </code></pre><h2 id='funding_rate'>funding_rate</h2>
 <p><strong>funding_rate</strong> channel provides a real time feed of funding rates for perpetual contracts.
-To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong> in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>Funding Rate Sample</p>
@@ -11994,7 +12008,7 @@ To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></
 <p>List of supported resolutions
 [&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;,&quot;2w&quot;,&quot;30d&quot;]</p>
 
-<p>To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+<p>To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong> in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>OHLC candles update sample</p>
@@ -12058,7 +12072,7 @@ Sample feed response
 <p>Channel provides updates for change in position. Need to pass list of product symbols while subscribing. these updates are provided only on change of position.</p>
 
 <p>A snapshot of current open position will be sent after subscribing a symbol, incremental updates will be sent on trade executions.
-To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong> in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>Positions Sample</p>
@@ -12071,6 +12085,19 @@ To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></
             {
                 "name": "positions",
                 "symbols": ["BTCUSD_29Mar"]
+            }
+        ]
+    }
+}
+
+//Subscribe for all the symbols
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "positions",
+                "symbols": ["all"]
             }
         ]
     }
@@ -12134,7 +12161,7 @@ To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></
 <li>self_trade</li>
 </ul>
 
-<p>To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+<p>To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong> in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>Orders Sample</p>
@@ -12217,7 +12244,7 @@ To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></
 <p>All updates will have incremental seq_id. seq_id is separate for each symbol.</p>
 
 <p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot; in the user_trades channel.
-To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
+To receive updates on all the contracts, pass <strong><em>[&quot;all&quot;]</em></strong> in symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>User Trades Sample</p>
@@ -12258,8 +12285,6 @@ To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></
 <p>For detailed description of portfolio magrgin please see <a href="https://guides.delta.exchange/delta-exchange-user-guide/trading-guide/margin-explainer/portfolio-margin">user guide</a></p>
 
 <p>UCF: is unrealised cashflows of your portfolio. These are the cashflows (negative for outgoing and positive for incoming) that will take place if all the positions in your portfolio are closed at prevailing mark prices.</p>
-
-<p>To receive updates on all the contracts, pass <strong><em>&quot;all&quot;</em></strong>  in the list of symbols. By default, no updates are sent.</p>
 
 <blockquote>
 <p>Portfolio Margin Sample</p>
