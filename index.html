@@ -638,6 +638,9 @@
             <a href="#websocket-feed" class="toc-h1 toc-link" data-title="Websocket Feed">Websocket Feed</a>
           </li>
           <li>
+            <a href="#product-categories" class="toc-h1 toc-link" data-title="Product Categories">Product Categories</a>
+          </li>
+          <li>
             <a href="#subscribing-to-channels" class="toc-h1 toc-link" data-title="Subscribing to Channels">Subscribing to Channels</a>
               <ul class="toc-list-h2">
                   <li>
@@ -11482,6 +11485,17 @@ This operation does not require authentication.
 
 <p>You will be disconnected, if there is no activity within 60 after making connection.</p>
 
+<h1 id='product-categories'>Product Categories</h1>
+
+<p>List of all the category names that should be used for subscribing to various public and private channels are listed here.</p>
+
+<ol>
+<li>Put Options (symbol: <strong><em>put_options</em></strong>)</li>
+<li>Call Options (symbol: <strong><em>call_options</em></strong>)</li>
+<li>Futures (symbol: <strong><em>futures</em></strong>)</li>
+<li>Perpetual Futures (symbol: <strong><em>perpetual_futures</em></strong>)</li>
+</ol>
+
 <h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
 <p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to subscribe for.</p>
 
@@ -11690,7 +11704,7 @@ ws.send({
 <p>The ticker channel provides price change data for the last 24 hrs (rolling window). It is published every 5 seconds.</p>
 
 <p>You need to send the list of symbols for which you would like to subscribe to ticker channel. You can also subscribe to 
-ticker updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+ticker updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to ticker channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -11744,7 +11758,7 @@ Please note that if you subscribe to ticker channel without specifying the symbo
 }
 </code></pre><h2 id='l1_orderbook'>l1_orderbook</h2>
 <p><strong>l1_orderbook</strong> channel provides level1 orderbook updates. You need to send the list of symbols for which you would like to subscribe to L1 orderbook. You can also subscribe to 
-orderbook updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+orderbook updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to L1 channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -11812,7 +11826,7 @@ Please note that if you subscribe to L2 channel without specifying the symbols l
 </code></pre><h2 id='all_trades'>all_trades</h2>
 <p><strong>all_trades</strong> channel provides a real time feed of all trades (fills).
 You need to send the list of symbols for which you would like to subscribe to all trades channel. You can also subscribe to
-all trades updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+all trades updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to all_trades channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -11846,7 +11860,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 </code></pre><h2 id='mark_price'>mark_price</h2>
 <p><strong>mark_price</strong> channel provides a real time feed of mark price. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a &quot;MARK:&quot; to subscribe for mark price.
 You need to send the list of symbols for which you would like to subscribe to mark price channel. You can also subscribe to 
-mark price updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+mark price updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to mark price channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -11945,7 +11959,7 @@ This is the price used for settlement of options. Specifying symbols when subscr
 </code></pre><h2 id='funding_rate'>funding_rate</h2>
 <p><strong>funding_rate</strong> channel provides a real time feed of funding rates for perpetual contracts.</p>
 
-<p>You need to send the list of symbols for which you would like to subscribe to funding rate channel. You can also subscribe to funding rate updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+<p>You need to send the list of symbols for which you would like to subscribe to funding rate channel. You can also subscribe to funding rate updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to funding rate channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -12074,7 +12088,7 @@ Please note that if you subscribe to funding rate channel without specifying the
 [&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;,&quot;2w&quot;,&quot;30d&quot;]</p>
 
 <p>You need to send the list of symbols for which you would like to subscribe to candlesticks channel. You can also subscribe to candlesticks
-updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 Please note that if you subscribe to candlsticks channel without specifying the symbols list, you will not receive any data.</p>
 
 <blockquote>
@@ -12140,7 +12154,7 @@ Sample feed response
 
 <p>A snapshot of current open position will be sent after subscribing a symbol, incremental updates will be sent on trade executions.
 You need to send the list of symbols for which you would like to subscribe to positions channel. You can also subscribe to positions 
-updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to positions channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -12232,7 +12246,7 @@ Please note that if you subscribe to positions channel without specifying the sy
 </ul>
 
 <p>You need to send the list of symbols for which you would like to subscribe to orders channel. You can also subscribe to orders
-updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to orders channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -12318,7 +12332,7 @@ Please note that if you subscribe to orders channel without specifying the symbo
 
 <p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot; in the user_trades channel.
 You need to send the list of symbols for which you would like to subscribe to user trades channel. You can also subscribe to user trades
-updates for category of products by sending category names. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+updates for category of products by sending <a href="/#product-categories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
 Please note that if you subscribe to user trades channel without specifying the symbols list, you will not receive any data.</p>
 
@@ -12449,7 +12463,7 @@ Please note that if you subscribe to user trades channel without specifying the 
 
 <h2 id='mmp-trigger'>MMP Trigger</h2>
 
-<p>Channel provides updates when MMP is triggered. MMP should be enabled by the Delta team for this channel to work. Read more about market maker protection <a href="https://guides.delta.exchange/delta-exchange-user-guide/market-makers-guide/market-maker-protection">here</a>.  </p>
+<p>Channel provides updates when MMP is triggered.Market maker protection is available to registered market makers by default. Others can reach out to support for getting access to MMP. More info <a href="https://guides.delta.exchange/delta-exchange-user-guide/market-makers-guide/market-maker-protection">here</a>.  </p>
 
 <blockquote>
 <p>MMP Trigger Sample</p>
