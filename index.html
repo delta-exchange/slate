@@ -535,6 +535,12 @@
                     <a href="#tocScreateorderrequest" class="toc-h2 toc-link" data-title="CreateOrderRequest">CreateOrderRequest</a>
                   </li>
                   <li>
+                    <a href="#tocSbatchcreateorderrequest" class="toc-h2 toc-link" data-title="BatchCreateOrderRequest">BatchCreateOrderRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSarrayofbatchcreateorderrequest" class="toc-h2 toc-link" data-title="ArrayOfBatchCreateOrderRequest">ArrayOfBatchCreateOrderRequest</a>
+                  </li>
+                  <li>
                     <a href="#tocSarrayofcreateorderrequest" class="toc-h2 toc-link" data-title="ArrayOfCreateOrderRequest">ArrayOfCreateOrderRequest</a>
                   </li>
                   <li>
@@ -3552,7 +3558,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 
 <p><code>POST /orders/batch</code></p>
 
-<p>Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply.</p>
+<p>Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that fok and ioc are not valid time in force values for creating batch orders.</p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -3607,7 +3613,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <tr>
 <td>» orders</td>
 <td>body</td>
-<td>[<a href="#schemacreateorderrequest">CreateOrderRequest</a>]</td>
+<td>[<a href="#schemabatchcreateorderrequest">BatchCreateOrderRequest</a>]</td>
 <td>false</td>
 <td>[A create order object]</td>
 </tr>
@@ -3800,14 +3806,6 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <tr>
 <td>»» time_in_force</td>
 <td>gtc</td>
-</tr>
-<tr>
-<td>»» time_in_force</td>
-<td>ioc</td>
-</tr>
-<tr>
-<td>»» time_in_force</td>
-<td>fok</td>
 </tr>
 <tr>
 <td>»» mmp</td>
@@ -9660,9 +9658,283 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSarrayofcreateorderrequest">ArrayOfCreateOrderRequest</h2>
+<h2 id="tocSbatchcreateorderrequest">BatchCreateOrderRequest</h2>
 
-<p><a id="schemaarrayofcreateorderrequest"></a></p>
+<p><a id="schemabatchcreateorderrequest"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>A create order object</em></p>
+
+<h3 id='properties-13'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>product_id</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>limit_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>size</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>side</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>side for which to place order</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>stop_order_type</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>stop_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>trail_amount</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>bracket_stop_loss_limit_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>bracket_stop_loss_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>bracket_take_profit_limit_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>bracket_take_profit_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>time_in_force</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>post_only</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>reduce_only</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>close_on_trigger</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-29'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>side</td>
+<td>buy</td>
+</tr>
+<tr>
+<td>side</td>
+<td>sell</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>limit_order</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>market_order</td>
+</tr>
+<tr>
+<td>stop_order_type</td>
+<td>stop_loss_order</td>
+</tr>
+<tr>
+<td>stop_order_type</td>
+<td>take_profit_order</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>mark_price</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>last_traded_price</td>
+</tr>
+<tr>
+<td>stop_trigger_method</td>
+<td>spot_price</td>
+</tr>
+<tr>
+<td>time_in_force</td>
+<td>gtc</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp1</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp2</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp3</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp4</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp5</td>
+</tr>
+<tr>
+<td>post_only</td>
+<td>true</td>
+</tr>
+<tr>
+<td>post_only</td>
+<td>false</td>
+</tr>
+<tr>
+<td>reduce_only</td>
+<td>true</td>
+</tr>
+<tr>
+<td>reduce_only</td>
+<td>false</td>
+</tr>
+<tr>
+<td>close_on_trigger</td>
+<td>true</td>
+</tr>
+<tr>
+<td>close_on_trigger</td>
+<td>false</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSarrayofbatchcreateorderrequest">ArrayOfBatchCreateOrderRequest</h2>
+
+<p><a id="schemaarrayofbatchcreateorderrequest"></a></p>
 
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -9688,7 +9960,53 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-13'>Properties</h3>
+</span></code></pre><h3 id='properties-14'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>[<a href="#schemabatchcreateorderrequest">BatchCreateOrderRequest</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>[A create order object]</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSarrayofcreateorderrequest">ArrayOfCreateOrderRequest</h2>
+
+<p><a id="schemaarrayofcreateorderrequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='properties-15'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -9722,7 +10040,7 @@ This operation does not require authentication.
 
 <p><em>edit order object</em></p>
 
-<h3 id='properties-14'>Properties</h3>
+<h3 id='properties-16'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -9770,7 +10088,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-29'>Enumerated Values</h4>
+<h4 id='enumerated-values-30'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -9818,7 +10136,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-15'>Properties</h3>
+</span></code></pre><h3 id='properties-17'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -9860,7 +10178,7 @@ This operation does not require authentication.
 
 <p><em>bracket order object</em></p>
 
-<h3 id='properties-16'>Properties</h3>
+<h3 id='properties-18'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -9950,7 +10268,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-30'>Enumerated Values</h4>
+<h4 id='enumerated-values-31'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10006,7 +10324,7 @@ This operation does not require authentication.
 
 <p><em>bracket order object</em></p>
 
-<h3 id='properties-17'>Properties</h3>
+<h3 id='properties-19'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10081,7 +10399,7 @@ This operation does not require authentication.
 
 <p><em>A delete order object</em></p>
 
-<h3 id='properties-18'>Properties</h3>
+<h3 id='properties-20'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10123,7 +10441,7 @@ This operation does not require authentication.
 
 <p><em>Cancel all request filter object</em></p>
 
-<h3 id='properties-19'>Properties</h3>
+<h3 id='properties-21'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10164,7 +10482,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-31'>Enumerated Values</h4>
+<h4 id='enumerated-values-32'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10201,7 +10519,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-20'>Properties</h3>
+</span></code></pre><h3 id='properties-22'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10242,7 +10560,7 @@ This operation does not require authentication.
 
 <p><em>A position object</em></p>
 
-<h3 id='properties-21'>Properties</h3>
+<h3 id='properties-23'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10360,7 +10678,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-22'>Properties</h3>
+</span></code></pre><h3 id='properties-24'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10398,7 +10716,7 @@ This operation does not require authentication.
 
 <p><em>A fill object</em></p>
 
-<h3 id='properties-23'>Properties</h3>
+<h3 id='properties-25'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10474,7 +10792,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-32'>Enumerated Values</h4>
+<h4 id='enumerated-values-33'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10518,7 +10836,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-24'>Properties</h3>
+</span></code></pre><h3 id='properties-26'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10550,7 +10868,7 @@ This operation does not require authentication.
 
 <p><em>Order Leverage for a product</em></p>
 
-<h3 id='properties-25'>Properties</h3>
+<h3 id='properties-27'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10611,7 +10929,7 @@ This operation does not require authentication.
 
 <p><em>L2 orderbook</em></p>
 
-<h3 id='properties-26'>Properties</h3>
+<h3 id='properties-28'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10713,7 +11031,7 @@ This operation does not require authentication.
 
 <p><em>trades of a symbol</em></p>
 
-<h3 id='properties-27'>Properties</h3>
+<h3 id='properties-29'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10761,7 +11079,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-33'>Enumerated Values</h4>
+<h4 id='enumerated-values-34'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10794,7 +11112,7 @@ This operation does not require authentication.
   </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-28'>Properties</h3>
+</span></code></pre><h3 id='properties-30'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10878,7 +11196,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-29'>Properties</h3>
+</span></code></pre><h3 id='properties-31'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10907,7 +11225,7 @@ This operation does not require authentication.
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-30'>Properties</h3>
+</span></code></pre><h3 id='properties-32'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10957,7 +11275,7 @@ This operation does not require authentication.
   </span><span class="s2">"page_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-31'>Properties</h3>
+</span></code></pre><h3 id='properties-33'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11012,7 +11330,7 @@ This operation does not require authentication.
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-32'>Properties</h3>
+</span></code></pre><h3 id='properties-34'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11086,7 +11404,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-34'>Enumerated Values</h4>
+<h4 id='enumerated-values-35'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -11172,7 +11490,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-33'>Properties</h3>
+</span></code></pre><h3 id='properties-35'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11204,7 +11522,7 @@ This operation does not require authentication.
   </span><span class="s2">"transferrer_user"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-34'>Properties</h3>
+</span></code></pre><h3 id='properties-36'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11280,7 +11598,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-35'>Properties</h3>
+</span></code></pre><h3 id='properties-37'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11310,7 +11628,7 @@ This operation does not require authentication.
   </span><span class="s2">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-36'>Properties</h3>
+</span></code></pre><h3 id='properties-38'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11365,7 +11683,7 @@ This operation does not require authentication.
   </span><span class="s2">"upper_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-37'>Properties</h3>
+</span></code></pre><h3 id='properties-39'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11403,7 +11721,7 @@ This operation does not require authentication.
   </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-38'>Properties</h3>
+</span></code></pre><h3 id='properties-40'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11503,7 +11821,7 @@ This operation does not require authentication.
   </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-39'>Properties</h3>
+</span></code></pre><h3 id='properties-41'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11731,7 +12049,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-40'>Properties</h3>
+</span></code></pre><h3 id='properties-42'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11758,7 +12076,7 @@ This operation does not require authentication.
   </span><span class="s2">"before"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-41'>Properties</h3>
+</span></code></pre><h3 id='properties-43'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11800,7 +12118,7 @@ This operation does not require authentication.
 
 <p><em>A ohlc object</em></p>
 
-<h3 id='properties-42'>Properties</h3>
+<h3 id='properties-44'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11870,7 +12188,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-43'>Properties</h3>
+</span></code></pre><h3 id='properties-45'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11911,7 +12229,7 @@ This operation does not require authentication.
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-44'>Properties</h3>
+</span></code></pre><h3 id='properties-46'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11939,7 +12257,7 @@ This operation does not require authentication.
   </span><span class="s2">"total_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-45'>Properties</h3>
+</span></code></pre><h3 id='properties-47'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11989,7 +12307,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-46'>Properties</h3>
+<h3 id='properties-48'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12051,7 +12369,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-35'>Enumerated Values</h4>
+<h4 id='enumerated-values-36'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -12094,7 +12412,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-47'>Properties</h3>
+<h3 id='properties-49'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12121,7 +12439,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-36'>Enumerated Values</h4>
+<h4 id='enumerated-values-37'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -12167,7 +12485,7 @@ This operation does not require authentication.
 
 <p><em>User trading preferences</em></p>
 
-<h3 id='properties-48'>Properties</h3>
+<h3 id='properties-50'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12227,7 +12545,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Request Object</em></p>
 
-<h3 id='properties-49'>Properties</h3>
+<h3 id='properties-51'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12260,7 +12578,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Response Object</em></p>
 
-<h3 id='properties-50'>Properties</h3>
+<h3 id='properties-52'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12287,7 +12605,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-37'>Enumerated Values</h4>
+<h4 id='enumerated-values-38'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -12328,7 +12646,7 @@ This operation does not require authentication.
 
 <p><em>User Object</em></p>
 
-<h3 id='properties-51'>Properties</h3>
+<h3 id='properties-53'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12446,7 +12764,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-52'>Properties</h3>
+</span></code></pre><h3 id='properties-54'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
