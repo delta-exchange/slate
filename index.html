@@ -3558,7 +3558,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 
 <p><code>POST /orders/batch</code></p>
 
-<p>Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that fok and ioc are not valid time in force values for creating batch orders.</p>
+<p>Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that fok and ioc are not valid time in force for creating batch orders.</p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -13274,6 +13274,14 @@ Please note that if you subscribe to l2_updates channel without specifying the s
   "timestamp": 1671140769059031,
   "cs":3409694612
 }
+
+// Error response
+{
+  "action":"error",
+  "symbol":"BTCUSDT",
+  "type":"l2_updates",
+  "msg":"Failed to fetch snapshot, please re-subscribe after a few secs."
+}
 </code></pre><h3 id='how-to-maintain-orderbook-locally-using-this-channel'>How to maintain orderbook locally using this channel:</h3>
 <p>1) When you subscribe to this channel, the first message with &quot;action&quot;= &quot;snapshot&quot; resembles the complete l2_orderbook at this time. &quot;asks&quot; and &quot;bids&quot; are arrays of [&quot;price&quot;, &quot;size&quot;]. (size is number of contracts at this price)</p>
 
@@ -13287,6 +13295,8 @@ Case 1: price already exists, new size is 0 -&gt; Delete this price level.<br>
 Case 2: price already exists, new size isn&#39;t 0 -&gt; Replace the old size with new size.<br>
 Case 3: price doesn’t exists -&gt; insert the price level.<br>
 e.g. for the shown snapshot and update messages: in the ask side, price level of &quot;16919.0&quot; will be deleted. Size at price level &quot;16919.5&quot; will be changed from &quot;1193&quot; to &quot;710&quot;. In the bids side there was no price level of &quot;16918.5&quot;, so add a new level of &quot;16918.5&quot; of size &quot;304&quot;.</p>
+
+<p>5) If &quot;action&quot;:&quot;error&quot; message is received, resubscribe this symbol after a few seconds. Can occur in rare cases, e.g. Failed to send &quot;action&quot;:&quot;snapshot&quot; message after subscribing due to a race condition, instead an &quot;error&quot; message will be sent.</p>
 
 <p>Checksum: This mechanism assist users in checking the accuracy of orderbook data created using l2_updates. checksum is the &quot;cs&quot; key in the message payload.<br>
 Steps to calculate checksum:<br>
