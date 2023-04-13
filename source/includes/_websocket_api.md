@@ -413,6 +413,14 @@ Please note that if you subscribe to l2_updates channel without specifying the s
   "timestamp": 1671140769059031,
   "cs":3409694612
 }
+
+// Error response
+{
+  "action":"error",
+  "symbol":"BTCUSDT",
+  "type":"l2_updates",
+  "msg":"Failed to fetch snapshot, please re-subscribe after a few secs."
+}
 ```
 
 ### How to maintain orderbook locally using this channel:
@@ -429,6 +437,8 @@ Case 1: price already exists, new size is 0 -> Delete this price level.
 Case 2: price already exists, new size isn't 0 -> Replace the old size with new size.  
 Case 3: price doesn’t exists -> insert the price level.  
 e.g. for the shown snapshot and update messages: in the ask side, price level of "16919.0" will be deleted. Size at price level "16919.5" will be changed from "1193" to "710". In the bids side there was no price level of "16918.5", so add a new level of "16918.5" of size "304".
+
+5) If "action":"error" message is received, resubscribe this symbol after a few seconds. Can occur in rare cases, e.g. Failed to send "action":"snapshot" message after subscribing due to a race condition, instead an "error" message will be sent.
 
 Checksum: This mechanism assist users in checking the accuracy of orderbook data created using l2_updates. checksum is the "cs" key in the message payload.  
 Steps to calculate checksum:  
