@@ -309,7 +309,9 @@ Please note that if you subscribe to ticker channel without specifying the symbo
 **l1_orderbook** channel provides level1 orderbook updates. You need to send the list of symbols for which you would like to subscribe to L1 orderbook. You can also subscribe to 
 orderbook updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
 If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
-Please note that if you subscribe to L1 channel without specifying the symbols list, you will not receive any data.
+Please note that if you subscribe to L1 channel without specifying the symbols list, you will not receive any data.  
+Publish interval: 250 millisecs  
+Max interval (in case of same data): 5 secs
 
 > L1 Orderbook Sample
 
@@ -349,7 +351,9 @@ Please note that if you subscribe to L1 channel without specifying the symbols l
 ## l2_orderbook
 
 **l2_orderbook** channel provides the complete level2 orderbook for the sepecified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. Unlike L1 orderbook channel, L2 orderbook channel does not accept product category names or "all" as valid symbols. 
-Please note that if you subscribe to L2 channel without specifying the symbols list, you will not receive any data.
+Please note that if you subscribe to L2 channel without specifying the symbols list, you will not receive any data.  
+Publish interval: 1 sec  
+Max interval (in case of same data): 10 secs
 
 > L2 Orderbook Sample
 
@@ -387,7 +391,9 @@ Please note that if you subscribe to L2 channel without specifying the symbols l
 ## l2_updates
 
 **l2_updates** channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. l2_updates channel does not accept product category names or "all" as valid symbols. 
-Please note that if you subscribe to l2_updates channel without specifying the symbols list, you will not receive any data.
+Please note that if you subscribe to l2_updates channel without specifying the symbols list, you will not receive any data.  
+Publish interval: 250 millisecs  
+"action"="update" messages wont be published till there is an orderbook change.
 
 ```
 // Initial snapshot response
