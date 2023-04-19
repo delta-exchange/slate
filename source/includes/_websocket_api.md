@@ -404,7 +404,7 @@ Publish interval: 250 millisecs
             {
                 "name": "l2_updates",
                 "symbols": [
-                    "ETHUSDT"
+                    "BTCUSDT"
                 ]
             }
         ]
