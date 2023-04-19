@@ -390,12 +390,27 @@ Max interval (in case of same data): 10 secs
 
 ## l2_updates
 
-**l2_updates** channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. l2_updates channel does not accept product category names or "all" as valid symbols. 
+**l2_updates** channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. l2_updates channel does not accept product category names or "all" as valid symbols. 
 Please note that if you subscribe to l2_updates channel without specifying the symbols list, you will not receive any data.  
 Publish interval: 250 millisecs  
 "action"="update" messages wont be published till there is an orderbook change.
 
 ```
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "l2_updates",
+                "symbols": [
+                    "ETHUSDT"
+                ]
+            }
+        ]
+    }
+}
+
 // Initial snapshot response
 {
   "action":"snapshot",
