@@ -1895,7 +1895,8 @@ Orders to be edited in a batch. Rate limits apply.
       "product_id": 0,
       "limit_price": "string",
       "size": 0,
-      "mmp": "disabled"
+      "mmp": "disabled",
+      "post_only": "true"
     }
   ],
   "product_id": 0
@@ -1913,6 +1914,7 @@ Orders to be edited in a batch. Rate limits apply.
 |»» limit_price|body|string|false|none|
 |»» size|body|integer|false|total size after editing order|
 |»» mmp|body|string|false|none|
+|»» post_only|body|string|false|none|
 |» product_id|body|integer|false|none|
 
 #### Enumerated Values
@@ -1925,6 +1927,8 @@ Orders to be edited in a batch. Rate limits apply.
 |»» mmp|mmp3|
 |»» mmp|mmp4|
 |»» mmp|mmp5|
+|»» post_only|true|
+|»» post_only|false|
 
 > Example responses
 
