@@ -3114,6 +3114,13 @@
             "mmp4",
             "mmp5"
           ]
+        },
+        "post_only": {
+          "type": "string",
+          "enum": [
+            "false",
+            "true"
+          ]
         }
       }
     },
