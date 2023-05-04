@@ -1121,7 +1121,8 @@ p JSON.parse(result)
   "product_id": 0,
   "limit_price": "string",
   "size": 0,
-  "mmp": "disabled"
+  "mmp": "disabled",
+  "post_only": "false"
 }
 ```
 
@@ -1684,7 +1685,7 @@ p JSON.parse(result)
 
 `POST /orders/batch`
 
-Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that fok and ioc are not valid time in force for creating batch orders.
+Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that fok and ioc are not valid time in force values for creating batch orders.
 
 > Body parameter
 
@@ -1895,7 +1896,8 @@ Orders to be edited in a batch. Rate limits apply.
       "product_id": 0,
       "limit_price": "string",
       "size": 0,
-      "mmp": "disabled"
+      "mmp": "disabled",
+      "post_only": "false"
     }
   ],
   "product_id": 0
@@ -1913,6 +1915,7 @@ Orders to be edited in a batch. Rate limits apply.
 |»» limit_price|body|string|false|none|
 |»» size|body|integer|false|total size after editing order|
 |»» mmp|body|string|false|none|
+|»» post_only|body|string|false|none|
 |» product_id|body|integer|false|none|
 
 #### Enumerated Values
@@ -1925,6 +1928,8 @@ Orders to be edited in a batch. Rate limits apply.
 |»» mmp|mmp3|
 |»» mmp|mmp4|
 |»» mmp|mmp5|
+|»» post_only|false|
+|»» post_only|true|
 
 > Example responses
 
@@ -5589,7 +5594,8 @@ This operation does not require authentication.
   "product_id": 0,
   "limit_price": "string",
   "size": 0,
-  "mmp": "disabled"
+  "mmp": "disabled",
+  "post_only": "false"
 }
 
 ```
@@ -5605,6 +5611,7 @@ This operation does not require authentication.
 |limit_price|string|false|none|none|
 |size|integer|false|none|total size after editing order|
 |mmp|string|false|none|none|
+|post_only|string|false|none|none|
 
 #### Enumerated Values
 
@@ -5616,6 +5623,8 @@ This operation does not require authentication.
 |mmp|mmp3|
 |mmp|mmp4|
 |mmp|mmp5|
+|post_only|false|
+|post_only|true|
 
 <h2 id="tocSarrayofeditorderrequest">ArrayOfEditOrderRequest</h2>
 
@@ -5628,7 +5637,8 @@ This operation does not require authentication.
     "product_id": 0,
     "limit_price": "string",
     "size": 0,
-    "mmp": "disabled"
+    "mmp": "disabled",
+    "post_only": "false"
   }
 ]
 
