@@ -640,7 +640,6 @@ You need to send the list of symbols for which you would like to subscribe to fu
 If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
 Please note that if you subscribe to funding rate channel without specifying the symbols list, you will not receive any data.
 
- 
 > Funding Rate Sample
 
 ```
@@ -652,7 +651,7 @@ Please note that if you subscribe to funding rate channel without specifying the
             {
                 "name": "funding_rate",
                 "symbols": [
-                    "BTCUSD_28Dec"
+                    "BTCUSDT"
                 ]
             }
         ]
@@ -663,11 +662,14 @@ Please note that if you subscribe to funding rate channel without specifying the
 ```
 // Funding Rate Response
 {
-    symbol: "BTCUSD_28Dec",
-    product_id: 7,
+    symbol: "BTCUSDT",
+    product_id: 139,
     type: "funding_rate",
-    funding_rate: "-0.00401010",  // in %
-    timestamp: 1561634049751430   // in us
+    funding_rate: 0.005701298078111892,  // %
+    funding_rate_8h: 0.005701298078111892, // %
+    next_funding_realization: 1683734400000000 // %
+    predicted_funding_rate: 0.007221329334075148, // in us
+    timestamp: 1683711930547419   // in us
 }
 ```
 
