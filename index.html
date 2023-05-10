@@ -13517,7 +13517,7 @@ Please note that if you subscribe to funding rate channel without specifying the
             {
                 "name": "funding_rate",
                 "symbols": [
-                    "BTCUSD_28Dec"
+                    "BTCUSDT"
                 ]
             }
         ]
@@ -13525,11 +13525,14 @@ Please note that if you subscribe to funding rate channel without specifying the
 }
 </code></pre><pre class="highlight plaintext"><code>// Funding Rate Response
 {
-    symbol: "BTCUSD_28Dec",
-    product_id: 7,
+    symbol: "BTCUSDT",
+    product_id: 139,
     type: "funding_rate",
-    funding_rate: "-0.00401010",  // in %
-    timestamp: 1561634049751430   // in us
+    funding_rate: 0.005701298078111892,  // %
+    funding_rate_8h: 0.005701298078111892, // %
+    next_funding_realization: 1683734400000000 // %
+    predicted_funding_rate: 0.007221329334075148, // in us
+    timestamp: 1683711930547419   // in us
 }
 </code></pre><h2 id='product_updates'>product_updates</h2>
 <p>This channel provides updates when markets are disrupted and resumed. On opening, we conduct a single price auction and auction starting and finish events are also published on this channel. To subscribe, you dont need to pass the symbol list. This channel automatically subscribes to all markets by default.</p>
