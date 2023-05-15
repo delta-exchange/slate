@@ -593,8 +593,40 @@ Please note that if you subscribe to mark price channel without specifying the s
 {
     symbol: ".DEBNBBTC",
     price: "0.0014579",
-    type: "spot_price",
-    timestamp: 1561634049751430
+    type: "spot_price"
+}
+```
+
+## v2/spot_price
+
+**v2/spot_price** channel publishes data of underlying index prices at a fixed interval. Specifying symbols when subscribing to v2/spot_price is necessary to receive updates. No updates are sent for symbol: ***"all"***  
+Publish interval: 1 sec  
+
+> v2/spot_price Subscribe
+
+```
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "v2/spot_price",
+                "symbols": [
+                    ".DEETHUSDT"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```
+// Response
+{
+    s: ".DEETHUSDT",   # spot index symbol
+    p: 1349.3412141,   # spot price
+    type: "v2/spot_price"
 }
 ```
 
