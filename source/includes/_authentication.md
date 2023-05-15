@@ -34,8 +34,8 @@ You can create a new API key from here :
 To create an API key with Trading permissions, whitelisted IP(s) must be provided. API requests using this API key will only succeed, if made from a machine with an IP address that was whitelisted. Multiple IPs can be whitelisted for a single API key. IP values can take IPv4 and IPv6. Whitelisted IPs can be changed and updated from the same page.
 
 Common issues:  
-1. Your machine is using IPv6 instead of IPv4 or vice-versa. Disable the one that isn't whitelisted from your network settings.  
-2. The IP address at your home, office can change automatically after some time interval(about once a week). Update your whitelisted IP in such case.  
+1. Your machine is using IPv6 instead of IPv4 or vice-versa. Disable the one that isn’t whitelisted from your network settings or whitelist both.  
+2. Your ISP may automatically change the IP address at your home, office about once a week. Update your whitelisted IP in such case.  
 3. If you are using a Web Service/Cloud provider like AWS, assign a static public IPv4 address to your machine.  
 
 ## API Key Permissions
