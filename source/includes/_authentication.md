@@ -20,12 +20,23 @@ You should use ntp timestamp to sync local clocks in order to avoid following is
 
   Check api key have required permissions like trading permission
 
+* ```{"success": False, "error": {"code": "ip_blocked_for_api_key"}}```
+
+  API call made from a machine with IP address that isn't whitelisted. Check the below docs for common issues and fixes.
+
 ## Generating an API Key
 
 Before being able to sign any requests, you must create an API key via the Delta website. Upon creating a key you will receive api key and api secret, which you must remember and secure at your end. The Key and Secret will be randomly generated.
 
 You can create a new API key from here :
 [https://www.delta.exchange/app/account/manageapikeys](https://www.delta.exchange/app/account/manageapikeys)
+
+To create an API key with Trading permissions, whitelisted IP(s) must be provided. API requests using this API key will only succeed, if made from a machine with an IP address that was whitelisted. Multiple IPs can be whitelisted for a single API key. IP values can take IPv4 and IPv6. Whitelisted IPs can be changed and updated from the same page.
+
+Common issues:  
+1. Your machine is using IPv6 instead of IPv4 or vice-versa. Disable the one that isn't whitelisted from your network settings.  
+2. The IP address at your home, office can change automatically after some time interval(about once a week). Update your whitelisted IP in such case.  
+3. If you are using a Web Service/Cloud provider like AWS, assign a static public IPv4 address to your machine.  
 
 ## API Key Permissions
 
