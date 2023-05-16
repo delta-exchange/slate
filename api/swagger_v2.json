@@ -1850,6 +1850,12 @@
             "description": "number of records per page",
             "type": "integer",
             "default": 10
+          },
+          {
+            "in": "query",
+            "name": "transaction_types",
+            "description": "transaction types to retrieve",
+            "type": "string_array"
           }
         ],
         "responses": {
