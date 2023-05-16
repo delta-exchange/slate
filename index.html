@@ -598,6 +598,9 @@
                     <a href="#tocSsubaccounttransferhistory" class="toc-h2 toc-link" data-title="SubaccountTransferHistory">SubaccountTransferHistory</a>
                   </li>
                   <li>
+                    <a href="#tocStransactiontypes" class="toc-h2 toc-link" data-title="TransactionTypes">TransactionTypes</a>
+                  </li>
+                  <li>
                     <a href="#tocStransaction" class="toc-h2 toc-link" data-title="Transaction">Transaction</a>
                   </li>
                   <li>
@@ -727,6 +730,9 @@
                   </li>
                   <li>
                     <a href="#spot_price" class="toc-h2 toc-link" data-title="spot_price">spot_price</a>
+                  </li>
+                  <li>
+                    <a href="#v2-spot_price" class="toc-h2 toc-link" data-title="v2/spot_price">v2/spot_price</a>
                   </li>
                   <li>
                     <a href="#spot_30mtwap_price" class="toc-h2 toc-link" data-title="spot_30mtwap_price">spot_30mtwap_price</a>
@@ -983,12 +989,25 @@ You should use ntp timestamp to sync local clocks in order to avoid following is
 
 <p>Check api key have required permissions like trading permission</p>
 
+<ul>
+<li><code>{&quot;success&quot;: False, &quot;error&quot;: {&quot;code&quot;: &quot;ip_blocked_for_api_key&quot;}}</code></li>
+</ul>
+
+<p>API call made from a machine with IP address that isn&#39;t whitelisted. Check the below docs for common issues and fixes.</p>
+
 <h2 id='generating-an-api-key'>Generating an API Key</h2>
 
 <p>Before being able to sign any requests, you must create an API key via the Delta website. Upon creating a key you will receive api key and api secret, which you must remember and secure at your end. The Key and Secret will be randomly generated.</p>
 
 <p>You can create a new API key from here :
 <a href="https://www.delta.exchange/app/account/manageapikeys">https://www.delta.exchange/app/account/manageapikeys</a></p>
+
+<p>To create an API key with Trading permissions, whitelisted IP(s) must be provided. API requests using this API key will only succeed, if made from a machine with an IP address that was whitelisted. Multiple IPs can be whitelisted for a single API key. IP values can take IPv4 and IPv6. Whitelisted IPs can be changed and updated from the same page.</p>
+
+<p>Common issues:<br>
+1. Your machine is using IPv6 instead of IPv4 or vice-versa. Disable the one that isn’t whitelisted from your network settings or whitelist both.<br>
+2. Your ISP may automatically change the IP address at your home, office about once a week. Update your whitelisted IP in such case.<br>
+3. If you are using a Web Service/Cloud provider like AWS, assign a static public IPv4 address to your machine.  </p>
 
 <h2 id='api-key-permissions'>API Key Permissions</h2>
 
@@ -6443,6 +6462,13 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 <td>false</td>
 <td>number of records per page</td>
 </tr>
+<tr>
+<td>transaction_types</td>
+<td>query</td>
+<td><a href="#schematransactiontypes">TransactionTypes</a></td>
+<td>false</td>
+<td>transaction types to retrieve</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -6458,7 +6484,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"transaction_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pnl"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transaction_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"meta_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
       </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -11349,20 +11375,10 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocStransaction">Transaction</h2>
+<h2 id="tocStransactiontypes">TransactionTypes</h2>
 
-<p><a id="schematransaction"></a></p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"transaction_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pnl"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"meta_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<p><a id="schematransactiontypes"></a></p>
+<pre class="highlight json tab-json"><code><span class="s2">"string"</span><span class="w">
 
 </span></code></pre><h3 id='properties-34'>Properties</h3>
 <table><thead>
@@ -11375,63 +11391,14 @@ This operation does not require authentication.
 </tr>
 </thead><tbody>
 <tr>
-<td>id</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>amount</td>
+<td><em>anonymous</em></td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>amount credited/debited in this transaction (+ for credited, - for debited)</td>
-</tr>
-<tr>
-<td>balance</td>
-<td>string</td>
-<td>false</td>
 <td>none</td>
-<td>net wallet balance after this transaction</td>
 </tr>
 <tr>
 <td>transaction_type</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>meta_data</td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>product_id</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>asset_id</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>asset_symbol</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>created_at</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
@@ -11507,6 +11474,96 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocStransaction">Transaction</h2>
+
+<p><a id="schematransaction"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"transaction_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"meta_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='properties-35'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>amount credited/debited in this transaction (+ for credited, - for debited)</td>
+</tr>
+<tr>
+<td>balance</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>net wallet balance after this transaction</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td><a href="#schematransactiontypes">TransactionTypes</a></td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>meta_data</td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>product_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>asset_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>asset_symbol</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSarrayoftransactions">ArrayOfTransactions</h2>
 
 <p><a id="schemaarrayoftransactions"></a></p>
@@ -11515,7 +11572,7 @@ This operation does not require authentication.
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"transaction_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pnl"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transaction_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"meta_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -11524,7 +11581,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-35'>Properties</h3>
+</span></code></pre><h3 id='properties-36'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11556,7 +11613,7 @@ This operation does not require authentication.
   </span><span class="s2">"transferrer_user"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-36'>Properties</h3>
+</span></code></pre><h3 id='properties-37'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11632,7 +11689,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-37'>Properties</h3>
+</span></code></pre><h3 id='properties-38'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11662,7 +11719,7 @@ This operation does not require authentication.
   </span><span class="s2">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-38'>Properties</h3>
+</span></code></pre><h3 id='properties-39'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11717,7 +11774,7 @@ This operation does not require authentication.
   </span><span class="s2">"upper_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-39'>Properties</h3>
+</span></code></pre><h3 id='properties-40'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11755,7 +11812,7 @@ This operation does not require authentication.
   </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-40'>Properties</h3>
+</span></code></pre><h3 id='properties-41'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11855,7 +11912,7 @@ This operation does not require authentication.
   </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-41'>Properties</h3>
+</span></code></pre><h3 id='properties-42'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12083,7 +12140,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-42'>Properties</h3>
+</span></code></pre><h3 id='properties-43'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12110,7 +12167,7 @@ This operation does not require authentication.
   </span><span class="s2">"before"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-43'>Properties</h3>
+</span></code></pre><h3 id='properties-44'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12152,7 +12209,7 @@ This operation does not require authentication.
 
 <p><em>A ohlc object</em></p>
 
-<h3 id='properties-44'>Properties</h3>
+<h3 id='properties-45'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12222,7 +12279,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-45'>Properties</h3>
+</span></code></pre><h3 id='properties-46'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12263,7 +12320,7 @@ This operation does not require authentication.
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-46'>Properties</h3>
+</span></code></pre><h3 id='properties-47'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12291,7 +12348,7 @@ This operation does not require authentication.
   </span><span class="s2">"total_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-47'>Properties</h3>
+</span></code></pre><h3 id='properties-48'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12341,7 +12398,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-48'>Properties</h3>
+<h3 id='properties-49'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12446,7 +12503,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-49'>Properties</h3>
+<h3 id='properties-50'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12519,7 +12576,7 @@ This operation does not require authentication.
 
 <p><em>User trading preferences</em></p>
 
-<h3 id='properties-50'>Properties</h3>
+<h3 id='properties-51'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12579,7 +12636,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Request Object</em></p>
 
-<h3 id='properties-51'>Properties</h3>
+<h3 id='properties-52'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12612,7 +12669,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Response Object</em></p>
 
-<h3 id='properties-52'>Properties</h3>
+<h3 id='properties-53'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12680,7 +12737,7 @@ This operation does not require authentication.
 
 <p><em>User Object</em></p>
 
-<h3 id='properties-53'>Properties</h3>
+<h3 id='properties-54'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12798,7 +12855,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-54'>Properties</h3>
+</span></code></pre><h3 id='properties-55'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13468,8 +13525,34 @@ Please note that if you subscribe to mark price channel without specifying the s
 {
     symbol: ".DEBNBBTC",
     price: "0.0014579",
-    type: "spot_price",
-    timestamp: 1561634049751430
+    type: "spot_price"
+}
+</code></pre><h2 id='v2-spot_price'>v2/spot_price</h2>
+<p><strong>v2/spot_price</strong> channel publishes data of underlying index prices at a fixed interval. Specifying symbols when subscribing to v2/spot_price is necessary to receive updates. No updates are sent for symbol: <strong><em>&quot;all&quot;</em></strong><br>
+Publish interval: 1 sec  </p>
+
+<blockquote>
+<p>v2/spot_price Subscribe</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "v2/spot_price",
+                "symbols": [
+                    ".DEETHUSDT"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// Response
+{
+    s: ".DEETHUSDT",   # spot index symbol
+    p: 1349.3412141,   # spot price
+    type: "v2/spot_price"
 }
 </code></pre><h2 id='spot_30mtwap_price'>spot_30mtwap_price</h2>
 <p><strong>spot_30mtwap_price</strong> channel provides a real time feed of the 30 min twap of underlying index prices. 
