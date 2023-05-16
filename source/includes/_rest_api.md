@@ -3468,6 +3468,7 @@ p JSON.parse(result)
 |after|query|string|false|after cursor for pagination|
 |before|query|string|false|before cursor for pagination|
 |page_size|query|integer|false|number of records per page|
+|transaction_types|query|[TransactionTypes](#schematransactiontypes)|false|transaction types to retrieve|
 
 > Example responses
 
@@ -3481,7 +3482,7 @@ p JSON.parse(result)
       "id": 0,
       "amount": "string",
       "balance": "string",
-      "transaction_type": "pnl",
+      "transaction_type": "string",
       "meta_data": {},
       "product_id": 0,
       "asset_id": 0,
@@ -3508,21 +3509,21 @@ p JSON.parse(result)
 
 |Property|Value|
 |---|---|
-|transaction_type|pnl|
-|transaction_type|deposit|
-|transaction_type|withdrawal|
-|transaction_type|commission|
-|transaction_type|conversion|
-|transaction_type|funding|
-|transaction_type|withdrawal_cancellation|
-|transaction_type|referral_bonus|
-|transaction_type|commission_rebate|
-|transaction_type|promo_credit|
-|transaction_type|trading_credits|
-|transaction_type|trading_credits_forfeited|
-|transaction_type|trading_credits_paid|
-|transaction_type|liquidation_fee|
-|transaction_type|interest_credit|
+|type|pnl|
+|type|deposit|
+|type|withdrawal|
+|type|commission|
+|type|conversion|
+|type|funding|
+|type|withdrawal_cancellation|
+|type|referral_bonus|
+|type|commission_rebate|
+|type|promo_credit|
+|type|trading_credits|
+|type|trading_credits_forfeited|
+|type|trading_credits_paid|
+|type|liquidation_fee|
+|type|interest_credit|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -6157,6 +6158,42 @@ This operation does not require authentication.
 |after|string|false|none|after cursor for pagination|
 |page_size|big_decimal|false|none|records per page|
 
+<h2 id="tocStransactiontypes">TransactionTypes</h2>
+
+<a id="schematransactiontypes"></a>
+
+```json
+"string"
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|string|false|none|none|
+|type|string|false|none|none|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|type|pnl|
+|type|deposit|
+|type|withdrawal|
+|type|commission|
+|type|conversion|
+|type|funding|
+|type|withdrawal_cancellation|
+|type|referral_bonus|
+|type|commission_rebate|
+|type|promo_credit|
+|type|trading_credits|
+|type|trading_credits_forfeited|
+|type|trading_credits_paid|
+|type|liquidation_fee|
+|type|interest_credit|
+
 <h2 id="tocStransaction">Transaction</h2>
 
 <a id="schematransaction"></a>
@@ -6166,7 +6203,7 @@ This operation does not require authentication.
   "id": 0,
   "amount": "string",
   "balance": "string",
-  "transaction_type": "pnl",
+  "transaction_type": "string",
   "meta_data": {},
   "product_id": 0,
   "asset_id": 0,
@@ -6183,32 +6220,12 @@ This operation does not require authentication.
 |id|integer|false|none|none|
 |amount|string|false|none|amount credited/debited in this transaction (+ for credited, - for debited)|
 |balance|string|false|none|net wallet balance after this transaction|
-|transaction_type|string|false|none|none|
+|transaction_type|[TransactionTypes](#schematransactiontypes)|false|none|none|
 |meta_data|object|false|none|none|
 |product_id|integer|false|none|none|
 |asset_id|integer|false|none|none|
 |asset_symbol|integer|false|none|none|
 |created_at|string|false|none|none|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|transaction_type|pnl|
-|transaction_type|deposit|
-|transaction_type|withdrawal|
-|transaction_type|commission|
-|transaction_type|conversion|
-|transaction_type|funding|
-|transaction_type|withdrawal_cancellation|
-|transaction_type|referral_bonus|
-|transaction_type|commission_rebate|
-|transaction_type|promo_credit|
-|transaction_type|trading_credits|
-|transaction_type|trading_credits_forfeited|
-|transaction_type|trading_credits_paid|
-|transaction_type|liquidation_fee|
-|transaction_type|interest_credit|
 
 <h2 id="tocSarrayoftransactions">ArrayOfTransactions</h2>
 
@@ -6220,7 +6237,7 @@ This operation does not require authentication.
     "id": 0,
     "amount": "string",
     "balance": "string",
-    "transaction_type": "pnl",
+    "transaction_type": "string",
     "meta_data": {},
     "product_id": 0,
     "asset_id": 0,
