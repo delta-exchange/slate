@@ -1850,6 +1850,15 @@
             "description": "number of records per page",
             "type": "integer",
             "default": 10
+          },
+          {
+            "in": "query",
+            "name": "transaction_types",
+            "description": "transaction types to retrieve",
+            "type": "string_array",
+            "schema": {
+              "$ref": "#/definitions/TransactionTypes"
+            }
           }
         ],
         "responses": {
@@ -3563,20 +3572,9 @@
         }
       }
     },
-    "Transaction": {
-      "type": "object",
+    "TransactionTypes": {
+      "type": "string",
       "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "amount": {
-          "type": "string",
-          "description": "amount credited/debited in this transaction (+ for credited, - for debited)"
-        },
-        "balance": {
-          "type": "string",
-          "description": "net wallet balance after this transaction"
-        },
         "transaction_type": {
           "type": "string",
           "enum": [
@@ -3596,6 +3594,25 @@
             "liquidation_fee",
             "interest_credit"
           ]
+        }
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "amount": {
+          "type": "string",
+          "description": "amount credited/debited in this transaction (+ for credited, - for debited)"
+        },
+        "balance": {
+          "type": "string",
+          "description": "net wallet balance after this transaction"
+        },
+        "transaction_type": {
+          "$ref": "#/definitions/TransactionTypes"
         },
         "meta_data": {
           "type": "object"
