@@ -310,7 +310,7 @@ Please note that if you subscribe to ticker channel without specifying the symbo
 orderbook updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
 If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
 Please note that if you subscribe to L1 channel without specifying the symbols list, you will not receive any data.  
-Publish interval: 250 millisecs  
+Publish interval: 100 millisecs  
 Max interval (in case of same data): 5 secs
 
 > L1 Orderbook Sample
@@ -392,7 +392,7 @@ Max interval (in case of same data): 10 secs
 
 **l2_updates** channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. l2_updates channel does not accept product category names or "all" as valid symbols. 
 Please note that if you subscribe to l2_updates channel without specifying the symbols list, you will not receive any data.  
-Publish interval: 250 millisecs  
+Publish interval: 100 millisecs  
 "action"="update" messages wont be published till there is an orderbook change.
 
 ```
@@ -450,26 +450,26 @@ Publish interval: 250 millisecs
 
 2) After the initial snapshot, messages will be with "action" = "update", resembling the difference between current and previous orderbook state. "asks" and "bids" are arrays of ["price", "new size"]. "asks" are sorted in increasing order of price. "bids" are sorted in decreasing order of price. This is true for both "snapshot" and "update" messages.
 
-3) "sequence_no" field must be used to check any messages were dropped. "sequence_no" must be +1 of the last message.  
+3) "sequence_no" field must be used to check if any messages were dropped. "sequence_no" must be +1 of the last message.  
 e.g. In the snapshot message it is 6199, and the update message has 6200. The next update message must have 6201. In case of sequence_no mismatch, resubscribe to the channel, and start from the beginning.
 
 4) If sequence_no is correct, edit the in-memory orderbook using the "update" message.  
 Case 1: price already exists, new size is 0 -> Delete this price level.  
 Case 2: price already exists, new size isn't 0 -> Replace the old size with new size.  
 Case 3: price doesn’t exists -> insert the price level.  
-e.g. for the shown snapshot and update messages: in the ask side, price level of "16919.0" will be deleted. Size at price level "16919.5" will be changed from "1193" to "710". In the bids side there was no price level of "16918.5", so add a new level of "16918.5" of size "304".
+e.g. for the shown snapshot and update messages to create the new orderbook: in the ask side, price level of "16919.0" will be deleted. Size at price level "16919.5" will be changed from "1193" to "710". In the bids side there was no price level of "16918.5", so add a new level of "16918.5" of size "304". Other price levels from the snapshot will remain the same.
 
 5) If "action":"error" message is received, resubscribe this symbol after a few seconds. Can occur in rare cases, e.g. Failed to send "action":"snapshot" message after subscribing due to a race condition, instead an "error" message will be sent.
 
-Checksum: This mechanism assist users in checking the accuracy of orderbook data created using l2_updates. checksum is the "cs" key in the message payload.  
+Checksum: Using this, users can verify the accuracy of orderbook data created using l2_updates. checksum is the "cs" key in the message payload.  
 Steps to calculate checksum:  
 1) Edit the old in-memory orderbook with the "update" message received.  
-2) Create asks_string and bids_string as shown below. where priceN = price at Nth level, sizeN = size at Nth level. Where asks are sorted by price in increasing order and bids in decreasing order.  
+2) Create asks_string and bids_string as shown below. where priceN = price at Nth level, sizeN = size at Nth level. Asks are sorted in increasing order and bids in decreasing order by price.  
 asks_string = price0:size0,price1:size1,…,price9:size9  
 bids_string = price0:size0,price1:size1,…,price9:size9  
 checksum_string = asks_string + "|" + bids_string  
 Only consider the first 10 price levels on both sides. If orderbook as less than 10 levels, use only them.  
-e.g. After applying the update, the new orderbook becomes ->  
+e.g. If after applying the update, the new orderbook becomes ->  
 asks = [["100.00", "23"], ["100.05", "34"]]  
 bids = [["99.04", "87"], ["98.65", "102"], ["98.30", "16"]]  
 checksum_string = "100.00:23,100.05:34|99.04:87,98.65:102,98.30:16"  
