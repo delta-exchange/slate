@@ -1121,6 +1121,53 @@ Please note that if you subscribe to user trades channel without specifying the 
     
 ```
 
+## v2/user_trades
+Channel provides updates for fills. Need to pass list of product symbols while subscribing. This channel is similar to user_trades channel, only difference is that, it is faster than user_trades and doesn't contain commission data.
+
+All updates will have incremental sequence_id. sequence_id is separate for each symbol, useful for identifying if any v2/user_trades messages were missed/dropped. The sequence_id will reset to 1 after our systems restart. (usually after maintainaince/market disruption).
+
+Auto Deleverage Liquidations of a position can be tracked by reason: "adl" in the user_trades channel.
+You need to send the list of symbols for which you would like to subscribe to v2/user_trades channel. You can also subscribe to v2/user_trades
+updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
+If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
+Please note that if you subscribe to v2/user_trades channel without specifying the symbols list, you will not receive any data.
+
+> v2/user_trades Sample
+
+```
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "v2/user_trades",
+                "symbols": ["BTCUSDT"]
+            }
+        ]
+    }
+}
+```
+```
+// v2/user_trades
+{
+    "type": "v2/user_trades",
+    "sy": "BTCUSDT",             // symbol
+    "f": "1234-abcd-qwer-3456",  // fill_id
+    "R": "normal"                // reason: "normal" or "adl"
+    "u": 1998,                   // user_id
+    "o": 3283999,                // order_id
+    "S": "buy",                  // side: "buy" or "sell"
+    "s": 190,                    // size in contracts
+    "p": "17289.2",              // price
+    "r": "taker",                // role: "taker" or "maker"
+    "c": "GA123",                // client_order_id
+    "t": 1685794274866438,       // timestamp of fill creation
+    "se": 4                      // incremental sequence_no
+}
+    
+```
+
 ## PortfolioMargins
 Channel provides updates for portfolio margin values of the selected sub-account. These updates are sent every 2 seconds. In case portfolio margin is not enabled on the selected sub-account, no updates will be sent on this channel.
 
