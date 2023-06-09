@@ -767,6 +767,9 @@
                     <a href="#usertrades" class="toc-h2 toc-link" data-title="UserTrades">UserTrades</a>
                   </li>
                   <li>
+                    <a href="#v2-user_trades" class="toc-h2 toc-link" data-title="v2/user_trades">v2/user_trades</a>
+                  </li>
+                  <li>
                     <a href="#portfoliomargins" class="toc-h2 toc-link" data-title="PortfolioMargins">PortfolioMargins</a>
                   </li>
                   <li>
@@ -13996,6 +13999,49 @@ Please note that if you subscribe to user trades channel without specifying the 
     "client_order_id": "GA123",
     "timestamp": 1544091555086559,
     "seq_no": 1
+}
+
+</code></pre><h2 id='v2-user_trades'>v2/user_trades</h2>
+<p>Channel provides updates for fills. Need to pass list of product symbols while subscribing. This channel is similar to user_trades channel, only difference is that, it is faster than user_trades and doesn&#39;t contain commission data.</p>
+
+<p>All updates will have incremental sequence_id. sequence_id is separate for each symbol, useful for identifying if any v2/user_trades messages were missed/dropped. The sequence_id will reset to 1 after our systems restart. (usually after maintainaince/market disruption).</p>
+
+<p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot; in the user_trades channel.
+You need to send the list of symbols for which you would like to subscribe to v2/user_trades channel. You can also subscribe to v2/user_trades
+updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
+If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
+Please note that if you subscribe to v2/user_trades channel without specifying the symbols list, you will not receive any data.</p>
+
+<blockquote>
+<p>v2/user_trades Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "v2/user_trades",
+                "symbols": ["BTCUSDT"]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// v2/user_trades
+{
+    "type": "v2/user_trades",
+    "sy": "BTCUSDT",             // symbol
+    "f": "1234-abcd-qwer-3456",  // fill_id
+    "R": "normal"                // reason: "normal" or "adl"
+    "u": 1998,                   // user_id
+    "o": 3283999,                // order_id
+    "S": "buy",                  // side: "buy" or "sell"
+    "s": 190,                    // size in contracts
+    "p": "17289.2",              // price
+    "r": "taker",                // role: "taker" or "maker"
+    "c": "GA123",                // client_order_id
+    "t": 1685794274866438,       // timestamp of fill creation
+    "se": 4                      // incremental sequence_no
 }
 
 </code></pre><h2 id='portfoliomargins'>PortfolioMargins</h2>
