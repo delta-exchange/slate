@@ -478,7 +478,7 @@ checksum_string = "100.00:23,100.05:34|99.04:87,98.65:102,98.30:16"
 ## all_trades
 
 **all_trades** channel provides a real time feed of all trades (fills).
-You need to send the list of symbols for which you would like to subscribe to all trades channel. You can also subscribe to
+You need to send the list of symbols for which you would like to subscribe to all trades channel. After subscribing to this channel, you get a snapshot of last 50 trades and then trade data in real time. You can also subscribe to
 all trades updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
 If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
 Please note that if you subscribe to all_trades channel without specifying the symbols list, you will not receive any data.
@@ -494,7 +494,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
             {
                 "name": "all_trades",
                 "symbols": [
-                    "BTCUSD_28Dec"
+                    "BTCUSDT"
                 ]
             }
         ]
@@ -503,17 +503,37 @@ Please note that if you subscribe to all_trades channel without specifying the s
 ```
 
 ```
+// All Trades Response Snapshot
+{
+    "symbol": "BTCUSDT",
+    "type": "all_trades_snapshot",          // "type" is not "all_trades"
+    "trades": [                             // Recent trades list
+        {
+            "buyer_role": "maker",
+            "seller_role": "taker",
+            "size": 53,                     // size in contracts
+            "price": "25816.5",
+            "timestamp": 1686577411879974   // time of the trade.
+        },
+        ... // More recent trades.
+    ]
+}
+```
+
+```
 // All Trades Response
 {
-    symbol: "BTCUSD_28Dec",
-    price: "0.0014579",
+    symbol: "BTCUSDT",
+    price: "25816.5",
     size: 100,
     type: "all_trades",
     buyer_role: "maker",
     seller_role: "taker",
-    timestamp: 1561634049751430
+    timestamp: 1686577411879974
 }
 ```
+
+
 
 ## mark_price
 
