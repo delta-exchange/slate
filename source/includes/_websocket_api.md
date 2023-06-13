@@ -380,9 +380,23 @@ Max interval (in case of same data): 10 secs
   "type":"l2_orderbook"
   "symbol":"ETHUSDT",
   "product_id": 176,
-  "buy": [{"limit_price":"101.5","size":10,"depth":"10"},{"limit_price":"101.0","size":28,"depth":"38"}],
-  "sell": [{"limit_price":"102.0","size":20,"depth":"20"},{"limit_price":"102.5","size":"25","depth":"45"},{"limit_price":"103.0","size":30,"depth":"75"}],
-  "last_sequence_no": 1671600134033215,
+  "buy": [
+    {
+        "limit_price":"101.5",
+        "size":10,              // For Futures & Options: number of contracts integer. Spot product: Asset token quantity in string.
+        "depth":"10"            // total size from best bid
+    },
+    ...
+  ],
+  "sell": [
+    {
+        "limit_price":"102.0",
+        "size":20,
+        "depth":"20"            // total size from best ask
+    },
+    ...
+  ],
+  "last_sequence_no": 6435634,
   "last_updated_at": 1671600133884000,
   "timestamp":1671600134033215,
 }
@@ -440,7 +454,7 @@ Publish interval: 100 millisecs
   "action":"error",
   "symbol":"BTCUSDT",
   "type":"l2_updates",
-  "msg":"Failed to fetch snapshot, please re-subscribe after a few secs."
+  "msg":"Snapshot load failed. Verify if product is live and resubscribe after a few secs."
 }
 ```
 
