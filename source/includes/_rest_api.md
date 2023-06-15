@@ -3509,21 +3509,40 @@ p JSON.parse(result)
 
 |Property|Value|
 |---|---|
-|type|pnl|
-|type|deposit|
-|type|withdrawal|
-|type|commission|
-|type|conversion|
-|type|funding|
-|type|withdrawal_cancellation|
-|type|referral_bonus|
-|type|commission_rebate|
-|type|promo_credit|
-|type|trading_credits|
-|type|trading_credits_forfeited|
-|type|trading_credits_paid|
-|type|liquidation_fee|
-|type|interest_credit|
+|transaction_type|cashflow|
+|transaction_type|deposit|
+|transaction_type|withdrawal|
+|transaction_type|commission|
+|transaction_type|conversion|
+|transaction_type|funding|
+|transaction_type|settlement|
+|transaction_type|liquidation_fee|
+|transaction_type|spot_trade|
+|transaction_type|withdrawal_cancellation|
+|transaction_type|referral_bonus|
+|transaction_type|sub_account_transfer|
+|transaction_type|commission_rebate|
+|transaction_type|promo_credit|
+|transaction_type|trading_credits|
+|transaction_type|trading_credits_forfeited|
+|transaction_type|trading_credits_paid|
+|transaction_type|trading_fee_credits_paid_liquidation_fee|
+|transaction_type|trading_credits_reverted|
+|transaction_type|interest_credit|
+|transaction_type|external_deposit|
+|transaction_type|credit_line|
+|transaction_type|trading_competition|
+|transaction_type|fund_deposit|
+|transaction_type|fund_withdrawal|
+|transaction_type|fund_wallet_deposit|
+|transaction_type|fund_wallet_withdrawal|
+|transaction_type|fund_reward|
+|transaction_type|trade_farming_reward|
+|transaction_type|interest_credit|
+|transaction_type|revert|
+|transaction_type|raf_bonus|
+|transaction_type|fill_appropriation|
+|transaction_type|incident_compensation|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -6172,27 +6191,46 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |*anonymous*|string|false|none|none|
-|type|string|false|none|none|
+|transaction_type|string|false|none|none|
 
 #### Enumerated Values
 
 |Property|Value|
 |---|---|
-|type|pnl|
-|type|deposit|
-|type|withdrawal|
-|type|commission|
-|type|conversion|
-|type|funding|
-|type|withdrawal_cancellation|
-|type|referral_bonus|
-|type|commission_rebate|
-|type|promo_credit|
-|type|trading_credits|
-|type|trading_credits_forfeited|
-|type|trading_credits_paid|
-|type|liquidation_fee|
-|type|interest_credit|
+|transaction_type|cashflow|
+|transaction_type|deposit|
+|transaction_type|withdrawal|
+|transaction_type|commission|
+|transaction_type|conversion|
+|transaction_type|funding|
+|transaction_type|settlement|
+|transaction_type|liquidation_fee|
+|transaction_type|spot_trade|
+|transaction_type|withdrawal_cancellation|
+|transaction_type|referral_bonus|
+|transaction_type|sub_account_transfer|
+|transaction_type|commission_rebate|
+|transaction_type|promo_credit|
+|transaction_type|trading_credits|
+|transaction_type|trading_credits_forfeited|
+|transaction_type|trading_credits_paid|
+|transaction_type|trading_fee_credits_paid_liquidation_fee|
+|transaction_type|trading_credits_reverted|
+|transaction_type|interest_credit|
+|transaction_type|external_deposit|
+|transaction_type|credit_line|
+|transaction_type|trading_competition|
+|transaction_type|fund_deposit|
+|transaction_type|fund_withdrawal|
+|transaction_type|fund_wallet_deposit|
+|transaction_type|fund_wallet_withdrawal|
+|transaction_type|fund_reward|
+|transaction_type|trade_farming_reward|
+|transaction_type|interest_credit|
+|transaction_type|revert|
+|transaction_type|raf_bonus|
+|transaction_type|fill_appropriation|
+|transaction_type|incident_compensation|
 
 <h2 id="tocStransaction">Transaction</h2>
 

@@ -3578,21 +3578,40 @@
         "transaction_type": {
           "type": "string",
           "enum": [
-            "pnl",
+            "cashflow",
             "deposit",
             "withdrawal",
             "commission",
             "conversion",
             "funding",
+            "settlement",
+            "liquidation_fee",
+            "spot_trade",
             "withdrawal_cancellation",
             "referral_bonus",
+            "sub_account_transfer",
             "commission_rebate",
             "promo_credit",
             "trading_credits",
             "trading_credits_forfeited",
             "trading_credits_paid",
-            "liquidation_fee",
-            "interest_credit"
+            "trading_fee_credits_paid_liquidation_fee",
+            "trading_credits_reverted",
+            "interest_credit",
+            "external_deposit",
+            "credit_line",
+            "trading_competition",
+            "fund_deposit",
+            "fund_withdrawal",
+            "fund_wallet_deposit",
+            "fund_wallet_withdrawal",
+            "fund_reward",
+            "trade_farming_reward",
+            "interest_credit",
+            "revert",
+            "raf_bonus",
+            "fill_appropriation",
+            "incident_compensation"
           ]
         }
       }
