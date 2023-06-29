@@ -39,10 +39,7 @@ Get Asset List
 ```python
 import requests
 headers = {
-  'Accept': 'application/json',
-  'api-key': '****',
-  'signature': '****',
-  'timestamp': '****'
+  'Accept': 'application/json'
 }
 
 r = requests.get('https://api.delta.exchange/v2/assets', params={
@@ -56,10 +53,7 @@ print r.json()
 ```shell
 # You can also use wget
 curl -X GET https://api.delta.exchange/v2/assets \
-  -H 'Accept: application/json' \
-  -H 'api-key: ****' \
-  -H 'signature: ****' \
-  -H 'timestamp: ****'
+  -H 'Accept: application/json'
 
 ```
 
@@ -68,10 +62,7 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json',
-  'api-key' => '****',
-  'signature' => '****',
-  'timestamp' => '****'
+  'Accept' => 'application/json'
 }
 
 result = RestClient.get 'https://api.delta.exchange/v2/assets',
@@ -122,8 +113,8 @@ p JSON.parse(result)
 |withdrawal_status|enabled|
 |withdrawal_status|disabled|
 
-<aside class="warning">
-To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+<aside class="success">
+This operation does not require authentication.
 </aside>
 
 <h1 id="delta-exchange-api-v2-indices">Indices</h1>
@@ -2132,7 +2123,7 @@ To perform this operation, you must be sign the request using your api key and s
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': '*/*',
+  'Accept': 'application/json',
   'api-key': '****',
   'signature': '****',
   'timestamp': '****'
@@ -2150,7 +2141,7 @@ print r.json()
 # You can also use wget
 curl -X POST https://api.delta.exchange/v2/products/{product_id}/orders/leverage \
   -H 'Content-Type: application/json' \
-  -H 'Accept: */*' \
+  -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
   -H 'timestamp: ****'
@@ -2163,7 +2154,7 @@ require 'json'
 
 headers = {
   'Content-Type' => 'application/json',
-  'Accept' => '*/*',
+  'Accept' => 'application/json',
   'api-key' => '****',
   'signature' => '****',
   'timestamp' => '****'
@@ -2199,6 +2190,17 @@ p JSON.parse(result)
 
 > 200 Response
 
+```json
+{
+  "success": true,
+  "result": {
+    "leverage": "string",
+    "order_margin": "string",
+    "product_id": 0
+  }
+}
+```
+
 <h3 id="change-order-leverage-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
@@ -2221,7 +2223,7 @@ To perform this operation, you must be sign the request using your api key and s
 ```python
 import requests
 headers = {
-  'Accept': '*/*',
+  'Accept': 'application/json',
   'api-key': '****',
   'signature': '****',
   'timestamp': '****'
@@ -2238,7 +2240,7 @@ print r.json()
 ```shell
 # You can also use wget
 curl -X GET https://api.delta.exchange/v2/products/{product_id}/orders/leverage \
-  -H 'Accept: */*' \
+  -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
   -H 'timestamp: ****'
@@ -2250,7 +2252,7 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => '*/*',
+  'Accept' => 'application/json',
   'api-key' => '****',
   'signature' => '****',
   'timestamp' => '****'
@@ -2275,6 +2277,17 @@ p JSON.parse(result)
 > Example responses
 
 > 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "leverage": "string",
+    "order_margin": "string",
+    "product_id": 0
+  }
+}
+```
 
 <h3 id="get-order-leverage-responses">Responses</h3>
 
@@ -2956,7 +2969,10 @@ To perform this operation, you must be sign the request using your api key and s
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
 }
 
 r = requests.get('https://api.delta.exchange/v2/fills', params={
@@ -2970,7 +2986,10 @@ print r.json()
 ```shell
 # You can also use wget
 curl -X GET https://api.delta.exchange/v2/fills \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
 
 ```
 
@@ -2979,7 +2998,10 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
 }
 
 result = RestClient.get 'https://api.delta.exchange/v2/fills',
@@ -3015,13 +3037,32 @@ p JSON.parse(result)
     {
       "id": 0,
       "size": 0,
+      "fill_type": "normal",
       "side": "buy",
       "price": "string",
       "role": "taker",
       "commission": "string",
       "created_at": "string",
       "product_id": 0,
-      "product_symbol": "string"
+      "product_symbol": "string",
+      "order_id": "string",
+      "settling_asset_id": 0,
+      "settling_asset_symbol": "string",
+      "meta_data": {
+        "commission_deto": "string",
+        "commission_deto_in_settling_asset": "string",
+        "effective_commission_rate": "string",
+        "liquidation_fee_deto": "string",
+        "liquidation_fee_deto_in_settling_asset": "string",
+        "order_price": "string",
+        "order_size": "string",
+        "order_type": "string",
+        "order_unfilled_size": "string",
+        "tfc_used_for_commission": "string",
+        "tfc_used_for_liquidation_fee": "string",
+        "total_commission_in_settling_asset": "string",
+        "total_liquidation_fee_in_settling_asset": "string"
+      }
     }
   ],
   "meta": {
@@ -3043,16 +3084,18 @@ p JSON.parse(result)
 
 |Property|Value|
 |---|---|
+|fill_type|normal|
+|fill_type|adl|
 |side|buy|
 |side|sell|
 |role|taker|
 |role|maker|
 
-<aside class="success">
-This operation does not require authentication.
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
 
-## Download Wallet transactions
+## Download Fills history
 
 <a id="opIddownloadFillsHistory"></a>
 
@@ -3103,7 +3146,7 @@ p JSON.parse(result)
 
 `GET /fills/history/download/csv`
 
-<h3 id="download-wallet-transactions-parameters">Parameters</h3>
+<h3 id="download-fills-history-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -3112,7 +3155,7 @@ p JSON.parse(result)
 |start_time|query|integer|false|from time in micro-seconds in epoc|
 |end_time|query|integer|false|from time in micro-seconds in epoc|
 
-<h3 id="download-wallet-transactions-responses">Responses</h3>
+<h3 id="download-fills-history-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -4720,8 +4763,8 @@ p JSON.parse(result)
 |---|---|---|---|---|
 |resolution|query|string|true|none|
 |symbol|query|string|true|To get index data pass index symbol like .DEXBTUSDT/ .DEETHUSDT, to get funding history in the same api pass symbol as FUNDING:${symbol} ,for mark price MARK:${symbol}, and for OI data OI:${symbol}|
-|start|query|integer|true|Start time|
-|end|query|integer|true|End time|
+|start|query|integer|true|Start time: unix timestamp in seconds|
+|end|query|integer|true|End time: unix timestamp in seconds|
 
 #### Enumerated Values
 
@@ -5908,13 +5951,32 @@ This operation does not require authentication.
 {
   "id": 0,
   "size": 0,
+  "fill_type": "normal",
   "side": "buy",
   "price": "string",
   "role": "taker",
   "commission": "string",
   "created_at": "string",
   "product_id": 0,
-  "product_symbol": "string"
+  "product_symbol": "string",
+  "order_id": "string",
+  "settling_asset_id": 0,
+  "settling_asset_symbol": "string",
+  "meta_data": {
+    "commission_deto": "string",
+    "commission_deto_in_settling_asset": "string",
+    "effective_commission_rate": "string",
+    "liquidation_fee_deto": "string",
+    "liquidation_fee_deto_in_settling_asset": "string",
+    "order_price": "string",
+    "order_size": "string",
+    "order_type": "string",
+    "order_unfilled_size": "string",
+    "tfc_used_for_commission": "string",
+    "tfc_used_for_liquidation_fee": "string",
+    "total_commission_in_settling_asset": "string",
+    "total_liquidation_fee_in_settling_asset": "string"
+  }
 }
 
 ```
@@ -5927,6 +5989,7 @@ This operation does not require authentication.
 |---|---|---|---|---|
 |id|integer|false|none|none|
 |size|integer|false|none|none|
+|fill_type|string|false|none|none|
 |side|string|false|none|none|
 |price|string|false|none|Price at which the fill happened, BigDecimal sent as string|
 |role|string|false|none|none|
@@ -5934,11 +5997,17 @@ This operation does not require authentication.
 |created_at|string|false|none|none|
 |product_id|integer|false|none|none|
 |product_symbol|string|false|none|none|
+|order_id|string|false|none|none|
+|settling_asset_id|integer|false|none|none|
+|settling_asset_symbol|string|false|none|none|
+|meta_data|[FillMetaData](#schemafillmetadata)|false|none|Meta data inside fill|
 
 #### Enumerated Values
 
 |Property|Value|
 |---|---|
+|fill_type|normal|
+|fill_type|adl|
 |side|buy|
 |side|sell|
 |role|taker|
@@ -5953,13 +6022,32 @@ This operation does not require authentication.
   {
     "id": 0,
     "size": 0,
+    "fill_type": "normal",
     "side": "buy",
     "price": "string",
     "role": "taker",
     "commission": "string",
     "created_at": "string",
     "product_id": 0,
-    "product_symbol": "string"
+    "product_symbol": "string",
+    "order_id": "string",
+    "settling_asset_id": 0,
+    "settling_asset_symbol": "string",
+    "meta_data": {
+      "commission_deto": "string",
+      "commission_deto_in_settling_asset": "string",
+      "effective_commission_rate": "string",
+      "liquidation_fee_deto": "string",
+      "liquidation_fee_deto_in_settling_asset": "string",
+      "order_price": "string",
+      "order_size": "string",
+      "order_type": "string",
+      "order_unfilled_size": "string",
+      "tfc_used_for_commission": "string",
+      "tfc_used_for_liquidation_fee": "string",
+      "total_commission_in_settling_asset": "string",
+      "total_liquidation_fee_in_settling_asset": "string"
+    }
   }
 ]
 
@@ -5970,6 +6058,49 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |*anonymous*|[[Fill](#schemafill)]|false|none|[A fill object]|
+
+<h2 id="tocSfillmetadata">FillMetaData</h2>
+
+<a id="schemafillmetadata"></a>
+
+```json
+{
+  "commission_deto": "string",
+  "commission_deto_in_settling_asset": "string",
+  "effective_commission_rate": "string",
+  "liquidation_fee_deto": "string",
+  "liquidation_fee_deto_in_settling_asset": "string",
+  "order_price": "string",
+  "order_size": "string",
+  "order_type": "string",
+  "order_unfilled_size": "string",
+  "tfc_used_for_commission": "string",
+  "tfc_used_for_liquidation_fee": "string",
+  "total_commission_in_settling_asset": "string",
+  "total_liquidation_fee_in_settling_asset": "string"
+}
+
+```
+
+*Meta data inside fill*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|commission_deto|string|false|none|none|
+|commission_deto_in_settling_asset|string|false|none|none|
+|effective_commission_rate|string|false|none|none|
+|liquidation_fee_deto|string|false|none|none|
+|liquidation_fee_deto_in_settling_asset|string|false|none|none|
+|order_price|string|false|none|none|
+|order_size|string|false|none|none|
+|order_type|string|false|none|none|
+|order_unfilled_size|string|false|none|none|
+|tfc_used_for_commission|string|false|none|none|
+|tfc_used_for_liquidation_fee|string|false|none|none|
+|total_commission_in_settling_asset|string|false|none|none|
+|total_liquidation_fee_in_settling_asset|string|false|none|none|
 
 <h2 id="tocSorderleverage">OrderLeverage</h2>
 

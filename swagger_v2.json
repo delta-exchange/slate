@@ -83,13 +83,6 @@
         "produces": [
           "application/json"
         ],
-        "security": [
-          {
-            "api-key": [],
-            "signature": [],
-            "timestamp": []
-          }
-        ],
         "responses": {
           "200": {
             "description": "List of all assets",
@@ -1021,6 +1014,9 @@
         ],
         "summary": "Change order leverage",
         "operationId": "changeOrderLeverage",
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api-key": [],
@@ -1085,6 +1081,9 @@
         ],
         "summary": "Get order leverage",
         "operationId": "getOrderLeverage",
+        "produces": [
+          "application/json"
+        ],
         "security": [
           {
             "api-key": [],
@@ -1233,6 +1232,13 @@
         "produces": [
           "application/json"
         ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
         "parameters": [
           {
             "in": "query",
@@ -1308,7 +1314,7 @@
         "tags": [
           "TradeHistory"
         ],
-        "summary": "Download Wallet transactions",
+        "summary": "Download Fills history",
         "operationId": "downloadFillsHistory",
         "produces": [
           "application/json"
@@ -2149,14 +2155,14 @@
           {
             "in": "query",
             "name": "start",
-            "description": "Start time",
+            "description": "Start time: unix timestamp in seconds",
             "type": "integer",
             "required": true
           },
           {
             "in": "query",
             "name": "end",
-            "description": "End time",
+            "description": "End time: unix timestamp in seconds",
             "type": "integer",
             "required": true
           }
@@ -3333,6 +3339,13 @@
         "size": {
           "type": "integer"
         },
+        "fill_type":{
+          "type": "string",
+          "enum": [
+            "normal",
+            "adl"
+          ]
+        },
         "side": {
           "type": "string",
           "enum": [
@@ -3363,6 +3376,18 @@
         },
         "product_symbol": {
           "type": "string"
+        },
+        "order_id": {
+          "type": "string"
+        },
+        "settling_asset_id": {
+          "type": "integer"
+        },
+        "settling_asset_symbol": {
+          "type": "string"
+        },
+        "meta_data": {
+          "$ref": "#/definitions/FillMetaData"
         }
       }
     },
@@ -3370,6 +3395,51 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/Fill"
+      }
+    },
+    "FillMetaData": {
+      "type": "object",
+      "description": "Meta data inside fill",
+      "properties": {
+        "commission_deto": {
+          "type": "string"
+        },
+        "commission_deto_in_settling_asset": {
+          "type": "string"
+        },
+        "effective_commission_rate": {
+          "type": "string"
+        },
+        "liquidation_fee_deto": {
+          "type": "string"
+        },
+        "liquidation_fee_deto_in_settling_asset": {
+          "type": "string"
+        },
+        "order_price": {
+          "type": "string"
+        },
+        "order_size": {
+          "type": "string"
+        },
+        "order_type": {
+          "type": "string"
+        },
+        "order_unfilled_size": {
+          "type": "string"
+        },
+        "tfc_used_for_commission": {
+          "type": "string"
+        },
+        "tfc_used_for_liquidation_fee": {
+          "type": "string"
+        },
+        "total_commission_in_settling_asset": {
+          "type": "string"
+        },
+        "total_liquidation_fee_in_settling_asset": {
+          "type": "string"
+        }
       }
     },
     "OrderLeverage": {
