@@ -2837,7 +2837,11 @@
         },
         "paid_commission": {
           "type": "string",
-          "description": "net commission paid for the order"
+          "description": "Commission paid for filled order"
+        },
+        "commission": {
+          "type": "string",
+          "description": "Commission blocked for order"
         },
         "close_on_trigger": {
           "type": "string",
@@ -2869,8 +2873,7 @@
         "product_symbol": {
           "type": "string"
         }
-      },
-      "example": { "id": "ashb1212", "client_order_id": "asbasa", "product_id": 27, "product_symbol": "BTCUSD", "limit_price": "9200", "side": "buy", "size": 100, "unfilled_size": 50, "user_id": 1, "order_type": "limit_order", "state": "open", "created_at": "..."}
+      }
     },
     "ArrayOfOrders": {
       "type": "array",

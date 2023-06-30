@@ -877,18 +877,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": "ashb1212",
-    "client_order_id": "asbasa",
-    "product_id": 27,
-    "product_symbol": "BTCUSD",
-    "limit_price": "9200",
+    "id": 0,
+    "user_id": 0,
+    "size": 0,
+    "unfilled_size": 0,
     "side": "buy",
-    "size": 100,
-    "unfilled_size": 50,
-    "user_id": 1,
     "order_type": "limit_order",
+    "limit_price": "string",
+    "stop_order_type": "stop_loss_order",
+    "stop_price": "string",
+    "paid_commission": "string", // Commission already paid for filled order
+    "commission": "string", // Commission blocked in order
+    "close_on_trigger": "false",
+    "client_order_id": "string",
     "state": "open",
-    "created_at": "..."
+    "created_at": "string",
+    "product_id": 0,
+    "product_symbol": "string"
   }
 }
 ```
@@ -1002,18 +1007,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": "ashb1212",
-    "client_order_id": "asbasa",
-    "product_id": 27,
-    "product_symbol": "BTCUSD",
-    "limit_price": "9200",
+    "id": 0,
+    "user_id": 0,
+    "size": 0,
+    "unfilled_size": 0,
     "side": "buy",
-    "size": 100,
-    "unfilled_size": 50,
-    "user_id": 1,
     "order_type": "limit_order",
+    "limit_price": "string",
+    "stop_order_type": "stop_loss_order",
+    "stop_price": "string",
+    "paid_commission": "string",
+    "commission": "string",
+    "close_on_trigger": "false",
+    "client_order_id": "string",
     "state": "open",
-    "created_at": "..."
+    "created_at": "string",
+    "product_id": 0,
+    "product_symbol": "string"
   }
 }
 ```
@@ -1131,18 +1141,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": "ashb1212",
-    "client_order_id": "asbasa",
-    "product_id": 27,
-    "product_symbol": "BTCUSD",
-    "limit_price": "9200",
+    "id": 0,
+    "user_id": 0,
+    "size": 0,
+    "unfilled_size": 0,
     "side": "buy",
-    "size": 100,
-    "unfilled_size": 50,
-    "user_id": 1,
     "order_type": "limit_order",
+    "limit_price": "string",
+    "stop_order_type": "stop_loss_order",
+    "stop_price": "string",
+    "paid_commission": "string",
+    "commission": "string",
+    "close_on_trigger": "false",
+    "client_order_id": "string",
     "state": "open",
-    "created_at": "..."
+    "created_at": "string",
+    "product_id": 0,
+    "product_symbol": "string"
   }
 }
 ```
@@ -1267,18 +1282,23 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": "ashb1212",
-      "client_order_id": "asbasa",
-      "product_id": 27,
-      "product_symbol": "BTCUSD",
-      "limit_price": "9200",
+      "id": 0,
+      "user_id": 0,
+      "size": 0,
+      "unfilled_size": 0,
       "side": "buy",
-      "size": 100,
-      "unfilled_size": 50,
-      "user_id": 1,
       "order_type": "limit_order",
+      "limit_price": "string",
+      "stop_order_type": "stop_loss_order",
+      "stop_price": "string",
+      "paid_commission": "string",
+      "commission": "string",
+      "close_on_trigger": "false",
+      "client_order_id": "string",
       "state": "open",
-      "created_at": "..."
+      "created_at": "string",
+      "product_id": 0,
+      "product_symbol": "string"
     }
   ],
   "meta": {
@@ -1772,18 +1792,23 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
   "success": true,
   "result": [
     {
-      "id": "ashb1212",
-      "client_order_id": "asbasa",
-      "product_id": 27,
-      "product_symbol": "BTCUSD",
-      "limit_price": "9200",
+      "id": 0,
+      "user_id": 0,
+      "size": 0,
+      "unfilled_size": 0,
       "side": "buy",
-      "size": 100,
-      "unfilled_size": 50,
-      "user_id": 1,
       "order_type": "limit_order",
+      "limit_price": "string",
+      "stop_order_type": "stop_loss_order",
+      "stop_price": "string",
+      "paid_commission": "string",
+      "commission": "string",
+      "close_on_trigger": "false",
+      "client_order_id": "string",
       "state": "open",
-      "created_at": "..."
+      "created_at": "string",
+      "product_id": 0,
+      "product_symbol": "string"
     }
   ]
 }
@@ -1931,18 +1956,23 @@ Orders to be edited in a batch. Rate limits apply.
   "success": true,
   "result": [
     {
-      "id": "ashb1212",
-      "client_order_id": "asbasa",
-      "product_id": 27,
-      "product_symbol": "BTCUSD",
-      "limit_price": "9200",
+      "id": 0,
+      "user_id": 0,
+      "size": 0,
+      "unfilled_size": 0,
       "side": "buy",
-      "size": 100,
-      "unfilled_size": 50,
-      "user_id": 1,
       "order_type": "limit_order",
+      "limit_price": "string",
+      "stop_order_type": "stop_loss_order",
+      "stop_price": "string",
+      "paid_commission": "string",
+      "commission": "string",
+      "close_on_trigger": "false",
+      "client_order_id": "string",
       "state": "open",
-      "created_at": "..."
+      "created_at": "string",
+      "product_id": 0,
+      "product_symbol": "string"
     }
   ]
 }
@@ -2067,18 +2097,23 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": "ashb1212",
-      "client_order_id": "asbasa",
-      "product_id": 27,
-      "product_symbol": "BTCUSD",
-      "limit_price": "9200",
+      "id": 0,
+      "user_id": 0,
+      "size": 0,
+      "unfilled_size": 0,
       "side": "buy",
-      "size": 100,
-      "unfilled_size": 50,
-      "user_id": 1,
       "order_type": "limit_order",
+      "limit_price": "string",
+      "stop_order_type": "stop_loss_order",
+      "stop_price": "string",
+      "paid_commission": "string",
+      "commission": "string",
+      "close_on_trigger": "false",
+      "client_order_id": "string",
       "state": "open",
-      "created_at": "..."
+      "created_at": "string",
+      "product_id": 0,
+      "product_symbol": "string"
     }
   ]
 }
@@ -2911,18 +2946,23 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": "ashb1212",
-      "client_order_id": "asbasa",
-      "product_id": 27,
-      "product_symbol": "BTCUSD",
-      "limit_price": "9200",
+      "id": 0,
+      "user_id": 0,
+      "size": 0,
+      "unfilled_size": 0,
       "side": "buy",
-      "size": 100,
-      "unfilled_size": 50,
-      "user_id": 1,
       "order_type": "limit_order",
+      "limit_price": "string",
+      "stop_order_type": "stop_loss_order",
+      "stop_price": "string",
+      "paid_commission": "string",
+      "commission": "string",
+      "close_on_trigger": "false",
+      "client_order_id": "string",
       "state": "open",
-      "created_at": "..."
+      "created_at": "string",
+      "product_id": 0,
+      "product_symbol": "string"
     }
   ],
   "meta": {
@@ -5322,18 +5362,23 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": "ashb1212",
-  "client_order_id": "asbasa",
-  "product_id": 27,
-  "product_symbol": "BTCUSD",
-  "limit_price": "9200",
+  "id": 0,
+  "user_id": 0,
+  "size": 0,
+  "unfilled_size": 0,
   "side": "buy",
-  "size": 100,
-  "unfilled_size": 50,
-  "user_id": 1,
   "order_type": "limit_order",
+  "limit_price": "string",
+  "stop_order_type": "stop_loss_order",
+  "stop_price": "string",
+  "paid_commission": "string",
+  "commission": "string",
+  "close_on_trigger": "false",
+  "client_order_id": "string",
   "state": "open",
-  "created_at": "..."
+  "created_at": "string",
+  "product_id": 0,
+  "product_symbol": "string"
 }
 
 ```
@@ -5353,7 +5398,8 @@ This operation does not require authentication.
 |limit_price|string|false|none|none|
 |stop_order_type|string|false|none|none|
 |stop_price|string|false|none|none|
-|paid_commission|string|false|none|net commission paid for the order|
+|paid_commission|string|false|none|Commission paid for filled order|
+|commission|string|false|none|Commission blocked for order|
 |close_on_trigger|string|false|none|none|
 |client_order_id|string|false|none|client order id provided by the user while creating order|
 |state|string|false|none|Order Status|
@@ -5384,18 +5430,23 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": "ashb1212",
-    "client_order_id": "asbasa",
-    "product_id": 27,
-    "product_symbol": "BTCUSD",
-    "limit_price": "9200",
+    "id": 0,
+    "user_id": 0,
+    "size": 0,
+    "unfilled_size": 0,
     "side": "buy",
-    "size": 100,
-    "unfilled_size": 50,
-    "user_id": 1,
     "order_type": "limit_order",
+    "limit_price": "string",
+    "stop_order_type": "stop_loss_order",
+    "stop_price": "string",
+    "paid_commission": "string",
+    "commission": "string",
+    "close_on_trigger": "false",
+    "client_order_id": "string",
     "state": "open",
-    "created_at": "..."
+    "created_at": "string",
+    "product_id": 0,
+    "product_symbol": "string"
   }
 ]
 
