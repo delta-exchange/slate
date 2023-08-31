@@ -887,7 +887,7 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Delele batch orders",
+        "summary": "Delete batch orders",
         "operationId": "batchDelete",
         "consumes": [
           "application/json"
@@ -1002,6 +1002,53 @@
             "description": "Returns if configs couldnt be set",
             "schema": {
               "$ref": "#/definitions/ApiErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/orders/client_order_id/{client_oid}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get Order by client oid",
+        "operationId": "getOrderByCOI",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "client_oid",
+            "description": "Client provided order id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns back the order object with assigned id and latest state",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/Order"
+                    }
+                  }
+                }
+              ]
             }
           }
         }
