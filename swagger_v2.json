@@ -1007,6 +1007,53 @@
         }
       }
     },
+    "/orders/{order_id}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get Order by id",
+        "operationId": "getOrderById",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "order_id",
+            "description": "Id of the order",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns back the order object with assigned id and latest state",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/Order"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
     "/orders/client_order_id/{client_oid}": {
       "get": {
         "tags": [
@@ -1034,7 +1081,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns back the order object with assigned id and latest state",
+            "description": "Returns back the order object with assigned client order id and latest state",
             "schema": {
               "allOf": [
                 {

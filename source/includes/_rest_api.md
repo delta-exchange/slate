@@ -2148,6 +2148,123 @@ p JSON.parse(result)
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
 
+## Get Order by id
+
+<a id="opIdgetOrderById"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.delta.exchange/v2/orders/{order_id}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.delta.exchange/v2/orders/{order_id} \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.delta.exchange/v2/orders/{order_id}',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /orders/{order_id}`
+
+<h3 id="get-order-by-id-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|order_id|path|string|true|Id of the order|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "id": 0,
+    "user_id": 0,
+    "size": 0,
+    "unfilled_size": 0,
+    "side": "buy",
+    "order_type": "limit_order",
+    "limit_price": "string",
+    "stop_order_type": "stop_loss_order",
+    "stop_price": "string",
+    "paid_commission": "string",
+    "commission": "string",
+    "close_on_trigger": "false",
+    "client_order_id": "string",
+    "state": "open",
+    "created_at": "string",
+    "product_id": 0,
+    "product_symbol": "string"
+  }
+}
+```
+
+<h3 id="get-order-by-id-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns back the order object with assigned id and latest state|Inline|
+
+<h3 id="get-order-by-id-responseschema">Response Schema</h3>
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|side|buy|
+|side|sell|
+|order_type|limit_order|
+|order_type|market_order|
+|stop_order_type|stop_loss_order|
+|close_on_trigger|false|
+|close_on_trigger|true|
+|state|open|
+|state|pending|
+|state|closed|
+|state|cancelled|
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
 ## Get Order by client oid
 
 <a id="opIdgetOrderByCOI"></a>
@@ -2241,7 +2358,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns back the order object with assigned id and latest state|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns back the order object with assigned client order id and latest state|Inline|
 
 <h3 id="get-order-by-client-oid-responseschema">Response Schema</h3>
 
