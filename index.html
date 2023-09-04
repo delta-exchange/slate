@@ -355,7 +355,13 @@
                     <a href="#edit-batch-orders" class="toc-h2 toc-link" data-title="Edit batch orders">Edit batch orders</a>
                   </li>
                   <li>
-                    <a href="#delele-batch-orders" class="toc-h2 toc-link" data-title="Delele batch orders">Delele batch orders</a>
+                    <a href="#delete-batch-orders" class="toc-h2 toc-link" data-title="Delete batch orders">Delete batch orders</a>
+                  </li>
+                  <li>
+                    <a href="#get-order-by-id" class="toc-h2 toc-link" data-title="Get Order by id">Get Order by id</a>
+                  </li>
+                  <li>
+                    <a href="#get-order-by-client-oid" class="toc-h2 toc-link" data-title="Get Order by client oid">Get Order by client oid</a>
                   </li>
                   <li>
                     <a href="#change-order-leverage" class="toc-h2 toc-link" data-title="Change order leverage">Change order leverage</a>
@@ -4317,7 +4323,7 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
 
-<h2 id='delele-batch-orders'>Delele batch orders</h2>
+<h2 id='delete-batch-orders'>Delete batch orders</h2>
 
 <p><a id="opIdbatchDelete"></a></p>
 
@@ -4384,7 +4390,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="delele-batch-orders-parameters">Parameters</h3>
+<h3 id="delete-batch-orders-parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -4464,7 +4470,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="delele-batch-orders-responses">Responses</h3>
+<h3 id="delete-batch-orders-responses">Responses</h3>
 
 <table><thead>
 <tr>
@@ -4488,9 +4494,363 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 </tr>
 </tbody></table>
 
-<h3 id="delele-batch-orders-responseschema">Response Schema</h3>
+<h3 id="delete-batch-orders-responseschema">Response Schema</h3>
 
 <h4 id='enumerated-values-14'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>side</td>
+<td>buy</td>
+</tr>
+<tr>
+<td>side</td>
+<td>sell</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>limit_order</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>market_order</td>
+</tr>
+<tr>
+<td>stop_order_type</td>
+<td>stop_loss_order</td>
+</tr>
+<tr>
+<td>close_on_trigger</td>
+<td>false</td>
+</tr>
+<tr>
+<td>close_on_trigger</td>
+<td>true</td>
+</tr>
+<tr>
+<td>state</td>
+<td>open</td>
+</tr>
+<tr>
+<td>state</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>state</td>
+<td>closed</td>
+</tr>
+<tr>
+<td>state</td>
+<td>cancelled</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h2 id='get-order-by-id'>Get Order by id</h2>
+
+<p><a id="opIdgetOrderById"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/orders/{order_id}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.delta.exchange/v2/orders/<span class="o">{</span>order_id<span class="o">}</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/orders/{order_id}'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>GET /orders/{order_id}</code></p>
+
+<h3 id="get-order-by-id-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>order_id</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>Id of the order</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"unfilled_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="get-order-by-id-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns back the order object with assigned id and latest state</td>
+<td>Inline</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-order-by-id-responseschema">Response Schema</h3>
+
+<h4 id='enumerated-values-15'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>side</td>
+<td>buy</td>
+</tr>
+<tr>
+<td>side</td>
+<td>sell</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>limit_order</td>
+</tr>
+<tr>
+<td>order_type</td>
+<td>market_order</td>
+</tr>
+<tr>
+<td>stop_order_type</td>
+<td>stop_loss_order</td>
+</tr>
+<tr>
+<td>close_on_trigger</td>
+<td>false</td>
+</tr>
+<tr>
+<td>close_on_trigger</td>
+<td>true</td>
+</tr>
+<tr>
+<td>state</td>
+<td>open</td>
+</tr>
+<tr>
+<td>state</td>
+<td>pending</td>
+</tr>
+<tr>
+<td>state</td>
+<td>closed</td>
+</tr>
+<tr>
+<td>state</td>
+<td>cancelled</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h2 id='get-order-by-client-oid'>Get Order by client oid</h2>
+
+<p><a id="opIdgetOrderByCOI"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/orders/client_order_id/{client_oid}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.delta.exchange/v2/orders/client_order_id/<span class="o">{</span>client_oid<span class="o">}</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/orders/client_order_id/{client_oid}'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>GET /orders/client_order_id/{client_oid}</code></p>
+
+<h3 id="get-order-by-client-oid-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_oid</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>Client provided order id</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"unfilled_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="get-order-by-client-oid-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns back the order object with assigned client order id and latest state</td>
+<td>Inline</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-order-by-client-oid-responseschema">Response Schema</h3>
+
+<h4 id='enumerated-values-16'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4878,7 +5238,7 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-15'>Enumerated Values</h4>
+<h4 id='enumerated-values-17'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5633,7 +5993,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-16'>Enumerated Values</h4>
+<h4 id='enumerated-values-18'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5719,7 +6079,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 
 <h3 id="get-order-history-(cancelled-and-closed)-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-17'>Enumerated Values</h4>
+<h4 id='enumerated-values-19'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5955,7 +6315,7 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 
 <h3 id="get-user-fills-by-filters-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-18'>Enumerated Values</h4>
+<h4 id='enumerated-values-20'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6331,7 +6691,7 @@ curl -X GET https://api.delta.exchange/v2/trades/<span class="o">{</span>symbol<
 
 <h3 id="get-public-trades-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-19'>Enumerated Values</h4>
+<h4 id='enumerated-values-21'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6612,7 +6972,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 
 <h3 id="get-wallet-transactions-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-20'>Enumerated Values</h4>
+<h4 id='enumerated-values-22'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -7627,7 +7987,7 @@ curl -X POST https://api.delta.exchange/v2/orders/cancel_after <span class="se">
 
 <h3 id="cancel-after-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-21'>Enumerated Values</h4>
+<h4 id='enumerated-values-23'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8115,7 +8475,7 @@ curl -X GET https://api.delta.exchange/v2/products/?states<span class="o">=</spa
 
 <h3 id="get-product-settlement-prices-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-22'>Enumerated Values</h4>
+<h4 id='enumerated-values-24'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8276,7 +8636,7 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-23'>Enumerated Values</h4>
+<h4 id='enumerated-values-25'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8631,7 +8991,7 @@ This operation does not require authentication.
 <td>Type of index</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-24'>Enumerated Values</h4>
+<h4 id='enumerated-values-26'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -8760,7 +9120,7 @@ This operation does not require authentication.
 <td>Minimum value of allowed withdrawal</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-25'>Enumerated Values</h4>
+<h4 id='enumerated-values-27'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -9141,7 +9501,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-26'>Enumerated Values</h4>
+<h4 id='enumerated-values-28'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -9507,7 +9867,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-27'>Enumerated Values</h4>
+<h4 id='enumerated-values-29'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -9781,7 +10141,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-28'>Enumerated Values</h4>
+<h4 id='enumerated-values-30'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10063,7 +10423,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-29'>Enumerated Values</h4>
+<h4 id='enumerated-values-31'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10325,7 +10685,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-30'>Enumerated Values</h4>
+<h4 id='enumerated-values-32'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10514,7 +10874,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-31'>Enumerated Values</h4>
+<h4 id='enumerated-values-33'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10728,7 +11088,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-32'>Enumerated Values</h4>
+<h4 id='enumerated-values-34'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11092,7 +11452,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-33'>Enumerated Values</h4>
+<h4 id='enumerated-values-35'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11534,7 +11894,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-34'>Enumerated Values</h4>
+<h4 id='enumerated-values-36'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11800,7 +12160,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-35'>Enumerated Values</h4>
+<h4 id='enumerated-values-37'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -12931,7 +13291,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-36'>Enumerated Values</h4>
+<h4 id='enumerated-values-38'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13001,7 +13361,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-37'>Enumerated Values</h4>
+<h4 id='enumerated-values-39'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13167,7 +13527,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-38'>Enumerated Values</h4>
+<h4 id='enumerated-values-40'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -14544,7 +14904,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </code></pre><h2 id='portfoliomargins'>PortfolioMargins</h2>
 <p>Channel provides updates for portfolio margin values of the selected sub-account. These updates are sent every 2 seconds. In case portfolio margin is not enabled on the selected sub-account, no updates will be sent on this channel.</p>
 
-<p>For detailed description of portfolio magrgin please see <a href="https://guides.delta.exchange/delta-exchange-user-guide/trading-guide/margin-explainer/portfolio-margin">user guide</a></p>
+<p>For detailed description of portfolio margin please see <a href="https://guides.delta.exchange/delta-exchange-user-guide/trading-guide/margin-explainer/portfolio-margin">user guide</a></p>
 
 <p>UCF: is unrealised cashflows of your portfolio. These are the cashflows (negative for outgoing and positive for incoming) that will take place if all the positions in your portfolio are closed at prevailing mark prices.</p>
 
