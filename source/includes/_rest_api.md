@@ -2628,6 +2628,8 @@ p JSON.parse(result)
 
 `GET /positions/margined`
 
+Change in position may take upto 10secs to reflect. Use 'GET /position' for real-time data.
+
 <h3 id="get-margined-positions-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
@@ -2698,7 +2700,7 @@ headers = {
 }
 
 r = requests.get('https://api.delta.exchange/v2/positions', params={
-  'product_id': '0'
+
 }, headers = headers)
 
 print r.json()
@@ -2707,7 +2709,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/positions?product_id=0 \
+curl -X GET https://api.delta.exchange/v2/positions \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2728,8 +2730,7 @@ headers = {
 
 result = RestClient.get 'https://api.delta.exchange/v2/positions',
   params: {
-  'product_id' => 'integer'
-}, headers: headers
+  }, headers: headers
 
 p JSON.parse(result)
 
@@ -2737,11 +2738,14 @@ p JSON.parse(result)
 
 `GET /positions`
 
+Get real-time positions data.
+
 <h3 id="get-position-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|product_id|query|integer|true|id of the product|
+|product_id|query|integer|false|id of the product|
+|underlying_asset_symbol|query|string|false|Underlying asset symbol. e.g. 'BTC', 'ETH'. This gives a list of all positions in products which have the given underlying asset|
 
 > Example responses
 
