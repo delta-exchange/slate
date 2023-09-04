@@ -1458,6 +1458,7 @@
     },
     "/positions/margined": {
       "get": {
+        "description": "Change in position may take upto 10secs to reflect. Use 'GET /position' for real-time data.",
         "tags": [
           "Positions"
         ],
@@ -1517,6 +1518,7 @@
     },
     "/positions": {
       "get": {
+        "description": "Get real-time positions data.",
         "tags": [
           "Positions"
         ],
@@ -1536,9 +1538,16 @@
           {
             "name": "product_id",
             "in": "query",
-            "required": true,
+            "required": false,
             "type": "integer",
             "description": "id of the product"
+          },
+          {
+            "name": "underlying_asset_symbol",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Underlying asset symbol. e.g. 'BTC', 'ETH'. This gives a list of all positions in products which have the given underlying asset"
           }
         ],
         "responses": {

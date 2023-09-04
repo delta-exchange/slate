@@ -5211,6 +5211,8 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 
 <p><code>GET /positions/margined</code></p>
 
+<p>Change in position may take upto 10secs to reflect. Use &#39;GET /position&#39; for real-time data.</p>
+
 <h3 id="get-margined-positions-parameters">Parameters</h3>
 
 <table><thead>
@@ -5332,13 +5334,13 @@ To perform this operation, you must be sign the request using your api key and s
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/positions'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-  <span class="s">'product_id'</span><span class="p">:</span> <span class="s">'0'</span>
+
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/v2/positions?product_id<span class="o">=</span>0 <span class="se">\</span>
+curl -X GET https://api.delta.exchange/v2/positions <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
   -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
   -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
@@ -5356,14 +5358,15 @@ curl -X GET https://api.delta.exchange/v2/positions?product_id<span class="o">=<
 
 <span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/positions'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
-  <span class="s1">'product_id'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span>
-<span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 </code></pre>
 
 <p><code>GET /positions</code></p>
+
+<p>Get real-time positions data.</p>
 
 <h3 id="get-position-parameters">Parameters</h3>
 
@@ -5380,8 +5383,15 @@ curl -X GET https://api.delta.exchange/v2/positions?product_id<span class="o">=<
 <td>product_id</td>
 <td>query</td>
 <td>integer</td>
-<td>true</td>
+<td>false</td>
 <td>id of the product</td>
+</tr>
+<tr>
+<td>underlying_asset_symbol</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>Underlying asset symbol. e.g. &#39;BTC&#39;, &#39;ETH&#39;. This gives a list of all positions in products which have the given underlying asset</td>
 </tr>
 </tbody></table>
 
