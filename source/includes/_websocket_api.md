@@ -347,6 +347,94 @@ Max interval (in case of same data): 5 secs
 }
 ```
 
+## l1ob
+
+**l1ob** channel provides best ask and bid price, size updates in the orderbook. You need to send the list of symbols for which you would like to subscribe.
+Please note that if you subscribe to l1ob channel without specifying the symbols list, you will not receive any data.  
+Publish interval: 100 millisecs  
+Max interval (in case of same data): 5 secs
+
+> l1ob subscribe Sample
+
+```
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "l1ob",
+                "symbols": [
+                    "BTCUSDT"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```
+// l1ob sample Response
+{
+  "type":"l1ob",
+  "s":"BTCUSDT",  //product symbol
+  "d": ["37026.2","2133","37025.6","1977"],  
+  //[BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
+  "t": 1701157803668868,  //message publish time in microsec
+  "T": 1701157444959989  //orderbook update time in microsec
+}
+```
+
+## l1ob_c
+
+**l1ob_c** channel provides best ask and bid price, size updates in the orderbook for an Option chain. You can subscribe to a Asset_Expiry. e.g. To subscribe to data for all BTC Options expiring on 28th December 2023, send "BTC_281223".
+The data is Brotli compressed and in base64 encoded string format, to use this data first Brotli decompress to get a list of json. 
+Publish interval: 100 millisecs  
+Max interval (in case of same data): 5 secs
+
+> l1ob_c subscribe Sample
+
+```
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "l1ob_c",
+                "symbols": [
+                    "BTC_011223"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```
+// l1ob_c Response
+{
+  "type":"l1ob_c",
+  "s":"BTC_011223",  //Asset_Expiry
+  "c": "G6gA+B0HzjnKz3E2icneQi2yFbPX1mbq5Ok9j49QZ6iGuNDWLDpdfWEDjinwATeecMOF7GTgAjJOddfahjsUbHpW6fEp4spZhjoMQTFpZEo2fjnjvWcEAQyUk2E32VVd3ssdudqRE61qupUB",  
+  //Brotli decompress this.
+  "t": 1701157556471116  //message publish time
+}
+
+//Decompressed data format
+[{
+    "T":1701105329216885,  //orderbook update time in microsec
+    "s":"C-BTC-32000-081223",  //product symbol
+    "d":["5246.8","593","5053.2","6655"]  // [BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
+},
+{
+    "T":1701105298898194,
+    "d":["1064.8","593","936.0","989"],
+    "s":"C-BTC-37500-081223"
+}, ...
+]
+```
+
 
 ## l2_orderbook
 
