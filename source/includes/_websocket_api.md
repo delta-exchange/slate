@@ -349,7 +349,7 @@ Max interval (in case of same data): 5 secs
 
 ## l1ob
 
-**l1ob** channel provides best ask and bid price, size updates in the orderbook. You need to send the list of symbols for which you would like to subscribe.
+**l1ob** channel provides best ask and bid price, size updates in the orderbook. You need to send the list of symbols for which you would like to subscribe. If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol's data was last sent.
 Please note that if you subscribe to l1ob channel without specifying the symbols list, you will not receive any data.  
 Publish interval: 100 millisecs  
 Max interval (in case of same data): 5 secs
@@ -365,7 +365,8 @@ Max interval (in case of same data): 5 secs
             {
                 "name": "l1ob",
                 "symbols": [
-                    "BTCUSDT"
+                    "BTCUSDT",
+                    "C-BTC-42000-260124"
                 ]
             }
         ]
@@ -379,16 +380,18 @@ Max interval (in case of same data): 5 secs
   "type":"l1ob",
   "s":"BTCUSDT",  //product symbol
   "d": ["37026.2","2133","37025.6","1977"],  
-  //[BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
-  "t": 1701157803668868,  //message publish time in microsec
+  // [BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
+  // Price and Size will be null for the side with no orders.
+  "t": 1701157803668868, //message publish time in microsec
   "T": 1701157444959989  //orderbook update time in microsec
 }
 ```
 
 ## l1ob_c
 
-**l1ob_c** channel provides best ask and bid price, size updates in the orderbook for an Option chain. You can subscribe to a Asset_Expiry. e.g. To subscribe to data for all BTC Options expiring on 28th December 2023, send "BTC_281223".
+**l1ob_c** channel provides best ask and bid price, size updates in the orderbook for an Option chain. You can subscribe to a Asset_Expiry. e.g. To subscribe to data for all BTC Options expiring on 26th January 2024, send "BTC_260124". If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol's data was last sent.
 The data is Brotli compressed and in base64 encoded string format, to use this data first Brotli decompress to get a list of json. 
+Please note that if you subscribe to l1ob_c channel without specifying the Asset_Expiry list, you will not receive any data.  
 Publish interval: 100 millisecs  
 Max interval (in case of same data): 5 secs
 
@@ -403,7 +406,8 @@ Max interval (in case of same data): 5 secs
             {
                 "name": "l1ob_c",
                 "symbols": [
-                    "BTC_011223"
+                    "BTC_260124",
+                    "BTC_270124"
                 ]
             }
         ]
@@ -417,11 +421,11 @@ Max interval (in case of same data): 5 secs
   "type":"l1ob_c",
   "s":"BTC_011223",  //Asset_Expiry
   "c": "G6gA+B0HzjnKz3E2icneQi2yFbPX1mbq5Ok9j49QZ6iGuNDWLDpdfWEDjinwATeecMOF7GTgAjJOddfahjsUbHpW6fEp4spZhjoMQTFpZEo2fjnjvWcEAQyUk2E32VVd3ssdudqRE61qupUB",  
-  //Brotli decompress this.
+  //Brotli decompress this to get the below json.
   "t": 1701157556471116  //message publish time
 }
 
-//Decompressed data format
+//Brotli decompressed data format
 [{
     "T":1701105329216885,  //orderbook update time in microsec
     "s":"C-BTC-32000-081223",  //product symbol
