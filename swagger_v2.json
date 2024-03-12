@@ -3797,11 +3797,16 @@
           "description": "multi-factor authentication code for 2FA",
           "required": true
         },
+        "api_key": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
         "ip_addresses": {
           "type": "array",
-              "items": {
-                  "type": "string"
-                },
+          "items": {
+            "type": "string"
+          },
           "description": "list of ips to be whitelisted"
         }
       }
