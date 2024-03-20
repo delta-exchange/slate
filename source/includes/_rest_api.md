@@ -17,14 +17,16 @@ headingLevel: 2
 ---
 
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
-This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
-
-If you are looking for the old api documentation, here is the link to [v1 api](https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md) docs (now deprecated). 
+This section documents the latest v2 api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
 
 REST API ENDPOINT URL
 
 - Production - https://api.delta.exchange/v2
 - Testnet - https://testnet-api.delta.exchange/v2
+
+REST API ENDPOINT URL for Delta Exchange India
+
+- Production - https://api.india.delta.exchange/v2
 
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
 

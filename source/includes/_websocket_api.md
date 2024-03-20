@@ -12,6 +12,10 @@ Access url
 - Production - wss://socket.delta.exchange
 - Testnet - wss://testnet-socket.delta.exchange
 
+Access url for Delta Exchange India
+
+- Production - wss://socket.india.delta.exchange
+
  You will be disconnected, if there is no activity within 60 after making connection.
 
 # Subscribing to Channels
