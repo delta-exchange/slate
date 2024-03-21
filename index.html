@@ -726,6 +726,12 @@
                     <a href="#l1_orderbook" class="toc-h2 toc-link" data-title="l1_orderbook">l1_orderbook</a>
                   </li>
                   <li>
+                    <a href="#l1ob" class="toc-h2 toc-link" data-title="l1ob">l1ob</a>
+                  </li>
+                  <li>
+                    <a href="#l1ob_c" class="toc-h2 toc-link" data-title="l1ob_c">l1ob_c</a>
+                  </li>
+                  <li>
                     <a href="#l2_orderbook" class="toc-h2 toc-link" data-title="l2_orderbook">l2_orderbook</a>
                   </li>
                   <li>
@@ -2385,8 +2391,8 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Commission</span><span class="w"> </span><span class="err">already</span><span class="w"> </span><span class="err">paid</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">filled</span><span class="w"> </span><span class="err">order</span><span class="w">
-    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Commission</span><span class="w"> </span><span class="err">blocked</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">order</span><span class="w">
+    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
@@ -13851,6 +13857,12 @@ This operation does not require authentication.
 <li>Testnet - wss://testnet-socket.delta.exchange</li>
 </ul>
 
+<p>Access url for Delta Exchange India</p>
+
+<ul>
+<li>Production - wss://socket.india.delta.exchange</li>
+</ul>
+
 <p>You will be disconnected, if there is no activity within 60 after making connection.</p>
 
 <h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
@@ -14150,6 +14162,86 @@ Max interval (in case of same data): 5 secs</p>
   "timestamp":1671603257645134,
   "type":"l1_orderbook"
 }
+</code></pre><h2 id='l1ob'>l1ob</h2>
+<p><strong>l1ob</strong> channel provides best ask and bid price, size updates in the orderbook. You need to send the list of symbols for which you would like to subscribe. If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol&#39;s data was last sent.
+Please note that if you subscribe to l1ob channel without specifying the symbols list, you will not receive any data.<br>
+Publish interval: 100 millisecs<br>
+Max interval (in case of same data): 5 secs</p>
+
+<blockquote>
+<p>l1ob subscribe Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "l1ob",
+                "symbols": [
+                    "BTCUSDT",
+                    "C-BTC-42000-260124"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// l1ob sample Response
+{
+  "type":"l1ob",
+  "s":"BTCUSDT",  //product symbol
+  "d": ["37026.2","2133","37025.6","1977"],  
+  // [BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
+  // Price and Size will be null for the side with no orders.
+  "t": 1701157803668868, //message publish time in microsec
+  "T": 1701157444959989  //orderbook update time in microsec
+}
+</code></pre><h2 id='l1ob_c'>l1ob_c</h2>
+<p><strong>l1ob_c</strong> channel provides best ask and bid price, size updates in the orderbook for an Option chain. You can subscribe to a Asset_Expiry. e.g. To subscribe to data for all BTC Options expiring on 26th January 2024, send &quot;BTC_260124&quot;. If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol&#39;s data was last sent.
+The data is Brotli compressed and in base64 encoded string format, to use this data first Brotli decompress to get a list of json. 
+Please note that if you subscribe to l1ob_c channel without specifying the Asset_Expiry list, you will not receive any data.<br>
+Publish interval: 100 millisecs<br>
+Max interval (in case of same data): 5 secs</p>
+
+<blockquote>
+<p>l1ob_c subscribe Sample</p>
+</blockquote>
+<pre class="highlight plaintext"><code>//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "l1ob_c",
+                "symbols": [
+                    "BTC_260124",
+                    "BTC_270124"
+                ]
+            }
+        ]
+    }
+}
+</code></pre><pre class="highlight plaintext"><code>// l1ob_c Response
+{
+  "type":"l1ob_c",
+  "s":"BTC_011223",  //Asset_Expiry
+  "c": "G6gA+B0HzjnKz3E2icneQi2yFbPX1mbq5Ok9j49QZ6iGuNDWLDpdfWEDjinwATeecMOF7GTgAjJOddfahjsUbHpW6fEp4spZhjoMQTFpZEo2fjnjvWcEAQyUk2E32VVd3ssdudqRE61qupUB",  
+  //Brotli decompress this to get the below json.
+  "t": 1701157556471116  //message publish time
+}
+
+//Brotli decompressed data format
+[{
+    "T":1701105329216885,  //orderbook update time in microsec
+    "s":"C-BTC-32000-081223",  //product symbol
+    "d":["5246.8","593","5053.2","6655"]  // [BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
+},
+{
+    "T":1701105298898194,
+    "d":["1064.8","593","936.0","989"],
+    "s":"C-BTC-37500-081223"
+}, ...
+]
 </code></pre><h2 id='l2_orderbook'>l2_orderbook</h2>
 <p><strong>l2_orderbook</strong> channel provides the complete level2 orderbook for the sepecified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. Unlike L1 orderbook channel, L2 orderbook channel does not accept product category names or &quot;all&quot; as valid symbols. 
 Please note that if you subscribe to L2 channel without specifying the symbols list, you will not receive any data.<br>
