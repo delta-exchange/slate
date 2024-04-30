@@ -1366,7 +1366,7 @@
         },
         "time_in_force": {
           "type" : "string",
-          "enum" : [ "gtc", "ioc", "fok" ],
+          "enum" : [ "gtc", "ioc" ],
           "required": false
         },
         "post_only": {

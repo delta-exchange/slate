@@ -132,7 +132,7 @@ response = requests.request(
 # Place new order
 method = 'POST'
 timestamp = get_time_stamp()
-path = '/orders'
+path = '/v2/orders'
 query_string = ''
 payload = "{\"order_type\":\"limit_order\",\"size\":3,\"side\":\"buy\",\"limit_price\":\"0.0005\",\"product_id\":16}"
 signature_data = method + timestamp + path + query_string + payload
