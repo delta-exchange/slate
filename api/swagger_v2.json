@@ -756,7 +756,7 @@
           "Orders"
         ],
         "summary": "Create batch orders",
-        "description": "Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that fok and ioc are not valid time in force values for creating batch orders.",
+        "description": "Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that ioc is not valid time in force values for creating batch orders.",
         "operationId": "batchCreate",
         "consumes": [
           "application/json"
@@ -2229,6 +2229,7 @@
     "/history/candles": {
       "get": {
         "summary": "GET ohlc candles",
+        "description": "Open-High-Low-Close candle data. Max 2000 candles in a response.",
         "tags": [
           "Historical data/ OHLC Candles"
         ],
@@ -3050,8 +3051,7 @@
           "type": "string",
           "enum": [
             "gtc",
-            "ioc",
-            "fok"
+            "ioc"
           ]
         },
         "mmp": {
