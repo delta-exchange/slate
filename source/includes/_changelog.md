@@ -1,5 +1,10 @@
 # Changelog
 
+## 01.05.2024
+1. Added "po" positions key in /v2/user_trades websocket private channel.
+2. Removed "fok" type for orders, as they are no longer supported.
+
+
 ## V2 Rest Api
 Our v2 Api is significantly faster than the v1 api. Our focus while rebuilding v2 Apis was on the following
 

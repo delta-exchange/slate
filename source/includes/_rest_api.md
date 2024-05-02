@@ -1698,7 +1698,7 @@ p JSON.parse(result)
 
 `POST /orders/batch`
 
-Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that fok and ioc are not valid time in force values for creating batch orders.
+Orders in a batch should belong to the same contract. Max allowed size limit in a batch is 50. Rate limits apply. Please note that ioc is not valid time in force values for creating batch orders.
 
 > Body parameter
 
@@ -5037,6 +5037,8 @@ p JSON.parse(result)
 
 `GET /history/candles`
 
+Open-High-Low-Close candle data. Max 2000 candles in a response.
+
 <h3 id="get-ohlc-candles-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
@@ -5768,7 +5770,6 @@ This operation does not require authentication.
 |stop_trigger_method|spot_price|
 |time_in_force|gtc|
 |time_in_force|ioc|
-|time_in_force|fok|
 |mmp|disabled|
 |mmp|mmp1|
 |mmp|mmp2|

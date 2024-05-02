@@ -1290,6 +1290,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
     "S": "buy",                  // side: "buy" or "sell"
     "s": 190,                    // size in contracts
     "p": "17289.2",              // price
+    "po": 5,                     // position (in contracts) after this fill.
     "r": "taker",                // role: "taker" or "maker"
     "c": "GA123",                // client_order_id
     "t": 1685794274866438,       // timestamp of fill creation
