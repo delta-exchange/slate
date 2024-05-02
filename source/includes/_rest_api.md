@@ -17,7 +17,9 @@ headingLevel: 2
 ---
 
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
-This section documents the latest v2 api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
+This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
+
+If you are looking for the old api documentation, here is the link to [v1 api](https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md) docs (now deprecated). 
 
 REST API ENDPOINT URL
 
@@ -888,8 +890,8 @@ p JSON.parse(result)
     "limit_price": "string",
     "stop_order_type": "stop_loss_order",
     "stop_price": "string",
-    "paid_commission": "string", // Commission already paid for filled order
-    "commission": "string", // Commission blocked in order
+    "paid_commission": "string",
+    "commission": "string",
     "close_on_trigger": "false",
     "client_order_id": "string",
     "state": "open",
