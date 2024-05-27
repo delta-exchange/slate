@@ -2988,12 +2988,18 @@
     "CreateOrderRequest": {
       "type": "object",
       "description": "A create order object",
-      "required": [
-        "product_id"
+      "anyOf": [
+        { "required": ["product_id"] },
+        { "required": ["product_symbol"] }
       ],
       "properties": {
         "product_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "id of the product/contract to place order. Either product_id or product_symbol is required."
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
         },
         "limit_price": {
           "type": "string"
@@ -3094,12 +3100,18 @@
     "BatchCreateOrderRequest": {
       "type": "object",
       "description": "A create order object",
-      "required": [
-        "product_id"
+      "anyOf": [
+        { "required": ["product_id"] },
+        { "required": ["product_symbol"] }
       ],
       "properties": {
         "product_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "id of the product/contract to place order. Either product_id or product_symbol is required."
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
         },
         "limit_price": {
           "type": "string"
@@ -3216,7 +3228,12 @@
           "type": "integer"
         },
         "product_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
         },
         "limit_price": {
           "type": "string"
@@ -3254,10 +3271,18 @@
     "CreateBracketOrderRequest": {
       "type": "object",
       "description": "bracket order object",
+      "anyOf": [
+        { "required": ["product_id"] },
+        { "required": ["product_symbol"] }
+      ],
       "properties": {
         "product_id": {
           "type": "integer",
-          "required": true
+          "description": "id of the product/contract to place order. Either product_id or product_symbol is required."
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
         },
         "stop_loss_order": {
           "type": "object",
@@ -3308,6 +3333,10 @@
     "EditBracketOrderRequest": {
       "type": "object",
       "description": "bracket order object",
+      "anyOf": [
+        { "required": ["product_id"] },
+        { "required": ["product_symbol"] }
+      ],
       "properties": {
         "id": {
           "type": "integer",
@@ -3316,7 +3345,11 @@
         },
         "product_id": {
           "type": "integer",
-          "required": true
+          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
         },
         "bracket_stop_loss_limit_price": {
           "type": "string"
