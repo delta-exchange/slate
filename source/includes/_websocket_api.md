@@ -7,7 +7,7 @@ Websocket api can be used for the following use cases
 - Get account specific notifications like fills, liquidations, [ADL](https://www.delta.exchange/user-guide/docs/trading-guide/ADL/) and PnL updates.
 - Get account specific updates on orders ,positions and wallets.
 
-Access url
+Access url for Delta Exchange Global
 
 - Production - wss://socket.delta.exchange
 - Testnet - wss://testnet-socket.delta.exchange
@@ -16,7 +16,7 @@ Access url for Delta Exchange India
 
 - Production - wss://socket.india.delta.exchange
 
- You will be disconnected, if there is no activity within 60 after making connection.
+ You will be disconnected, if there is no activity within 60 seconds after making connection.
 
 # Subscribing to Channels
 
