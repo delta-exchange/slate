@@ -844,6 +844,7 @@ p JSON.parse(result)
 ```json
 {
   "product_id": 0,
+  "product_symbol": "string",
   "limit_price": "string",
   "size": 0,
   "side": "buy",
@@ -1122,6 +1123,7 @@ p JSON.parse(result)
 {
   "id": 0,
   "product_id": 0,
+  "product_symbol": "string",
   "limit_price": "string",
   "size": 0,
   "mmp": "disabled",
@@ -1402,6 +1404,7 @@ A bracket order is a set of TP and SL order. For a bracket order , size need not
 ```json
 {
   "product_id": 0,
+  "product_symbol": "string",
   "stop_loss_order": {
     "order_type": "limit_order",
     "stop_price": "string",
@@ -1509,6 +1512,7 @@ A bracket order is a set of TP and SL order. You can specify bracket order with 
 {
   "id": 0,
   "product_id": 0,
+  "product_symbol": "string",
   "bracket_stop_loss_limit_price": "string",
   "bracket_stop_loss_price": "string",
   "bracket_take_profit_limit_price": "string",
@@ -1707,6 +1711,7 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
   "orders": [
     {
       "product_id": 0,
+      "product_symbol": "string",
       "limit_price": "string",
       "size": 0,
       "side": "buy",
@@ -1737,7 +1742,8 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
 |---|---|---|---|---|
 |body|body|object|true|Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders|
 |» orders|body|[[BatchCreateOrderRequest](#schemabatchcreateorderrequest)]|false|[A create order object]|
-|»» product_id|body|integer|true|none|
+|»» product_id|body|integer|false|id of the product to place order. Either product_id or product_symbol is required.|
+|»» product_symbol|body|string|false|symbol of the product to place order. Either product_id or product_symbol is required.|
 |»» limit_price|body|string|false|none|
 |»» size|body|integer|false|none|
 |»» side|body|string|false|side for which to place order|
@@ -1912,6 +1918,7 @@ Orders to be edited in a batch. Rate limits apply.
     {
       "id": 0,
       "product_id": 0,
+      "product_symbol": "string",
       "limit_price": "string",
       "size": 0,
       "mmp": "disabled",
@@ -1929,7 +1936,8 @@ Orders to be edited in a batch. Rate limits apply.
 |body|body|object|true|none|
 |» orders|body|[[EditOrderRequest](#schemaeditorderrequest)]|false|[edit order object]|
 |»» id|body|integer|false|none|
-|»» product_id|body|integer|false|none|
+|»» product_id|body|integer|false|id of the product to place order. Either product_id or product_symbol is required.|
+|»» product_symbol|body|string|false|symbol of the product to place order. Either product_id or product_symbol is required.|
 |»» limit_price|body|string|false|none|
 |»» size|body|integer|false|total size after editing order|
 |»» mmp|body|string|false|none|
@@ -5707,6 +5715,7 @@ This operation does not require authentication.
 ```json
 {
   "product_id": 0,
+  "product_symbol": "string",
   "limit_price": "string",
   "size": 0,
   "side": "buy",
@@ -5735,7 +5744,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|true|none|none|
+|product_id|integer|true|none|id of the product to place order. Either product_id or product_symbol is required.|
+|product_symbol|string|true|none|symbol of the product to place order. Either product_id or product_symbol is required.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|none|
 |side|string|false|none|side for which to place order|
@@ -5790,6 +5800,7 @@ This operation does not require authentication.
 ```json
 {
   "product_id": 0,
+  "product_symbol": "string",
   "limit_price": "string",
   "size": 0,
   "side": "buy",
@@ -5818,7 +5829,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|true|none|none|
+|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
+|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|none|
 |side|string|false|none|side for which to place order|
@@ -5873,6 +5885,7 @@ This operation does not require authentication.
 [
   {
     "product_id": 0,
+    "product_symbol": "string",
     "limit_price": "string",
     "size": 0,
     "side": "buy",
@@ -5910,6 +5923,7 @@ This operation does not require authentication.
 [
   {
     "product_id": 0,
+    "product_symbol": "string",
     "limit_price": "string",
     "size": 0,
     "side": "buy",
@@ -5947,6 +5961,7 @@ This operation does not require authentication.
 {
   "id": 0,
   "product_id": 0,
+  "product_symbol": "string",
   "limit_price": "string",
   "size": 0,
   "mmp": "disabled",
@@ -5962,7 +5977,8 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|none|
-|product_id|integer|false|none|none|
+|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
+|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|total size after editing order|
 |mmp|string|false|none|none|
@@ -6034,7 +6050,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|false|none|none|
+|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
+|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
 |stop_loss_order|object|false|none|none|
 |» order_type|string|false|none|none|
 |» stop_price|string|false|none|none|
@@ -6082,7 +6099,8 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|Order ID for which bracket params are being updated|
-|product_id|integer|false|none|none|
+|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
+|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
 |bracket_stop_loss_limit_price|string|false|none|none|
 |bracket_stop_loss_price|string|false|none|none|
 |bracket_take_profit_limit_price|string|false|none|none|

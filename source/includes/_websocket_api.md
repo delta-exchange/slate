@@ -291,12 +291,32 @@ Please note that if you subscribe to ticker channel without specifying the symbo
 ```
 // Response
 {
+    "open": 0.00001347,
     "close": 0.00001327,
     "high": 0.00001359,
     "low": 0.00001323,
     "mark_price": "0.00001325",
-    "open": 0.00001347,
+    "mark_change_24h": "-0.1202",
+    "oi": "812.6100",
     "product_id": 56,
+    "quotes": {
+        "ask_iv": null,
+        "ask_size": "922",
+        "best_ask": "3171.5",
+        "best_bid": "3171.4",
+        "bid_iv": null,
+        "bid_size": "191",
+        "impact_mid_price": null,
+        "mark_iv": "0.29418049"
+    },
+    "greeks":{               // Will be null for Futures and Spot products.
+        "delta":"0.01939861",
+        "gamma":"0.00006382",
+        "rho":"0.00718630",
+        "spot":"63449.5",
+        "theta":"-81.48397021",
+        "vega":"0.72486575"
+    }
     "size": 1254631,                        // num of contracts traded
     "spot_price": "0.00001326",             
     "symbol": "BTCUSD_28Dec",
@@ -647,11 +667,14 @@ Please note that if you subscribe to all_trades channel without specifying the s
 
 ## mark_price
 
-**mark_price** channel provides a real time feed of mark price. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a "MARK:" to subscribe for mark price.
+**mark_price** channel provides mark price updates at a fixed interval. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a "MARK:" to subscribe for mark price.  
 You need to send the list of symbols for which you would like to subscribe to mark price channel. You can also subscribe to 
-mark price updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
-If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
-Please note that if you subscribe to mark price channel without specifying the symbols list, you will not receive any data.
+mark price updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.  
+If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.  
+You can also subscribe to a Options chain, by passing 'Asset-Expiry', e.g. `{"symbols": ["BTC-310524"] }` will subscribe to all BTC Options expirying on 31st May 2024.  
+Please note that if you subscribe to mark price channel without specifying the symbols list, you will not receive any data.  
+Publish interval: 2 secs.
+
 
 > Mark Price Sample
 
@@ -1204,6 +1227,8 @@ Please note that if you subscribe to orders channel without specifying the symbo
 ```
 
 ## UserTrades
+Please use "v2/user_trades" channel for better latency.
+
 Channel provides updates for fills. Need to pass list of product symbols while subscribing.
 
 All updates will have incremental seq_id. seq_id is separate for each symbol.
