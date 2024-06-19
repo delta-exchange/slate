@@ -15,8 +15,10 @@ Rest Api markdown is generated using swagger. Steps
 
 ### How to run
 ```
-bundle install
-bundle exec middleman server
+# Build the Delta slate docker image
+docker build . -t deltaslate
+# Run the Delta slate docker image on local machine (http://127.0.0.1:4567)
+docker run --rm --name deltaslate -p 4567:4567 -v source/srv/slate/source deltaslate serve
 ```
 
 ### How to publish
