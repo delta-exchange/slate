@@ -1870,6 +1870,9 @@
                 {
                   "type": "object",
                   "properties": {
+                    "meta": {
+                      "$ref": "#/definitions/MetaData"
+                    },
                     "result": {
                       "$ref": "#/definitions/ArrayOfWallets"
                     }
@@ -3683,34 +3686,81 @@
     "Wallet": {
       "type": "object",
       "properties": {
-        "balance": {
-          "type": "string",
-          "description": "Total wallet balance"
-        },
-        "order_margin": {
-          "type": "string",
-          "description": "Margin blocked in open orders"
-        },
-        "position_margin": {
-          "type": "string",
-          "description": "Margin blocked in open positions"
-        },
-        "commission": {
-          "type": "string",
-          "description": "Commissions blocked in open orders and open positions"
-        },
-        "available_balance": {
-          "type": "string",
-          "description": "Amount available for withdrawals"
-        },
-        "interest_credit": {
-          "type": "string",
-          "description": "Interest credit earned till now"
-        },
         "asset_id": {
           "type": "integer"
         },
         "asset_symbol": {
+          "type": "string"
+        },
+        "available_balance": {
+          "type": "string"
+        },
+        "available_balance_for_robo": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "string"
+        },
+        "blocked_margin": {
+          "type": "string"
+        },
+        "commission": {
+          "type": "string"
+        },
+        "cross_asset_liability": {
+          "type": "string"
+        },
+        "cross_commission": {
+          "type": "string"
+        },
+        "cross_locked_collateral": {
+          "type": "string"
+        },
+        "cross_order_margin": {
+          "type": "string"
+        },
+        "cross_position_margin": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "interest_credit": {
+          "type": "string"
+        },
+        "order_margin": {
+          "type": "string"
+        },
+        "pending_referral_bonus": {
+          "type": "string"
+        },
+        "pending_trading_fee_credit": {
+          "type": "string"
+        },
+        "portfolio_margin": {
+          "type": "string"
+        },
+        "position_margin": {
+          "type": "string"
+        },
+        "trading_fee_credit": {
+          "type": "string"
+        },
+        "unvested_amount": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer"
+        }
+      }
+    },
+    "MetaData": {
+      "type": "object",
+      "properties": {
+        "net_equity": {
+          "type": "string"
+        },
+        "robo_trading_equity": {
           "type": "string"
         }
       }

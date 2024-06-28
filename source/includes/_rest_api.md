@@ -3626,16 +3626,34 @@ p JSON.parse(result)
 ```json
 {
   "success": true,
+  "meta": {
+    "net_equity": "string",
+    "robo_trading_equity": "string"
+  },
   "result": [
     {
-      "balance": "string",
-      "order_margin": "string",
-      "position_margin": "string",
-      "commission": "string",
-      "available_balance": "string",
-      "interest_credit": "string",
       "asset_id": 0,
-      "asset_symbol": "string"
+      "asset_symbol": "string",
+      "available_balance": "string",
+      "available_balance_for_robo": "string",
+      "balance": "string",
+      "blocked_margin": "string",
+      "commission": "string",
+      "cross_asset_liability": "string",
+      "cross_commission": "string",
+      "cross_locked_collateral": "string",
+      "cross_order_margin": "string",
+      "cross_position_margin": "string",
+      "id": 0,
+      "interest_credit": "string",
+      "order_margin": "string",
+      "pending_referral_bonus": "string",
+      "pending_trading_fee_credit": "string",
+      "portfolio_margin": "string",
+      "position_margin": "string",
+      "trading_fee_credit": "string",
+      "unvested_amount": "string",
+      "user_id": 0
     }
   ]
 }
@@ -6442,14 +6460,28 @@ This operation does not require authentication.
 
 ```json
 {
-  "balance": "string",
-  "order_margin": "string",
-  "position_margin": "string",
-  "commission": "string",
-  "available_balance": "string",
-  "interest_credit": "string",
   "asset_id": 0,
-  "asset_symbol": "string"
+  "asset_symbol": "string",
+  "available_balance": "string",
+  "available_balance_for_robo": "string",
+  "balance": "string",
+  "blocked_margin": "string",
+  "commission": "string",
+  "cross_asset_liability": "string",
+  "cross_commission": "string",
+  "cross_locked_collateral": "string",
+  "cross_order_margin": "string",
+  "cross_position_margin": "string",
+  "id": 0,
+  "interest_credit": "string",
+  "order_margin": "string",
+  "pending_referral_bonus": "string",
+  "pending_trading_fee_credit": "string",
+  "portfolio_margin": "string",
+  "position_margin": "string",
+  "trading_fee_credit": "string",
+  "unvested_amount": "string",
+  "user_id": 0
 }
 
 ```
@@ -6458,14 +6490,47 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|balance|string|false|none|Total wallet balance|
-|order_margin|string|false|none|Margin blocked in open orders|
-|position_margin|string|false|none|Margin blocked in open positions|
-|commission|string|false|none|Commissions blocked in open orders and open positions|
-|available_balance|string|false|none|Amount available for withdrawals|
-|interest_credit|string|false|none|Interest credit earned till now|
 |asset_id|integer|false|none|none|
 |asset_symbol|string|false|none|none|
+|available_balance|string|false|none|none|
+|available_balance_for_robo|string|false|none|none|
+|balance|string|false|none|none|
+|blocked_margin|string|false|none|none|
+|commission|string|false|none|none|
+|cross_asset_liability|string|false|none|none|
+|cross_commission|string|false|none|none|
+|cross_locked_collateral|string|false|none|none|
+|cross_order_margin|string|false|none|none|
+|cross_position_margin|string|false|none|none|
+|id|integer|false|none|none|
+|interest_credit|string|false|none|none|
+|order_margin|string|false|none|none|
+|pending_referral_bonus|string|false|none|none|
+|pending_trading_fee_credit|string|false|none|none|
+|portfolio_margin|string|false|none|none|
+|position_margin|string|false|none|none|
+|trading_fee_credit|string|false|none|none|
+|unvested_amount|string|false|none|none|
+|user_id|integer|false|none|none|
+
+<h2 id="tocSmetadata">MetaData</h2>
+
+<a id="schemametadata"></a>
+
+```json
+{
+  "net_equity": "string",
+  "robo_trading_equity": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|net_equity|string|false|none|none|
+|robo_trading_equity|string|false|none|none|
 
 <h2 id="tocSarrayofwallets">ArrayOfWallets</h2>
 
@@ -6474,14 +6539,28 @@ This operation does not require authentication.
 ```json
 [
   {
-    "balance": "string",
-    "order_margin": "string",
-    "position_margin": "string",
-    "commission": "string",
-    "available_balance": "string",
-    "interest_credit": "string",
     "asset_id": 0,
-    "asset_symbol": "string"
+    "asset_symbol": "string",
+    "available_balance": "string",
+    "available_balance_for_robo": "string",
+    "balance": "string",
+    "blocked_margin": "string",
+    "commission": "string",
+    "cross_asset_liability": "string",
+    "cross_commission": "string",
+    "cross_locked_collateral": "string",
+    "cross_order_margin": "string",
+    "cross_position_margin": "string",
+    "id": 0,
+    "interest_credit": "string",
+    "order_margin": "string",
+    "pending_referral_bonus": "string",
+    "pending_trading_fee_credit": "string",
+    "portfolio_margin": "string",
+    "position_margin": "string",
+    "trading_fee_credit": "string",
+    "unvested_amount": "string",
+    "user_id": 0
   }
 ]
 

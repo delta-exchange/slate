@@ -1028,19 +1028,35 @@ This channel provides updates on wallet balances. Updates are sent for a specifi
 ```
 // margin update
 {
-    "type": "margins",
-    "balance": "1.0012",            // wallet balance = deposits - withdrawals + realised_cashflows
-    "available_balance": "0.1",     // available balance for trading
-    "order_margin": "0.121212",     // Margin blocked in isolated margined open orders
-    "position_margin": "0.101212",  // Margin blocked in isolated margined positions
-    "commission": "0.00012",        // commissions blocked in isolated margined positions and orders
-    "portfolio_margin": "2.333"     // Margin blocked for portfolio margined positions and orders. Same as blocked margin in portfolio margins channel.
-    "asset_id": 2                   // BTC
-    "asset_symbol": "BTC",          // BTC
-    "unvested_amount": "0.05"       // amount locked. Relevant only for DETO
-    "timestamp": 1668570144,        // unix timestamp in microseconds
+    "action": "update",
+    "asset_id": 2,                           // BTC
+    "asset_symbol": "BTC",                   // BTC
+    "available_balance": "9.385",            // Available balance for trading = balance - blocked_margin
+    "available_balance_for_robo": "9.385",   // Available balance for robo trading = balance - blocked_margin
+    "balance": "10",                         // Wallet balance = deposits - withdrawals + realised_cashflows
+    "blocked_margin": "0.615",               // Total Margin blocked
+    "commission": "0.001",                   // Commissions blocked in isolated margined positions and orders
+    "cross_asset_liability": "0",            // Liability between asset in cross margin mode
+    "cross_commission": "0.002",             // Commissions blocked in cross margined positions and orders
+    "cross_locked_collateral": "0.003",      // Balance blocked for collateral
+    "cross_order_margin": "0.004",           // Margin blocked in cross margined open orders
+    "cross_position_margin": "0.005",        // Margin blocked in cross margined positions
+    "id": 1,                                 // Wallet Id
+    "interest_credit": "0",                  // Interest credited
+    "order_margin": "0.1",                   // Margin blocked in isolated margined open orders
+    "pending_referral_bonus": "0",           // Bonus pending
+    "pending_trading_fee_credit": "0",       // Pending trading fee to credit
+    "portfolio_margin": "0.2",               // Margin blocked for portfolio margined positions and orders. Same as blocked margin in portfolio margins channel.
+    "position_margin": "0.3",                // Margin blocked in isolated margined positions
+    "robo_trading_equity": "0",              // Equity for robo trading
+    "timestamp": 1719397302569921,           // Unix timestamp in microseconds
+    "trading_fee_credit": "0",               // Trading fee credited
+    "type": "margins",                       // Margins channel
+    "unvested_amount": "0",                  // Amount locked. Relevant only for DETO
+    "user_id": 1                             // User id
 }
 ```
+
 
 ## Positions
 This channel provides updates whenever there is any change in your open positions.
