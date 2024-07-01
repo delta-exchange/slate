@@ -1253,15 +1253,19 @@ headingLevel: 2</p>
 
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 
-<p>This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.</p>
-
-<p>If you are looking for the old api documentation, here is the link to <a href="https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md">v1 api</a> docs (now deprecated). </p>
+<p>This section documents the latest v2 api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.</p>
 
 <p>REST API ENDPOINT URL</p>
 
 <ul>
 <li>Production - https://api.delta.exchange/v2</li>
 <li>Testnet - https://testnet-api.delta.exchange/v2</li>
+</ul>
+
+<p>REST API ENDPOINT URL for Delta Exchange India</p>
+
+<ul>
+<li>Production - https://api.india.delta.exchange/v2</li>
 </ul>
 
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
@@ -2395,8 +2399,8 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Commission</span><span class="w"> </span><span class="err">already</span><span class="w"> </span><span class="err">paid</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">filled</span><span class="w"> </span><span class="err">order</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Commission</span><span class="w"> </span><span class="err">blocked</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">order</span><span class="w">
     </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
@@ -3811,20 +3815,6 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <td>»» client_order_id</td>
 <td>body</td>
 <td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» <em>anonymous</em></td>
-<td>body</td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» <em>anonymous</em></td>
-<td>body</td>
-<td>object</td>
 <td>false</td>
 <td>none</td>
 </tr>
@@ -10204,46 +10194,6 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<p><em>anyOf</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<p><em>or</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
 <h4 id='enumerated-values-30'>Enumerated Values</h4>
 
 <table><thead>
@@ -10524,46 +10474,6 @@ This operation does not require authentication.
 <tr>
 <td>client_order_id</td>
 <td>string</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<p><em>anyOf</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<p><em>or</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
@@ -10892,7 +10802,6 @@ This operation does not require authentication.
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
@@ -10924,7 +10833,6 @@ This operation does not require authentication.
 <p><a id="schemacreatebracketorderrequest"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"stop_loss_order"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -11040,46 +10948,6 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<p><em>anyOf</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<p><em>or</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
 <h4 id='enumerated-values-33'>Enumerated Values</h4>
 
 <table><thead>
@@ -11125,7 +10993,6 @@ This operation does not require authentication.
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -11200,46 +11067,6 @@ This operation does not require authentication.
 <tr>
 <td>bracket_trail_amount</td>
 <td>string</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<p><em>anyOf</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<p><em>or</em></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><em>anonymous</em></td>
-<td>object</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
