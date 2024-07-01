@@ -17,16 +17,18 @@ headingLevel: 2
 ---
 
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
-This section documents the latest v2 api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
+This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
 
-REST API ENDPOINT URL
+If you are looking for the old api documentation, here is the link to [v1 api](https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md) docs (now deprecated). 
+
+REST API Endpoint URL for Delta Exchange Global
 
 - Production - https://api.delta.exchange/v2
 - Testnet - https://testnet-api.delta.exchange/v2
 
-REST API ENDPOINT URL for Delta Exchange India
+REST API Endpoint URL for Delta Exchange India
 
-- Production - https://api.india.delta.exchange/v2
+Production - https://api.india.delta.exchange/v2
 
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
 
@@ -889,8 +891,8 @@ p JSON.parse(result)
     "limit_price": "string",
     "stop_order_type": "stop_loss_order",
     "stop_price": "string",
-    "paid_commission": "string", // Commission already paid for filled order
-    "commission": "string", // Commission blocked in order
+    "paid_commission": "string",
+    "commission": "string",
     "close_on_trigger": "false",
     "client_order_id": "string",
     "state": "open",
@@ -1707,89 +1709,37 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
 > Body parameter
 
 ```json
-{
-  "orders": [
-    {
-      "product_id": 0,
-      "product_symbol": "string",
-      "limit_price": "string",
-      "size": 0,
-      "side": "buy",
-      "order_type": "limit_order",
-      "stop_order_type": "stop_loss_order",
-      "stop_price": "string",
-      "trail_amount": "string",
-      "stop_trigger_method": "mark_price",
-      "bracket_stop_loss_limit_price": "string",
-      "bracket_stop_loss_price": "string",
-      "bracket_take_profit_limit_price": "string",
-      "bracket_take_profit_price": "string",
-      "time_in_force": "gtc",
-      "mmp": "disabled",
-      "post_only": "true",
-      "reduce_only": "true",
-      "close_on_trigger": "true",
-      "client_order_id": "string"
-    }
-  ],
-  "product_id": 0
-}
+[
+  {
+    "product_id": 0,
+    "product_symbol": "string",
+    "limit_price": "string",
+    "size": 0,
+    "side": "buy",
+    "order_type": "limit_order",
+    "stop_order_type": "stop_loss_order",
+    "stop_price": "string",
+    "trail_amount": "string",
+    "stop_trigger_method": "mark_price",
+    "bracket_stop_loss_limit_price": "string",
+    "bracket_stop_loss_price": "string",
+    "bracket_take_profit_limit_price": "string",
+    "bracket_take_profit_price": "string",
+    "time_in_force": "gtc",
+    "mmp": "disabled",
+    "post_only": "true",
+    "reduce_only": "true",
+    "close_on_trigger": "true",
+    "client_order_id": "string"
+  }
+]
 ```
 
 <h3 id="create-batch-orders-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|true|Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders|
-|» orders|body|[[BatchCreateOrderRequest](#schemabatchcreateorderrequest)]|false|[A create order object]|
-|»» product_id|body|integer|false|id of the product to place order. Either product_id or product_symbol is required.|
-|»» product_symbol|body|string|false|symbol of the product to place order. Either product_id or product_symbol is required.|
-|»» limit_price|body|string|false|none|
-|»» size|body|integer|false|none|
-|»» side|body|string|false|side for which to place order|
-|»» order_type|body|string|false|none|
-|»» stop_order_type|body|string|false|none|
-|»» stop_price|body|string|false|none|
-|»» trail_amount|body|string|false|none|
-|»» stop_trigger_method|body|string|false|none|
-|»» bracket_stop_loss_limit_price|body|string|false|none|
-|»» bracket_stop_loss_price|body|string|false|none|
-|»» bracket_take_profit_limit_price|body|string|false|none|
-|»» bracket_take_profit_price|body|string|false|none|
-|»» time_in_force|body|string|false|none|
-|»» mmp|body|string|false|none|
-|»» post_only|body|string|false|none|
-|»» reduce_only|body|string|false|none|
-|»» close_on_trigger|body|string|false|none|
-|»» client_order_id|body|string|false|none|
-|» product_id|body|integer|false|none|
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|»» side|buy|
-|»» side|sell|
-|»» order_type|limit_order|
-|»» order_type|market_order|
-|»» stop_order_type|stop_loss_order|
-|»» stop_order_type|take_profit_order|
-|»» stop_trigger_method|mark_price|
-|»» stop_trigger_method|last_traded_price|
-|»» stop_trigger_method|spot_price|
-|»» time_in_force|gtc|
-|»» mmp|disabled|
-|»» mmp|mmp1|
-|»» mmp|mmp2|
-|»» mmp|mmp3|
-|»» mmp|mmp4|
-|»» mmp|mmp5|
-|»» post_only|true|
-|»» post_only|false|
-|»» reduce_only|true|
-|»» reduce_only|false|
-|»» close_on_trigger|true|
-|»» close_on_trigger|false|
+|body|body|[ArrayOfBatchCreateOrderRequest](#schemaarrayofbatchcreateorderrequest)|true|Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders|
 
 > Example responses
 
@@ -1913,49 +1863,24 @@ Orders to be edited in a batch. Rate limits apply.
 > Body parameter
 
 ```json
-{
-  "orders": [
-    {
-      "id": 0,
-      "product_id": 0,
-      "product_symbol": "string",
-      "limit_price": "string",
-      "size": 0,
-      "mmp": "disabled",
-      "post_only": "false"
-    }
-  ],
-  "product_id": 0
-}
+[
+  {
+    "id": 0,
+    "product_id": 0,
+    "product_symbol": "string",
+    "limit_price": "string",
+    "size": 0,
+    "mmp": "disabled",
+    "post_only": "false"
+  }
+]
 ```
 
 <h3 id="edit-batch-orders-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|true|none|
-|» orders|body|[[EditOrderRequest](#schemaeditorderrequest)]|false|[edit order object]|
-|»» id|body|integer|false|none|
-|»» product_id|body|integer|false|id of the product to place order. Either product_id or product_symbol is required.|
-|»» product_symbol|body|string|false|symbol of the product to place order. Either product_id or product_symbol is required.|
-|»» limit_price|body|string|false|none|
-|»» size|body|integer|false|total size after editing order|
-|»» mmp|body|string|false|none|
-|»» post_only|body|string|false|none|
-|» product_id|body|integer|false|none|
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|»» mmp|disabled|
-|»» mmp|mmp1|
-|»» mmp|mmp2|
-|»» mmp|mmp3|
-|»» mmp|mmp4|
-|»» mmp|mmp5|
-|»» post_only|false|
-|»» post_only|true|
+|body|body|[ArrayOfEditOrderRequest](#schemaarrayofeditorderrequest)|true|none|
 
 > Example responses
 
@@ -2077,26 +2002,19 @@ p JSON.parse(result)
 > Body parameter
 
 ```json
-{
-  "orders": [
-    {
-      "id": 0,
-      "product_id": 0
-    }
-  ],
-  "product_id": 0
-}
+[
+  {
+    "id": 0,
+    "product_id": 0
+  }
+]
 ```
 
 <h3 id="delete-batch-orders-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|object|true|none|
-|» orders|body|[[DeleteOrderRequest](#schemadeleteorderrequest)]|false|[A delete order object]|
-|»» id|body|integer|false|none|
-|»» product_id|body|integer|false|none|
-|» product_id|body|integer|false|none|
+|body|body|[ArrayOfDeleteOrderRequest](#schemaarrayofdeleteorderrequest)|true|none|
 
 > Example responses
 
@@ -3708,16 +3626,34 @@ p JSON.parse(result)
 ```json
 {
   "success": true,
+  "meta": {
+    "net_equity": "string",
+    "robo_trading_equity": "string"
+  },
   "result": [
     {
-      "balance": "string",
-      "order_margin": "string",
-      "position_margin": "string",
-      "commission": "string",
-      "available_balance": "string",
-      "interest_credit": "string",
       "asset_id": 0,
-      "asset_symbol": "string"
+      "asset_symbol": "string",
+      "available_balance": "string",
+      "available_balance_for_robo": "string",
+      "balance": "string",
+      "blocked_margin": "string",
+      "commission": "string",
+      "cross_asset_liability": "string",
+      "cross_commission": "string",
+      "cross_locked_collateral": "string",
+      "cross_order_margin": "string",
+      "cross_position_margin": "string",
+      "id": 0,
+      "interest_credit": "string",
+      "order_margin": "string",
+      "pending_referral_bonus": "string",
+      "pending_trading_fee_credit": "string",
+      "portfolio_margin": "string",
+      "position_margin": "string",
+      "trading_fee_credit": "string",
+      "unvested_amount": "string",
+      "user_id": 0
     }
   ]
 }
@@ -5744,8 +5680,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|true|none|id of the product to place order. Either product_id or product_symbol is required.|
-|product_symbol|string|true|none|symbol of the product to place order. Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Either product_id or product_symbol is required.|
+|product_symbol|string|true|none|Either product_id or product_symbol is required.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|none|
 |side|string|false|none|side for which to place order|
@@ -5829,8 +5765,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
-|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Either product_id or product_symbol is required.|
+|product_symbol|string|true|none|Either product_id or product_symbol is required.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|none|
 |side|string|false|none|side for which to place order|
@@ -5977,8 +5913,8 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|none|
-|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
-|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Either product_id or product_symbol is required.|
+|product_symbol|string|true|none|Either product_id or product_symbol is required.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|total size after editing order|
 |mmp|string|false|none|none|
@@ -6006,6 +5942,7 @@ This operation does not require authentication.
   {
     "id": 0,
     "product_id": 0,
+    "product_symbol": "string",
     "limit_price": "string",
     "size": 0,
     "mmp": "disabled",
@@ -6028,6 +5965,7 @@ This operation does not require authentication.
 ```json
 {
   "product_id": 0,
+  "product_symbol": "string",
   "stop_loss_order": {
     "order_type": "limit_order",
     "stop_price": "string",
@@ -6050,8 +5988,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
-|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Either product_id or product_symbol is required.|
+|product_symbol|string|true|none|Either product_id or product_symbol is required.|
 |stop_loss_order|object|false|none|none|
 |» order_type|string|false|none|none|
 |» stop_price|string|false|none|none|
@@ -6083,6 +6021,7 @@ This operation does not require authentication.
 {
   "id": 0,
   "product_id": 0,
+  "product_symbol": "string",
   "bracket_stop_loss_limit_price": "string",
   "bracket_stop_loss_price": "string",
   "bracket_take_profit_limit_price": "string",
@@ -6099,8 +6038,8 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|Order ID for which bracket params are being updated|
-|product_id|integer|false|none|id of the product to place order. Either product_id or product_symbol is required.|
-|product_symbol|string|false|none|symbol of the product to place order. Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Either product_id or product_symbol is required.|
+|product_symbol|string|true|none|Either product_id or product_symbol is required.|
 |bracket_stop_loss_limit_price|string|false|none|none|
 |bracket_stop_loss_price|string|false|none|none|
 |bracket_take_profit_limit_price|string|false|none|none|
@@ -6521,14 +6460,28 @@ This operation does not require authentication.
 
 ```json
 {
-  "balance": "string",
-  "order_margin": "string",
-  "position_margin": "string",
-  "commission": "string",
-  "available_balance": "string",
-  "interest_credit": "string",
   "asset_id": 0,
-  "asset_symbol": "string"
+  "asset_symbol": "string",
+  "available_balance": "string",
+  "available_balance_for_robo": "string",
+  "balance": "string",
+  "blocked_margin": "string",
+  "commission": "string",
+  "cross_asset_liability": "string",
+  "cross_commission": "string",
+  "cross_locked_collateral": "string",
+  "cross_order_margin": "string",
+  "cross_position_margin": "string",
+  "id": 0,
+  "interest_credit": "string",
+  "order_margin": "string",
+  "pending_referral_bonus": "string",
+  "pending_trading_fee_credit": "string",
+  "portfolio_margin": "string",
+  "position_margin": "string",
+  "trading_fee_credit": "string",
+  "unvested_amount": "string",
+  "user_id": 0
 }
 
 ```
@@ -6537,14 +6490,47 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|balance|string|false|none|Total wallet balance|
-|order_margin|string|false|none|Margin blocked in open orders|
-|position_margin|string|false|none|Margin blocked in open positions|
-|commission|string|false|none|Commissions blocked in open orders and open positions|
-|available_balance|string|false|none|Amount available for withdrawals|
-|interest_credit|string|false|none|Interest credit earned till now|
 |asset_id|integer|false|none|none|
 |asset_symbol|string|false|none|none|
+|available_balance|string|false|none|none|
+|available_balance_for_robo|string|false|none|none|
+|balance|string|false|none|none|
+|blocked_margin|string|false|none|none|
+|commission|string|false|none|none|
+|cross_asset_liability|string|false|none|none|
+|cross_commission|string|false|none|none|
+|cross_locked_collateral|string|false|none|none|
+|cross_order_margin|string|false|none|none|
+|cross_position_margin|string|false|none|none|
+|id|integer|false|none|none|
+|interest_credit|string|false|none|none|
+|order_margin|string|false|none|none|
+|pending_referral_bonus|string|false|none|none|
+|pending_trading_fee_credit|string|false|none|none|
+|portfolio_margin|string|false|none|none|
+|position_margin|string|false|none|none|
+|trading_fee_credit|string|false|none|none|
+|unvested_amount|string|false|none|none|
+|user_id|integer|false|none|none|
+
+<h2 id="tocSmetadata">MetaData</h2>
+
+<a id="schemametadata"></a>
+
+```json
+{
+  "net_equity": "string",
+  "robo_trading_equity": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|net_equity|string|false|none|none|
+|robo_trading_equity|string|false|none|none|
 
 <h2 id="tocSarrayofwallets">ArrayOfWallets</h2>
 
@@ -6553,14 +6539,28 @@ This operation does not require authentication.
 ```json
 [
   {
-    "balance": "string",
-    "order_margin": "string",
-    "position_margin": "string",
-    "commission": "string",
-    "available_balance": "string",
-    "interest_credit": "string",
     "asset_id": 0,
-    "asset_symbol": "string"
+    "asset_symbol": "string",
+    "available_balance": "string",
+    "available_balance_for_robo": "string",
+    "balance": "string",
+    "blocked_margin": "string",
+    "commission": "string",
+    "cross_asset_liability": "string",
+    "cross_commission": "string",
+    "cross_locked_collateral": "string",
+    "cross_order_margin": "string",
+    "cross_position_margin": "string",
+    "id": 0,
+    "interest_credit": "string",
+    "order_margin": "string",
+    "pending_referral_bonus": "string",
+    "pending_trading_fee_credit": "string",
+    "portfolio_margin": "string",
+    "position_margin": "string",
+    "trading_fee_credit": "string",
+    "unvested_amount": "string",
+    "user_id": 0
   }
 ]
 
@@ -7037,7 +7037,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |time|integer|false|none|none|
-|open|number(float)|false|none|none|
+|open|number|false|none|none|
 |high|number|false|none|none|
 |low|number|false|none|none|
 |close|number|false|none|none|
