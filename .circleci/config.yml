@@ -2,22 +2,21 @@ version: 2.1
 jobs:  
   deploy:
     docker:
-      - image: 'cimg/ruby:2.6.1'
+      - image: 'cimg/ruby:2.6.6-node'
     steps:
       - checkout
       - run:
           name: apt install
           command: |
-            apt-get update \
-                && apt-get install -y --no-install-recommends \
-                    build-essential \
-                    git \
-                    nodejs \
-                && gem install bundler -v 2.4.22\
-                && bundle install \
-                && apt-get remove -y build-essential git \
-                && apt-get autoremove -y \
-                && rm -rf /var/lib/apt/lists/*
+            apk update \
+            && apk upgrade --no-cache \
+            && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.14/main/ nodejs=14.20.0-r0 npm \
+            && apk add git \
+            && apk add --no-cache build-base
+      - run:
+          name: install widdershins
+          command: npm install -g widdershins && gem install bundler
+
       - run:
           name: add permission
           command: chmod +x deploy.sh
