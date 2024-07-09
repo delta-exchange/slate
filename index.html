@@ -598,6 +598,12 @@
                     <a href="#tocSwallet" class="toc-h2 toc-link" data-title="Wallet">Wallet</a>
                   </li>
                   <li>
+                    <a href="#tocSwalletpayload" class="toc-h2 toc-link" data-title="WalletPayload">WalletPayload</a>
+                  </li>
+                  <li>
+                    <a href="#tocSwalletmetadata" class="toc-h2 toc-link" data-title="WalletMetaData">WalletMetaData</a>
+                  </li>
+                  <li>
                     <a href="#tocSarrayofwallets" class="toc-h2 toc-link" data-title="ArrayOfWallets">ArrayOfWallets</a>
                   </li>
                   <li>
@@ -1253,20 +1259,20 @@ headingLevel: 2</p>
 
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 
-<p>This section documents the latest v2 api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.</p>
+<p>This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.</p>
 
-<p>REST API ENDPOINT URL</p>
+<p>If you are looking for the old api documentation, here is the link to <a href="https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md">v1 api</a> docs (now deprecated). </p>
+
+<p>REST API Endpoint URL for Delta Exchange Global</p>
 
 <ul>
 <li>Production - https://api.delta.exchange/v2</li>
 <li>Testnet - https://testnet-api.delta.exchange/v2</li>
 </ul>
 
-<p>REST API ENDPOINT URL for Delta Exchange India</p>
+<p>REST API Endpoint URL for Delta Exchange India</p>
 
-<ul>
-<li>Production - https://api.india.delta.exchange/v2</li>
-</ul>
+<p>Production - https://api.india.delta.exchange/v2</p>
 
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
 
@@ -2399,8 +2405,8 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Commission</span><span class="w"> </span><span class="err">already</span><span class="w"> </span><span class="err">paid</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">filled</span><span class="w"> </span><span class="err">order</span><span class="w">
-    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Commission</span><span class="w"> </span><span class="err">blocked</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">order</span><span class="w">
+    </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
@@ -3624,33 +3630,30 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <p>Body parameter</p>
 </blockquote>
 
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 </span></code></pre>
 
 <h3 id="create-batch-orders-parameters">Parameters</h3>
@@ -3667,261 +3670,9 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <tr>
 <td>body</td>
 <td>body</td>
-<td>object</td>
+<td><a href="#schemaarrayofbatchcreateorderrequest">ArrayOfBatchCreateOrderRequest</a></td>
 <td>true</td>
 <td>Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders</td>
-</tr>
-<tr>
-<td>» orders</td>
-<td>body</td>
-<td>[<a href="#schemabatchcreateorderrequest">BatchCreateOrderRequest</a>]</td>
-<td>false</td>
-<td>[A create order object]</td>
-</tr>
-<tr>
-<td>»» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>id of the product to place order. Either product_id or product_symbol is required.</td>
-</tr>
-<tr>
-<td>»» product_symbol</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>symbol of the product to place order. Either product_id or product_symbol is required.</td>
-</tr>
-<tr>
-<td>»» limit_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» size</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» side</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>side for which to place order</td>
-</tr>
-<tr>
-<td>»» order_type</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» stop_order_type</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» stop_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» trail_amount</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» stop_trigger_method</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» bracket_stop_loss_limit_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» bracket_stop_loss_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» bracket_take_profit_limit_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» bracket_take_profit_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» time_in_force</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» post_only</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» reduce_only</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» close_on_trigger</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» client_order_id</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<h4 id='enumerated-values-10'>Enumerated Values</h4>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>»» side</td>
-<td>buy</td>
-</tr>
-<tr>
-<td>»» side</td>
-<td>sell</td>
-</tr>
-<tr>
-<td>»» order_type</td>
-<td>limit_order</td>
-</tr>
-<tr>
-<td>»» order_type</td>
-<td>market_order</td>
-</tr>
-<tr>
-<td>»» stop_order_type</td>
-<td>stop_loss_order</td>
-</tr>
-<tr>
-<td>»» stop_order_type</td>
-<td>take_profit_order</td>
-</tr>
-<tr>
-<td>»» stop_trigger_method</td>
-<td>mark_price</td>
-</tr>
-<tr>
-<td>»» stop_trigger_method</td>
-<td>last_traded_price</td>
-</tr>
-<tr>
-<td>»» stop_trigger_method</td>
-<td>spot_price</td>
-</tr>
-<tr>
-<td>»» time_in_force</td>
-<td>gtc</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>disabled</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp1</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp2</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp3</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp4</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp5</td>
-</tr>
-<tr>
-<td>»» post_only</td>
-<td>true</td>
-</tr>
-<tr>
-<td>»» post_only</td>
-<td>false</td>
-</tr>
-<tr>
-<td>»» reduce_only</td>
-<td>true</td>
-</tr>
-<tr>
-<td>»» reduce_only</td>
-<td>false</td>
-</tr>
-<tr>
-<td>»» close_on_trigger</td>
-<td>true</td>
-</tr>
-<tr>
-<td>»» close_on_trigger</td>
-<td>false</td>
 </tr>
 </tbody></table>
 
@@ -3983,7 +3734,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 
 <h3 id="create-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-11'>Enumerated Values</h4>
+<h4 id='enumerated-values-10'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4099,20 +3850,17 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 <p>Body parameter</p>
 </blockquote>
 
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 </span></code></pre>
 
 <h3 id="edit-batch-orders-parameters">Parameters</h3>
@@ -4129,114 +3877,9 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 <tr>
 <td>body</td>
 <td>body</td>
-<td>object</td>
+<td><a href="#schemaarrayofeditorderrequest">ArrayOfEditOrderRequest</a></td>
 <td>true</td>
 <td>none</td>
-</tr>
-<tr>
-<td>» orders</td>
-<td>body</td>
-<td>[<a href="#schemaeditorderrequest">EditOrderRequest</a>]</td>
-<td>false</td>
-<td>[edit order object]</td>
-</tr>
-<tr>
-<td>»» id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>id of the product to place order. Either product_id or product_symbol is required.</td>
-</tr>
-<tr>
-<td>»» product_symbol</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>symbol of the product to place order. Either product_id or product_symbol is required.</td>
-</tr>
-<tr>
-<td>»» limit_price</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» size</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>total size after editing order</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» post_only</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-</tr>
-</tbody></table>
-
-<h4 id='enumerated-values-12'>Enumerated Values</h4>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>»» mmp</td>
-<td>disabled</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp1</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp2</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp3</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp4</td>
-</tr>
-<tr>
-<td>»» mmp</td>
-<td>mmp5</td>
-</tr>
-<tr>
-<td>»» post_only</td>
-<td>false</td>
-</tr>
-<tr>
-<td>»» post_only</td>
-<td>true</td>
 </tr>
 </tbody></table>
 
@@ -4298,7 +3941,7 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 
 <h3 id="edit-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-13'>Enumerated Values</h4>
+<h4 id='enumerated-values-11'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4412,15 +4055,12 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 <p>Body parameter</p>
 </blockquote>
 
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 </span></code></pre>
 
 <h3 id="delete-batch-orders-parameters">Parameters</h3>
@@ -4437,36 +4077,8 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 <tr>
 <td>body</td>
 <td>body</td>
-<td>object</td>
+<td><a href="#schemaarrayofdeleteorderrequest">ArrayOfDeleteOrderRequest</a></td>
 <td>true</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» orders</td>
-<td>body</td>
-<td>[<a href="#schemadeleteorderrequest">DeleteOrderRequest</a>]</td>
-<td>false</td>
-<td>[A delete order object]</td>
-</tr>
-<tr>
-<td>»» id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>»» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
-<td>none</td>
-</tr>
-<tr>
-<td>» product_id</td>
-<td>body</td>
-<td>integer</td>
-<td>false</td>
 <td>none</td>
 </tr>
 </tbody></table>
@@ -4529,7 +4141,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 
 <h3 id="delete-batch-orders-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-14'>Enumerated Values</h4>
+<h4 id='enumerated-values-12'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4706,7 +4318,7 @@ curl -X GET https://api.delta.exchange/v2/orders/<span class="o">{</span>order_i
 
 <h3 id="get-order-by-id-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-15'>Enumerated Values</h4>
+<h4 id='enumerated-values-13'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -4883,7 +4495,7 @@ curl -X GET https://api.delta.exchange/v2/orders/client_order_id/<span class="o"
 
 <h3 id="get-order-by-client-oid-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-16'>Enumerated Values</h4>
+<h4 id='enumerated-values-14'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -5273,7 +4885,7 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-17'>Enumerated Values</h4>
+<h4 id='enumerated-values-15'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6036,7 +5648,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-18'>Enumerated Values</h4>
+<h4 id='enumerated-values-16'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6122,7 +5734,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 
 <h3 id="get-order-history-(cancelled-and-closed)-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-19'>Enumerated Values</h4>
+<h4 id='enumerated-values-17'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6358,7 +5970,7 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 
 <h3 id="get-user-fills-by-filters-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-20'>Enumerated Values</h4>
+<h4 id='enumerated-values-18'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6734,7 +6346,7 @@ curl -X GET https://api.delta.exchange/v2/trades/<span class="o">{</span>symbol<
 
 <h3 id="get-public-trades-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-21'>Enumerated Values</h4>
+<h4 id='enumerated-values-19'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -6816,19 +6428,37 @@ curl -X GET https://api.delta.exchange/v2/wallet/balances <span class="se">\</sp
 </blockquote>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"net_equity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"robo_trading_equity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+      </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"available_balance_for_robo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"blocked_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_asset_liability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_locked_collateral"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pending_referral_bonus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pending_trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"portfolio_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unvested_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -6846,11 +6476,9 @@ curl -X GET https://api.delta.exchange/v2/wallet/balances <span class="se">\</sp
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>List of wallets attached to the user account</td>
-<td>Inline</td>
+<td><a href="#schemawalletpayload">WalletPayload</a></td>
 </tr>
 </tbody></table>
-
-<h3 id="get-wallet-balances-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -7015,7 +6643,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 
 <h3 id="get-wallet-transactions-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-22'>Enumerated Values</h4>
+<h4 id='enumerated-values-20'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8030,7 +7658,7 @@ curl -X POST https://api.delta.exchange/v2/orders/cancel_after <span class="se">
 
 <h3 id="cancel-after-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-23'>Enumerated Values</h4>
+<h4 id='enumerated-values-21'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8518,7 +8146,7 @@ curl -X GET https://api.delta.exchange/v2/products/?states<span class="o">=</spa
 
 <h3 id="get-product-settlement-prices-responseschema">Response Schema</h3>
 
-<h4 id='enumerated-values-24'>Enumerated Values</h4>
+<h4 id='enumerated-values-22'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -8681,7 +8309,7 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-25'>Enumerated Values</h4>
+<h4 id='enumerated-values-23'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -9036,7 +8664,7 @@ This operation does not require authentication.
 <td>Type of index</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-26'>Enumerated Values</h4>
+<h4 id='enumerated-values-24'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -9165,7 +8793,7 @@ This operation does not require authentication.
 <td>Minimum value of allowed withdrawal</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-27'>Enumerated Values</h4>
+<h4 id='enumerated-values-25'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -9546,7 +9174,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-28'>Enumerated Values</h4>
+<h4 id='enumerated-values-26'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -9912,7 +9540,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-29'>Enumerated Values</h4>
+<h4 id='enumerated-values-27'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10057,14 +9685,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>true</td>
 <td>none</td>
-<td>id of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
 <td>true</td>
 <td>none</td>
-<td>symbol of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>limit_price</td>
@@ -10194,7 +9822,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-30'>Enumerated Values</h4>
+<h4 id='enumerated-values-28'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10341,16 +9969,16 @@ This operation does not require authentication.
 <tr>
 <td>product_id</td>
 <td>integer</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>id of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>symbol of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>limit_price</td>
@@ -10480,7 +10108,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-31'>Enumerated Values</h4>
+<h4 id='enumerated-values-29'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10711,16 +10339,16 @@ This operation does not require authentication.
 <tr>
 <td>product_id</td>
 <td>integer</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>id of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>symbol of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>limit_price</td>
@@ -10752,7 +10380,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-32'>Enumerated Values</h4>
+<h4 id='enumerated-values-30'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10802,6 +10430,7 @@ This operation does not require authentication.
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
@@ -10833,6 +10462,7 @@ This operation does not require authentication.
 <p><a id="schemacreatebracketorderrequest"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"stop_loss_order"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -10865,16 +10495,16 @@ This operation does not require authentication.
 <tr>
 <td>product_id</td>
 <td>integer</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>id of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>symbol of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>stop_loss_order</td>
@@ -10948,7 +10578,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-33'>Enumerated Values</h4>
+<h4 id='enumerated-values-31'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10993,6 +10623,7 @@ This operation does not require authentication.
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -11025,16 +10656,16 @@ This operation does not require authentication.
 <tr>
 <td>product_id</td>
 <td>integer</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>id of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
-<td>false</td>
+<td>true</td>
 <td>none</td>
-<td>symbol of the product to place order. Either product_id or product_symbol is required.</td>
+<td>Either product_id or product_symbol is required.</td>
 </tr>
 <tr>
 <td>bracket_stop_loss_limit_price</td>
@@ -11169,7 +10800,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-34'>Enumerated Values</h4>
+<h4 id='enumerated-values-32'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11533,7 +11164,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-35'>Enumerated Values</h4>
+<h4 id='enumerated-values-33'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11975,7 +11606,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-36'>Enumerated Values</h4>
+<h4 id='enumerated-values-34'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11998,17 +11629,36 @@ This operation does not require authentication.
 <p><a id="schemawallet"></a></p>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"available_balance_for_robo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"blocked_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cross_asset_liability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cross_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cross_locked_collateral"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cross_order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cross_position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pending_referral_bonus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pending_trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"portfolio_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"unvested_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-31'>Properties</h3>
+</span></code></pre>
+
+<p><em>Wallet Data for each asset.</em></p>
+
+<h3 id='properties-31'>Properties</h3>
+
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12019,6 +11669,34 @@ This operation does not require authentication.
 </tr>
 </thead><tbody>
 <tr>
+<td>asset_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>Id for assets like BTC</td>
+</tr>
+<tr>
+<td>asset_symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Symbol for assets like BTC</td>
+</tr>
+<tr>
+<td>available_balance</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Balance available for trading</td>
+</tr>
+<tr>
+<td>available_balance_for_robo</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Balance available for robo trading</td>
+</tr>
+<tr>
 <td>balance</td>
 <td>string</td>
 <td>false</td>
@@ -12026,73 +11704,273 @@ This operation does not require authentication.
 <td>Total wallet balance</td>
 </tr>
 <tr>
-<td>order_margin</td>
+<td>blocked_margin</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Margin blocked in open orders</td>
-</tr>
-<tr>
-<td>position_margin</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Margin blocked in open positions</td>
+<td>Total blocked margin including commissions for all modes</td>
 </tr>
 <tr>
 <td>commission</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Commissions blocked in open orders and open positions</td>
+<td>Commissions blocked in Isolated Mode</td>
 </tr>
 <tr>
-<td>available_balance</td>
+<td>cross_asset_liability</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Amount available for withdrawals</td>
+<td>Asset liability in Cross margin mode</td>
+</tr>
+<tr>
+<td>cross_commission</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Commision blocked in Cross margin mode</td>
+</tr>
+<tr>
+<td>cross_locked_collateral</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>collateral blocked in Cross margin mode</td>
+</tr>
+<tr>
+<td>cross_order_margin</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>margin blocked for open orders in Cross margin mode</td>
+</tr>
+<tr>
+<td>cross_position_margin</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>margin blocked for open positions in Cross margin mode</td>
+</tr>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>Wallet Id</td>
 </tr>
 <tr>
 <td>interest_credit</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Interest credit earned till now</td>
+<td>Total interest credited</td>
 </tr>
 <tr>
-<td>asset_id</td>
+<td>order_margin</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>margin blocked for open positions in isolated mode</td>
+</tr>
+<tr>
+<td>pending_referral_bonus</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Pending referral bonus</td>
+</tr>
+<tr>
+<td>pending_trading_fee_credit</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Credit of trading fee pending</td>
+</tr>
+<tr>
+<td>portfolio_margin</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Total margin blocked including commissions in portfolio margin mode</td>
+</tr>
+<tr>
+<td>position_margin</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Margin blocked in open positions in isolated mode</td>
+</tr>
+<tr>
+<td>trading_fee_credit</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Credit of trading fee</td>
+</tr>
+<tr>
+<td>unvested_amount</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Amount currently unvested</td>
+</tr>
+<tr>
+<td>user_id</td>
 <td>integer</td>
 <td>false</td>
 <td>none</td>
+<td>User Id linked to this wallet</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSwalletpayload">WalletPayload</h2>
+
+<p><a id="schemawalletpayload"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"net_equity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"robo_trading_equity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"available_balance_for_robo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"blocked_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_asset_liability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_locked_collateral"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"cross_position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pending_referral_bonus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pending_trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"portfolio_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unvested_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='properties-32'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>meta</td>
+<td><a href="#schemawalletmetadata">WalletMetaData</a></td>
+<td>false</td>
 <td>none</td>
+<td>Meta data for robo trading</td>
 </tr>
 <tr>
-<td>asset_symbol</td>
-<td>string</td>
+<td>result</td>
+<td><a href="#schemaarrayofwallets">ArrayOfWallets</a></td>
+<td>false</td>
+<td>none</td>
+<td>Array of wallet for every asset</td>
+</tr>
+<tr>
+<td>success</td>
+<td>boolean</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
 </tr>
 </tbody></table>
 
+<h2 id="tocSwalletmetadata">WalletMetaData</h2>
+
+<p><a id="schemawalletmetadata"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"net_equity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"robo_trading_equity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Meta data for robo trading</em></p>
+
+<h3 id='properties-33'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>net_equity</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Net equity for robo trading</td>
+</tr>
+<tr>
+<td>robo_trading_equity</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>trading equity for robo trading</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSarrayofwallets">ArrayOfWallets</h2>
 
 <p><a id="schemaarrayofwallets"></a></p>
+
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="s2">"asset_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"available_balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"available_balance_for_robo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"blocked_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cross_asset_liability"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cross_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cross_locked_collateral"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cross_order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cross_position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"interest_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"order_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pending_referral_bonus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pending_trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"portfolio_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"position_margin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trading_fee_credit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"unvested_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-32'>Properties</h3>
+</span></code></pre>
+
+<p><em>Array of wallet for every asset</em></p>
+
+<h3 id='properties-34'>Properties</h3>
+
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12107,13 +11985,14 @@ This operation does not require authentication.
 <td>[<a href="#schemawallet">Wallet</a>]</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Array of wallet for every asset</td>
 </tr>
 </tbody></table>
 
 <h2 id="tocSassettransfersubaccountreq">AssetTransferSubaccountReq</h2>
 
 <p><a id="schemaassettransfersubaccountreq"></a></p>
+
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"transferrer_user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"transferee_user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -12121,7 +12000,7 @@ This operation does not require authentication.
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-33'>Properties</h3>
+</span></code></pre><h3 id='properties-35'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12171,7 +12050,7 @@ This operation does not require authentication.
   </span><span class="s2">"page_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-34'>Properties</h3>
+</span></code></pre><h3 id='properties-36'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12216,7 +12095,7 @@ This operation does not require authentication.
 <p><a id="schematransactiontypes"></a></p>
 <pre class="highlight json tab-json"><code><span class="s2">"string"</span><span class="w">
 
-</span></code></pre><h3 id='properties-35'>Properties</h3>
+</span></code></pre><h3 id='properties-37'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12241,7 +12120,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-37'>Enumerated Values</h4>
+<h4 id='enumerated-values-35'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -12401,7 +12280,7 @@ This operation does not require authentication.
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-36'>Properties</h3>
+</span></code></pre><h3 id='properties-38'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12493,7 +12372,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-37'>Properties</h3>
+</span></code></pre><h3 id='properties-39'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12525,7 +12404,7 @@ This operation does not require authentication.
   </span><span class="s2">"transferrer_user"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-38'>Properties</h3>
+</span></code></pre><h3 id='properties-40'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12601,7 +12480,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-39'>Properties</h3>
+</span></code></pre><h3 id='properties-41'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12631,7 +12510,7 @@ This operation does not require authentication.
   </span><span class="s2">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-40'>Properties</h3>
+</span></code></pre><h3 id='properties-42'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12686,7 +12565,7 @@ This operation does not require authentication.
   </span><span class="s2">"upper_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-41'>Properties</h3>
+</span></code></pre><h3 id='properties-43'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12724,7 +12603,7 @@ This operation does not require authentication.
   </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-42'>Properties</h3>
+</span></code></pre><h3 id='properties-44'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12824,7 +12703,7 @@ This operation does not require authentication.
   </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-43'>Properties</h3>
+</span></code></pre><h3 id='properties-45'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13052,7 +12931,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-44'>Properties</h3>
+</span></code></pre><h3 id='properties-46'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13079,7 +12958,7 @@ This operation does not require authentication.
   </span><span class="s2">"before"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-45'>Properties</h3>
+</span></code></pre><h3 id='properties-47'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13121,7 +13000,7 @@ This operation does not require authentication.
 
 <p><em>A ohlc object</em></p>
 
-<h3 id='properties-46'>Properties</h3>
+<h3 id='properties-48'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13141,7 +13020,7 @@ This operation does not require authentication.
 </tr>
 <tr>
 <td>open</td>
-<td>number(float)</td>
+<td>number</td>
 <td>false</td>
 <td>none</td>
 <td>none</td>
@@ -13191,7 +13070,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-47'>Properties</h3>
+</span></code></pre><h3 id='properties-49'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13232,7 +13111,7 @@ This operation does not require authentication.
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-48'>Properties</h3>
+</span></code></pre><h3 id='properties-50'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13260,7 +13139,7 @@ This operation does not require authentication.
   </span><span class="s2">"total_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-49'>Properties</h3>
+</span></code></pre><h3 id='properties-51'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13310,7 +13189,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-50'>Properties</h3>
+<h3 id='properties-52'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13372,7 +13251,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-38'>Enumerated Values</h4>
+<h4 id='enumerated-values-36'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13415,7 +13294,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-51'>Properties</h3>
+<h3 id='properties-53'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13442,7 +13321,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-39'>Enumerated Values</h4>
+<h4 id='enumerated-values-37'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13488,7 +13367,7 @@ This operation does not require authentication.
 
 <p><em>User trading preferences</em></p>
 
-<h3 id='properties-52'>Properties</h3>
+<h3 id='properties-54'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13548,7 +13427,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Request Object</em></p>
 
-<h3 id='properties-53'>Properties</h3>
+<h3 id='properties-55'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13581,7 +13460,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Response Object</em></p>
 
-<h3 id='properties-54'>Properties</h3>
+<h3 id='properties-56'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13608,7 +13487,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-40'>Enumerated Values</h4>
+<h4 id='enumerated-values-38'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13649,7 +13528,7 @@ This operation does not require authentication.
 
 <p><em>User Object</em></p>
 
-<h3 id='properties-55'>Properties</h3>
+<h3 id='properties-57'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13767,7 +13646,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-56'>Properties</h3>
+</span></code></pre><h3 id='properties-58'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13915,7 +13794,7 @@ This operation does not require authentication.
 <li>Get account specific updates on orders ,positions and wallets.</li>
 </ul>
 
-<p>Access url</p>
+<p>Access url for Delta Exchange Global</p>
 
 <ul>
 <li>Production - wss://socket.delta.exchange</li>
@@ -13928,7 +13807,7 @@ This operation does not require authentication.
 <li>Production - wss://socket.india.delta.exchange</li>
 </ul>
 
-<p>You will be disconnected, if there is no activity within 60 after making connection.</p>
+<p>You will be disconnected, if there is no activity within 60 seconds after making connection.</p>
 
 <h1 id='subscribing-to-channels'>Subscribing to Channels</h1><h2 id='subscribe'>Subscribe</h2>
 <p>To begin receiving feed messages, you must first send a subscribe message to the server indicating which channels and contracts to subscribe for.</p>
@@ -14815,17 +14694,32 @@ Sample feed response
 }
 </code></pre><pre class="highlight plaintext"><code>// margin update
 {
-    "type": "margins",
-    "balance": "1.0012",            // wallet balance = deposits - withdrawals + realised_cashflows
-    "available_balance": "0.1",     // available balance for trading
-    "order_margin": "0.121212",     // Margin blocked in isolated margined open orders
-    "position_margin": "0.101212",  // Margin blocked in isolated margined positions
-    "commission": "0.00012",        // commissions blocked in isolated margined positions and orders
-    "portfolio_margin": "2.333"     // Margin blocked for portfolio margined positions and orders. Same as blocked margin in portfolio margins channel.
-    "asset_id": 2                   // BTC
-    "asset_symbol": "BTC",          // BTC
-    "unvested_amount": "0.05"       // amount locked. Relevant only for DETO
-    "timestamp": 1668570144,        // unix timestamp in microseconds
+    "action": "update",
+    "asset_id": 2,                           // BTC
+    "asset_symbol": "BTC",                   // BTC
+    "available_balance": "9.385",            // Available balance for trading = balance - blocked_margin
+    "available_balance_for_robo": "9.385",   // Available balance for robo trading = balance - blocked_margin
+    "balance": "10",                         // Wallet balance = deposits - withdrawals + realised_cashflows
+    "blocked_margin": "0.615",               // Total Margin blocked
+    "commission": "0.001",                   // Commissions blocked in isolated margined positions and orders
+    "cross_asset_liability": "0",            // Liability between asset in cross margin mode
+    "cross_commission": "0.002",             // Commissions blocked in cross margined positions and orders
+    "cross_locked_collateral": "0.003",      // Balance blocked for collateral
+    "cross_order_margin": "0.004",           // Margin blocked in cross margined open orders
+    "cross_position_margin": "0.005",        // Margin blocked in cross margined positions
+    "id": 1,                                 // Wallet Id
+    "interest_credit": "0",                  // Interest credited
+    "order_margin": "0.1",                   // Margin blocked in isolated margined open orders
+    "pending_referral_bonus": "0",           // Bonus pending
+    "pending_trading_fee_credit": "0",       // Pending trading fee to credit
+    "portfolio_margin": "0.2",               // Margin blocked for portfolio margined positions and orders. Same as blocked margin in portfolio margins channel.
+    "position_margin": "0.3",                // Margin blocked in isolated margined positions
+    "robo_trading_equity": "0",              // Equity for robo trading
+    "timestamp": 1719397302569921,           // Unix timestamp in microseconds
+    "trading_fee_credit": "0",               // Trading fee credited
+    "type": "margins",                       // Margins channel
+    "unvested_amount": "0",                  // Amount locked. Relevant only for DETO
+    "user_id": 1                             // User id
 }
 </code></pre><h2 id='positions'>Positions</h2>
 <p>This channel provides updates whenever there is any change in your open positions.</p>
