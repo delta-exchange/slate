@@ -20,10 +20,10 @@ jobs:
                 && rm -rf /var/lib/apt/lists/*
       - run:
           name: install nodejs
-          command: sudo apt install nodejs
+          command: apt install nodejs
       - run:
           name: install npm
-          command: sudo apt install npm
+          command: apt install npm
       - run:
           name: install widdershins
           command: npm install -g widdershins
