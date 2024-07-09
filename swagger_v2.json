@@ -778,14 +778,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "properties": {
-                "orders": {
-                  "$ref": "#/definitions/ArrayOfBatchCreateOrderRequest"
-                },
-                "product_id": {
-                  "type": "integer"
-                }
-              }
+              "$ref": "#/definitions/ArrayOfBatchCreateOrderRequest"
             },
             "description": "Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders"
           }
@@ -845,14 +838,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "properties": {
-                "orders": {
-                  "$ref": "#/definitions/ArrayOfEditOrderRequest"
-                },
-                "product_id": {
-                  "type": "integer"
-                }
-              }
+              "$ref": "#/definitions/ArrayOfEditOrderRequest"
             }
           }
         ],
@@ -909,14 +895,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "properties": {
-                "orders": {
-                  "$ref": "#/definitions/ArrayOfDeleteOrderRequest"
-                },
-                "product_id": {
-                  "type": "integer"
-                }
-              }
+              "$ref": "#/definitions/ArrayOfDeleteOrderRequest"
             }
           }
         ],
@@ -1884,21 +1863,10 @@
           "200": {
             "description": "List of wallets attached to the user account",
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/ApiSuccessResponse"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "$ref": "#/definitions/ArrayOfWallets"
-                    }
-                  }
-                }
-              ]
+                "type": "object",
+                "$ref": "#/definitions/WalletPayload"
+              }
             }
-          }
         }
       }
     },
@@ -2988,18 +2956,18 @@
     "CreateOrderRequest": {
       "type": "object",
       "description": "A create order object",
-      "anyOf": [
-        { "required": ["product_id"] },
-        { "required": ["product_symbol"] }
+      "required": [
+        "product_id",
+        "product_symbol"
       ],
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "id of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "product_symbol": {
           "type": "string",
-          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "limit_price": {
           "type": "string"
@@ -3100,18 +3068,18 @@
     "BatchCreateOrderRequest": {
       "type": "object",
       "description": "A create order object",
-      "anyOf": [
-        { "required": ["product_id"] },
-        { "required": ["product_symbol"] }
+      "required": [
+        "product_id",
+        "product_symbol"
       ],
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "id of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "product_symbol": {
           "type": "string",
-          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "limit_price": {
           "type": "string"
@@ -3223,17 +3191,21 @@
     "EditOrderRequest": {
       "type": "object",
       "description": "edit order object",
+      "required": [
+        "product_id",
+        "product_symbol"
+      ],
       "properties": {
         "id": {
           "type": "integer"
         },
         "product_id": {
           "type": "integer",
-          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "product_symbol": {
           "type": "string",
-          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "limit_price": {
           "type": "string"
@@ -3271,18 +3243,18 @@
     "CreateBracketOrderRequest": {
       "type": "object",
       "description": "bracket order object",
-      "anyOf": [
-        { "required": ["product_id"] },
-        { "required": ["product_symbol"] }
+      "required": [
+        "product_id",
+        "product_symbol"
       ],
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "id of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "product_symbol": {
           "type": "string",
-          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "stop_loss_order": {
           "type": "object",
@@ -3333,9 +3305,9 @@
     "EditBracketOrderRequest": {
       "type": "object",
       "description": "bracket order object",
-      "anyOf": [
-        { "required": ["product_id"] },
-        { "required": ["product_symbol"] }
+      "required": [
+        "product_id",
+        "product_symbol"
       ],
       "properties": {
         "id": {
@@ -3345,11 +3317,11 @@
         },
         "product_id": {
           "type": "integer",
-          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "product_symbol": {
           "type": "string",
-          "description": "symbol of the product/contract to place order. Either product_id or product_symbol is required."
+          "description": "Either product_id or product_symbol is required."
         },
         "bracket_stop_loss_limit_price": {
           "type": "string"
@@ -3699,41 +3671,130 @@
     },
     "Wallet": {
       "type": "object",
+      "description": "Wallet Data for each asset.",
       "properties": {
+        "asset_id": {
+          "type": "integer",
+          "description": "Id for assets like BTC"
+        },
+        "asset_symbol": {
+          "type": "string",
+          "description": "Symbol for assets like BTC"
+        },
+        "available_balance": {
+          "type": "string",
+          "description": "Balance available for trading"
+        },
+        "available_balance_for_robo": {
+          "type": "string",
+          "description": "Balance available for robo trading"
+        },
         "balance": {
           "type": "string",
           "description": "Total wallet balance"
         },
-        "order_margin": {
+        "blocked_margin": {
           "type": "string",
-          "description": "Margin blocked in open orders"
-        },
-        "position_margin": {
-          "type": "string",
-          "description": "Margin blocked in open positions"
+          "description": "Total blocked margin including commissions for all modes"
         },
         "commission": {
           "type": "string",
-          "description": "Commissions blocked in open orders and open positions"
+          "description": "Commissions blocked in Isolated Mode"
         },
-        "available_balance": {
+        "cross_asset_liability": {
           "type": "string",
-          "description": "Amount available for withdrawals"
+          "description": "Asset liability in Cross margin mode"
+        },
+        "cross_commission": {
+          "type": "string",
+          "description": "Commision blocked in Cross margin mode"
+        },
+        "cross_locked_collateral": {
+          "type": "string",
+          "description": "collateral blocked in Cross margin mode"
+        },
+        "cross_order_margin": {
+          "type": "string",
+          "description": "margin blocked for open orders in Cross margin mode"
+        },
+        "cross_position_margin": {
+          "type": "string",
+          "description": "margin blocked for open positions in Cross margin mode"
+        },
+        "id": {
+          "type": "integer",
+          "description": "Wallet Id"
         },
         "interest_credit": {
           "type": "string",
-          "description": "Interest credit earned till now"
+          "description": "Total interest credited"
         },
-        "asset_id": {
-          "type": "integer"
+        "order_margin": {
+          "type": "string",
+          "description": "margin blocked for open positions in isolated mode"
         },
-        "asset_symbol": {
+        "pending_referral_bonus": {
+          "type": "string",
+          "description": "Pending referral bonus"
+        },
+        "pending_trading_fee_credit": {
+          "type": "string",
+          "description": "Credit of trading fee pending"
+        },
+        "portfolio_margin": {
+          "type": "string",
+          "description": "Total margin blocked including commissions in portfolio margin mode"
+        },
+        "position_margin": {
+          "type": "string",
+          "description": "Margin blocked in open positions in isolated mode"
+        },
+        "trading_fee_credit": {
+          "type": "string",
+          "description": "Credit of trading fee"
+        },
+        "unvested_amount": {
+          "type": "string",
+          "description": "Amount currently unvested"
+        },
+        "user_id": {
+          "type": "integer",
+          "description": "User Id linked to this wallet"
+        }
+      }
+    },
+    "WalletPayload": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "$ref": "#/definitions/WalletMetaData"
+        },
+        "result": {
+          "$ref": "#/definitions/ArrayOfWallets"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "WalletMetaData": {
+      "type": "object",
+      "description": "Meta data for robo trading",
+      "properties": {
+        "net_equity": {
+          "description": "Net equity for robo trading",
+          "type": "string"
+        },
+        "robo_trading_equity": {
+          "description": "trading equity for robo trading",
           "type": "string"
         }
       }
     },
     "ArrayOfWallets": {
       "type": "array",
+      "description": "Array of wallet for every asset",
       "items": {
         "$ref": "#/definitions/Wallet"
       }
@@ -4060,8 +4121,7 @@
           "type": "integer"
         },
         "open": {
-          "type": "number",
-          "format": "float"
+          "type": "number"
         },
         "high": {
           "type": "number"
