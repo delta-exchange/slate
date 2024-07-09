@@ -19,6 +19,12 @@ jobs:
                 && apt-get autoremove -y \
                 && rm -rf /var/lib/apt/lists/*
       - run:
+          name: install nodejs
+          command: sudo apt install nodejs
+      - run:
+          name: install npm
+          command: sudo apt install npm
+      - run:
           name: install widdershins
           command: npm install -g widdershins
       - run:
