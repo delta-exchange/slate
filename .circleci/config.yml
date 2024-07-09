@@ -13,13 +13,14 @@ jobs:
                     build-essential \
                     git \
                     nodejs \
-                && gem install bundler -v 2.4.22 \                
+                && gem install bundler -v 2.4.22\
+                && bundle install \
                 && apt-get remove -y build-essential git \
                 && apt-get autoremove -y \
                 && rm -rf /var/lib/apt/lists/*
       - run:
-          name: install widdershins and bundle install
-          command: npm install -g widdershins && bundle install
+          name: install widdershins
+          command: npm install -g widdershins
       - run:
           name: add permission
           command: chmod +x deploy.sh
