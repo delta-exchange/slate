@@ -23,7 +23,7 @@ jobs:
           command: apt install nodejs
       - run:
           name: install npm
-          command: apt install npm
+          command: npm --version
       - run:
           name: install widdershins
           command: npm install -g widdershins
