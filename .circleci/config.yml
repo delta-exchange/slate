@@ -8,15 +8,13 @@ jobs:
       - run:
           name: apt install
           command: |
-            apk update \
-            && apk upgrade --no-cache \
-            && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.14/main/ nodejs=14.20.0-r0 npm \
-            && apk add git \
-            && apk add --no-cache build-base
-      - run:
-          name: install widdershins
-          command: npm install -g widdershins && gem install bundler
-
+            apt-get update \
+                && apt-get install -y --no-install-recommends \
+                    build-essential \
+                    git \
+                && npm install -g widdershins    \
+                && gem install bundler -v 2.4.22 \
+                && bundle install 
       - run:
           name: add permission
           command: chmod +x deploy.sh
