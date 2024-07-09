@@ -1863,24 +1863,10 @@
           "200": {
             "description": "List of wallets attached to the user account",
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/ApiSuccessResponse"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "meta": {
-                      "$ref": "#/definitions/MetaData"
-                    },
-                    "result": {
-                      "$ref": "#/definitions/ArrayOfWallets"
-                    }
-                  }
-                }
-              ]
+                "type": "object",
+                "$ref": "#/definitions/WalletPayload"
+              }
             }
-          }
         }
       }
     },
@@ -3685,88 +3671,130 @@
     },
     "Wallet": {
       "type": "object",
+      "description": "Wallet Data for each asset.",
       "properties": {
         "asset_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Id for assets like BTC"
         },
         "asset_symbol": {
-          "type": "string"
+          "type": "string",
+          "description": "Symbol for assets like BTC"
         },
         "available_balance": {
-          "type": "string"
+          "type": "string",
+          "description": "Balance available for trading"
         },
         "available_balance_for_robo": {
-          "type": "string"
+          "type": "string",
+          "description": "Balance available for robo trading"
         },
         "balance": {
-          "type": "string"
+          "type": "string",
+          "description": "Total wallet balance"
         },
         "blocked_margin": {
-          "type": "string"
+          "type": "string",
+          "description": "Total blocked margin including commissions for all modes"
         },
         "commission": {
-          "type": "string"
+          "type": "string",
+          "description": "Commissions blocked in Isolated Mode"
         },
         "cross_asset_liability": {
-          "type": "string"
+          "type": "string",
+          "description": "Asset liability in Cross margin mode"
         },
         "cross_commission": {
-          "type": "string"
+          "type": "string",
+          "description": "Commision blocked in Cross margin mode"
         },
         "cross_locked_collateral": {
-          "type": "string"
+          "type": "string",
+          "description": "collateral blocked in Cross margin mode"
         },
         "cross_order_margin": {
-          "type": "string"
+          "type": "string",
+          "description": "margin blocked for open orders in Cross margin mode"
         },
         "cross_position_margin": {
-          "type": "string"
+          "type": "string",
+          "description": "margin blocked for open positions in Cross margin mode"
         },
         "id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Wallet Id"
         },
         "interest_credit": {
-          "type": "string"
+          "type": "string",
+          "description": "Total interest credited"
         },
         "order_margin": {
-          "type": "string"
+          "type": "string",
+          "description": "margin blocked for open positions in isolated mode"
         },
         "pending_referral_bonus": {
-          "type": "string"
+          "type": "string",
+          "description": "Pending referral bonus"
         },
         "pending_trading_fee_credit": {
-          "type": "string"
+          "type": "string",
+          "description": "Credit of trading fee pending"
         },
         "portfolio_margin": {
-          "type": "string"
+          "type": "string",
+          "description": "Total margin blocked including commissions in portfolio margin mode"
         },
         "position_margin": {
-          "type": "string"
+          "type": "string",
+          "description": "Margin blocked in open positions in isolated mode"
         },
         "trading_fee_credit": {
-          "type": "string"
+          "type": "string",
+          "description": "Credit of trading fee"
         },
         "unvested_amount": {
-          "type": "string"
+          "type": "string",
+          "description": "Amount currently unvested"
         },
         "user_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "User Id linked to this wallet"
         }
       }
     },
-    "MetaData": {
+    "WalletPayload": {
       "type": "object",
       "properties": {
+        "meta": {
+          "$ref": "#/definitions/WalletMetaData"
+        },
+        "result": {
+          "$ref": "#/definitions/ArrayOfWallets"
+        },
+        "success": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "WalletMetaData": {
+      "type": "object",
+      "description": "Meta data for robo trading",
+      "properties": {
         "net_equity": {
+          "description": "Net equity for robo trading",
           "type": "string"
         },
         "robo_trading_equity": {
+          "description": "trading equity for robo trading",
           "type": "string"
         }
       }
     },
     "ArrayOfWallets": {
       "type": "array",
+      "description": "Array of wallet for every asset",
       "items": {
         "$ref": "#/definitions/Wallet"
       }

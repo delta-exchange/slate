@@ -3625,7 +3625,6 @@ p JSON.parse(result)
 
 ```json
 {
-  "success": true,
   "meta": {
     "net_equity": "string",
     "robo_trading_equity": "string"
@@ -3655,7 +3654,8 @@ p JSON.parse(result)
       "unvested_amount": "string",
       "user_id": 0
     }
-  ]
+  ],
+  "success": true
 }
 ```
 
@@ -3663,9 +3663,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of wallets attached to the user account|Inline|
-
-<h3 id="get-wallet-balances-responseschema">Response Schema</h3>
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of wallets attached to the user account|[WalletPayload](#schemawalletpayload)|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -6486,36 +6484,87 @@ This operation does not require authentication.
 
 ```
 
+*Wallet Data for each asset.*
+
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|asset_id|integer|false|none|none|
-|asset_symbol|string|false|none|none|
-|available_balance|string|false|none|none|
-|available_balance_for_robo|string|false|none|none|
-|balance|string|false|none|none|
-|blocked_margin|string|false|none|none|
-|commission|string|false|none|none|
-|cross_asset_liability|string|false|none|none|
-|cross_commission|string|false|none|none|
-|cross_locked_collateral|string|false|none|none|
-|cross_order_margin|string|false|none|none|
-|cross_position_margin|string|false|none|none|
-|id|integer|false|none|none|
-|interest_credit|string|false|none|none|
-|order_margin|string|false|none|none|
-|pending_referral_bonus|string|false|none|none|
-|pending_trading_fee_credit|string|false|none|none|
-|portfolio_margin|string|false|none|none|
-|position_margin|string|false|none|none|
-|trading_fee_credit|string|false|none|none|
-|unvested_amount|string|false|none|none|
-|user_id|integer|false|none|none|
+|asset_id|integer|false|none|Id for assets like BTC|
+|asset_symbol|string|false|none|Symbol for assets like BTC|
+|available_balance|string|false|none|Balance available for trading|
+|available_balance_for_robo|string|false|none|Balance available for robo trading|
+|balance|string|false|none|Total wallet balance|
+|blocked_margin|string|false|none|Total blocked margin including commissions for all modes|
+|commission|string|false|none|Commissions blocked in Isolated Mode|
+|cross_asset_liability|string|false|none|Asset liability in Cross margin mode|
+|cross_commission|string|false|none|Commision blocked in Cross margin mode|
+|cross_locked_collateral|string|false|none|collateral blocked in Cross margin mode|
+|cross_order_margin|string|false|none|margin blocked for open orders in Cross margin mode|
+|cross_position_margin|string|false|none|margin blocked for open positions in Cross margin mode|
+|id|integer|false|none|Wallet Id|
+|interest_credit|string|false|none|Total interest credited|
+|order_margin|string|false|none|margin blocked for open positions in isolated mode|
+|pending_referral_bonus|string|false|none|Pending referral bonus|
+|pending_trading_fee_credit|string|false|none|Credit of trading fee pending|
+|portfolio_margin|string|false|none|Total margin blocked including commissions in portfolio margin mode|
+|position_margin|string|false|none|Margin blocked in open positions in isolated mode|
+|trading_fee_credit|string|false|none|Credit of trading fee|
+|unvested_amount|string|false|none|Amount currently unvested|
+|user_id|integer|false|none|User Id linked to this wallet|
 
-<h2 id="tocSmetadata">MetaData</h2>
+<h2 id="tocSwalletpayload">WalletPayload</h2>
 
-<a id="schemametadata"></a>
+<a id="schemawalletpayload"></a>
+
+```json
+{
+  "meta": {
+    "net_equity": "string",
+    "robo_trading_equity": "string"
+  },
+  "result": [
+    {
+      "asset_id": 0,
+      "asset_symbol": "string",
+      "available_balance": "string",
+      "available_balance_for_robo": "string",
+      "balance": "string",
+      "blocked_margin": "string",
+      "commission": "string",
+      "cross_asset_liability": "string",
+      "cross_commission": "string",
+      "cross_locked_collateral": "string",
+      "cross_order_margin": "string",
+      "cross_position_margin": "string",
+      "id": 0,
+      "interest_credit": "string",
+      "order_margin": "string",
+      "pending_referral_bonus": "string",
+      "pending_trading_fee_credit": "string",
+      "portfolio_margin": "string",
+      "position_margin": "string",
+      "trading_fee_credit": "string",
+      "unvested_amount": "string",
+      "user_id": 0
+    }
+  ],
+  "success": true
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|meta|[WalletMetaData](#schemawalletmetadata)|false|none|Meta data for robo trading|
+|result|[ArrayOfWallets](#schemaarrayofwallets)|false|none|Array of wallet for every asset|
+|success|boolean|false|none|none|
+
+<h2 id="tocSwalletmetadata">WalletMetaData</h2>
+
+<a id="schemawalletmetadata"></a>
 
 ```json
 {
@@ -6525,12 +6574,14 @@ This operation does not require authentication.
 
 ```
 
+*Meta data for robo trading*
+
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|net_equity|string|false|none|none|
-|robo_trading_equity|string|false|none|none|
+|net_equity|string|false|none|Net equity for robo trading|
+|robo_trading_equity|string|false|none|trading equity for robo trading|
 
 <h2 id="tocSarrayofwallets">ArrayOfWallets</h2>
 
@@ -6566,11 +6617,13 @@ This operation does not require authentication.
 
 ```
 
+*Array of wallet for every asset*
+
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[Wallet](#schemawallet)]|false|none|none|
+|*anonymous*|[[Wallet](#schemawallet)]|false|none|Array of wallet for every asset|
 
 <h2 id="tocSassettransfersubaccountreq">AssetTransferSubaccountReq</h2>
 
