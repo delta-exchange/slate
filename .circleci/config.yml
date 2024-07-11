@@ -32,7 +32,9 @@ jobs:
       - run:
           name: deploy slate
           command: ./deploy.sh --gen-widdershins
-
+      - run:
+          name: deploy
+          command: ./deploy.sh
 workflows:
   version: 2
   build-and-deploy:
