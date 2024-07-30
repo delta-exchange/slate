@@ -4,6 +4,9 @@ jobs:
     docker:
       - image: 'cimg/ruby:2.6.1'
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:DamVOQKLp697/bKqJ7gm749JISeNDCOPv+c/ShJQDf0"
       - checkout
       - run:
           name: apt install
@@ -41,4 +44,4 @@ workflows:
           filters:
             branches:
               only:
-                - deployCircleCi
+                - master
