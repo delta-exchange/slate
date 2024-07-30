@@ -218,7 +218,7 @@ This operation does not require authentication.
 
 Get Product List
 
-## Get list of products by filters
+## Get list of products
 
 <a id="opIdgetProducts"></a>
 
@@ -263,7 +263,7 @@ p JSON.parse(result)
 
 `GET /products`
 
-<h3 id="get-list-of-products-by-filters-parameters">Parameters</h3>
+<h3 id="get-list-of-products-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -354,13 +354,13 @@ p JSON.parse(result)
 }
 ```
 
-<h3 id="get-list-of-products-by-filters-responses">Responses</h3>
+<h3 id="get-list-of-products-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of products|Inline|
 
-<h3 id="get-list-of-products-by-filters-responseschema">Response Schema</h3>
+<h3 id="get-list-of-products-responseschema">Response Schema</h3>
 
 #### Enumerated Values
 
