@@ -6,7 +6,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:ewjJoF6LQS7O+QxKeTDapfRArCM7p8JlYJwlTc+rP1k"
+            - "SHA256:DamVOQKLp697/bKqJ7gm749JISeNDCOPv+c/ShJQDf0"
       - checkout
       - run:
           name: apt install
