@@ -41,4 +41,4 @@ workflows:
           filters:
             branches:
               only:
-                - deployCircleCi
+                - fix/test_cicd
