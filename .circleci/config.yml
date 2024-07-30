@@ -4,6 +4,9 @@ jobs:
     docker:
       - image: 'cimg/ruby:2.6.1'
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:ewjJoF6LQS7O+QxKeTDapfRArCM7p8JlYJwlTc+rP1k"
       - checkout
       - run:
           name: apt install
