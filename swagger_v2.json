@@ -2196,10 +2196,10 @@
     },
     "/history/candles": {
       "get": {
-        "summary": "GET ohlc candles",
-        "description": "Open-High-Low-Close candle data. Max 2000 candles in a response.",
+        "summary": "GET historical ohlc candles",
+        "description": "It returns historical Open-High-Low-Close(ohlc) candles data of the symbol as per input values for resolution, start time and end time. Also, it can return only upto 2000 candles maximum in a response.",
         "tags": [
-          "Historical data/ OHLC Candles"
+          "Historical OHLC Candles/Sparklines"
         ],
         "operationId": "getCandles",
         "deprecated": false,
@@ -2211,32 +2211,36 @@
             "in": "query",
             "name": "resolution",
             "type": "string",
-            "description": "",
+            "description": "ohlc candle time frames like 1m, 5m, 1h",
             "enum": [
               "1m","3m","5m","15m","30m","1h","2h","4h","6h","1d","7d","30d","1w","2w"
             ],
-            "required": true
+            "required": true,
+            "example": "5m"
           },
           {
             "in": "query",
             "name": "symbol",
             "type": "string",
-            "description": "To get index data pass index symbol like .DEXBTUSDT/ .DEETHUSDT, to get funding history in the same api pass symbol as FUNDING:${symbol} ,for mark price MARK:${symbol}, and for OI data OI:${symbol}",
-            "required": true
+            "description": "To get funding history pass symbol as FUNDING:${symbol}, mark price MARK:${symbol} and OI data OI:${symbol} for e.g. - FUNDING:BTCUSD, MARK:C-BTC-66400-010824, OI:ETHUSD",
+            "required": true,
+            "example": "BTCUSD"
           },
           {
             "in": "query",
             "name": "start",
             "description": "Start time: unix timestamp in seconds",
             "type": "integer",
-            "required": true
+            "required": true,
+            "example": 1685618835
           },
           {
             "in": "query",
             "name": "end",
             "description": "End time: unix timestamp in seconds",
             "type": "integer",
-            "required": true
+            "required": true,
+            "example": 1722511635
           }
         ],
         "responses": {
@@ -2263,9 +2267,9 @@
     },
     "/history/sparklines": {
       "get": {
-        "summary": "GET product history sparkline",
+        "summary": "GET product history sparklines",
         "tags": [
-          "Historical data/ OHLC Candles"
+          "Historical OHLC Candles/Sparklines"
         ],
         "operationId": "getSparklines",
         "deprecated": false,
@@ -2278,7 +2282,8 @@
             "name": "symbols",
             "type": "string",
             "description": "comma separated product symbols",
-            "required": true
+            "required": true,
+            "example": "ETHUSD,MARK:BTCUSD"
           }
         ],
         "responses": {
@@ -4152,7 +4157,7 @@
         },
         "description": "array of timestamp and closing value"
       },
-      "example": {"MARK:BTCUSD_31Oct": [[1594214051,0.00003826],[1594214051,0.00003826]],"SPOT:BTCUSD_31Oct": [[1594215270,0.00003826]]}
+      "example": {"ETHUSD": [[1594214051,0.00003826],[1594214051,0.00003826]],"MARK:BTCUSD": [[1594215270,0.00003826]]}
     },
     "Stats":{
       "type": "object",
