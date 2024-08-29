@@ -491,13 +491,13 @@
               </ul>
           </li>
           <li>
-            <a href="#delta-exchange-api-v2-historical-data-ohlc-candles" class="toc-h1 toc-link" data-title="Historical data/ OHLC Candles">Historical data/ OHLC Candles</a>
+            <a href="#delta-exchange-api-v2-historical-ohlc-candles-sparklines" class="toc-h1 toc-link" data-title="Historical OHLC Candles/Sparklines">Historical OHLC Candles/Sparklines</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-ohlc-candles" class="toc-h2 toc-link" data-title="GET ohlc candles">GET ohlc candles</a>
+                    <a href="#get-historical-ohlc-candles" class="toc-h2 toc-link" data-title="GET historical ohlc candles">GET historical ohlc candles</a>
                   </li>
                   <li>
-                    <a href="#get-product-history-sparkline" class="toc-h2 toc-link" data-title="GET product history sparkline">GET product history sparkline</a>
+                    <a href="#get-product-history-sparklines" class="toc-h2 toc-link" data-title="GET product history sparklines">GET product history sparklines</a>
                   </li>
               </ul>
           </li>
@@ -8220,9 +8220,9 @@ curl -X GET https://api.delta.exchange/v2/products/?states<span class="o">=</spa
 This operation does not require authentication.
 </aside>
 
-<h1 id="delta-exchange-api-v2-historical-data-ohlc-candles">Historical data/ OHLC Candles</h1>
+<h1 id="delta-exchange-api-v2-historical-ohlc-candles-sparklines">Historical OHLC Candles/Sparklines</h1>
 
-<h2 id='get-ohlc-candles'>GET ohlc candles</h2>
+<h2 id='get-historical-ohlc-candles'>GET historical ohlc candles</h2>
 
 <p><a id="opIdgetCandles"></a></p>
 
@@ -8236,13 +8236,13 @@ This operation does not require authentication.
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/history/candles'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-  <span class="s">'resolution'</span><span class="p">:</span> <span class="s">'1m'</span><span class="p">,</span>  <span class="s">'symbol'</span><span class="p">:</span> <span class="s">'string'</span><span class="p">,</span>  <span class="s">'start'</span><span class="p">:</span> <span class="s">'0'</span><span class="p">,</span>  <span class="s">'end'</span><span class="p">:</span> <span class="s">'0'</span>
+  <span class="s">'resolution'</span><span class="p">:</span> <span class="s">'5m'</span><span class="p">,</span>  <span class="s">'symbol'</span><span class="p">:</span> <span class="s">'BTCUSD'</span><span class="p">,</span>  <span class="s">'start'</span><span class="p">:</span> <span class="s">'1685618835'</span><span class="p">,</span>  <span class="s">'end'</span><span class="p">:</span> <span class="s">'1722511635'</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class="o">=</span>1m&amp;symbol<span class="o">=</span>string&amp;start<span class="o">=</span>0&amp;end<span class="o">=</span>0 <span class="se">\</span>
+curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class="o">=</span>5m&amp;symbol<span class="o">=</span>BTCUSD&amp;start<span class="o">=</span>1685618835&amp;end<span class="o">=</span>1722511635 <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
@@ -8254,10 +8254,10 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 
 <span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/history/candles'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
-  <span class="s1">'resolution'</span> <span class="o">=&gt;</span> <span class="s1">'string'</span><span class="p">,</span>
-<span class="s1">'symbol'</span> <span class="o">=&gt;</span> <span class="s1">'string'</span><span class="p">,</span>
-<span class="s1">'start'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span><span class="p">,</span>
-<span class="s1">'end'</span> <span class="o">=&gt;</span> <span class="s1">'integer'</span>
+  <span class="s1">'resolution'</span> <span class="o">=&gt;</span> <span class="s1">'5m'</span><span class="p">,</span>
+<span class="s1">'symbol'</span> <span class="o">=&gt;</span> <span class="s1">'BTCUSD'</span><span class="p">,</span>
+<span class="s1">'start'</span> <span class="o">=&gt;</span> <span class="s1">'1685618835'</span><span class="p">,</span>
+<span class="s1">'end'</span> <span class="o">=&gt;</span> <span class="s1">'1722511635'</span>
 <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
@@ -8266,9 +8266,9 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 
 <p><code>GET /history/candles</code></p>
 
-<p>Open-High-Low-Close candle data. Max 2000 candles in a response.</p>
+<p>It returns historical Open-High-Low-Close(ohlc) candles data of the symbol as per input values for resolution, start time and end time. Also, it can return only upto 2000 candles maximum in a response.</p>
 
-<h3 id="get-ohlc-candles-parameters">Parameters</h3>
+<h3 id="get-historical-ohlc-candles-parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -8284,14 +8284,14 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 <td>query</td>
 <td>string</td>
 <td>true</td>
-<td>none</td>
+<td>ohlc candle time frames like 1m, 5m, 1h</td>
 </tr>
 <tr>
 <td>symbol</td>
 <td>query</td>
 <td>string</td>
 <td>true</td>
-<td>To get index data pass index symbol like .DEXBTUSDT/ .DEETHUSDT, to get funding history in the same api pass symbol as FUNDING:${symbol} ,for mark price MARK:${symbol}, and for OI data OI:${symbol}</td>
+<td>To get funding history pass symbol as FUNDING:${symbol}, mark price MARK:${symbol} and OI data OI:${symbol} for e.g. - FUNDING:BTCUSD, MARK:C-BTC-66400-010824, OI:ETHUSD</td>
 </tr>
 <tr>
 <td>start</td>
@@ -8396,7 +8396,7 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="get-ohlc-candles-responses">Responses</h3>
+<h3 id="get-historical-ohlc-candles-responses">Responses</h3>
 
 <table><thead>
 <tr>
@@ -8414,13 +8414,13 @@ curl -X GET https://api.delta.exchange/v2/history/candles?resolution<span class=
 </tr>
 </tbody></table>
 
-<h3 id="get-ohlc-candles-responseschema">Response Schema</h3>
+<h3 id="get-historical-ohlc-candles-responseschema">Response Schema</h3>
 
 <aside class="success">
 This operation does not require authentication.
 </aside>
 
-<h2 id='get-product-history-sparkline'>GET product history sparkline</h2>
+<h2 id='get-product-history-sparklines'>GET product history sparklines</h2>
 
 <p><a id="opIdgetSparklines"></a></p>
 
@@ -8434,13 +8434,13 @@ This operation does not require authentication.
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.delta.exchange/v2/history/sparklines'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-  <span class="s">'symbols'</span><span class="p">:</span> <span class="s">'string'</span>
+  <span class="s">'symbols'</span><span class="p">:</span> <span class="s">'ETHUSD,MARK:BTCUSD'</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class="o">=</span>string <span class="se">\</span>
+curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class="o">=</span>ETHUSD%2CMARK%3ABTCUSD <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
@@ -8452,7 +8452,7 @@ curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class=
 
 <span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.delta.exchange/v2/history/sparklines'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
-  <span class="s1">'symbols'</span> <span class="o">=&gt;</span> <span class="s1">'string'</span>
+  <span class="s1">'symbols'</span> <span class="o">=&gt;</span> <span class="s1">'ETHUSD,MARK:BTCUSD'</span>
 <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
@@ -8461,7 +8461,7 @@ curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class=
 
 <p><code>GET /history/sparklines</code></p>
 
-<h3 id="get-product-history-sparkline-parameters">Parameters</h3>
+<h3 id="get-product-history-sparklines-parameters">Parameters</h3>
 
 <table><thead>
 <tr>
@@ -8490,7 +8490,7 @@ curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class=
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"MARK:BTCUSD_31Oct"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"ETHUSD"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">[</span><span class="w">
         </span><span class="mi">1594214051</span><span class="p">,</span><span class="w">
         </span><span class="mf">0.00003826</span><span class="w">
@@ -8500,7 +8500,7 @@ curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class=
         </span><span class="mf">0.00003826</span><span class="w">
       </span><span class="p">]</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"SPOT:BTCUSD_31Oct"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"MARK:BTCUSD"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="p">[</span><span class="w">
         </span><span class="mi">1594215270</span><span class="p">,</span><span class="w">
         </span><span class="mf">0.00003826</span><span class="w">
@@ -8510,7 +8510,7 @@ curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class=
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="get-product-history-sparkline-responses">Responses</h3>
+<h3 id="get-product-history-sparklines-responses">Responses</h3>
 
 <table><thead>
 <tr>
@@ -8528,7 +8528,7 @@ curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols<span class=
 </tr>
 </tbody></table>
 
-<h3 id="get-product-history-sparkline-responseschema">Response Schema</h3>
+<h3 id="get-product-history-sparklines-responseschema">Response Schema</h3>
 
 <aside class="success">
 This operation does not require authentication.
@@ -13093,7 +13093,7 @@ This operation does not require authentication.
 
 <p><a id="schemasparklinedata"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"MARK:BTCUSD_31Oct"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"ETHUSD"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">[</span><span class="w">
       </span><span class="mi">1594214051</span><span class="p">,</span><span class="w">
       </span><span class="mf">0.00003826</span><span class="w">
@@ -13103,7 +13103,7 @@ This operation does not require authentication.
       </span><span class="mf">0.00003826</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"SPOT:BTCUSD_31Oct"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"MARK:BTCUSD"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">[</span><span class="w">
       </span><span class="mi">1594215270</span><span class="p">,</span><span class="w">
       </span><span class="mf">0.00003826</span><span class="w">
