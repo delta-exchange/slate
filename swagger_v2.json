@@ -2968,11 +2968,11 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "product_symbol": {
           "type": "string",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "limit_price": {
           "type": "string"
@@ -3080,11 +3080,11 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "product_symbol": {
           "type": "string",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "limit_price": {
           "type": "string"
@@ -3206,11 +3206,11 @@
         },
         "product_id": {
           "type": "integer",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "product_symbol": {
           "type": "string",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "limit_price": {
           "type": "string"
@@ -3255,11 +3255,11 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "product_symbol": {
           "type": "string",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "stop_loss_order": {
           "type": "object",
@@ -3322,11 +3322,11 @@
         },
         "product_id": {
           "type": "integer",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "product_symbol": {
           "type": "string",
-          "description": "Either product_id or product_symbol is required."
+          "description": "Only one of either product_id or product_symbol must be sent."
         },
         "bracket_stop_loss_limit_price": {
           "type": "string"
