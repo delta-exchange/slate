@@ -2956,7 +2956,7 @@
         },
         "close_on_trigger": {
           "type": "string",
-          "description": "Should the order be closed on trigger?",
+          "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
             "false",
             "true"
@@ -3071,7 +3071,7 @@
         },
         "stop_trigger_method": {
           "type": "string",
-          "description": "Stop order placement method - mark_price/last_traded_price/spot_price",
+          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
           "enum": [
             "mark_price", "last_traded_price", "spot_price"
           ],
@@ -3085,7 +3085,7 @@
         },
         "bracket_stop_loss_price": {
           "type": "string",
-          "description": "Bracket order stop loss price",
+          "description": "Bracket order stop loss trigger price",
           "example": "56000"
         },
         "bracket_take_profit_limit_price": {
@@ -3095,7 +3095,7 @@
         },
         "bracket_take_profit_price": {
           "type": "string",
-          "description": "Bracket order take profit price",
+          "description": "take profit trigger price for bracket order",
           "example": "61000"
         },
         "time_in_force": {
@@ -3142,7 +3142,7 @@
         },
         "close_on_trigger": {
           "type": "string",
-          "description": "Should order be closed after trigger?",
+          "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
             "true",
             "false"
@@ -3225,7 +3225,7 @@
         },
         "stop_trigger_method": {
           "type": "string",
-          "description": "Stop order placement method - mark_price/last_traded_price/spot_price",
+          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
           "enum": [
             "mark_price", "last_traded_price", "spot_price"
           ],
@@ -3239,7 +3239,7 @@
         },
         "bracket_stop_loss_price": {
           "type": "string",
-          "description": "Bracket order stop loss price",
+          "description": "Bracket order stop loss trigger price",
           "example": "56000"
         },
         "bracket_take_profit_limit_price": {
@@ -3249,7 +3249,7 @@
         },
         "bracket_take_profit_price": {
           "type": "string",
-          "description": "Bracket order take profit price",
+          "description": "take profit trigger price for bracket order",
           "example": "61000"
         },
         "time_in_force": {
@@ -3295,7 +3295,7 @@
         },
         "close_on_trigger": {
           "type": "string",
-          "description": "Should order be closed after trigger?",
+          "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
             "true",
             "false"
@@ -3426,7 +3426,7 @@
             },
             "limit_price": {
               "type": "string",
-              "description": "Required if its a limit order",
+              "description": "required for limit orders",
               "example": "55000"
             }
           }
@@ -3448,14 +3448,14 @@
             },
             "limit_price": {
               "type": "string",
-              "description": "Required if its a limit order",
+              "description": "required for limit orders",
               "example": "64000"
             }
           }
         },
         "stop_trigger_method": {
           "type": "string",
-          "description": "Stop order placement method - mark_price/last_traded_price/spot_price",
+          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
           "enum": [
             "mark_price",
             "last_traded_price",
@@ -3492,22 +3492,22 @@
         },
         "bracket_stop_loss_limit_price": {
           "type": "string",
-          "description": "stop loss limit price of bracket order",
+          "description": "stop loss limit price for bracket order",
           "example": "55000"
         },
         "bracket_stop_loss_price": {
           "type": "string",
-          "description": "stop loss price level of bracket order",
+          "description": "stop loss trigger price for bracket order",
           "example": "56000"
         },
         "bracket_take_profit_limit_price": {
           "type": "string",
-          "description": "take profit limit price of bracket order",
+          "description": "take profit limit price for bracket order",
           "example": "65000"
         },
         "bracket_take_profit_price": {
           "type": "string",
-          "description": "take profit price level of bracket order",
+          "description": "take profit trigger price for bracket order",
           "example": "64000"
         },
         "bracket_trail_amount": {
@@ -3549,7 +3549,7 @@
         },
         "cancel_limit_orders": {
           "type": "string",
-          "description": "set as true to cancel open limit orders",
+          "description": "set true to cancel open limit orders",
           "enum": [
             "true",
             "false"
