@@ -264,7 +264,7 @@
             <a href="#rate-limits" class="toc-h1 toc-link" data-title="Rate Limits">Rate Limits</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#rest-api-cost-structure" class="toc-h2 toc-link" data-title="REST API Cost Structure">REST API Cost Structure</a>
+                    <a href="#rest-api-rate-limit-weight" class="toc-h2 toc-link" data-title="REST API Rate Limit Weight">REST API Rate Limit Weight</a>
                   </li>
                   <li>
                     <a href="#increasing-your-rate-limits" class="toc-h2 toc-link" data-title="Increasing your rate limits">Increasing your rate limits</a>
@@ -813,6 +813,9 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#18-10-2024" class="toc-h2 toc-link" data-title="18.10.2024">18.10.2024</a>
+                  </li>
+                  <li>
                     <a href="#01-05-2024" class="toc-h2 toc-link" data-title="01.05.2024">01.05.2024</a>
                   </li>
                   <li>
@@ -1150,23 +1153,22 @@ You should use ntp timestamp to sync local clocks in order to avoid following is
 
 <h1 id='rate-limits'>Rate Limits</h1>
 
-<p>When a rate limit is exceeded, a status of 429 Too Many Requests will be returned.
-&#39;X-RATE-LIMIT-RESET&#39; is returned in response header with time left in milisecond
-after which next API request can be hit. </p>
+<p>When a rate limit is exceeded, a HTTP response status 429 Too Many Requests will be returned.
+&#39;X-RATE-LIMIT-RESET&#39; is returned in response header with time left in milliseconds after which next API request can be hit. </p>
 
-<p>We throttle unauthenticated api requests by IP and authenticated requests by user ID. </p>
+<p>We throttle unauthenticated api requests by IP address and authenticated requests by user ID. </p>
 
-<p>Default Quota is 10000 for a fixed 5 minute window.</p>
+<p>Default Quota is 10000 for a fixed 5 minute window. Rate Limit quota resets to full every 5 mins.</p>
 
-<h3 id='rest-api-cost-structure'>REST API Cost Structure</h3>
+<h3 id='rest-api-rate-limit-weight'>REST API Rate Limit Weight</h3>
 
-<p>Every rest endpoint has been assigned a cost (weight). When you make an api call, the cost incurred is deducted from your 5 min quota. So, Apis related to reading public data are cheaper whereas Apis related to writing private data (like placing an order) are the costliest. </p>
+<p>Every REST endpoint has been assigned a weight. When you make an API call, the weight of that endpoint is deducted from your 5 min window quota. Exceeding the rate limit quota, results in 429 HTTP response status error. API endpoints related to reading public data are lighter in weight, whereas API endpoints related to writing private data (like placing an order) are heavier in weight. </p>
 
 <p>Here is the cost structure for various endpoints. Please note that any endpoint not mentioned here has a cost of 1 unit.</p>
 
 <table><thead>
 <tr>
-<th>Cost Slab</th>
+<th>Weight Slab</th>
 <th>API Endpoints</th>
 </tr>
 </thead><tbody>
@@ -1187,6 +1189,13 @@ after which next API request can be hit. </p>
 <td>Batch Order Apis</td>
 </tr>
 </tbody></table>
+
+<p>e.g. Consider making all the below requests in a 5 minute window.<br>
+100 Get Open Orders requests = 100 * 3 = 300 weight.<br>
+50 Get Balances requests = 50 * 3 = 150 weight.<br>
+200 Place order requests = 200 * 5 = 1000 weight.<br>
+20 Batch Order requests = 20 * 25 = 500 weight.<br>
+Total quota used: 300 + 150 + 1000 + 500 = 1950 quota used. If this is greater than quota assigned to you, rate limit error will occur.</p>
 
 <h3 id='increasing-your-rate-limits'>Increasing your rate limits</h3>
 
@@ -1263,16 +1272,19 @@ headingLevel: 2</p>
 
 <p>If you are looking for the old api documentation, here is the link to <a href="https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md">v1 api</a> docs (now deprecated). </p>
 
+<p>REST API Endpoint URL for Delta Exchange India</p>
+
+<ul>
+<li><strong>Production-India</strong> - https://api.india.delta.exchange/v2</li>
+<li><strong>Testnet-India</strong> - https://cdn-ind.testnet.deltaex.org/v2</li>
+</ul>
+
 <p>REST API Endpoint URL for Delta Exchange Global</p>
 
 <ul>
-<li>Production - https://api.delta.exchange/v2</li>
-<li>Testnet - https://testnet-api.delta.exchange/v2</li>
+<li><strong>Production-Global</strong> - https://api.delta.exchange/v2</li>
+<li><strong>Testnet-Global</strong> - https://testnet-api.delta.exchange/v2</li>
 </ul>
-
-<p>REST API Endpoint URL for Delta Exchange India</p>
-
-<p>Production - https://api.india.delta.exchange/v2</p>
 
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
 
@@ -1353,7 +1365,7 @@ curl -X GET https://api.delta.exchange/v2/assets <span class="se">\</span>
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>List of all assets</td>
+<td>List of <a href="#tocSasset">Asset schema</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -1453,6 +1465,7 @@ curl -X GET https://api.delta.exchange/v2/indices <span class="se">\</span>
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -1472,7 +1485,7 @@ curl -X GET https://api.delta.exchange/v2/indices <span class="se">\</span>
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>List of indices</td>
+<td>List of <a href="#tocSindex">Spot Index schema</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -1672,6 +1685,7 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
         </span><span class="p">],</span><span class="w">
         </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -1692,7 +1706,7 @@ curl -X GET https://api.delta.exchange/v2/products <span class="se">\</span>
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>List of products</td>
+<td>List of <a href="#tocSproduct">products schema</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -1907,6 +1921,7 @@ curl -X GET https://api.delta.exchange/v2/products/<span class="o">{</span>symbo
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -1926,7 +1941,7 @@ curl -X GET https://api.delta.exchange/v2/products/<span class="o">{</span>symbo
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>List of products</td>
+<td><a href="#tocSproduct">Product schema</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -4951,7 +4966,7 @@ curl -X GET https://api.delta.exchange/v2/positions/margined <span class="se">\<
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>List of all open positions</td>
+<td>List of all <a href="#tocSposition">open positions</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -5727,7 +5742,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>List of closed and cancelled orders</td>
+<td>List of closed and cancelled orders. <a href="#tocSorder">Order schema</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -5963,7 +5978,7 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>fills</td>
+<td>Array of <a href="#tocSfill">fills</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -5985,6 +6000,18 @@ curl -X GET https://api.delta.exchange/v2/fills <span class="se">\</span>
 <tr>
 <td>fill_type</td>
 <td>adl</td>
+</tr>
+<tr>
+<td>fill_type</td>
+<td>liquidation</td>
+</tr>
+<tr>
+<td>fill_type</td>
+<td>settlement</td>
+</tr>
+<tr>
+<td>fill_type</td>
+<td>otc</td>
 </tr>
 <tr>
 <td>side</td>
@@ -6636,7 +6663,7 @@ curl -X GET https://api.delta.exchange/v2/wallet/transactions <span class="se">\
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>list of transactions for that wallet</td>
+<td>list of <a href="#tocStransaction">Wallet transactions</a></td>
 <td>Inline</td>
 </tr>
 </tbody></table>
@@ -8120,6 +8147,7 @@ curl -X GET https://api.delta.exchange/v2/products/?states<span class="o">=</spa
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -8608,6 +8636,7 @@ This operation does not require authentication.
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -8633,14 +8662,14 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>e.g. &#39;.DE&#39; followed by base asset + quoting asset</td>
 </tr>
 <tr>
 <td>constituent_exchanges</td>
 <td>[object]</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Details of name and weight of exchanges in index</td>
 </tr>
 <tr>
 <td>underlying_asset_id</td>
@@ -8655,6 +8684,13 @@ This operation does not require authentication.
 <td>false</td>
 <td>none</td>
 <td>Asset ID for quoting symbol</td>
+</tr>
+<tr>
+<td>tick_size</td>
+<td>string(Decimal)</td>
+<td>false</td>
+<td>none</td>
+<td>Precision of the spot price</td>
 </tr>
 <tr>
 <td>index_type</td>
@@ -8697,6 +8733,7 @@ This operation does not require authentication.
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -8921,6 +8958,7 @@ This operation does not require authentication.
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -9357,6 +9395,7 @@ This operation does not require authentication.
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"underlying_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"quoting_asset_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tick_size"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"index_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_pair"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -9685,14 +9724,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>limit_price</td>
@@ -9971,14 +10010,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>limit_price</td>
@@ -10341,14 +10380,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>limit_price</td>
@@ -10497,14 +10536,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>stop_loss_order</td>
@@ -10658,14 +10697,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>product_symbol</td>
 <td>string</td>
 <td>true</td>
 <td>none</td>
-<td>Either product_id or product_symbol is required.</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>bracket_stop_loss_limit_price</td>
@@ -11139,7 +11178,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Will be order_id(Integer) in most cases. Will be UUID string of order when fill_type is settlement</td>
 </tr>
 <tr>
 <td>settling_asset_id</td>
@@ -11179,6 +11218,18 @@ This operation does not require authentication.
 <tr>
 <td>fill_type</td>
 <td>adl</td>
+</tr>
+<tr>
+<td>fill_type</td>
+<td>liquidation</td>
+</tr>
+<tr>
+<td>fill_type</td>
+<td>settlement</td>
+</tr>
+<tr>
+<td>fill_type</td>
+<td>otc</td>
 </tr>
 <tr>
 <td>side</td>
@@ -13794,17 +13845,18 @@ This operation does not require authentication.
 <li>Get account specific updates on orders ,positions and wallets.</li>
 </ul>
 
-<p>Access url for Delta Exchange Global</p>
-
-<ul>
-<li>Production - wss://socket.delta.exchange</li>
-<li>Testnet - wss://testnet-socket.delta.exchange</li>
-</ul>
-
 <p>Access url for Delta Exchange India</p>
 
 <ul>
-<li>Production - wss://socket.india.delta.exchange</li>
+<li><strong>Production-India</strong> - wss://socket.india.delta.exchange</li>
+<li><strong>Testnet-India</strong> - wss://socket-ind.testnet.deltaex.org</li>
+</ul>
+
+<p>Access url for Delta Exchange Global</p>
+
+<ul>
+<li><strong>Production-Global</strong> - wss://socket.delta.exchange</li>
+<li><strong>Testnet-Global</strong> - wss://testnet-socket.delta.exchange</li>
 </ul>
 
 <p>You will be disconnected, if there is no activity within 60 seconds after making connection.</p>
@@ -15174,7 +15226,13 @@ Socket connection needs to be <a href="/#authenticating-a-connection">authentica
 </code></pre><h2 id='response-message'>Response Message</h2>
 <p>The response message will be similar to the REST API.</p></p>
 
-<h1 id='changelog'>Changelog</h1><h2 id='01-05-2024'>01.05.2024</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='18-10-2024'>18.10.2024</h2>
+<ol>
+<li>Added clickable links to the corresponding API response json schemas under some API &quot;Responses&quot; table. Updated some schemas to match the response. (This is a documentation fix, no changes in API)</li>
+<li>Added &quot;Testnet-India&quot; REST and Websocket host endpoints.</li>
+<li>Changed &quot;Rate Limits&quot; description and added an example.</li>
+</ol>
+<h2 id='01-05-2024'>01.05.2024</h2>
 <ol>
 <li>Added &quot;po&quot; positions key in /v2/user_trades websocket private channel.</li>
 <li>Removed &quot;fok&quot; type for orders, as they are no longer supported.</li>
