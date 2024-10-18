@@ -1,34 +1,17 @@
----
-title: Delta Exchange Api V2 v1.0.0
-language_tabs:
-  - python: Python
-  - shell: Shell
-  - ruby: Ruby
-language_clients:
-  - python: ""
-  - shell: ""
-  - ruby: ""
-toc_footers: []
-includes: []
-search: true
-highlight_theme: darkula
-headingLevel: 2
-
----
-
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
 
 If you are looking for the old api documentation, here is the link to [v1 api](https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md) docs (now deprecated). 
 
-REST API Endpoint URL for Delta Exchange Global
-
-- Production - https://api.delta.exchange/v2
-- Testnet - https://testnet-api.delta.exchange/v2
-
 REST API Endpoint URL for Delta Exchange India
 
-Production - https://api.india.delta.exchange/v2
+ - **Production-India** - https://api.india.delta.exchange/v2
+ - **Testnet-India** - https://cdn-ind.testnet.deltaex.org/v2
+
+REST API Endpoint URL for Delta Exchange Global
+
+- **Production-Global** - https://api.delta.exchange/v2
+- **Testnet-Global** - https://testnet-api.delta.exchange/v2
 
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
 
@@ -104,7 +87,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of all assets|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of [Asset schema](#tocSasset)|Inline|
 
 <h3 id="get-list-of-all-assets-responseschema">Response Schema</h3>
 
@@ -188,6 +171,7 @@ Indices refer to spot price indices that Delta Exchange creates by combining spo
       ],
       "underlying_asset_id": 0,
       "quoting_asset_id": 0,
+      "tick_size": null,
       "index_type": "spot_pair"
     }
   ]
@@ -198,7 +182,7 @@ Indices refer to spot price indices that Delta Exchange creates by combining spo
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of indices|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of [Spot Index schema](#tocSindex)|Inline|
 
 <h3 id="get-indices-responseschema">Response Schema</h3>
 
@@ -347,6 +331,7 @@ p JSON.parse(result)
         ],
         "underlying_asset_id": 0,
         "quoting_asset_id": 0,
+        "tick_size": null,
         "index_type": "spot_pair"
       }
     }
@@ -358,7 +343,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of products|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of [products schema](#tocSproduct)|Inline|
 
 <h3 id="get-list-of-products-responseschema">Response Schema</h3>
 
@@ -510,6 +495,7 @@ p JSON.parse(result)
       ],
       "underlying_asset_id": 0,
       "quoting_asset_id": 0,
+      "tick_size": null,
       "index_type": "spot_pair"
     }
   }
@@ -520,7 +506,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of products|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|[Product schema](#tocSproduct)|Inline|
 
 <h3 id="get-product-by-symbol-responseschema">Response Schema</h3>
 
@@ -2604,7 +2590,7 @@ Change in position may take upto 10secs to reflect. Use 'GET /position' for real
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of all open positions|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of all [open positions](#tocSposition)|Inline|
 
 <h3 id="get-margined-positions-responseschema">Response Schema</h3>
 
@@ -3142,7 +3128,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of closed and cancelled orders|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of closed and cancelled orders. [Order schema](#tocSorder)|Inline|
 
 <h3 id="get-order-history-(cancelled-and-closed)-responseschema">Response Schema</h3>
 
@@ -3282,7 +3268,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|fills|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Array of [fills](#tocSfill)|Inline|
 
 <h3 id="get-user-fills-by-filters-responseschema">Response Schema</h3>
 
@@ -3292,6 +3278,9 @@ p JSON.parse(result)
 |---|---|
 |fill_type|normal|
 |fill_type|adl|
+|fill_type|liquidation|
+|fill_type|settlement|
+|fill_type|otc|
 |side|buy|
 |side|sell|
 |role|taker|
@@ -3766,7 +3755,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|list of transactions for that wallet|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|list of [Wallet transactions](#tocStransaction)|Inline|
 
 <h3 id="get-wallet-transactions-responseschema">Response Schema</h3>
 
@@ -4890,6 +4879,7 @@ p JSON.parse(result)
       ],
       "underlying_asset_id": 0,
       "quoting_asset_id": 0,
+      "tick_size": null,
       "index_type": "spot_pair"
     }
   }
@@ -4928,9 +4918,9 @@ p JSON.parse(result)
 This operation does not require authentication.
 </aside>
 
-<h1 id="delta-exchange-api-v2-historical-data-ohlc-candles">Historical data/ OHLC Candles</h1>
+<h1 id="delta-exchange-api-v2-historical-ohlc-candles-sparklines">Historical OHLC Candles/Sparklines</h1>
 
-## GET ohlc candles
+## GET historical ohlc candles
 
 <a id="opIdgetCandles"></a>
 
@@ -4943,7 +4933,7 @@ headers = {
 }
 
 r = requests.get('https://api.delta.exchange/v2/history/candles', params={
-  'resolution': '1m',  'symbol': 'string',  'start': '0',  'end': '0'
+  'resolution': '5m',  'symbol': 'BTCUSD',  'start': '1685618835',  'end': '1722511635'
 }, headers = headers)
 
 print r.json()
@@ -4952,7 +4942,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/history/candles?resolution=1m&symbol=string&start=0&end=0 \
+curl -X GET https://api.delta.exchange/v2/history/candles?resolution=5m&symbol=BTCUSD&start=1685618835&end=1722511635 \
   -H 'Accept: application/json'
 
 ```
@@ -4967,10 +4957,10 @@ headers = {
 
 result = RestClient.get 'https://api.delta.exchange/v2/history/candles',
   params: {
-  'resolution' => 'string',
-'symbol' => 'string',
-'start' => 'integer',
-'end' => 'integer'
+  'resolution' => '5m',
+'symbol' => 'BTCUSD',
+'start' => '1685618835',
+'end' => '1722511635'
 }, headers: headers
 
 p JSON.parse(result)
@@ -4979,14 +4969,14 @@ p JSON.parse(result)
 
 `GET /history/candles`
 
-Open-High-Low-Close candle data. Max 2000 candles in a response.
+It returns historical Open-High-Low-Close(ohlc) candles data of the symbol as per input values for resolution, start time and end time. Also, it can return only upto 2000 candles maximum in a response.
 
-<h3 id="get-ohlc-candles-parameters">Parameters</h3>
+<h3 id="get-historical-ohlc-candles-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|resolution|query|string|true|none|
-|symbol|query|string|true|To get index data pass index symbol like .DEXBTUSDT/ .DEETHUSDT, to get funding history in the same api pass symbol as FUNDING:${symbol} ,for mark price MARK:${symbol}, and for OI data OI:${symbol}|
+|resolution|query|string|true|ohlc candle time frames like 1m, 5m, 1h|
+|symbol|query|string|true|To get funding history pass symbol as FUNDING:${symbol}, mark price MARK:${symbol} and OI data OI:${symbol} for e.g. - FUNDING:BTCUSD, MARK:C-BTC-66400-010824, OI:ETHUSD|
 |start|query|integer|true|Start time: unix timestamp in seconds|
 |end|query|integer|true|End time: unix timestamp in seconds|
 
@@ -5029,19 +5019,19 @@ Open-High-Low-Close candle data. Max 2000 candles in a response.
 }
 ```
 
-<h3 id="get-ohlc-candles-responses">Responses</h3>
+<h3 id="get-historical-ohlc-candles-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|ohlc|Inline|
 
-<h3 id="get-ohlc-candles-responseschema">Response Schema</h3>
+<h3 id="get-historical-ohlc-candles-responseschema">Response Schema</h3>
 
 <aside class="success">
 This operation does not require authentication.
 </aside>
 
-## GET product history sparkline
+## GET product history sparklines
 
 <a id="opIdgetSparklines"></a>
 
@@ -5054,7 +5044,7 @@ headers = {
 }
 
 r = requests.get('https://api.delta.exchange/v2/history/sparklines', params={
-  'symbols': 'string'
+  'symbols': 'ETHUSD,MARK:BTCUSD'
 }, headers = headers)
 
 print r.json()
@@ -5063,7 +5053,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols=string \
+curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols=ETHUSD%2CMARK%3ABTCUSD \
   -H 'Accept: application/json'
 
 ```
@@ -5078,7 +5068,7 @@ headers = {
 
 result = RestClient.get 'https://api.delta.exchange/v2/history/sparklines',
   params: {
-  'symbols' => 'string'
+  'symbols' => 'ETHUSD,MARK:BTCUSD'
 }, headers: headers
 
 p JSON.parse(result)
@@ -5087,7 +5077,7 @@ p JSON.parse(result)
 
 `GET /history/sparklines`
 
-<h3 id="get-product-history-sparkline-parameters">Parameters</h3>
+<h3 id="get-product-history-sparklines-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5101,7 +5091,7 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "MARK:BTCUSD_31Oct": [
+    "ETHUSD": [
       [
         1594214051,
         0.00003826
@@ -5111,7 +5101,7 @@ p JSON.parse(result)
         0.00003826
       ]
     ],
-    "SPOT:BTCUSD_31Oct": [
+    "MARK:BTCUSD": [
       [
         1594215270,
         0.00003826
@@ -5121,13 +5111,13 @@ p JSON.parse(result)
 }
 ```
 
-<h3 id="get-product-history-sparkline-responses">Responses</h3>
+<h3 id="get-product-history-sparklines-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|product history sparkline|Inline|
 
-<h3 id="get-product-history-sparkline-responseschema">Response Schema</h3>
+<h3 id="get-product-history-sparklines-responseschema">Response Schema</h3>
 
 <aside class="success">
 This operation does not require authentication.
@@ -5184,6 +5174,7 @@ This operation does not require authentication.
   ],
   "underlying_asset_id": 0,
   "quoting_asset_id": 0,
+  "tick_size": null,
   "index_type": "spot_pair"
 }
 
@@ -5194,10 +5185,11 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer(int64)|false|none|none|
-|symbol|string|false|none|none|
-|constituent_exchanges|[object]|false|none|none|
+|symbol|string|false|none|e.g. '.DE' followed by base asset + quoting asset|
+|constituent_exchanges|[object]|false|none|Details of name and weight of exchanges in index|
 |underlying_asset_id|integer|false|none|Asset ID for base symbol|
 |quoting_asset_id|integer|false|none|Asset ID for quoting symbol|
+|tick_size|string(Decimal)|false|none|Precision of the spot price|
 |index_type|string|false|none|Type of index|
 
 #### Enumerated Values
@@ -5222,6 +5214,7 @@ This operation does not require authentication.
     ],
     "underlying_asset_id": 0,
     "quoting_asset_id": 0,
+    "tick_size": null,
     "index_type": "spot_pair"
   }
 ]
@@ -5368,6 +5361,7 @@ This operation does not require authentication.
     ],
     "underlying_asset_id": 0,
     "quoting_asset_id": 0,
+    "tick_size": null,
     "index_type": "spot_pair"
   }
 }
@@ -5527,6 +5521,7 @@ This operation does not require authentication.
       ],
       "underlying_asset_id": 0,
       "quoting_asset_id": 0,
+      "tick_size": null,
       "index_type": "spot_pair"
     }
   }
@@ -5678,8 +5673,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|true|none|Either product_id or product_symbol is required.|
-|product_symbol|string|true|none|Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|none|
 |side|string|false|none|side for which to place order|
@@ -5763,8 +5758,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|true|none|Either product_id or product_symbol is required.|
-|product_symbol|string|true|none|Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|none|
 |side|string|false|none|side for which to place order|
@@ -5911,8 +5906,8 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|none|
-|product_id|integer|true|none|Either product_id or product_symbol is required.|
-|product_symbol|string|true|none|Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |limit_price|string|false|none|none|
 |size|integer|false|none|total size after editing order|
 |mmp|string|false|none|none|
@@ -5986,8 +5981,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|true|none|Either product_id or product_symbol is required.|
-|product_symbol|string|true|none|Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |stop_loss_order|object|false|none|none|
 |» order_type|string|false|none|none|
 |» stop_price|string|false|none|none|
@@ -6036,8 +6031,8 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|Order ID for which bracket params are being updated|
-|product_id|integer|true|none|Either product_id or product_symbol is required.|
-|product_symbol|string|true|none|Either product_id or product_symbol is required.|
+|product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |bracket_stop_loss_limit_price|string|false|none|none|
 |bracket_stop_loss_price|string|false|none|none|
 |bracket_take_profit_limit_price|string|false|none|none|
@@ -6244,7 +6239,7 @@ This operation does not require authentication.
 |created_at|string|false|none|none|
 |product_id|integer|false|none|none|
 |product_symbol|string|false|none|none|
-|order_id|string|false|none|none|
+|order_id|string|false|none|Will be order_id(Integer) in most cases. Will be UUID string of order when fill_type is settlement|
 |settling_asset_id|integer|false|none|none|
 |settling_asset_symbol|string|false|none|none|
 |meta_data|[FillMetaData](#schemafillmetadata)|false|none|Meta data inside fill|
@@ -6255,6 +6250,9 @@ This operation does not require authentication.
 |---|---|
 |fill_type|normal|
 |fill_type|adl|
+|fill_type|liquidation|
+|fill_type|settlement|
+|fill_type|otc|
 |side|buy|
 |side|sell|
 |role|taker|
@@ -7126,7 +7124,7 @@ This operation does not require authentication.
 
 ```json
 {
-  "MARK:BTCUSD_31Oct": [
+  "ETHUSD": [
     [
       1594214051,
       0.00003826
@@ -7136,7 +7134,7 @@ This operation does not require authentication.
       0.00003826
     ]
   ],
-  "SPOT:BTCUSD_31Oct": [
+  "MARK:BTCUSD": [
     [
       1594215270,
       0.00003826

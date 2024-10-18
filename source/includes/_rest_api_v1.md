@@ -1,10 +1,17 @@
 <h1 id="ApiSection" class="section-header">API V1 (Deprecated)</h1>
 The REST API has endpoints for account and order management as well as public market data.
 
-REST API ENDPOINT URL
+REST API Endpoint URL for Delta Exchange India
 
-- Production - https://api.delta.exchange
-- Testnet - https://testnet-api.delta.exchange
+ - **Production-India** - https://api.india.delta.exchange/v2
+ - **Testnet-India** - https://cdn-ind.testnet.deltaex.org/v2
+
+REST API Endpoint URL for Delta Exchange Global
+
+- **Production-Global** - https://api.delta.exchange/v2
+- **Testnet-Global** - https://testnet-api.delta.exchange/v2
+
+
 
 <h1 id="delta-exchange-api-default">Default</h1>
 

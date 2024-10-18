@@ -85,7 +85,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of all assets",
+            "description": "List of [Asset schema](#tocSasset)",
             "schema": {
               "allOf": [
                 {
@@ -118,7 +118,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of indices",
+            "description": "List of [Spot Index schema](#tocSindex)",
             "schema": {
               "allOf": [
                 {
@@ -182,7 +182,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of products",
+            "description": "List of [products schema](#tocSproduct)",
             "schema": {
               "allOf": [
                 {
@@ -222,7 +222,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of products",
+            "description": "[Product schema](#tocSproduct)",
             "schema": {
               "allOf": [
                 {
@@ -1271,7 +1271,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of closed and cancelled orders",
+            "description": "List of closed and cancelled orders. [Order schema](#tocSorder)",
             "schema": {
               "allOf": [
                 {
@@ -1359,7 +1359,7 @@
         ],
         "responses": {
           "200": {
-            "description": "fills",
+            "description": "Array of [fills](#tocSfill)",
             "schema": {
               "allOf": [
                 {
@@ -1475,7 +1475,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of all open positions",
+            "description": "List of all [open positions](#tocSposition)",
             "schema": {
               "allOf": [
                 {
@@ -1940,7 +1940,7 @@
         ],
         "responses": {
           "200": {
-            "description": "list of transactions for that wallet",
+            "description": "list of [Wallet transactions](#tocStransaction)",
             "schema": {
               "allOf": [
                 {
@@ -2614,13 +2614,15 @@
           "format": "int64"
         },
         "symbol": {
-          "type": "string"
+          "type": "string",
+          "description": "e.g. '.DE' followed by base asset + quoting asset"
         },
         "constituent_exchanges": {
           "type": "array",
           "items": {
             "type": "object"
-          }
+          },
+          "description": "Details of name and weight of exchanges in index"
         },
         "underlying_asset_id": {
           "type": "integer",
@@ -2629,6 +2631,10 @@
         "quoting_asset_id": {
           "type": "integer",
           "description": "Asset ID for quoting symbol"
+        },
+        "tick_size": {
+          "type": "string(Decimal)",
+          "description": "Precision of the spot price"
         },
         "index_type": {
           "type": "string",
@@ -3459,7 +3465,10 @@
           "type": "string",
           "enum": [
             "normal",
-            "adl"
+            "adl",
+            "liquidation",
+            "settlement",
+            "otc"
           ]
         },
         "side": {
@@ -3494,7 +3503,8 @@
           "type": "string"
         },
         "order_id": {
-          "type": "string"
+          "type": "string",
+          "description": "Will be order_id(Integer) in most cases. Will be UUID string of order when fill_type is settlement"
         },
         "settling_asset_id": {
           "type": "integer"

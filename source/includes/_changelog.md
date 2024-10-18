@@ -1,5 +1,11 @@
 # Changelog
 
+## 18.10.2024
+1. Added clickable links to the corresponding API response json schemas under some API "Responses" table. Updated some schemas to match the response. (This is a documentation fix, no changes in API)
+2. Added "Testnet-India" REST and Websocket host endpoints.
+3. Changed "Rate Limits" description and added an example.
+
+
 ## 01.05.2024
 1. Added "po" positions key in /v2/user_trades websocket private channel.
 2. Removed "fok" type for orders, as they are no longer supported.
