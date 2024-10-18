@@ -518,13 +518,15 @@
             "in": "query",
             "name": "product_ids",
             "description": "comma separated product ids, if not specified, all the orders will be returned",
-            "type": "string"
+            "type": "string",
+            "example": "27,5"
           },
           {
             "in": "query",
             "name": "states",
             "description": "comma separated list of states - open,pending",
-            "type": "string"
+            "type": "string",
+            "example": "open, pending, closed"
           },
           {
             "in": "query",
@@ -536,7 +538,8 @@
               "perpetual_futures",
               "call_options",
               "put_options"
-            ]
+            ],
+            "example": "futures, perpetual_futures, call_options"
           },
           {
             "in": "query",
@@ -549,38 +552,44 @@
               "stop_market",
               "stop_limit",
               "all_stop"
-            ]
+            ],
+            "example": "market, limit, stop_limit"
           },
           {
             "in": "query",
             "name": "start_time",
             "description": "from time in micro-seconds in epoc; referring to the order creation time",
-            "type": "integer"
+            "type": "integer",
+            "example": 1725174294000000
           },
           {
             "in": "query",
             "name": "end_time",
             "description": "from time in micro-seconds in epoc; referring to the order creation time",
-            "type": "integer"
+            "type": "integer",
+            "example": 1725865494000000
           },
           {
             "in": "query",
             "name": "after",
-            "description": "after cursor for pagination",
-            "type": "string"
+            "description": "after cursor for pagination; becomes null if page after the current one does not exist",
+            "type": "string",
+            "example": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN"
           },
           {
             "in": "query",
             "name": "before",
-            "description": "before cursor for pagination",
-            "type": "string"
+            "description": "before cursor for pagination; becomes null if page before the current one does not exist",
+            "type": "string",
+            "example": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
           },
           {
             "in": "query",
             "name": "page_size",
             "description": "number of records per page",
             "type": "integer",
-            "default": 10
+            "default": 10,
+            "example": 50
           }
         ],
         "responses": {
@@ -1109,7 +1118,9 @@
               ],
               "properties": {
                 "leverage": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Order leverage",
+                  "example": 10
                 }
               }
             }
@@ -1117,8 +1128,10 @@
           {
             "in": "path",
             "name": "product_id",
+            "description": "Product id of the ordered product",
             "type": "integer",
-            "required": true
+            "required": true,
+            "example": 27
           }
         ],
         "responses": {
@@ -1168,8 +1181,10 @@
           {
             "in": "path",
             "name": "product_id",
+            "description": "Product id of the ordered product",
             "type": "integer",
-            "required": true
+            "required": true,
+            "example": 27
           }
         ],
         "responses": {
@@ -2880,62 +2895,85 @@
       "description": "An Order object",
       "properties": {
         "id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Genraeted order id",
+          "example": 123
         },
         "user_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Client id",
+          "example": 453671
         },
         "size": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Order size",
+          "example": 10
         },
         "unfilled_size": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Order size which is not filled yet",
+          "example": 2
         },
         "side": {
           "type": "string",
-          "description": "side for which to place order",
+          "description": "Side for which to place order",
           "enum": [
             "buy",
             "sell"
-          ]
+          ],
+          "example": "buy"
         },
         "order_type": {
           "type": "string",
+          "description": "Order type - limit_order/market_order",
           "enum": [
             "limit_order",
             "market_order"
-          ]
+          ],
+          "example": "limit_order"
         },
         "limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Price level on which order must be triggered",
+          "example": "59000"
         },
         "stop_order_type": {
           "type": "string",
+          "description": "Stop order type - stop loss or take profit",
           "enum": [
             "stop_loss_order"
-          ]
+          ],
+          "example": "stop_loss_order"
         },
         "stop_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Stop price level for the stop order",
+          "example": "55000"
         },
         "paid_commission": {
           "type": "string",
-          "description": "Commission paid for filled order"
+          "description": "Commission paid for filled order",
+          "example": "0.5432"
         },
         "commission": {
           "type": "string",
-          "description": "Commission blocked for order"
+          "description": "Commission blocked for order",
+          "example": "0.5432"
         },
         "close_on_trigger": {
           "type": "string",
+          "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
             "false",
             "true"
-          ]
+          ],
+          "default": false,
+          "example": false
         },
         "client_order_id": {
           "type": "string",
-          "description": "client order id provided by the user while creating order"
+          "description": "client order id provided by the user while creating order",
+          "example": "34521712"
         },
         "state": {
           "type": "string",
@@ -2945,16 +2983,23 @@
             "pending",
             "closed",
             "cancelled"
-          ]
+          ],
+          "example": "open"
         },
         "created_at": {
-          "type": "string"
+          "type": "string",
+          "description": "Created at unix timestamp of the order in micro seconds",
+          "example": "1725865012000000"
         },
         "product_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Product id of the ordered product",
+          "example": 27
         },
         "product_symbol": {
-          "type": "string"
+          "type": "string",
+          "description": "Product symbol of the ordered product",
+          "example": "BTCUSD"
         }
       }
     },
@@ -2974,73 +3019,103 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
         },
         "product_symbol": {
           "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
         },
         "limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Price level for limit orders",
+          "example": "59000"
         },
         "size": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Order size",
+          "example": 10
         },
         "side": {
           "type": "string",
-          "description": "side for which to place order",
+          "description": "Buy order or Sell order",
           "enum": [
             "buy",
             "sell"
-          ]
+          ],
+          "example": "buy"
         },
         "order_type": {
           "type": "string",
+          "description": "Limit order(limit_price must be defined) or Market order",
           "enum": [
             "limit_order",
             "market_order"
-          ]
+          ],
+          "default": "market_order",
+          "example": "limit_order"
         },
         "stop_order_type": {
           "type": "string",
+          "description": "Stop order type - stop loss or take profit",
           "enum": [
             "stop_loss_order",
             "take_profit_order"
-          ]
+          ],
+          "example": "stop_loss_order"
         },
         "stop_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Stop loss price level if the order is stop order",
+          "example": "56000"
         },
         "trail_amount": {
-          "type": "string"
+          "type": "string",
+          "description": "Use trail amount if you want a trailing stop order. Required if stop price is empty.",
+          "example": "50"
         },
         "stop_trigger_method": {
           "type": "string",
+          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
           "enum": [
             "mark_price", "last_traded_price", "spot_price"
-          ]
+          ],
+          "default": "mark_price",
+          "example": "last_traded_price"
         },
         "bracket_stop_loss_limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Bracket order stop loss limit price",
+          "example": "57000"
         },
         "bracket_stop_loss_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Bracket order stop loss trigger price",
+          "example": "56000"
         },
         "bracket_take_profit_limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Bracket order take profit limit price",
+          "example": "62000"
         },
         "bracket_take_profit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "take profit trigger price for bracket order",
+          "example": "61000"
         },
         "time_in_force": {
           "type": "string",
+          "description": "GTC/IOC order type",
           "enum": [
             "gtc",
             "ioc"
-          ]
+          ],
+          "example": "gtc"
         },
         "mmp": {
           "type": "string",
+          "description": "MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5",
           "enum": [
             "disabled",
             "mmp1",
@@ -3048,31 +3123,43 @@
             "mmp3",
             "mmp4",
             "mmp5"
-          ]
+          ],
+          "example": "disabled"
         },
         "post_only": {
           "type": "string",
+          "description": "Post only order",
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "default": false,
+          "example": false
         },
         "reduce_only": {
           "type": "string",
+          "description": "Reduce only order",
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "default": false,
+          "example": false
         },
         "close_on_trigger": {
           "type": "string",
+          "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "default": false,
+          "example": false
         },
         "client_order_id": {
-          "type": "string"
+          "type": "string",
+          "description": "Valid order Id of the client",
+          "example": "34521712"
         }
       }
     },
@@ -3086,72 +3173,102 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
         },
         "product_symbol": {
           "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
         },
         "limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Price level for limit orders",
+          "example": "59000"
         },
         "size": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Order size",
+          "example": 10
         },
         "side": {
           "type": "string",
-          "description": "side for which to place order",
+          "description": "Buy order or Sell order",
           "enum": [
             "buy",
             "sell"
-          ]
+          ],
+          "example": "buy"
         },
         "order_type": {
           "type": "string",
+          "description": "Limit order(limit_price must be defined) or Market order",
           "enum": [
             "limit_order",
             "market_order"
-          ]
+          ],
+          "default": "market_order",
+          "example": "limit_order"
         },
         "stop_order_type": {
           "type": "string",
+          "description": "Stop order type - stop loss or take profit",
           "enum": [
             "stop_loss_order",
             "take_profit_order"
-          ]
+          ],
+          "example": "stop_loss_order"
         },
         "stop_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Stop loss price level if the order is stop order",
+          "example": "56000"
         },
         "trail_amount": {
-          "type": "string"
+          "type": "string",
+          "description": "Use trail amount if you want a trailing stop order. Required if stop price is empty.",
+          "example": "50"
         },
         "stop_trigger_method": {
           "type": "string",
+          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
           "enum": [
             "mark_price", "last_traded_price", "spot_price"
-          ]
+          ],
+          "default": "mark_price",
+          "example": "last_traded_price"
         },
         "bracket_stop_loss_limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Bracket order stop loss limit price",
+          "example": "57000"
         },
         "bracket_stop_loss_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Bracket order stop loss trigger price",
+          "example": "56000"
         },
         "bracket_take_profit_limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Bracket order take profit limit price",
+          "example": "62000"
         },
         "bracket_take_profit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "take profit trigger price for bracket order",
+          "example": "61000"
         },
         "time_in_force": {
           "type": "string",
+          "description": "GTC/IOC order type",
           "enum": [
             "gtc"
-          ]
+          ],
+          "example": "gtc"
         },
         "mmp": {
           "type": "string",
+          "description": "MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5",
           "enum": [
             "disabled",
             "mmp1",
@@ -3159,31 +3276,43 @@
             "mmp3",
             "mmp4",
             "mmp5"
-          ]
+          ],
+          "example": "disabled"
         },
         "post_only": {
           "type": "string",
+          "description": "Post only order",
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "default": false,
+          "example": false
         },
         "reduce_only": {
           "type": "string",
+          "description": "Reduce only order",
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "default": false,
+          "example": false
         },
         "close_on_trigger": {
           "type": "string",
+          "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "default": false,
+          "example": false
         },
         "client_order_id": {
-          "type": "string"
+          "type": "string",
+          "description": "Valid order Id of the client",
+          "example": "34521712"
         }
       }
     },
@@ -3208,25 +3337,33 @@
       ],
       "properties": {
         "id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "existing order id to be edited",
+          "example": 34521712
         },
         "product_id": {
           "type": "integer",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
         },
         "product_symbol": {
           "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
         },
         "limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Price level for limit orders",
+          "example": "59000"
         },
         "size": {
           "type": "integer",
-          "description": "total size after editing order"
+          "description": "total size after editing order",
+          "example": 15
         },
         "mmp": {
           "type": "string",
+          "description": "MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5",
           "enum": [
             "disabled",
             "mmp1",
@@ -3234,14 +3371,18 @@
             "mmp3",
             "mmp4",
             "mmp5"
-          ]
+          ],
+          "example": "disabled"
         },
         "post_only": {
           "type": "string",
+          "description": "Post only order",
           "enum": [
             "false",
             "true"
-          ]
+          ],
+          "default": false,
+          "example": false
         }
       }
     },
@@ -3261,29 +3402,38 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
         },
         "product_symbol": {
           "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
         },
         "stop_loss_order": {
           "type": "object",
           "properties": {
             "order_type": {
               "type": "string",
-              "enum": ["limit_order", "market_order"]
+              "description": "Limit order(limit_price must be defined) or Market order",
+              "enum": ["limit_order", "market_order"],
+              "default": "market_order",
+              "example": "limit_order"
             },
             "stop_price": {
-              "type": "string"
+              "type": "string",
+              "description": "Stop loss price level",
+              "example": "56000"
             },
             "trail_amount": {
               "type": "string",
-              "description": "Use trail amount if you want a trailing stop order. Required if stop price is empty."
+              "description": "Use trail amount if you want a trailing stop order. Required if stop price is empty.",
+              "example": "50"
             },
             "limit_price": {
               "type": "string",
-              "description": "Required if its a limit order"
+              "description": "required for limit orders",
+              "example": "55000"
             }
           }
         },
@@ -3292,24 +3442,33 @@
           "properties": {
             "order_type": {
               "type": "string",
-              "enum": ["limit_order", "market_order"]
+              "description": "Limit order(limit_price must be defined) or Market order",
+              "enum": ["limit_order", "market_order"],
+              "default": "market_order",
+              "example": "limit_order"
             },
             "stop_price": {
-              "type": "string"
+              "type": "string",
+              "description": "Stop price level",
+              "example": "65000"
             },
             "limit_price": {
               "type": "string",
-              "description": "Required if its a limit order"
+              "description": "required for limit orders",
+              "example": "64000"
             }
           }
         },
         "stop_trigger_method": {
           "type": "string",
+          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
           "enum": [
             "mark_price",
             "last_traded_price",
             "spot_price"
-          ]
+          ],
+          "default": "mark_price",
+          "example": "last_traded_price"
         }
       }
     },
@@ -3324,30 +3483,43 @@
         "id": {
           "type": "integer",
           "required": true,
-          "description": "Order ID for which bracket params are being updated"
+          "description": "Order ID for which bracket params are being updated",
+          "example": 34521712
         },
         "product_id": {
           "type": "integer",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
         },
         "product_symbol": {
           "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent."
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
         },
         "bracket_stop_loss_limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "stop loss limit price for bracket order",
+          "example": "55000"
         },
         "bracket_stop_loss_price": {
-          "type": "string"
+          "type": "string",
+          "description": "stop loss trigger price for bracket order",
+          "example": "56000"
         },
         "bracket_take_profit_limit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "take profit limit price for bracket order",
+          "example": "65000"
         },
         "bracket_take_profit_price": {
-          "type": "string"
+          "type": "string",
+          "description": "take profit trigger price for bracket order",
+          "example": "64000"
         },
         "bracket_trail_amount": {
-          "type": "string"
+          "type": "string",
+          "description": "trail amount of bracket order",
+          "example": "50"
         }
       }
     },
@@ -3356,10 +3528,14 @@
       "description": "A delete order object",
       "properties": {
         "id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "existing order id to be deleted",
+          "example": 34521712
         },
         "product_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "product_id of the product in the order",
+          "example": 27
         }
       }
     },
@@ -3369,19 +3545,22 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "cancel all orders for particular product, cancels orders for all products if not provided"
+          "description": "cancel all orders for particular product, cancels orders for all products if not provided",
+          "example": 27
         },
         "contract_types": {
           "type": "string",
-          "description": "comma separated list of desired contract types"
+          "description": "comma separated list of desired contract types",
+          "example": "perpetual_futures,put_options,call_options"
         },
         "cancel_limit_orders": {
           "type": "string",
-          "description": "set as true to cancel open limit orders",
+          "description": "set true to cancel open limit orders",
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "example": false
         },
         "cancel_stop_orders": {
           "type": "string",
@@ -3389,7 +3568,8 @@
           "enum": [
             "true",
             "false"
-          ]
+          ],
+          "example": false
         }
       }
     },
@@ -3574,14 +3754,18 @@
       "properties": {
         "leverage": {
           "type": "string",
-          "description": "Leverage of all open orders for this product"
+          "description": "Leverage of all open orders for this product",
+          "example": 10
         },
         "order_margin": {
           "type": "string",
-          "description": "Margin blocked in open orders for this product"
+          "description": "Margin blocked in open orders for this product",
+          "example": "563.2"
         },
         "product_id": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Product id of the ordered product",
+          "example": 27
         }
       }
     },
@@ -4121,10 +4305,14 @@
       "type": "object",
       "properties": {
         "after": {
-          "type": "string"
+          "type": "string",
+          "description": "after cursor for pagination; becomes null if page after the current one does not exist",
+          "example": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN"
         },
         "before": {
-          "type": "string"
+          "type": "string",
+          "description": "before cursor for pagination; becomes null if page before the current one does not exist",
+          "example": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
         }
       }
     },
