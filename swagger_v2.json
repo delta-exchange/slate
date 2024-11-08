@@ -3165,16 +3165,6 @@
           ],
           "default": false,
           "example": false
-        },
-        "order_triggered_from_strategy_builder": {
-          "type": "string",
-          "description": "if set, will consider the order to be triggered from strategy builder",
-          "enum": [
-            "false",
-            "true"
-          ],
-          "default": false,
-          "example": false
         }
       }
     },
@@ -3332,11 +3322,6 @@
           "default": false,
           "example": false
         },
-        "unfilled_size": {
-          "type": "integer",
-          "description": "order size which is not filled yet",
-          "example": 5
-        },
         "cancel_orders_accepted": {
           "type": "string",
           "description": "if set, will cancel all existing orders for the product",
@@ -3414,11 +3399,6 @@
           ],
           "default": false,
           "example": false
-        },
-        "unfilled_size": {
-          "type": "integer",
-          "description": "order size which is not filled yet",
-          "example": 5
         }
       }
     },
@@ -3583,6 +3563,11 @@
           "type": "string",
           "description": "client order id provided by the user while creating order",
           "example": "34521712"
+        },
+        "product_id": {
+          "type": "integer",
+          "description": "product_id of the product in the order",
+          "example": 27 
         }
       }
     },
@@ -3594,11 +3579,6 @@
           "type": "integer",
           "description": "Only one of either product_id or product_symbol must be sent.",
           "example": 27
-        },
-        "product_symbol": {
-          "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent.",
-          "example": "BTCUSD"
         },
         "contract_types": {
           "type": "string",
@@ -3631,51 +3611,6 @@
             "false"
           ],
           "example": false
-        },
-        "cancellation_reason": {
-          "type": "string",
-          "description": "reason for cancellation",
-          "enum": [
-            "ClosePositionInsufficientMargin",
-            "TradingBlocked",
-            "InsufficientMargin",
-            "InsufficientCommission",
-            "OrderExceedsSizeLimit",
-            "ImmediateLiquidationOrder",
-            "LowerthanBankruptcy",
-            "OrderSizeExceededAvailable",
-            "OrderSizeNotAvailableInOrderBook",
-            "CloseOrderPositionUnavailable",
-            "NoPositionForReduceOnly",
-            "NoPositionLeftForReduceOnly",
-            "PositionClosed",
-            "LeverageLimitExceeded",
-            "PositionLiquidated",
-            "PositionADLed",
-            "ContractExpired",
-            "CancelledByUser",
-            "ImmediateExecutionPostOnly",
-            "NakedShortRestricted",
-            "CancelOnFill",
-            "OrderMaxSizeExceeded",
-            "LessThanOrderMinSize",
-            "KycPending",
-            "NoLiquidityForMarketOrder",
-            "TradingCreditsBreached",
-            "CancelledByAdmin",
-            "ReduceOnlyOrdersAllowed",
-            "CancelledDueToRmm",
-            "CancelledDueToMMP",
-            "CancelledDueToVOL",
-            "CancelledDueToLiquidationRisk",
-            "CancelledDueToDeadManSwitchTrigger",
-            "DerivativesTradingBlocked",
-            "SpotTradingBlocked",
-            "SpotBlockedCountry",
-            "PortfolioLimitsBreached",
-            "AccountLimitsBreached"
-          ],
-          "example": "CancelledByUser"
         }
       }
     },
