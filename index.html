@@ -553,7 +553,10 @@
                     <a href="#tocSeditorderrequest" class="toc-h2 toc-link" data-title="EditOrderRequest">EditOrderRequest</a>
                   </li>
                   <li>
-                    <a href="#tocSarrayofeditorderrequest" class="toc-h2 toc-link" data-title="ArrayOfEditOrderRequest">ArrayOfEditOrderRequest</a>
+                    <a href="#tocSbatcheditorderrequest" class="toc-h2 toc-link" data-title="BatchEditOrderRequest">BatchEditOrderRequest</a>
+                  </li>
+                  <li>
+                    <a href="#tocSarrayofbatcheditorderrequest" class="toc-h2 toc-link" data-title="ArrayOfBatchEditOrderRequest">ArrayOfBatchEditOrderRequest</a>
                   </li>
                   <li>
                     <a href="#tocScreatebracketorderrequest" class="toc-h2 toc-link" data-title="CreateBracketOrderRequest">CreateBracketOrderRequest</a>
@@ -2371,14 +2374,15 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_orders_accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -2422,7 +2426,7 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -2487,11 +2491,11 @@ curl -X POST https://api.delta.exchange/v2/orders <span class="se">\</span>
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -2573,7 +2577,8 @@ curl -X DELETE https://api.delta.exchange/v2/orders <span class="se">\</span>
 </blockquote>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -2618,7 +2623,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders <span class="se">\</span>
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -2683,11 +2688,11 @@ curl -X DELETE https://api.delta.exchange/v2/orders <span class="se">\</span>
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -2775,7 +2780,10 @@ curl -X PUT https://api.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_orders_accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -2819,7 +2827,7 @@ curl -X PUT https://api.delta.exchange/v2/orders <span class="se">\</span>
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -2884,11 +2892,11 @@ curl -X PUT https://api.delta.exchange/v2/orders <span class="se">\</span>
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -3105,7 +3113,7 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
       </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -3169,11 +3177,11 @@ curl -X GET https://api.delta.exchange/v2/orders <span class="se">\</span>
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -3270,7 +3278,7 @@ curl -X POST https://api.delta.exchange/v2/orders/bracket <span class="se">\</sp
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"65000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"64000"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="w">
+  </span><span class="s2">"bracket_stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -3399,7 +3407,8 @@ curl -X PUT https://api.delta.exchange/v2/orders/bracket <span class="se">\</spa
   </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"65000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"64000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bracket_trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="w">
+  </span><span class="s2">"bracket_trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -3524,7 +3533,8 @@ curl -X DELETE https://api.delta.exchange/v2/orders/all <span class="se">\</span
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
   </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="s2">"perpetual_futures,put_options,call_options"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cancel_limit_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cancel_stop_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="s2">"cancel_stop_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_reduce_only_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -3653,19 +3663,9 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -3712,7 +3712,7 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
       </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -3778,11 +3778,11 @@ curl -X POST https://api.delta.exchange/v2/orders/batch <span class="se">\</span
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -3892,7 +3892,7 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 <tr>
 <td>body</td>
 <td>body</td>
-<td><a href="#schemaarrayofeditorderrequest">ArrayOfEditOrderRequest</a></td>
+<td><a href="#schemaarrayofbatcheditorderrequest">ArrayOfBatchEditOrderRequest</a></td>
 <td>true</td>
 <td>none</td>
 </tr>
@@ -3919,7 +3919,7 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
       </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -3985,11 +3985,11 @@ curl -X PUT https://api.delta.exchange/v2/orders/batch <span class="se">\</span>
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -4072,7 +4072,8 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -4119,7 +4120,7 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
       </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -4185,11 +4186,11 @@ curl -X DELETE https://api.delta.exchange/v2/orders/batch <span class="se">\</sp
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -4303,7 +4304,7 @@ curl -X GET https://api.delta.exchange/v2/orders/<span class="o">{</span>order_i
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -4362,11 +4363,11 @@ curl -X GET https://api.delta.exchange/v2/orders/<span class="o">{</span>order_i
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -4480,7 +4481,7 @@ curl -X GET https://api.delta.exchange/v2/orders/client_order_id/<span class="o"
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -4539,11 +4540,11 @@ curl -X GET https://api.delta.exchange/v2/orders/client_order_id/<span class="o"
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -5714,7 +5715,7 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
       </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -5778,11 +5779,11 @@ curl -X GET https://api.delta.exchange/v2/orders/history <span class="se">\</spa
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -9435,7 +9436,7 @@ This operation does not require authentication.
   </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -9536,7 +9537,7 @@ This operation does not require authentication.
 <td>Commission blocked for order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
@@ -9608,11 +9609,11 @@ This operation does not require authentication.
 <td>stop_loss_order</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>reduce_only</td>
 <td>true</td>
 </tr>
 <tr>
@@ -9650,7 +9651,7 @@ This operation does not require authentication.
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"paid_commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"commission"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1725865012000000"</span><span class="p">,</span><span class="w">
@@ -9694,14 +9695,15 @@ This operation does not require authentication.
   </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_orders_accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -9804,6 +9806,13 @@ This operation does not require authentication.
 <td>Bracket order stop loss trigger price</td>
 </tr>
 <tr>
+<td>bracket_trail_amount</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty</td>
+</tr>
+<tr>
 <td>bracket_take_profit_limit_price</td>
 <td>string</td>
 <td>false</td>
@@ -9843,13 +9852,6 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Reduce only order</td>
-</tr>
-<tr>
-<td>close_on_trigger</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
 <td>if set, will only close positions. New orders will not be placed</td>
 </tr>
 <tr>
@@ -9857,7 +9859,14 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Valid order Id of the client</td>
+<td>client order id provided by the user while creating order</td>
+</tr>
+<tr>
+<td>cancel_orders_accepted</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>if set, will cancel all existing orders for the product</td>
 </tr>
 </tbody></table>
 
@@ -9954,11 +9963,11 @@ This operation does not require authentication.
 <td>false</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>cancel_orders_accepted</td>
 <td>true</td>
 </tr>
 <tr>
-<td>close_on_trigger</td>
+<td>cancel_orders_accepted</td>
 <td>false</td>
 </tr>
 </tbody></table>
@@ -9974,19 +9983,9 @@ This operation does not require authentication.
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
   </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -10048,62 +10047,6 @@ This operation does not require authentication.
 <td>Limit order(limit_price must be defined) or Market order</td>
 </tr>
 <tr>
-<td>stop_order_type</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Stop order type - stop loss or take profit</td>
-</tr>
-<tr>
-<td>stop_price</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Stop loss price level if the order is stop order</td>
-</tr>
-<tr>
-<td>trail_amount</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Use trail amount if you want a trailing stop order. Required if stop price is empty.</td>
-</tr>
-<tr>
-<td>stop_trigger_method</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Stop order trigger method - mark_price/last_traded_price/spot_price</td>
-</tr>
-<tr>
-<td>bracket_stop_loss_limit_price</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Bracket order stop loss limit price</td>
-</tr>
-<tr>
-<td>bracket_stop_loss_price</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Bracket order stop loss trigger price</td>
-</tr>
-<tr>
-<td>bracket_take_profit_limit_price</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Bracket order take profit limit price</td>
-</tr>
-<tr>
-<td>bracket_take_profit_price</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>take profit trigger price for bracket order</td>
-</tr>
-<tr>
 <td>time_in_force</td>
 <td>string</td>
 <td>false</td>
@@ -10125,25 +10068,11 @@ This operation does not require authentication.
 <td>Post only order</td>
 </tr>
 <tr>
-<td>reduce_only</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Reduce only order</td>
-</tr>
-<tr>
-<td>close_on_trigger</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>if set, will only close positions. New orders will not be placed</td>
-</tr>
-<tr>
 <td>client_order_id</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Valid order Id of the client</td>
+<td>client order id provided by the user while creating order</td>
 </tr>
 </tbody></table>
 
@@ -10172,28 +10101,12 @@ This operation does not require authentication.
 <td>market_order</td>
 </tr>
 <tr>
-<td>stop_order_type</td>
-<td>stop_loss_order</td>
-</tr>
-<tr>
-<td>stop_order_type</td>
-<td>take_profit_order</td>
-</tr>
-<tr>
-<td>stop_trigger_method</td>
-<td>mark_price</td>
-</tr>
-<tr>
-<td>stop_trigger_method</td>
-<td>last_traded_price</td>
-</tr>
-<tr>
-<td>stop_trigger_method</td>
-<td>spot_price</td>
+<td>time_in_force</td>
+<td>gtc</td>
 </tr>
 <tr>
 <td>time_in_force</td>
-<td>gtc</td>
+<td>ioc</td>
 </tr>
 <tr>
 <td>mmp</td>
@@ -10227,22 +10140,6 @@ This operation does not require authentication.
 <td>post_only</td>
 <td>false</td>
 </tr>
-<tr>
-<td>reduce_only</td>
-<td>true</td>
-</tr>
-<tr>
-<td>reduce_only</td>
-<td>false</td>
-</tr>
-<tr>
-<td>close_on_trigger</td>
-<td>true</td>
-</tr>
-<tr>
-<td>close_on_trigger</td>
-<td>false</td>
-</tr>
 </tbody></table>
 
 <h2 id="tocSarrayofbatchcreateorderrequest">ArrayOfBatchCreateOrderRequest</h2>
@@ -10257,19 +10154,9 @@ This operation does not require authentication.
     </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
     </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"stop_order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop_loss_order"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -10310,14 +10197,15 @@ This operation does not require authentication.
     </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bracket_stop_loss_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bracket_trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"reduce_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close_on_trigger"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cancel_orders_accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
@@ -10350,7 +10238,10 @@ This operation does not require authentication.
   </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_orders_accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -10417,9 +10308,160 @@ This operation does not require authentication.
 <td>none</td>
 <td>Post only order</td>
 </tr>
+<tr>
+<td>cancel_orders_accepted</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>if set, will cancel all existing orders for the product</td>
+</tr>
+<tr>
+<td>stop_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>price to trigger stop order</td>
+</tr>
+<tr>
+<td>trail_amount</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Use trail amount if you want a trailing stop order. Required if stop price is empty.</td>
+</tr>
 </tbody></table>
 
 <h4 id='enumerated-values-30'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>mmp</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp1</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp2</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp3</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp4</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>mmp5</td>
+</tr>
+<tr>
+<td>post_only</td>
+<td>true</td>
+</tr>
+<tr>
+<td>post_only</td>
+<td>false</td>
+</tr>
+<tr>
+<td>cancel_orders_accepted</td>
+<td>true</td>
+</tr>
+<tr>
+<td>cancel_orders_accepted</td>
+<td>false</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSbatcheditorderrequest">BatchEditOrderRequest</h2>
+
+<p><a id="schemabatcheditorderrequest"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>edit order object</em></p>
+
+<h3 id='properties-17'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>existing order id to be edited</td>
+</tr>
+<tr>
+<td>product_id</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>product_symbol</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>limit_price</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Price level for limit orders</td>
+</tr>
+<tr>
+<td>size</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>total size after editing order</td>
+</tr>
+<tr>
+<td>mmp</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5</td>
+</tr>
+<tr>
+<td>post_only</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Post only order</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-31'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10461,9 +10503,9 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSarrayofeditorderrequest">ArrayOfEditOrderRequest</h2>
+<h2 id="tocSarrayofbatcheditorderrequest">ArrayOfBatchEditOrderRequest</h2>
 
-<p><a id="schemaarrayofeditorderrequest"></a></p>
+<p><a id="schemaarrayofbatcheditorderrequest"></a></p>
 
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -10477,7 +10519,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-17'>Properties</h3>
+</span></code></pre><h3 id='properties-18'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10489,7 +10531,7 @@ This operation does not require authentication.
 </thead><tbody>
 <tr>
 <td><em>anonymous</em></td>
-<td>[<a href="#schemaeditorderrequest">EditOrderRequest</a>]</td>
+<td>[<a href="#schemabatcheditorderrequest">BatchEditOrderRequest</a>]</td>
 <td>false</td>
 <td>none</td>
 <td>[edit order object]</td>
@@ -10513,14 +10555,14 @@ This operation does not require authentication.
     </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"65000"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"64000"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="w">
+  </span><span class="s2">"bracket_stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
 
 <p><em>bracket order object</em></p>
 
-<h3 id='properties-18'>Properties</h3>
+<h3 id='properties-19'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10609,15 +10651,15 @@ This operation does not require authentication.
 <td>required for limit orders</td>
 </tr>
 <tr>
-<td>stop_trigger_method</td>
+<td>bracket_stop_trigger_method</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Stop order trigger method - mark_price/last_traded_price/spot_price</td>
+<td>stop order trigger method for bracket orders- mark_price/last_traded_price/spot_price</td>
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-31'>Enumerated Values</h4>
+<h4 id='enumerated-values-32'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10642,15 +10684,15 @@ This operation does not require authentication.
 <td>market_order</td>
 </tr>
 <tr>
-<td>stop_trigger_method</td>
+<td>bracket_stop_trigger_method</td>
 <td>mark_price</td>
 </tr>
 <tr>
-<td>stop_trigger_method</td>
+<td>bracket_stop_trigger_method</td>
 <td>last_traded_price</td>
 </tr>
 <tr>
-<td>stop_trigger_method</td>
+<td>bracket_stop_trigger_method</td>
 <td>spot_price</td>
 </tr>
 </tbody></table>
@@ -10667,14 +10709,15 @@ This operation does not require authentication.
   </span><span class="s2">"bracket_stop_loss_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"65000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bracket_take_profit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"64000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bracket_trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="w">
+  </span><span class="s2">"bracket_trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bracket_stop_trigger_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"last_traded_price"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
 
 <p><em>bracket order object</em></p>
 
-<h3 id='properties-19'>Properties</h3>
+<h3 id='properties-20'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10741,6 +10784,35 @@ This operation does not require authentication.
 <td>none</td>
 <td>trail amount of bracket order</td>
 </tr>
+<tr>
+<td>bracket_stop_trigger_method</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>stop order trigger method for bracket orders- mark_price/last_traded_price/spot_price</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-33'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>bracket_stop_trigger_method</td>
+<td>mark_price</td>
+</tr>
+<tr>
+<td>bracket_stop_trigger_method</td>
+<td>last_traded_price</td>
+</tr>
+<tr>
+<td>bracket_stop_trigger_method</td>
+<td>spot_price</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
@@ -10748,7 +10820,8 @@ This operation does not require authentication.
 <p><a id="schemadeleteorderrequest"></a></p>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -10756,7 +10829,7 @@ This operation does not require authentication.
 
 <p><em>A delete order object</em></p>
 
-<h3 id='properties-20'>Properties</h3>
+<h3 id='properties-21'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10772,7 +10845,14 @@ This operation does not require authentication.
 <td>integer</td>
 <td>false</td>
 <td>none</td>
-<td>existing order id to be deleted</td>
+<td>use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>client order id provided by the user while creating order</td>
 </tr>
 <tr>
 <td>product_id</td>
@@ -10791,14 +10871,15 @@ This operation does not require authentication.
   </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
   </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="s2">"perpetual_futures,put_options,call_options"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cancel_limit_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cancel_stop_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="s2">"cancel_stop_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cancel_reduce_only_orders"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
 
 <p><em>Cancel all request filter object</em></p>
 
-<h3 id='properties-21'>Properties</h3>
+<h3 id='properties-22'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -10814,7 +10895,7 @@ This operation does not require authentication.
 <td>integer</td>
 <td>false</td>
 <td>none</td>
-<td>cancel all orders for particular product, cancels orders for all products if not provided</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>contract_types</td>
@@ -10837,9 +10918,16 @@ This operation does not require authentication.
 <td>none</td>
 <td>set as true to cancel stop orders</td>
 </tr>
+<tr>
+<td>cancel_reduce_only_orders</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>set as true to cancel reduce only orders</td>
+</tr>
 </tbody></table>
 
-<h4 id='enumerated-values-32'>Enumerated Values</h4>
+<h4 id='enumerated-values-34'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -10863,6 +10951,14 @@ This operation does not require authentication.
 <td>cancel_stop_orders</td>
 <td>false</td>
 </tr>
+<tr>
+<td>cancel_reduce_only_orders</td>
+<td>true</td>
+</tr>
+<tr>
+<td>cancel_reduce_only_orders</td>
+<td>false</td>
+</tr>
 </tbody></table>
 
 <h2 id="tocSarrayofdeleteorderrequest">ArrayOfDeleteOrderRequest</h2>
@@ -10871,12 +10967,13 @@ This operation does not require authentication.
 
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-22'>Properties</h3>
+</span></code></pre><h3 id='properties-23'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -10917,7 +11014,7 @@ This operation does not require authentication.
 
 <p><em>A position object</em></p>
 
-<h3 id='properties-23'>Properties</h3>
+<h3 id='properties-24'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11035,7 +11132,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-24'>Properties</h3>
+</span></code></pre><h3 id='properties-25'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11092,7 +11189,7 @@ This operation does not require authentication.
 
 <p><em>A fill object</em></p>
 
-<h3 id='properties-25'>Properties</h3>
+<h3 id='properties-26'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11203,7 +11300,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-33'>Enumerated Values</h4>
+<h4 id='enumerated-values-35'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11286,7 +11383,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-26'>Properties</h3>
+</span></code></pre><h3 id='properties-27'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11328,7 +11425,7 @@ This operation does not require authentication.
 
 <p><em>Meta data inside fill</em></p>
 
-<h3 id='properties-27'>Properties</h3>
+<h3 id='properties-28'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11446,7 +11543,7 @@ This operation does not require authentication.
 
 <p><em>Order Leverage for a product</em></p>
 
-<h3 id='properties-28'>Properties</h3>
+<h3 id='properties-29'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11507,7 +11604,7 @@ This operation does not require authentication.
 
 <p><em>L2 orderbook</em></p>
 
-<h3 id='properties-29'>Properties</h3>
+<h3 id='properties-30'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11609,7 +11706,7 @@ This operation does not require authentication.
 
 <p><em>trades of a symbol</em></p>
 
-<h3 id='properties-30'>Properties</h3>
+<h3 id='properties-31'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11657,7 +11754,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-34'>Enumerated Values</h4>
+<h4 id='enumerated-values-36'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -11708,7 +11805,7 @@ This operation does not require authentication.
 
 <p><em>Wallet Data for each asset.</em></p>
 
-<h3 id='properties-31'>Properties</h3>
+<h3 id='properties-32'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11913,7 +12010,7 @@ This operation does not require authentication.
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-32'>Properties</h3>
+</span></code></pre><h3 id='properties-33'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11958,7 +12055,7 @@ This operation does not require authentication.
 
 <p><em>Meta data for robo trading</em></p>
 
-<h3 id='properties-33'>Properties</h3>
+<h3 id='properties-34'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12020,7 +12117,7 @@ This operation does not require authentication.
 
 <p><em>Array of wallet for every asset</em></p>
 
-<h3 id='properties-34'>Properties</h3>
+<h3 id='properties-35'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12051,7 +12148,7 @@ This operation does not require authentication.
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-35'>Properties</h3>
+</span></code></pre><h3 id='properties-36'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12101,7 +12198,7 @@ This operation does not require authentication.
   </span><span class="s2">"page_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-36'>Properties</h3>
+</span></code></pre><h3 id='properties-37'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12146,7 +12243,7 @@ This operation does not require authentication.
 <p><a id="schematransactiontypes"></a></p>
 <pre class="highlight json tab-json"><code><span class="s2">"string"</span><span class="w">
 
-</span></code></pre><h3 id='properties-37'>Properties</h3>
+</span></code></pre><h3 id='properties-38'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12171,7 +12268,7 @@ This operation does not require authentication.
 <td>none</td>
 </tr>
 </tbody></table>
-<h4 id='enumerated-values-35'>Enumerated Values</h4>
+<h4 id='enumerated-values-37'>Enumerated Values</h4>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -12331,7 +12428,7 @@ This operation does not require authentication.
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-38'>Properties</h3>
+</span></code></pre><h3 id='properties-39'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12423,7 +12520,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-39'>Properties</h3>
+</span></code></pre><h3 id='properties-40'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12455,7 +12552,7 @@ This operation does not require authentication.
   </span><span class="s2">"transferrer_user"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-40'>Properties</h3>
+</span></code></pre><h3 id='properties-41'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12531,7 +12628,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-41'>Properties</h3>
+</span></code></pre><h3 id='properties-42'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12561,7 +12658,7 @@ This operation does not require authentication.
   </span><span class="s2">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-42'>Properties</h3>
+</span></code></pre><h3 id='properties-43'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12616,7 +12713,7 @@ This operation does not require authentication.
   </span><span class="s2">"upper_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-43'>Properties</h3>
+</span></code></pre><h3 id='properties-44'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12654,7 +12751,7 @@ This operation does not require authentication.
   </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-44'>Properties</h3>
+</span></code></pre><h3 id='properties-45'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12754,7 +12851,7 @@ This operation does not require authentication.
   </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-45'>Properties</h3>
+</span></code></pre><h3 id='properties-46'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12982,7 +13079,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-46'>Properties</h3>
+</span></code></pre><h3 id='properties-47'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13009,7 +13106,7 @@ This operation does not require authentication.
   </span><span class="s2">"before"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-47'>Properties</h3>
+</span></code></pre><h3 id='properties-48'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13051,7 +13148,7 @@ This operation does not require authentication.
 
 <p><em>A ohlc object</em></p>
 
-<h3 id='properties-48'>Properties</h3>
+<h3 id='properties-49'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13121,7 +13218,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-49'>Properties</h3>
+</span></code></pre><h3 id='properties-50'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13162,7 +13259,7 @@ This operation does not require authentication.
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-50'>Properties</h3>
+</span></code></pre><h3 id='properties-51'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13190,7 +13287,7 @@ This operation does not require authentication.
   </span><span class="s2">"total_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-51'>Properties</h3>
+</span></code></pre><h3 id='properties-52'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13240,7 +13337,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-52'>Properties</h3>
+<h3 id='properties-53'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13302,7 +13399,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-36'>Enumerated Values</h4>
+<h4 id='enumerated-values-38'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13345,7 +13442,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-53'>Properties</h3>
+<h3 id='properties-54'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13372,7 +13469,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-37'>Enumerated Values</h4>
+<h4 id='enumerated-values-39'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13418,7 +13515,7 @@ This operation does not require authentication.
 
 <p><em>User trading preferences</em></p>
 
-<h3 id='properties-54'>Properties</h3>
+<h3 id='properties-55'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13478,7 +13575,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Request Object</em></p>
 
-<h3 id='properties-55'>Properties</h3>
+<h3 id='properties-56'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13511,7 +13608,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Response Object</em></p>
 
-<h3 id='properties-56'>Properties</h3>
+<h3 id='properties-57'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13538,7 +13635,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-38'>Enumerated Values</h4>
+<h4 id='enumerated-values-40'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -13579,7 +13676,7 @@ This operation does not require authentication.
 
 <p><em>User Object</em></p>
 
-<h3 id='properties-57'>Properties</h3>
+<h3 id='properties-58'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13697,7 +13794,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-58'>Properties</h3>
+</span></code></pre><h3 id='properties-59'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
