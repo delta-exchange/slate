@@ -847,7 +847,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/ArrayOfEditOrderRequest"
+              "$ref": "#/definitions/ArrayOfBatchEditOrderRequest"
             }
           }
         ],
@@ -2960,7 +2960,7 @@
           "description": "Commission blocked for order",
           "example": "0.5432"
         },
-        "close_on_trigger": {
+        "reduce_only": {
           "type": "string",
           "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
@@ -3094,6 +3094,11 @@
           "description": "Bracket order stop loss trigger price",
           "example": "56000"
         },
+        "bracket_trail_amount": {
+          "type": "string",
+          "description": "use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty",
+          "example": "50"
+        },
         "bracket_take_profit_limit_price": {
           "type": "string",
           "description": "Bracket order take profit limit price",
@@ -3138,16 +3143,6 @@
         },
         "reduce_only": {
           "type": "string",
-          "description": "Reduce only order",
-          "enum": [
-            "true",
-            "false"
-          ],
-          "default": false,
-          "example": false
-        },
-        "close_on_trigger": {
-          "type": "string",
           "description": "if set, will only close positions. New orders will not be placed",
           "enum": [
             "true",
@@ -3158,8 +3153,18 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "Valid order Id of the client",
+          "description": "client order id provided by the user while creating order",
           "example": "34521712"
+        },
+        "cancel_orders_accepted": {
+          "type": "string",
+          "description": "if set, will cancel all existing orders for the product",
+          "enum": [
+            "true",
+            "false"
+          ],
+          "default": false,
+          "example": false
         }
       }
     },
@@ -3210,59 +3215,12 @@
           "default": "market_order",
           "example": "limit_order"
         },
-        "stop_order_type": {
-          "type": "string",
-          "description": "Stop order type - stop loss or take profit",
-          "enum": [
-            "stop_loss_order",
-            "take_profit_order"
-          ],
-          "example": "stop_loss_order"
-        },
-        "stop_price": {
-          "type": "string",
-          "description": "Stop loss price level if the order is stop order",
-          "example": "56000"
-        },
-        "trail_amount": {
-          "type": "string",
-          "description": "Use trail amount if you want a trailing stop order. Required if stop price is empty.",
-          "example": "50"
-        },
-        "stop_trigger_method": {
-          "type": "string",
-          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
-          "enum": [
-            "mark_price", "last_traded_price", "spot_price"
-          ],
-          "default": "mark_price",
-          "example": "last_traded_price"
-        },
-        "bracket_stop_loss_limit_price": {
-          "type": "string",
-          "description": "Bracket order stop loss limit price",
-          "example": "57000"
-        },
-        "bracket_stop_loss_price": {
-          "type": "string",
-          "description": "Bracket order stop loss trigger price",
-          "example": "56000"
-        },
-        "bracket_take_profit_limit_price": {
-          "type": "string",
-          "description": "Bracket order take profit limit price",
-          "example": "62000"
-        },
-        "bracket_take_profit_price": {
-          "type": "string",
-          "description": "take profit trigger price for bracket order",
-          "example": "61000"
-        },
         "time_in_force": {
           "type": "string",
           "description": "GTC/IOC order type",
           "enum": [
-            "gtc"
+            "gtc",
+            "ioc"
           ],
           "example": "gtc"
         },
@@ -3289,29 +3247,9 @@
           "default": false,
           "example": false
         },
-        "reduce_only": {
-          "type": "string",
-          "description": "Reduce only order",
-          "enum": [
-            "true",
-            "false"
-          ],
-          "default": false,
-          "example": false
-        },
-        "close_on_trigger": {
-          "type": "string",
-          "description": "if set, will only close positions. New orders will not be placed",
-          "enum": [
-            "true",
-            "false"
-          ],
-          "default": false,
-          "example": false
-        },
         "client_order_id": {
           "type": "string",
-          "description": "Valid order Id of the client",
+          "description": "client order id provided by the user while creating order",
           "example": "34521712"
         }
       }
@@ -3378,6 +3316,84 @@
           "type": "string",
           "description": "Post only order",
           "enum": [
+            "true",
+            "false"
+          ],
+          "default": false,
+          "example": false
+        },
+        "cancel_orders_accepted": {
+          "type": "string",
+          "description": "if set, will cancel all existing orders for the product",
+          "enum": [
+            "true",
+            "false"
+          ],
+          "default": false,
+          "example": false
+        },
+        "stop_price": {
+          "type": "string",
+          "description": "price to trigger stop order",
+          "example": "56000"
+        },
+        "trail_amount": {
+          "type": "string",
+          "description": "Use trail amount if you want a trailing stop order. Required if stop price is empty.",
+          "example": "50"
+        }
+      }
+    },
+    "BatchEditOrderRequest": {
+      "type": "object",
+      "description": "edit order object",
+      "required": [
+        "product_id",
+        "product_symbol"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "existing order id to be edited",
+          "example": 34521712
+        },
+        "product_id": {
+          "type": "integer",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
+        },
+        "limit_price": {
+          "type": "string",
+          "description": "Price level for limit orders",
+          "example": "59000"
+        },
+        "size": {
+          "type": "integer",
+          "description": "total size after editing order",
+          "example": 15
+        },
+        "mmp": {
+          "type": "string",
+          "description": "MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5",
+          "enum": [
+            "disabled",
+            "mmp1",
+            "mmp2",
+            "mmp3",
+            "mmp4",
+            "mmp5"
+          ],
+          "example": "disabled"
+        },
+        "post_only": {
+          "type": "string",
+          "description": "Post only order",
+          "enum": [
             "false",
             "true"
           ],
@@ -3386,10 +3402,10 @@
         }
       }
     },
-    "ArrayOfEditOrderRequest": {
+    "ArrayOfBatchEditOrderRequest": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/EditOrderRequest"
+        "$ref": "#/definitions/BatchEditOrderRequest"
       }
     },
     "CreateBracketOrderRequest": {
@@ -3459,9 +3475,9 @@
             }
           }
         },
-        "stop_trigger_method": {
+        "bracket_stop_trigger_method": {
           "type": "string",
-          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
+          "description": "stop order trigger method for bracket orders- mark_price/last_traded_price/spot_price",
           "enum": [
             "mark_price",
             "last_traded_price",
@@ -3520,6 +3536,17 @@
           "type": "string",
           "description": "trail amount of bracket order",
           "example": "50"
+        },
+        "bracket_stop_trigger_method": {
+          "type": "string",
+          "description": "stop order trigger method for bracket orders- mark_price/last_traded_price/spot_price",
+          "enum": [
+            "mark_price",
+            "last_traded_price",
+            "spot_price"
+          ],
+          "default": "mark_price",
+          "example": "last_traded_price"
         }
       }
     },
@@ -3529,13 +3556,18 @@
       "properties": {
         "id": {
           "type": "integer",
-          "description": "existing order id to be deleted",
-          "example": 34521712
+          "description": "use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty",
+          "example": 13452112
+        },
+        "client_order_id": {
+          "type": "string",
+          "description": "client order id provided by the user while creating order",
+          "example": "34521712"
         },
         "product_id": {
           "type": "integer",
           "description": "product_id of the product in the order",
-          "example": 27
+          "example": 27 
         }
       }
     },
@@ -3545,7 +3577,7 @@
       "properties": {
         "product_id": {
           "type": "integer",
-          "description": "cancel all orders for particular product, cancels orders for all products if not provided",
+          "description": "Only one of either product_id or product_symbol must be sent.",
           "example": 27
         },
         "contract_types": {
@@ -3565,6 +3597,15 @@
         "cancel_stop_orders": {
           "type": "string",
           "description": "set as true to cancel stop orders",
+          "enum": [
+            "true",
+            "false"
+          ],
+          "example": false
+        },
+        "cancel_reduce_only_orders": {
+          "type": "string",
+          "description": "set as true to cancel reduce only orders",
           "enum": [
             "true",
             "false"
