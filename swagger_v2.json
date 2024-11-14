@@ -248,6 +248,7 @@
           "Products"
         ],
         "summary": "Get tickers for products",
+        "description": "This endpoint retrieves the live tickers for available trading products, with an optional filter by specified contract types. The contract types should be provided as a comma-separated list (e.g., futures, perpetual_futures, call_options). If no contract type is specified, data for all available products will be returned.",
         "operationId": "getTickers",
         "produces": [
           "application/json"
@@ -256,14 +257,15 @@
           {
             "name": "contract_types",
             "in": "query",
-            "description": "Comma separated list of contract types e.g. futures,perpetual_futures,call_options, put_options, interest_rate_swaps,move_options,spreads, turbo_call_options, turbo_put_options, spot",
+            "description": "A comma-separated list of contract types to filter the tickers. Example values include futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "example": "futures,perpetual_futures,call_options"
           }
         ],
         "responses": {
           "200": {
-            "description": "List of live tickers for all products, including IV for option strikes",
+            "description": "List of live [tickers](#tocSticker) for all products, including implied volatility (IV) for option strikes.",
             "schema": {
               "allOf": [
                 {
@@ -289,6 +291,7 @@
           "Products"
         ],
         "summary": "Get ticker for a product by symbol",
+        "description": "This endpoint retrieves the ticker data for a specific product, identified by its symbol. The ticker data includes live price data, open interest, implied volatility (IV) for options, and other related market data.",
         "operationId": "getTicker",
         "produces": [
           "application/json"
@@ -297,14 +300,15 @@
           {
             "in": "path",
             "name": "symbol",
-            "description": "symbol of the ticker",
+            "description": "The symbol of the product for which the ticker data is requested (e.g., BTCUSD, ETHUSD).",
             "type": "string",
-            "required": true
+            "required": true,
+            "example": "BTCUSD"
           }
         ],
         "responses": {
           "200": {
-            "description": "ticker data for requested product, including IV for option strikes",
+            "description": "[Ticker](#tocSticker) data for the requested product, including implied volatility (IV) for option strikes, if applicable.",
             "schema": {
               "allOf": [
                 {
@@ -4209,132 +4213,207 @@
       "type": "object",
       "properties": {
         "delta": {
-          "type": "string"
+          "type": "string",
+          "description": "The rate of change of the option price with respect to changes in the underlying asset price. A measure of sensitivity to the asset price movement.",
+          "example": "0.25"
         },
         "gamma": {
-          "type": "string"
+          "type": "string",
+          "description": "The rate of change of delta with respect to changes in the underlying asset price. A measure of the curvature of the option’s price sensitivity to the asset price.",
+          "example": "0.10"
         },
         "rho": {
-          "type": "string"
+          "type": "string",
+          "description": "The rate of change of the option price with respect to changes in the risk-free interest rate. A measure of interest rate sensitivity.",
+          "example": "0.05"
         },
         "theta": {
-          "type": "string"
+          "type": "string",
+          "description": "The rate of change of the option price with respect to time, often referred to as time decay. A measure of how the option's price declines as expiration approaches.",
+          "example": "-0.02"
         },
         "vega": {
-          "type": "string"
+          "type": "string",
+          "description": "The rate of change of the option price with respect to changes in the volatility of the underlying asset. A measure of volatility sensitivity.",
+          "example": "0.15"
         }
-      }
+      },
+      "description": "The Greeks represent different factors that influence the pricing of options. These are key measures for assessing risk and managing option positions."
     },
     "price_band": {
       "type": "object",
       "properties": {
         "lower_limit": {
-          "type": "string"
+          "type": "string",
+          "description": "The minimum price limit for the product. It defines the lowest allowable price before triggering a price band constraint.",
+          "example": "61120.45"
         },
         "upper_limit": {
-          "type": "string"
+          "type": "string",
+          "description": "The maximum price limit for the product. It defines the highest allowable price before triggering a price band constraint.",
+          "example": "72300.00"
         }
-      }
+      },
+      "description": "The price band defines the permissible price range for a product. The lower and upper limits represent the boundaries within which the product's price can fluctuate."
     },
     "quotes": {
       "type": "object",
       "properties": {
         "ask_iv": {
-          "type": "string"
+          "type": "string",
+          "description": "The implied volatility (IV) for the ask price. Represents the market's expectation of the future volatility of the underlying asset.",
+          "example": "0.25"
         },
         "ask_size": {
-          "type": "string"
+          "type": "string",
+          "description": "The size of the ask order, representing the quantity of the asset available for sale at the ask price.",
+          "example": "100"
         },
         "best_ask": {
-          "type": "string"
+          "type": "string",
+          "description": "The best (lowest) ask price available in the market for the asset.",
+          "example": "150.00"
         },
         "best_bid": {
-          "type": "string"
+          "type": "string",
+          "description": "The best (highest) bid price available in the market for the asset.",
+          "example": "148.00"
         },
         "bid_iv": {
-          "type": "string"
+          "type": "string",
+          "description": "The implied volatility (IV) for the bid price. Represents the market's expectation of future volatility for the bid side of the order book.",
+          "example": "0.22"
         },
         "bid_size": {
-          "type": "string"
+          "type": "string",
+          "description": "The size of the bid order, representing the quantity of the asset that buyers are willing to purchase at the bid price.",
+          "example": "50"
         }
-      }
+      },
+      "description": "The 'quotes' object contains the latest bid and ask prices, their respective implied volatilities (IV), and order sizes for an asset. It provides key market data for understanding liquidity and pricing."
     },
     "Ticker": {
       "type": "object",
       "properties": {
         "close": {
-          "type": "integer"
+          "type": "integer",
+          "description": "The closing price of the last trade for the product.",
+          "example": 67321
         },
         "contract_type": {
-          "type": "string"
+          "type": "string",
+          "description": "Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.",
+          "example": "futures"
         },
         "greeks": {
-          "$ref": "#/definitions/greeks"
+          "$ref": "#/definitions/greeks",
+          "description": "The Greek values for options associated with the ticker, including delta, gamma, vega, theta, and rho."
         },
         "high": {
-          "type": "number"
+          "type": "number",
+          "description": "The highest price reached during the trading session.",
+          "example": 68500.50
         },
         "low": {
-          "type": "number"
+          "type": "number",
+          "description": "The lowest price reached during the trading session.",
+          "example": 66300.25
         },
         "mark_price": {
-          "type": "string"
+          "type": "string",
+          "description": "The market price of the product, reflecting the most recent transaction.",
+          "example": "67000.00"
         },
         "mark_vol": {
-          "type": "string"
+          "type": "string",
+          "description": "The market volume at the most recent trade price.",
+          "example": "500"
         },
         "oi": {
-          "type": "string"
+          "type": "string",
+          "description": "The open interest, or the number of outstanding contracts, for the product.",
+          "example": "15000"
         },
         "oi_value": {
-          "type": "string"
+          "type": "string",
+          "description": "The value of the open interest in the base currency.",
+          "example": "1000000"
         },
         "oi_value_symbol": {
-          "type": "string"
+          "type": "string",
+          "description": "The symbol representing the currency of the open interest value.",
+          "example": "USD"
         },
         "oi_value_usd": {
-          "type": "string"
+          "type": "string",
+          "description": "The open interest value converted to USD.",
+          "example": "1050000"
         },
         "open": {
-          "type": "number"
+          "type": "number",
+          "description": "The opening price at the start of the trading session.",
+          "example": 67000.00
         },
         "price_band": {
-          "$ref": "#/definitions/price_band"
+          "$ref": "#/definitions/price_band",
+          "description": "The price band within which the product’s price can fluctuate during the trading session."
         },
         "product_id": {
-          "type": "number"
+          "type": "number",
+          "description": "A unique identifier for the product.",
+          "example": 123456
         },
         "quotes": {
-          "$ref": "#/definitions/quotes"
+          "$ref": "#/definitions/quotes",
+          "description": "The latest bid and ask prices, sizes, and implied volatilities for the product."
         },
         "size": {
-          "type": "number"
+          "type": "number",
+          "description": "The size of the most recent order executed in the market.",
+          "example": 100
         },
         "spot_price": {
-          "type": "string"
+          "type": "string",
+          "description": "The current spot price of the underlying asset.",
+          "example": "67000.00"
         },
         "strike_price": {
-          "type": "string"
+          "type": "string",
+          "description": "The strike price for options contracts associated with the product.",
+          "example": "68000.00"
         },
         "symbol": {
-          "type": "string"
+          "type": "string",
+          "description": "The ticker symbol for the product.",
+          "example": "BTCUSD"
         },
         "timestamp": {
-          "type": "number"
+          "type": "number",
+          "description": "The timestamp of the last trade or update to the ticker.",
+          "example": 1609459200
         },
         "turnover": {
-          "type": "number"
+          "type": "number",
+          "description": "The total turnover (value traded) for the product during the trading session.",
+          "example": 5000000
         },
         "turnover_symbol": {
-          "type": "string"
+          "type": "string",
+          "description": "The symbol representing the currency in which the turnover is measured.",
+          "example": "USD"
         },
         "turnover_usd": {
-          "type": "number"
+          "type": "number",
+          "description": "The turnover value converted to USD.",
+          "example": 5200000
         },
         "volume": {
-          "type": "integer"
+          "type": "integer",
+          "description": "The total trading volume for the product during the trading session.",
+          "example": 25000
         }
-      }
+      },
+      "description": "The 'Ticker' object provides real-time trading data for a specific product, including prices, volumes, open interest, and Greek values (for options). This data is essential for analyzing market trends and asset performance."
     },
     "ArrayOfTickers": {
       "type": "array",

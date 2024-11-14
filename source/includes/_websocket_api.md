@@ -250,17 +250,29 @@ ws.send({
 
 ## v2 ticker
 
-The ticker channel provides price change data for the last 24 hrs (rolling window). It is published every 5 seconds.
+The ticker channel provides **price change data** for the last **24 hrs** (rolling window).  
+It is published every **5 seconds**.
 
-You need to send the list of symbols for which you would like to subscribe to ticker channel. You can also subscribe to 
-ticker updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
-If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
-Please note that if you subscribe to ticker channel without specifying the symbols list, you will not receive any data.
+To subscribe to the ticker channel, you need to send the list of **symbols** for which you would like to receive updates.
 
-> Ticker Sample
-
+You can also subscribe to ticker updates for a **category of products** by sending a list of [category names](/#schemaproductcategories).  
+For example, to receive updates for **put options** and **futures**, use the following format:  
 ```
-//Subscribe
+{"symbols": ["put_options", "futures"]}
+```
+
+If you would like to subscribe to all listed contracts, pass:  
+```
+{ "symbols": ["all"] }
+```
+
+**Important:**  
+If you subscribe to the ticker channel without specifying a symbols list, you will **not** receive any data.
+
+> **Ticker Sample**
+
+```json
+// Subscribe to specific symbol
 {
     "type": "subscribe",
     "payload": {
@@ -274,7 +286,8 @@ Please note that if you subscribe to ticker channel without specifying the symbo
         ]
     }
 }
-// Subscribe to all the symbols
+
+// Subscribe to all symbols
 {
     "type": "subscribe",
     "payload": {
@@ -290,43 +303,43 @@ Please note that if you subscribe to ticker channel without specifying the symbo
 }
 ```
 
-```
+```json
 // Response
 {
-    "open": 0.00001347,
-    "close": 0.00001327,
-    "high": 0.00001359,
-    "low": 0.00001323,
-    "mark_price": "0.00001325",
-    "mark_change_24h": "-0.1202",
-    "oi": "812.6100",
-    "product_id": 56,
+    "open": 0.00001347, // The price at the beginning of the 24-hour period
+    "close": 0.00001327, // The price at the end of the 24-hour period
+    "high": 0.00001359, // The highest price during the 24-hour period
+    "low": 0.00001323, // The lowest price during the 24-hour period
+    "mark_price": "0.00001325", // The current market price
+    "mark_change_24h": "-0.1202", // Percentage change in market price over the last 24 hours
+    "oi": "812.6100", // Open interest, indicating the total number of outstanding contracts
+    "product_id": 56, // The unique identifier for the product
     "quotes": {
-        "ask_iv": null,
-        "ask_size": "922",
-        "best_ask": "3171.5",
-        "best_bid": "3171.4",
-        "bid_iv": null,
-        "bid_size": "191",
-        "impact_mid_price": null,
-        "mark_iv": "0.29418049"
+        "ask_iv": "0.25", // Implied volatility for the ask price (if available)
+        "ask_size": "922", // The size of the ask (the amount available for sale)
+        "best_ask": "3171.5", // The best ask price (the lowest price at which the asset is being offered)
+        "best_bid": "3171.4", // The best bid price (the highest price a buyer is willing to pay)
+        "bid_iv": "0.25", // Implied volatility for the bid price (if available)
+        "bid_size": "191", // The size of the bid (the amount a buyer is willing to purchase)
+        "impact_mid_price": "61200", // Mid price impact, if available (the price midpoint between the best bid and ask)
+        "mark_iv": "0.29418049" // Mark volatility (volatility of the asset used for mark price calculation)
     },
-    "greeks":{               // Will be null for Futures and Spot products.
-        "delta":"0.01939861",
-        "gamma":"0.00006382",
-        "rho":"0.00718630",
-        "spot":"63449.5",
-        "theta":"-81.48397021",
-        "vega":"0.72486575"
-    }
-    "size": 1254631,                        // num of contracts traded
-    "spot_price": "0.00001326",             
-    "symbol": "BTCUSD_28Dec",
-    timestamp: 1595242187705121,            // in us
-    "turnover": 16.805033569999996,         // turnover reported in settling symbol
-    "turnover_symbol": "BTC",               // settling symbol
-    "turnover_usd": 154097.09108233,        // turnover in usd
-    "volume": 1254631                       // volume is defined as contract_value * size 
+    "greeks": { // Options-related metrics, will be null for Futures and Spot products
+        "delta": "0.01939861", // Rate of change of the option price with respect to the underlying asset's price
+        "gamma": "0.00006382", // Rate of change of delta with respect to the underlying asset's price
+        "rho": "0.00718630", // Rate of change of option price with respect to interest rate
+        "spot": "63449.5", // The current spot price of the underlying asset
+        "theta": "-81.48397021", // Rate of change of option price with respect to time (time decay)
+        "vega": "0.72486575" // Sensitivity of the option price to volatility changes
+    },
+    "size": 1254631, // Number of contracts traded
+    "spot_price": "0.00001326", // Spot price at the time of the ticker
+    "symbol": "BTCUSD_28Dec", // The symbol of the contract
+    "timestamp": 1595242187705121, // The timestamp of the data (in microseconds)
+    "turnover": 16.805033569999996, // The total turnover in the settling symbol
+    "turnover_symbol": "BTC", // The symbol used for settling
+    "turnover_usd": 154097.09108233, // The turnover value in USD
+    "volume": 1254631 // Total volume, defined as contract value * size
 }
 ```
 
