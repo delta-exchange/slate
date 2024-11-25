@@ -147,7 +147,7 @@ To subscribe to private channels, the client needs to first send an auth event, 
 > Authentication sample
 
 ```python
-// auth message with signed request
+# auth message with signed request
 import websocket
 import hashlib
 import hmac

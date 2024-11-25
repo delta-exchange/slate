@@ -144,6 +144,7 @@
           "Products"
         ],
         "summary": "Get list of products",
+        "description": "The endpoint provides details about all available trading products on the platform. Each product represents a financial instrument like perpetual futures, options, or contracts for specific asset pairs.",
         "operationId": "getProducts",
         "produces": [
           "application/json"
@@ -158,7 +159,7 @@
           {
             "in": "query",
             "name": "states",
-            "description": "Comma separated list of states e.g. upcoming,live,expired,settled to get expired contracts https://api.india.delta.exchange/v2/products?contract_types=call_options&states=expired ",
+            "description": "Comma separated list of states e.g. upcoming,live,expired,settled to get expired contracts.",
             "type": "string"
           },
           {
@@ -182,7 +183,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of [products schema](#tocSproduct)",
+            "description": "List of [Products](#tocSproduct)",
             "schema": {
               "allOf": [
                 {
@@ -208,6 +209,7 @@
           "Products"
         ],
         "summary": "Get product by symbol",
+        "description": "The endpoint retrieves details of a specific product identified by its symbol (e.g., BTCUSD, ETHUSD).",
         "operationId": "getProduct",
         "produces": [
           "application/json"
@@ -216,13 +218,13 @@
           {
             "in": "path",
             "name": "symbol",
-            "description": "symbol of the desired product",
+            "description": "symbol of the desired product like BTCUSD, ETHUSD",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "[Product schema](#tocSproduct)",
+            "description": "[Product](#tocSproduct)",
             "schema": {
               "allOf": [
                 {
@@ -2630,41 +2632,57 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Unique identifier for the index.",
+          "example": 14
         },
         "symbol": {
           "type": "string",
-          "description": "e.g. '.DE' followed by base asset + quoting asset"
+          "description": "Symbol representing the index, typically prefixed by '.DE' followed by base asset and quoting asset.",
+          "example": ".DEXBTUSD"
         },
         "constituent_exchanges": {
           "type": "array",
           "items": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the constituent exchange.",
+                "example": "ExchangeA"
+              },
+              "weight": {
+                "type": "number",
+                "description": "Weight of the exchange in the index.",
+                "example": 0.25
+              }
+            }
           },
-          "description": "Details of name and weight of exchanges in index"
+          "description": "Details of constituent exchanges, including their names and weights in the index."
         },
         "underlying_asset_id": {
           "type": "integer",
-          "description": "Asset ID for base symbol"
+          "description": "ID of the underlying asset for the index.",
+          "example": 13
         },
         "quoting_asset_id": {
           "type": "integer",
-          "description": "Asset ID for quoting symbol"
+          "description": "ID of the quoting asset for the index.",
+          "example": 14
         },
         "tick_size": {
-          "type": "string(Decimal)",
-          "description": "Precision of the spot price"
+          "type": "string",
+          "description": "Precision of the spot price in decimal format.",
+          "example": "0.5"
         },
         "index_type": {
           "type": "string",
-          "description": "Type of index",
-          "enum": [
-            "spot_pair",
-            "fixed_interest_rate",
-            "floating_interest_rate"
-          ]
+          "description": "Type of the index.",
+          "enum": ["spot_pair", "fixed_interest_rate", "floating_interest_rate"],
+          "example": "spot_pair"
         }
-      }
+      },
+      "description": "Details of an index used in trading, including its constituents and characteristics."
     },
     "ArrayOfIndices": {
       "type": "array",
@@ -2672,35 +2690,73 @@
         "$ref": "#/definitions/Index"
       }
     },
+    "ProductSpecs": {
+      "type": "object",
+      "properties": {
+        "funding_clamp_value": {
+          "type": "number",
+          "description": "The maximum allowable funding rate clamp value.",
+          "example": 0.05
+        },
+        "only_reduce_only_orders_allowed": {
+          "type": "boolean",
+          "description": "Indicates whether only reduce-only orders are allowed.",
+          "example": false
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags associated with the product specifications.",
+          "example": ["layer_1"]
+        }
+      },
+      "description": "Specifications related to the specific product or contract."
+    },
     "Asset": {
       "type": "object",
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Unique identifier for the asset.",
+          "example": 14
         },
         "symbol": {
-          "type": "string"
+          "type": "string",
+          "description": "Symbol representing the asset.",
+          "example": "USD"
         },
         "precision": {
-          "type": "integer"
+          "type": "integer",
+          "description": "Number of decimal places supported for the asset.",
+          "example": 8
         },
         "deposit_status": {
           "type": "string",
-          "enum": ["enabled", "disabled"]
+          "enum": ["enabled", "disabled"],
+          "description": "Indicates if deposits are enabled for the asset.",
+          "example": "enabled"
         },
         "withdrawal_status": {
           "type": "string",
-          "enum": ["enabled", "disabled"]
+          "enum": ["enabled", "disabled"],
+          "description": "Indicates if withdrawals are enabled for the asset.",
+          "example": "enabled"
         },
         "base_withdrawal_fee": {
-          "type": "string"
+          "type": "string",
+          "description": "Fixed withdrawal fee for the asset.",
+          "example": "0.000000000000000000"
         },
         "min_withdrawal_amount": {
           "type": "string",
-          "description": "Minimum value of allowed withdrawal"
+          "description": "Minimum allowable withdrawal amount for the asset.",
+          "example": "0.000000000000000000"
         }
-      }
+      },
+      "description": "Details of the asset used in the product or contract."
     },
     "ArrayOfAssets": {
       "type": "array",
@@ -2714,147 +2770,172 @@
         "id": {
           "type": "integer",
           "format": "int64",
-          "description": "id of a product or a contract"
+          "description": "Unique identifier of a product or contract.",
+          "example": 27
         },
         "symbol": {
           "type": "string",
-          "description": "symbol of a product or a contract e.g. LINKBTC, XRPUSDQ"
+          "description": "Symbol of the product or contract like BTCUSD, ETHUSD.",
+          "example": "BTCUSD"
         },
         "description": {
           "type": "string",
-          "description": "description of a product or a contract"
+          "description": "Detailed description of the product or contract.",
+          "example": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar"
         },
         "created_at": {
           "type": "string",
-          "description": "product/contract creation date and time"
+          "description": "Creation timestamp of the product or contract.",
+          "example": "2023-12-18T13:10:39Z"
         },
         "updated_at": {
           "type": "string",
-          "description": "product/contract update date and time"
+          "description": "Last update timestamp of the product or contract.",
+          "example": "2024-11-15T02:47:50Z"
         },
         "settlement_time": {
           "type": "string",
-          "description": "settlement Timestamp of futures contract"
+          "description": "Settlement timestamp for futures contracts.",
+          "example": null
         },
         "notional_type": {
           "type": "string",
-          "enum": [
-            "vanilla",
-            "inverse"
-          ],
-          "description": "whether notional is calculated using vanilla math or inverse math"
+          "enum": ["vanilla", "inverse"],
+          "description": "Type of notional calculation.",
+          "example": "vanilla"
         },
         "impact_size": {
           "type": "integer",
-          "description": "size of a typical trade. Used in the computation of mark price"
+          "description": "Size of a typical trade used for mark price computation.",
+          "example": 10000
         },
         "initial_margin": {
-          "type": "integer",
-          "description": "The amount required to enter into a new position"
+          "type": "string",
+          "description": "Margin required to open a position.",
+          "example": "0.5"
         },
         "maintenance_margin": {
           "type": "string",
-          "description": "The amount necessary when a loss on a futures position requires you to allocate more funds to return the margin to the initial margin level. "
+          "description": "Minimum margin required to maintain a position.",
+          "example": "0.25"
         },
         "contract_value": {
           "type": "string",
-          "description": "The notional value of a futures contract is simply the spot price of the asset multiplied by the amount of the asset specified in the contract"
+          "description": "Notional value of the contract (spot price x contract amount).",
+          "example": "0.001"
         },
         "contract_unit_currency": {
           "type": "string",
-          "description": "This is the unit of  1 contract, for vanilla futures, its underlying asset. for inverse, it is settling asset. for quanto, its settling asset / quoting asset"
+          "description": "Unit of the contract (underlying asset or settling asset).",
+          "example": "BTC"
         },
         "tick_size": {
           "type": "string",
-          "description": "The minimum gap between 2 consecutive prices."
+          "description": "Minimum price interval between two successive prices.",
+          "example": "0.5"
         },
         "product_specs": {
           "type": "object",
-          "description": "Specs related to specific contract types (IRS indices, options volatility limits)"
+          "description": "Specifications related to contract types.",
+          "$ref": "#/definitions/ProductSpecs"
         },
         "state": {
           "type": "string",
-          "enum": [
-            "live",
-            "expired",
-            "upcoming"
-          ],
-          "description": "current state of the product"
+          "enum": ["live", "expired", "upcoming"],
+          "description": "Current state of the product.",
+          "example": "live"
         },
         "trading_status": {
           "type": "string",
-          "enum": [
-            "operational",
-            "disrupted_cancel_only",
-            "disrupted_post_only"
-          ],
-          "description": "trading status of the contract e.g. 'operational','disrupted_cancel_only' or 'disrupted_post_only' "
+          "enum": ["operational", "disrupted_cancel_only", "disrupted_post_only"],
+          "description": "Trading status of the contract.",
+          "example": "operational"
         },
         "max_leverage_notional": {
           "type": "string",
-          "description": "maximum notional position size (in settling asset terms) that can be acquired at highest allowed leverage for a given contract."
+          "description": "Maximum notional position size at the highest leverage.",
+          "example": "100000"
         },
         "default_leverage": {
           "type": "string",
-          "description": "default leverage"
+          "description": "Default leverage assigned to the product.",
+          "example": "200"
         },
         "initial_margin_scaling_factor": {
-          "type": "string"
+          "type": "string",
+          "description": "Scaling factor for initial margin.",
+          "example": "0.0000025"
         },
         "maintenance_margin_scaling_factor": {
-          "type": "string"
+          "type": "string",
+          "description": "Scaling factor for maintenance margin.",
+          "example": "0.00000125"
         },
         "taker_commission_rate": {
           "type": "string",
-          "description": "rate at which commission fee will be calculated for a taker trade in given contract"
+          "description": "Commission rate for taker trades.",
+          "example": "0.0005"
         },
         "maker_commission_rate": {
           "type": "string",
-          "description": "rate at which maker rebate will be calculated"
+          "description": "Commission rate for maker trades.",
+          "example": "0.0002"
         },
         "liquidation_penalty_factor": {
           "type": "string",
-          "description": "Determines liquidation charge as per the following formula: liquidation_penalty_factor * minimum maintenance margin"
+          "description": "Factor used to calculate liquidation penalty.",
+          "example": "0.5"
         },
         "contract_type": {
           "type": "string",
-          "description": " Type of contracts e.g. futures, perpetual futures, "
+          "description": "Type of contract (e.g., futures, perpetual).",
+          "example": "perpetual_futures"
         },
         "position_size_limit": {
           "type": "integer",
-          "description": "Maximum size of contracts in a single order can be placed"
+          "description": "Maximum size for a single contract order.",
+          "example": 229167
         },
         "basis_factor_max_limit": {
           "type": "string",
-          "description": "Maximum allowed value of annualized basis"
+          "description": "Maximum value for annualized basis.",
+          "example": "10.95"
         },
         "is_quanto": {
           "type": "boolean",
-          "description": "Flag which denotes whether future contract is quanto or not"
+          "description": "Indicates if the contract is quanto.",
+          "example": false
         },
         "funding_method": {
           "type": "string",
-          "description": "Method used to calculate funding for given contract. e.g. Fixed or mark price"
+          "description": "Method used for funding calculation.",
+          "example": "mark_price"
         },
         "annualized_funding": {
           "type": "string",
-          "description": "Maximum allowed value of funding, expressed as annual rate."
+          "description": "Maximum allowed annualized funding rate.",
+          "example": "10.95"
         },
         "price_band": {
           "type": "string",
-          "description": "the range around mark price in which trading is allowed. This number is in percentage."
+          "description": "Price range allowed around the mark price (percentage).",
+          "example": "2.5"
         },
         "underlying_asset": {
-          "$ref": "#/definitions/Asset"
+          "$ref": "#/definitions/Asset",
+          "description": "Details of the underlying asset."
         },
         "quoting_asset": {
-          "$ref": "#/definitions/Asset"
+          "$ref": "#/definitions/Asset",
+          "description": "Details of the quoting asset."
         },
         "settling_asset": {
-          "$ref": "#/definitions/Asset"
+          "$ref": "#/definitions/Asset",
+          "description": "Details of the settling asset."
         },
         "spot_index": {
-          "$ref": "#/definitions/Index"
+          "$ref": "#/definitions/Index",
+          "description": "Spot index used for the product."
         }
       }
     },
