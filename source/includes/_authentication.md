@@ -105,7 +105,7 @@ def get_time_stamp():
     epoch = datetime.datetime(1970,1,1)
     return str(int((d - epoch).total_seconds()))
 
-url = "https://testnet-api.delta.exchange/v2/orders"
+url = "https://api.india.delta.exchange/v2/orders"
 
 # Get open orders
 payload = ''

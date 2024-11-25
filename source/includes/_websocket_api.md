@@ -7,12 +7,12 @@ Websocket api can be used for the following use cases
 - Get account specific notifications like fills, liquidations, [ADL](https://www.delta.exchange/user-guide/docs/trading-guide/ADL/) and PnL updates.
 - Get account specific updates on orders ,positions and wallets.
 
-Access url for Delta Exchange India
+Access url for [Delta Exchange India](https://www.delta.exchange)
 
 - **Production-India** - wss://socket.india.delta.exchange
 - **Testnet-India** - wss://socket-ind.testnet.deltaex.org
 
-Access url for Delta Exchange Global
+Access url for [Delta Exchange Global](https://global.delta.exchange)
 
 - **Production-Global** - wss://socket.delta.exchange
 - **Testnet-Global** - wss://testnet-socket.delta.exchange
@@ -147,7 +147,7 @@ To subscribe to private channels, the client needs to first send an auth event, 
 > Authentication sample
 
 ```python
-// auth message with signed request
+# auth message with signed request
 import websocket
 import hashlib
 import hmac
@@ -175,7 +175,7 @@ signature_data = method + timestamp + path
 signature = generate_signature(api_secret, signature_data)
 
 
-ws = websocket.WebSocketApp('wss://api.delta.exchange:2096')
+ws = websocket.WebSocketApp('wss://socket.india.delta.exchange')
 ws.send(json.dumps({
     "type": "auth",
     "payload": {
@@ -250,17 +250,29 @@ ws.send({
 
 ## v2 ticker
 
-The ticker channel provides price change data for the last 24 hrs (rolling window). It is published every 5 seconds.
+The ticker channel provides **price change data** for the last **24 hrs** (rolling window).  
+It is published every **5 seconds**.
 
-You need to send the list of symbols for which you would like to subscribe to ticker channel. You can also subscribe to 
-ticker updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
-If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
-Please note that if you subscribe to ticker channel without specifying the symbols list, you will not receive any data.
+To subscribe to the ticker channel, you need to send the list of **symbols** for which you would like to receive updates.
 
-> Ticker Sample
-
+You can also subscribe to ticker updates for a **category of products** by sending a list of [category names](/#schemaproductcategories).  
+For example, to receive updates for **put options** and **futures**, use the following format:  
 ```
-//Subscribe
+{"symbols": ["put_options", "futures"]}
+```
+
+If you would like to subscribe to all listed contracts, pass:  
+```
+{ "symbols": ["all"] }
+```
+
+**Important:**  
+If you subscribe to the ticker channel without specifying a symbols list, you will **not** receive any data.
+
+> **Ticker Sample**
+
+```json
+// Subscribe to specific symbol
 {
     "type": "subscribe",
     "payload": {
@@ -274,7 +286,8 @@ Please note that if you subscribe to ticker channel without specifying the symbo
         ]
     }
 }
-// Subscribe to all the symbols
+
+// Subscribe to all symbols
 {
     "type": "subscribe",
     "payload": {
@@ -290,43 +303,43 @@ Please note that if you subscribe to ticker channel without specifying the symbo
 }
 ```
 
-```
+```json
 // Response
 {
-    "open": 0.00001347,
-    "close": 0.00001327,
-    "high": 0.00001359,
-    "low": 0.00001323,
-    "mark_price": "0.00001325",
-    "mark_change_24h": "-0.1202",
-    "oi": "812.6100",
-    "product_id": 56,
+    "open": 0.00001347, // The price at the beginning of the 24-hour period
+    "close": 0.00001327, // The price at the end of the 24-hour period
+    "high": 0.00001359, // The highest price during the 24-hour period
+    "low": 0.00001323, // The lowest price during the 24-hour period
+    "mark_price": "0.00001325", // The current market price
+    "mark_change_24h": "-0.1202", // Percentage change in market price over the last 24 hours
+    "oi": "812.6100", // Open interest, indicating the total number of outstanding contracts
+    "product_id": 56, // The unique identifier for the product
     "quotes": {
-        "ask_iv": null,
-        "ask_size": "922",
-        "best_ask": "3171.5",
-        "best_bid": "3171.4",
-        "bid_iv": null,
-        "bid_size": "191",
-        "impact_mid_price": null,
-        "mark_iv": "0.29418049"
+        "ask_iv": "0.25", // Implied volatility for the ask price (if available)
+        "ask_size": "922", // The size of the ask (the amount available for sale)
+        "best_ask": "3171.5", // The best ask price (the lowest price at which the asset is being offered)
+        "best_bid": "3171.4", // The best bid price (the highest price a buyer is willing to pay)
+        "bid_iv": "0.25", // Implied volatility for the bid price (if available)
+        "bid_size": "191", // The size of the bid (the amount a buyer is willing to purchase)
+        "impact_mid_price": "61200", // Mid price impact, if available (the price midpoint between the best bid and ask)
+        "mark_iv": "0.29418049" // Mark volatility (volatility of the asset used for mark price calculation)
     },
-    "greeks":{               // Will be null for Futures and Spot products.
-        "delta":"0.01939861",
-        "gamma":"0.00006382",
-        "rho":"0.00718630",
-        "spot":"63449.5",
-        "theta":"-81.48397021",
-        "vega":"0.72486575"
-    }
-    "size": 1254631,                        // num of contracts traded
-    "spot_price": "0.00001326",             
-    "symbol": "BTCUSD_28Dec",
-    timestamp: 1595242187705121,            // in us
-    "turnover": 16.805033569999996,         // turnover reported in settling symbol
-    "turnover_symbol": "BTC",               // settling symbol
-    "turnover_usd": 154097.09108233,        // turnover in usd
-    "volume": 1254631                       // volume is defined as contract_value * size 
+    "greeks": { // Options-related metrics, will be null for Futures and Spot products
+        "delta": "0.01939861", // Rate of change of the option price with respect to the underlying asset's price
+        "gamma": "0.00006382", // Rate of change of delta with respect to the underlying asset's price
+        "rho": "0.00718630", // Rate of change of option price with respect to interest rate
+        "spot": "63449.5", // The current spot price of the underlying asset
+        "theta": "-81.48397021", // Rate of change of option price with respect to time (time decay)
+        "vega": "0.72486575" // Sensitivity of the option price to volatility changes
+    },
+    "size": 1254631, // Number of contracts traded
+    "spot_price": "0.00001326", // Spot price at the time of the ticker
+    "symbol": "BTCUSD_28Dec", // The symbol of the contract
+    "timestamp": 1595242187705121, // The timestamp of the data (in microseconds)
+    "turnover": 16.805033569999996, // The total turnover in the settling symbol
+    "turnover_symbol": "BTC", // The symbol used for settling
+    "turnover_usd": 154097.09108233, // The turnover value in USD
+    "volume": 1254631 // Total volume, defined as contract value * size
 }
 ```
 
@@ -350,7 +363,7 @@ Max interval (in case of same data): 5 secs
             {
                 "name": "l1_orderbook",
                 "symbols": [
-                    "ETHUSDT"
+                    "ETHUSD"
                 ]
             }
         ]
@@ -367,7 +380,7 @@ Max interval (in case of same data): 5 secs
   "bid_qty":"772",
   "last_sequence_no":1671603257645135,
   "last_updated_at":1671603257623000,
-  "product_id":176,"symbol":"ETHUSDT",
+  "product_id":176,"symbol":"ETHUSD",
   "timestamp":1671603257645134,
   "type":"l1_orderbook"
 }
@@ -391,7 +404,7 @@ Max interval (in case of same data): 5 secs
             {
                 "name": "l1ob",
                 "symbols": [
-                    "BTCUSDT",
+                    "BTCUSD",
                     "C-BTC-42000-260124"
                 ]
             }
@@ -404,7 +417,7 @@ Max interval (in case of same data): 5 secs
 // l1ob sample Response
 {
   "type":"l1ob",
-  "s":"BTCUSDT",  //product symbol
+  "s":"BTCUSD",  //product symbol
   "d": ["37026.2","2133","37025.6","1977"],  
   // [BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
   // Price and Size will be null for the side with no orders.
@@ -484,7 +497,7 @@ Max interval (in case of same data): 10 secs
             {
                 "name": "l2_orderbook",
                 "symbols": [
-                    "ETHUSDT"
+                    "ETHUSD"
                 ]
             }
         ]
@@ -496,7 +509,7 @@ Max interval (in case of same data): 10 secs
 // l2 orderbook Response
 {
   "type":"l2_orderbook"
-  "symbol":"ETHUSDT",
+  "symbol":"ETHUSD",
   "product_id": 176,
   "buy": [
     {
@@ -536,7 +549,7 @@ Publish interval: 100 millisecs
             {
                 "name": "l2_updates",
                 "symbols": [
-                    "BTCUSDT"
+                    "BTCUSD"
                 ]
             }
         ]
@@ -550,7 +563,7 @@ Publish interval: 100 millisecs
   "bids":[["16918.0", "602"], ["16917.5", "1792"], ["16917.0", "2039"]],
   "timestamp":1671140718980723,
   "sequence_no":6199,
-  "symbol":"BTCUSDT",
+  "symbol":"BTCUSD",
   "type":"l2_updates",
   "cs":2178756498
 }
@@ -561,7 +574,7 @@ Publish interval: 100 millisecs
   "asks":[["16919.0", "0"], ["16919.5", "710"]],
   "bids":[["16918.5", "304"]],
   "sequence_no":6200,
-  "symbol":"BTCUSDT",
+  "symbol":"BTCUSD",
   "type":"l2_updates",
   "timestamp": 1671140769059031,
   "cs":3409694612
@@ -570,7 +583,7 @@ Publish interval: 100 millisecs
 // Error response
 {
   "action":"error",
-  "symbol":"BTCUSDT",
+  "symbol":"BTCUSD",
   "type":"l2_updates",
   "msg":"Snapshot load failed. Verify if product is live and resubscribe after a few secs."
 }
@@ -626,7 +639,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
             {
                 "name": "all_trades",
                 "symbols": [
-                    "BTCUSDT"
+                    "BTCUSD"
                 ]
             }
         ]
@@ -637,7 +650,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 ```
 // All Trades Response Snapshot
 {
-    "symbol": "BTCUSDT",
+    "symbol": "BTCUSD",
     "type": "all_trades_snapshot",          // "type" is not "all_trades"
     "trades": [                             // Recent trades list
         {
@@ -655,7 +668,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 ```
 // All Trades Response
 {
-    symbol: "BTCUSDT",
+    symbol: "BTCUSD",
     price: "25816.5",
     size: 100,
     type: "all_trades",
@@ -838,7 +851,7 @@ Please note that if you subscribe to funding rate channel without specifying the
             {
                 "name": "funding_rate",
                 "symbols": [
-                    "BTCUSDT"
+                    "BTCUSD"
                 ]
             }
         ]
@@ -849,7 +862,7 @@ Please note that if you subscribe to funding rate channel without specifying the
 ```
 // Funding Rate Response
 {
-    symbol: "BTCUSDT",
+    symbol: "BTCUSD",
     product_id: 139,
     type: "funding_rate",
     funding_rate: 0.005701298078111892,  // %
@@ -984,7 +997,7 @@ Please note that if you subscribe to candlsticks channel without specifying the 
 Sample Subscribe Request
 {
   "name": "candlestick_1m",                 // "candlestick_" + resolution
-  "symbols": [ "BTCUSDT" ]        // product symbol
+  "symbols": [ "BTCUSD" ]        // product symbol
 }
 
 
@@ -998,7 +1011,7 @@ Sample feed response
     "low": 9220,
     "open": 9221,
     "resolution": "1m",
-    "symbol": "BTCUSDT",
+    "symbol": "BTCUSD",
     "timestamp": 1596015289339699,
     "type": "candlestick_1m",
     "volume": 1.2
@@ -1128,13 +1141,13 @@ Please note that if you subscribe to positions channel without specifying the sy
          "liquidation_price":"260.63",
          "margin":"4012.99",
          "product_id":357,
-         "product_symbol":"ZECUSDT",
+         "product_symbol":"ZECUSD",
          "realized_funding":"-3.08",
          "realized_pnl":"6364.57",
          "size":-1686,
          "updated_at":"2021-04-29T10:00:05Z",
          "user_id":1,
-         "symbol":"ZECUSDT"
+         "symbol":"ZECUSD"
       }
    ],
    "success":true,
@@ -1315,7 +1328,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
         "channels": [
             {
                 "name": "v2/user_trades",
-                "symbols": ["BTCUSDT"]
+                "symbols": ["BTCUSD"]
             }
         ]
     }
@@ -1325,7 +1338,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 // v2/user_trades
 {
     "type": "v2/user_trades",
-    "sy": "BTCUSDT",             // symbol
+    "sy": "BTCUSD",             // symbol
     "f": "1234-abcd-qwer-3456",  // fill_id
     "R": "normal"                // reason: "normal" or "adl"
     "u": 1998,                   // user_id

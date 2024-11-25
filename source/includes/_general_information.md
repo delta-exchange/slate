@@ -73,9 +73,9 @@ In API response, meta data will contain the cursors as show below
   
 **Example**
 
-https://api.delta.exchange/v2/products?page_size=30
+https://api.india.delta.exchange/v2/products?page_size=30
 
-https://api.delta.exchange/v2/products?page_size=30&after=after_cursor_from_last_request
+https://api.india.delta.exchange/v2/products?page_size=30&after=after_cursor_from_last_request
 
 ## Data Centers 
 Delta Exchange data centers are in **AWS Tokyo**
