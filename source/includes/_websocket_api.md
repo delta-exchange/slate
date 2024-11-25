@@ -7,12 +7,12 @@ Websocket api can be used for the following use cases
 - Get account specific notifications like fills, liquidations, [ADL](https://www.delta.exchange/user-guide/docs/trading-guide/ADL/) and PnL updates.
 - Get account specific updates on orders ,positions and wallets.
 
-Access url for Delta Exchange India
+Access url for [Delta Exchange India](https://www.delta.exchange)
 
 - **Production-India** - wss://socket.india.delta.exchange
 - **Testnet-India** - wss://socket-ind.testnet.deltaex.org
 
-Access url for Delta Exchange Global
+Access url for [Delta Exchange Global](https://global.delta.exchange)
 
 - **Production-Global** - wss://socket.delta.exchange
 - **Testnet-Global** - wss://testnet-socket.delta.exchange
@@ -175,7 +175,7 @@ signature_data = method + timestamp + path
 signature = generate_signature(api_secret, signature_data)
 
 
-ws = websocket.WebSocketApp('wss://api.delta.exchange:2096')
+ws = websocket.WebSocketApp('wss://socket.india.delta.exchange')
 ws.send(json.dumps({
     "type": "auth",
     "payload": {
@@ -363,7 +363,7 @@ Max interval (in case of same data): 5 secs
             {
                 "name": "l1_orderbook",
                 "symbols": [
-                    "ETHUSDT"
+                    "ETHUSD"
                 ]
             }
         ]
@@ -380,7 +380,7 @@ Max interval (in case of same data): 5 secs
   "bid_qty":"772",
   "last_sequence_no":1671603257645135,
   "last_updated_at":1671603257623000,
-  "product_id":176,"symbol":"ETHUSDT",
+  "product_id":176,"symbol":"ETHUSD",
   "timestamp":1671603257645134,
   "type":"l1_orderbook"
 }
@@ -404,7 +404,7 @@ Max interval (in case of same data): 5 secs
             {
                 "name": "l1ob",
                 "symbols": [
-                    "BTCUSDT",
+                    "BTCUSD",
                     "C-BTC-42000-260124"
                 ]
             }
@@ -417,7 +417,7 @@ Max interval (in case of same data): 5 secs
 // l1ob sample Response
 {
   "type":"l1ob",
-  "s":"BTCUSDT",  //product symbol
+  "s":"BTCUSD",  //product symbol
   "d": ["37026.2","2133","37025.6","1977"],  
   // [BestAskPrice, BestAskSize, BestBidPrice, BestBidSize]
   // Price and Size will be null for the side with no orders.
@@ -497,7 +497,7 @@ Max interval (in case of same data): 10 secs
             {
                 "name": "l2_orderbook",
                 "symbols": [
-                    "ETHUSDT"
+                    "ETHUSD"
                 ]
             }
         ]
@@ -509,7 +509,7 @@ Max interval (in case of same data): 10 secs
 // l2 orderbook Response
 {
   "type":"l2_orderbook"
-  "symbol":"ETHUSDT",
+  "symbol":"ETHUSD",
   "product_id": 176,
   "buy": [
     {
@@ -549,7 +549,7 @@ Publish interval: 100 millisecs
             {
                 "name": "l2_updates",
                 "symbols": [
-                    "BTCUSDT"
+                    "BTCUSD"
                 ]
             }
         ]
@@ -563,7 +563,7 @@ Publish interval: 100 millisecs
   "bids":[["16918.0", "602"], ["16917.5", "1792"], ["16917.0", "2039"]],
   "timestamp":1671140718980723,
   "sequence_no":6199,
-  "symbol":"BTCUSDT",
+  "symbol":"BTCUSD",
   "type":"l2_updates",
   "cs":2178756498
 }
@@ -574,7 +574,7 @@ Publish interval: 100 millisecs
   "asks":[["16919.0", "0"], ["16919.5", "710"]],
   "bids":[["16918.5", "304"]],
   "sequence_no":6200,
-  "symbol":"BTCUSDT",
+  "symbol":"BTCUSD",
   "type":"l2_updates",
   "timestamp": 1671140769059031,
   "cs":3409694612
@@ -583,7 +583,7 @@ Publish interval: 100 millisecs
 // Error response
 {
   "action":"error",
-  "symbol":"BTCUSDT",
+  "symbol":"BTCUSD",
   "type":"l2_updates",
   "msg":"Snapshot load failed. Verify if product is live and resubscribe after a few secs."
 }
@@ -639,7 +639,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
             {
                 "name": "all_trades",
                 "symbols": [
-                    "BTCUSDT"
+                    "BTCUSD"
                 ]
             }
         ]
@@ -650,7 +650,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 ```
 // All Trades Response Snapshot
 {
-    "symbol": "BTCUSDT",
+    "symbol": "BTCUSD",
     "type": "all_trades_snapshot",          // "type" is not "all_trades"
     "trades": [                             // Recent trades list
         {
@@ -668,7 +668,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 ```
 // All Trades Response
 {
-    symbol: "BTCUSDT",
+    symbol: "BTCUSD",
     price: "25816.5",
     size: 100,
     type: "all_trades",
@@ -851,7 +851,7 @@ Please note that if you subscribe to funding rate channel without specifying the
             {
                 "name": "funding_rate",
                 "symbols": [
-                    "BTCUSDT"
+                    "BTCUSD"
                 ]
             }
         ]
@@ -862,7 +862,7 @@ Please note that if you subscribe to funding rate channel without specifying the
 ```
 // Funding Rate Response
 {
-    symbol: "BTCUSDT",
+    symbol: "BTCUSD",
     product_id: 139,
     type: "funding_rate",
     funding_rate: 0.005701298078111892,  // %
@@ -997,7 +997,7 @@ Please note that if you subscribe to candlsticks channel without specifying the 
 Sample Subscribe Request
 {
   "name": "candlestick_1m",                 // "candlestick_" + resolution
-  "symbols": [ "BTCUSDT" ]        // product symbol
+  "symbols": [ "BTCUSD" ]        // product symbol
 }
 
 
@@ -1011,7 +1011,7 @@ Sample feed response
     "low": 9220,
     "open": 9221,
     "resolution": "1m",
-    "symbol": "BTCUSDT",
+    "symbol": "BTCUSD",
     "timestamp": 1596015289339699,
     "type": "candlestick_1m",
     "volume": 1.2
@@ -1141,13 +1141,13 @@ Please note that if you subscribe to positions channel without specifying the sy
          "liquidation_price":"260.63",
          "margin":"4012.99",
          "product_id":357,
-         "product_symbol":"ZECUSDT",
+         "product_symbol":"ZECUSD",
          "realized_funding":"-3.08",
          "realized_pnl":"6364.57",
          "size":-1686,
          "updated_at":"2021-04-29T10:00:05Z",
          "user_id":1,
-         "symbol":"ZECUSDT"
+         "symbol":"ZECUSD"
       }
    ],
    "success":true,
@@ -1328,7 +1328,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
         "channels": [
             {
                 "name": "v2/user_trades",
-                "symbols": ["BTCUSDT"]
+                "symbols": ["BTCUSD"]
             }
         ]
     }
@@ -1338,7 +1338,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 // v2/user_trades
 {
     "type": "v2/user_trades",
-    "sy": "BTCUSDT",             // symbol
+    "sy": "BTCUSD",             // symbol
     "f": "1234-abcd-qwer-3456",  // fill_id
     "R": "normal"                // reason: "normal" or "adl"
     "u": 1998,                   // user_id
