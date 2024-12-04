@@ -994,12 +994,18 @@ Please note that if you subscribe to candlsticks channel without specifying the 
 >OHLC candles update sample
 
 ```
-Sample Subscribe Request
+//Sample Subscribe Request
 {
-  "name": "candlestick_1m",                 // "candlestick_" + resolution
-  "symbols": [ "BTCUSD" ]        // product symbol
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "candlestick_5m",        // "candlestick_" + resolution
+                "symbols": ["BTCUSDT", "C-BTC-75000-271224"]
+            }
+        ]
+    }
 }
-
 
 
 Sample feed response
