@@ -544,10 +544,10 @@
                     <a href="#tocScreateorderrequest" class="toc-h2 toc-link" data-title="CreateOrderRequest">CreateOrderRequest</a>
                   </li>
                   <li>
-                    <a href="#tocSbatchcreateorderrequest" class="toc-h2 toc-link" data-title="BatchCreateOrderRequest">BatchCreateOrderRequest</a>
+                    <a href="#tocSbatchcreateorder" class="toc-h2 toc-link" data-title="BatchCreateOrder">BatchCreateOrder</a>
                   </li>
                   <li>
-                    <a href="#tocSarrayofbatchcreateorderrequest" class="toc-h2 toc-link" data-title="ArrayOfBatchCreateOrderRequest">ArrayOfBatchCreateOrderRequest</a>
+                    <a href="#tocSbatchcreateordersrequest" class="toc-h2 toc-link" data-title="BatchCreateOrdersRequest">BatchCreateOrdersRequest</a>
                   </li>
                   <li>
                     <a href="#tocSarrayofcreateorderrequest" class="toc-h2 toc-link" data-title="ArrayOfCreateOrderRequest">ArrayOfCreateOrderRequest</a>
@@ -556,10 +556,10 @@
                     <a href="#tocSeditorderrequest" class="toc-h2 toc-link" data-title="EditOrderRequest">EditOrderRequest</a>
                   </li>
                   <li>
-                    <a href="#tocSbatcheditorderrequest" class="toc-h2 toc-link" data-title="BatchEditOrderRequest">BatchEditOrderRequest</a>
+                    <a href="#tocSbatcheditorder" class="toc-h2 toc-link" data-title="BatchEditOrder">BatchEditOrder</a>
                   </li>
                   <li>
-                    <a href="#tocSarrayofbatcheditorderrequest" class="toc-h2 toc-link" data-title="ArrayOfBatchEditOrderRequest">ArrayOfBatchEditOrderRequest</a>
+                    <a href="#tocSbatcheditordersrequest" class="toc-h2 toc-link" data-title="BatchEditOrdersRequest">BatchEditOrdersRequest</a>
                   </li>
                   <li>
                     <a href="#tocScreatebracketorderrequest" class="toc-h2 toc-link" data-title="CreateBracketOrderRequest">CreateBracketOrderRequest</a>
@@ -568,13 +568,16 @@
                     <a href="#tocSeditbracketorderrequest" class="toc-h2 toc-link" data-title="EditBracketOrderRequest">EditBracketOrderRequest</a>
                   </li>
                   <li>
+                    <a href="#tocSbatchdeleteorder" class="toc-h2 toc-link" data-title="BatchDeleteOrder">BatchDeleteOrder</a>
+                  </li>
+                  <li>
                     <a href="#tocSdeleteorderrequest" class="toc-h2 toc-link" data-title="DeleteOrderRequest">DeleteOrderRequest</a>
                   </li>
                   <li>
                     <a href="#tocScancelallfilterobject" class="toc-h2 toc-link" data-title="CancelAllFilterObject">CancelAllFilterObject</a>
                   </li>
                   <li>
-                    <a href="#tocSarrayofdeleteorderrequest" class="toc-h2 toc-link" data-title="ArrayOfDeleteOrderRequest">ArrayOfDeleteOrderRequest</a>
+                    <a href="#tocSbatchdeleteordersrequest" class="toc-h2 toc-link" data-title="BatchDeleteOrdersRequest">BatchDeleteOrdersRequest</a>
                   </li>
                   <li>
                     <a href="#tocSposition" class="toc-h2 toc-link" data-title="Position">Position</a>
@@ -3687,20 +3690,22 @@ curl -X POST https://api.india.delta.exchange/v2/orders/batch <span class="se">\
 <p>Body parameter</p>
 </blockquote>
 
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h3 id="create-batch-orders-parameters">Parameters</h3>
@@ -3717,7 +3722,7 @@ curl -X POST https://api.india.delta.exchange/v2/orders/batch <span class="se">\
 <tr>
 <td>body</td>
 <td>body</td>
-<td><a href="#schemaarrayofbatchcreateorderrequest">ArrayOfBatchCreateOrderRequest</a></td>
+<td><a href="#schemabatchcreateordersrequest">BatchCreateOrdersRequest</a></td>
 <td>true</td>
 <td>Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders</td>
 </tr>
@@ -3897,17 +3902,19 @@ curl -X PUT https://api.india.delta.exchange/v2/orders/batch <span class="se">\<
 <p>Body parameter</p>
 </blockquote>
 
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h3 id="edit-batch-orders-parameters">Parameters</h3>
@@ -3924,7 +3931,7 @@ curl -X PUT https://api.india.delta.exchange/v2/orders/batch <span class="se">\<
 <tr>
 <td>body</td>
 <td>body</td>
-<td><a href="#schemaarrayofbatcheditorderrequest">ArrayOfBatchEditOrderRequest</a></td>
+<td><a href="#schemabatcheditordersrequest">BatchEditOrdersRequest</a></td>
 <td>true</td>
 <td>none</td>
 </tr>
@@ -4102,13 +4109,16 @@ curl -X DELETE https://api.india.delta.exchange/v2/orders/batch <span class="se"
 <p>Body parameter</p>
 </blockquote>
 
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <h3 id="delete-batch-orders-parameters">Parameters</h3>
@@ -4125,7 +4135,7 @@ curl -X DELETE https://api.india.delta.exchange/v2/orders/batch <span class="se"
 <tr>
 <td>body</td>
 <td>body</td>
-<td><a href="#schemaarrayofdeleteorderrequest">ArrayOfDeleteOrderRequest</a></td>
+<td><a href="#schemabatchdeleteordersrequest">BatchDeleteOrdersRequest</a></td>
 <td>true</td>
 <td>none</td>
 </tr>
@@ -10117,13 +10127,11 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSbatchcreateorderrequest">BatchCreateOrderRequest</h2>
+<h2 id="tocSbatchcreateorder">BatchCreateOrder</h2>
 
-<p><a id="schemabatchcreateorderrequest"></a></p>
+<p><a id="schemabatchcreateorder"></a></p>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
   </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
@@ -10149,20 +10157,6 @@ This operation does not require authentication.
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>product_id</td>
-<td>integer</td>
-<td>true</td>
-<td>none</td>
-<td>Only one of either product_id or product_symbol must be sent.</td>
-</tr>
-<tr>
-<td>product_symbol</td>
-<td>string</td>
-<td>true</td>
-<td>none</td>
-<td>Only one of either product_id or product_symbol must be sent.</td>
-</tr>
 <tr>
 <td>limit_price</td>
 <td>string</td>
@@ -10287,24 +10281,26 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSarrayofbatchcreateorderrequest">ArrayOfBatchCreateOrderRequest</h2>
+<h2 id="tocSbatchcreateordersrequest">BatchCreateOrdersRequest</h2>
 
-<p><a id="schemaarrayofbatchcreateorderrequest"></a></p>
+<p><a id="schemabatchcreateordersrequest"></a></p>
 
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"order_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit_order"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"time_in_force"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='properties-15'>Properties</h3>
 <table><thead>
@@ -10317,11 +10313,65 @@ This operation does not require authentication.
 </tr>
 </thead><tbody>
 <tr>
-<td><em>anonymous</em></td>
-<td>[<a href="#schemabatchcreateorderrequest">BatchCreateOrderRequest</a>]</td>
+<td>product_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>product_symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>orders</td>
+<td>[<a href="#schemabatchcreateorder">BatchCreateOrder</a>]</td>
 <td>false</td>
 <td>none</td>
 <td>[A create order object]</td>
+</tr>
+</tbody></table>
+
+<p><em>oneOf</em></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<p><em>xor</em></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
 </tr>
 </tbody></table>
 
@@ -10526,14 +10576,12 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSbatcheditorderrequest">BatchEditOrderRequest</h2>
+<h2 id="tocSbatcheditorder">BatchEditOrder</h2>
 
-<p><a id="schemabatcheditorderrequest"></a></p>
+<p><a id="schemabatcheditorder"></a></p>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
@@ -10561,20 +10609,6 @@ This operation does not require authentication.
 <td>false</td>
 <td>none</td>
 <td>existing order id to be edited</td>
-</tr>
-<tr>
-<td>product_id</td>
-<td>integer</td>
-<td>true</td>
-<td>none</td>
-<td>Only one of either product_id or product_symbol must be sent.</td>
-</tr>
-<tr>
-<td>product_symbol</td>
-<td>string</td>
-<td>true</td>
-<td>none</td>
-<td>Only one of either product_id or product_symbol must be sent.</td>
 </tr>
 <tr>
 <td>limit_price</td>
@@ -10648,21 +10682,23 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSarrayofbatcheditorderrequest">ArrayOfBatchEditOrderRequest</h2>
+<h2 id="tocSbatcheditordersrequest">BatchEditOrdersRequest</h2>
 
-<p><a id="schemaarrayofbatcheditorderrequest"></a></p>
+<p><a id="schemabatcheditordersrequest"></a></p>
 
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">34521712</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"59000"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='properties-19'>Properties</h3>
 <table><thead>
@@ -10675,11 +10711,65 @@ This operation does not require authentication.
 </tr>
 </thead><tbody>
 <tr>
-<td><em>anonymous</em></td>
-<td>[<a href="#schemabatcheditorderrequest">BatchEditOrderRequest</a>]</td>
+<td>product_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>product_symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>orders</td>
+<td>[<a href="#schemabatcheditorder">BatchEditOrder</a>]</td>
 <td>false</td>
 <td>none</td>
 <td>[edit order object]</td>
+</tr>
+</tbody></table>
+
+<p><em>oneOf</em></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<p><em>xor</em></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
 </tr>
 </tbody></table>
 
@@ -10960,6 +11050,46 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocSbatchdeleteorder">BatchDeleteOrder</h2>
+
+<p><a id="schemabatchdeleteorder"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>A delete order object</em></p>
+
+<h3 id='properties-22'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>client order id provided by the user while creating order</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
 
 <p><a id="schemadeleteorderrequest"></a></p>
@@ -10974,7 +11104,7 @@ This operation does not require authentication.
 
 <p><em>A delete order object</em></p>
 
-<h3 id='properties-22'>Properties</h3>
+<h3 id='properties-23'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11024,7 +11154,7 @@ This operation does not require authentication.
 
 <p><em>Cancel all request filter object</em></p>
 
-<h3 id='properties-23'>Properties</h3>
+<h3 id='properties-24'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11106,19 +11236,56 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocSarrayofdeleteorderrequest">ArrayOfDeleteOrderRequest</h2>
+<h2 id="tocSbatchdeleteordersrequest">BatchDeleteOrdersRequest</h2>
 
-<p><a id="schemaarrayofdeleteorderrequest"></a></p>
+<p><a id="schemabatchdeleteordersrequest"></a></p>
 
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"product_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"orders"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13452112</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"client_order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34521712"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-24'>Properties</h3>
+</span></code></pre><h3 id='properties-25'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>product_id</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>product_symbol</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Only one of either product_id or product_symbol must be sent.</td>
+</tr>
+<tr>
+<td>orders</td>
+<td>[<a href="#schemabatchdeleteorder">BatchDeleteOrder</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>[A delete order object]</td>
+</tr>
+</tbody></table>
+
+<p><em>oneOf</em></p>
+
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11130,10 +11297,30 @@ This operation does not require authentication.
 </thead><tbody>
 <tr>
 <td><em>anonymous</em></td>
-<td>[<a href="#schemadeleteorderrequest">DeleteOrderRequest</a>]</td>
+<td>object</td>
 <td>false</td>
 <td>none</td>
-<td>[A delete order object]</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<p><em>xor</em></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>object</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
 </tr>
 </tbody></table>
 
@@ -11159,7 +11346,7 @@ This operation does not require authentication.
 
 <p><em>A position object</em></p>
 
-<h3 id='properties-25'>Properties</h3>
+<h3 id='properties-26'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11277,7 +11464,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-26'>Properties</h3>
+</span></code></pre><h3 id='properties-27'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11334,7 +11521,7 @@ This operation does not require authentication.
 
 <p><em>A fill object</em></p>
 
-<h3 id='properties-27'>Properties</h3>
+<h3 id='properties-28'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11528,7 +11715,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-28'>Properties</h3>
+</span></code></pre><h3 id='properties-29'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11570,7 +11757,7 @@ This operation does not require authentication.
 
 <p><em>Meta data inside fill</em></p>
 
-<h3 id='properties-29'>Properties</h3>
+<h3 id='properties-30'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11688,7 +11875,7 @@ This operation does not require authentication.
 
 <p><em>Order Leverage for a product</em></p>
 
-<h3 id='properties-30'>Properties</h3>
+<h3 id='properties-31'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11749,7 +11936,7 @@ This operation does not require authentication.
 
 <p><em>L2 orderbook</em></p>
 
-<h3 id='properties-31'>Properties</h3>
+<h3 id='properties-32'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11851,7 +12038,7 @@ This operation does not require authentication.
 
 <p><em>trades of a symbol</em></p>
 
-<h3 id='properties-32'>Properties</h3>
+<h3 id='properties-33'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -11950,7 +12137,7 @@ This operation does not require authentication.
 
 <p><em>Wallet Data for each asset.</em></p>
 
-<h3 id='properties-33'>Properties</h3>
+<h3 id='properties-34'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12155,7 +12342,7 @@ This operation does not require authentication.
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-34'>Properties</h3>
+</span></code></pre><h3 id='properties-35'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12200,7 +12387,7 @@ This operation does not require authentication.
 
 <p><em>Meta data for robo trading</em></p>
 
-<h3 id='properties-35'>Properties</h3>
+<h3 id='properties-36'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12262,7 +12449,7 @@ This operation does not require authentication.
 
 <p><em>Array of wallet for every asset</em></p>
 
-<h3 id='properties-36'>Properties</h3>
+<h3 id='properties-37'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12293,7 +12480,7 @@ This operation does not require authentication.
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-37'>Properties</h3>
+</span></code></pre><h3 id='properties-38'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12343,7 +12530,7 @@ This operation does not require authentication.
   </span><span class="s2">"page_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-38'>Properties</h3>
+</span></code></pre><h3 id='properties-39'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12388,7 +12575,7 @@ This operation does not require authentication.
 <p><a id="schematransactiontypes"></a></p>
 <pre class="highlight json tab-json"><code><span class="s2">"string"</span><span class="w">
 
-</span></code></pre><h3 id='properties-39'>Properties</h3>
+</span></code></pre><h3 id='properties-40'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12573,7 +12760,7 @@ This operation does not require authentication.
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-40'>Properties</h3>
+</span></code></pre><h3 id='properties-41'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12665,7 +12852,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-41'>Properties</h3>
+</span></code></pre><h3 id='properties-42'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12697,7 +12884,7 @@ This operation does not require authentication.
   </span><span class="s2">"transferrer_user"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-42'>Properties</h3>
+</span></code></pre><h3 id='properties-43'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12773,7 +12960,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-43'>Properties</h3>
+</span></code></pre><h3 id='properties-44'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -12807,7 +12994,7 @@ This operation does not require authentication.
 
 <p><em>The Greeks represent different factors that influence the pricing of options. These are key measures for assessing risk and managing option positions.</em></p>
 
-<h3 id='properties-44'>Properties</h3>
+<h3 id='properties-45'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12868,7 +13055,7 @@ This operation does not require authentication.
 
 <p><em>The price band defines the permissible price range for a product. The lower and upper limits represent the boundaries within which the product&#39;s price can fluctuate.</em></p>
 
-<h3 id='properties-45'>Properties</h3>
+<h3 id='properties-46'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -12912,7 +13099,7 @@ This operation does not require authentication.
 
 <p><em>The &#39;quotes&#39; object contains the latest bid and ask prices, their respective implied volatilities (IV), and order sizes for an asset. It provides key market data for understanding liquidity and pricing.</em></p>
 
-<h3 id='properties-46'>Properties</h3>
+<h3 id='properties-47'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13018,7 +13205,7 @@ This operation does not require authentication.
 
 <p><em>The &#39;Ticker&#39; object provides real-time trading data for a specific product, including prices, volumes, open interest, and Greek values (for options). This data is essential for analyzing market trends and asset performance.</em></p>
 
-<h3 id='properties-47'>Properties</h3>
+<h3 id='properties-48'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13248,7 +13435,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-48'>Properties</h3>
+</span></code></pre><h3 id='properties-49'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13275,7 +13462,7 @@ This operation does not require authentication.
   </span><span class="s2">"before"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-49'>Properties</h3>
+</span></code></pre><h3 id='properties-50'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13317,7 +13504,7 @@ This operation does not require authentication.
 
 <p><em>A ohlc object</em></p>
 
-<h3 id='properties-50'>Properties</h3>
+<h3 id='properties-51'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13387,7 +13574,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-51'>Properties</h3>
+</span></code></pre><h3 id='properties-52'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13428,7 +13615,7 @@ This operation does not require authentication.
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-52'>Properties</h3>
+</span></code></pre><h3 id='properties-53'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13456,7 +13643,7 @@ This operation does not require authentication.
   </span><span class="s2">"total_volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h3 id='properties-53'>Properties</h3>
+</span></code></pre><h3 id='properties-54'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -13506,7 +13693,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-54'>Properties</h3>
+<h3 id='properties-55'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13611,7 +13798,7 @@ This operation does not require authentication.
 
 <p><em>MMP config for an underlying</em></p>
 
-<h3 id='properties-55'>Properties</h3>
+<h3 id='properties-56'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13684,7 +13871,7 @@ This operation does not require authentication.
 
 <p><em>User trading preferences</em></p>
 
-<h3 id='properties-56'>Properties</h3>
+<h3 id='properties-57'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13744,7 +13931,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Request Object</em></p>
 
-<h3 id='properties-57'>Properties</h3>
+<h3 id='properties-58'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13777,7 +13964,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Response Object</em></p>
 
-<h3 id='properties-58'>Properties</h3>
+<h3 id='properties-59'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13845,7 +14032,7 @@ This operation does not require authentication.
 
 <p><em>User Object</em></p>
 
-<h3 id='properties-59'>Properties</h3>
+<h3 id='properties-60'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -13963,7 +14150,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-60'>Properties</h3>
+</span></code></pre><h3 id='properties-61'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
