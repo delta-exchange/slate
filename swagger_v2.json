@@ -793,7 +793,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/ArrayOfBatchCreateOrderRequest"
+              "$ref": "#/definitions/BatchCreateOrdersRequest"
             },
             "description": "Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders"
           }
@@ -853,7 +853,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/ArrayOfBatchEditOrderRequest"
+              "$ref": "#/definitions/BatchEditOrdersRequest"
             }
           }
         ],
@@ -910,7 +910,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/ArrayOfDeleteOrderRequest"
+              "$ref": "#/definitions/BatchDeleteOrdersRequest"
             }
           }
         ],
@@ -3253,24 +3253,10 @@
         }
       }
     },
-    "BatchCreateOrderRequest": {
+    "BatchCreateOrder": {
       "type": "object",
       "description": "A create order object",
-      "required": [
-        "product_id",
-        "product_symbol"
-      ],
       "properties": {
-        "product_id": {
-          "type": "integer",
-          "description": "Only one of either product_id or product_symbol must be sent.",
-          "example": 27
-        },
-        "product_symbol": {
-          "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent.",
-          "example": "BTCUSD"
-        },
         "limit_price": {
           "type": "string",
           "description": "Price level for limit orders",
@@ -3339,10 +3325,33 @@
         }
       }
     },
-    "ArrayOfBatchCreateOrderRequest": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/BatchCreateOrderRequest"
+    "BatchCreateOrdersRequest": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": ["product_id"]
+        },
+        {
+          "required": ["product_symbol"]
+        }
+      ],
+      "properties": {
+        "product_id": {
+          "type": "integer",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BatchCreateOrder"
+          }
+        }
       }
     },
     "ArrayOfCreateOrderRequest": {
@@ -3429,28 +3438,14 @@
         }
       }
     },
-    "BatchEditOrderRequest": {
+    "BatchEditOrder": {
       "type": "object",
       "description": "edit order object",
-      "required": [
-        "product_id",
-        "product_symbol"
-      ],
       "properties": {
         "id": {
           "type": "integer",
           "description": "existing order id to be edited",
           "example": 34521712
-        },
-        "product_id": {
-          "type": "integer",
-          "description": "Only one of either product_id or product_symbol must be sent.",
-          "example": 27
-        },
-        "product_symbol": {
-          "type": "string",
-          "description": "Only one of either product_id or product_symbol must be sent.",
-          "example": "BTCUSD"
         },
         "limit_price": {
           "type": "string",
@@ -3487,10 +3482,33 @@
         }
       }
     },
-    "ArrayOfBatchEditOrderRequest": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/BatchEditOrderRequest"
+    "BatchEditOrdersRequest": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": ["product_id"]
+        },
+        {
+          "required": ["product_symbol"]
+        }
+      ],
+      "properties": {
+        "product_id": {
+          "type": "integer",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BatchEditOrder"
+          }
+        }
       }
     },
     "CreateBracketOrderRequest": {
@@ -3635,6 +3653,22 @@
         }
       }
     },
+    "BatchDeleteOrder": {
+      "type": "object",
+      "description": "A delete order object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty",
+          "example": 13452112
+        },
+        "client_order_id": {
+          "type": "string",
+          "description": "client order id provided by the user while creating order",
+          "example": "34521712"
+        }
+      }
+    },
     "DeleteOrderRequest": {
       "type": "object",
       "description": "A delete order object",
@@ -3699,10 +3733,33 @@
         }
       }
     },
-    "ArrayOfDeleteOrderRequest": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/DeleteOrderRequest"
+    "BatchDeleteOrdersRequest": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": ["product_id"]
+        },
+        {
+          "required": ["product_symbol"]
+        }
+      ],
+      "properties": {
+        "product_id": {
+          "type": "integer",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": 27
+        },
+        "product_symbol": {
+          "type": "string",
+          "description": "Only one of either product_id or product_symbol must be sent.",
+          "example": "BTCUSD"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BatchDeleteOrder"
+          }
+        }
       }
     },
     "Position": {
