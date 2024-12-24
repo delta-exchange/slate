@@ -3,12 +3,12 @@ This section documents the latest(v2) api for trading on Delta Exchange. The RES
 
 If you are looking for the old api documentation, here is the link to [v1 api](https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md) docs (now deprecated). 
 
-REST API Endpoint URL for Delta Exchange India
+REST API Endpoint URL for [Delta Exchange India](https://www.delta.exchange)
 
  - **Production-India** - https://api.india.delta.exchange/v2
  - **Testnet-India** - https://cdn-ind.testnet.deltaex.org/v2
 
-REST API Endpoint URL for Delta Exchange Global
+REST API Endpoint URL for [Delta Exchange Global](https://global.delta.exchange/)
 
 - **Production-Global** - https://api.delta.exchange/v2
 - **Testnet-Global** - https://testnet-api.delta.exchange/v2
@@ -29,7 +29,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/assets', params={
+r = requests.get('https://api.india.delta.exchange/v2/assets', params={
 
 }, headers = headers)
 
@@ -39,7 +39,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/assets \
+curl -X GET https://api.india.delta.exchange/v2/assets \
   -H 'Accept: application/json'
 
 ```
@@ -52,7 +52,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/assets',
+result = RestClient.get 'https://api.india.delta.exchange/v2/assets',
   params: {
   }, headers: headers
 
@@ -71,13 +71,13 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     }
   ]
 }
@@ -120,7 +120,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/indices', params={
+r = requests.get('https://api.india.delta.exchange/v2/indices', params={
 
 }, headers = headers)
 
@@ -130,7 +130,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/indices \
+curl -X GET https://api.india.delta.exchange/v2/indices \
   -H 'Accept: application/json'
 
 ```
@@ -143,7 +143,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/indices',
+result = RestClient.get 'https://api.india.delta.exchange/v2/indices',
   params: {
   }, headers: headers
 
@@ -164,14 +164,17 @@ Indices refer to spot price indices that Delta Exchange creates by combining spo
   "success": true,
   "result": [
     {
-      "id": 0,
-      "symbol": "string",
+      "id": 14,
+      "symbol": ".DEXBTUSD",
       "constituent_exchanges": [
-        {}
+        {
+          "name": "ExchangeA",
+          "weight": 0.25
+        }
       ],
-      "underlying_asset_id": 0,
-      "quoting_asset_id": 0,
-      "tick_size": null,
+      "underlying_asset_id": 13,
+      "quoting_asset_id": 14,
+      "tick_size": "0.5",
       "index_type": "spot_pair"
     }
   ]
@@ -214,7 +217,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/products', params={
+r = requests.get('https://api.india.delta.exchange/v2/products', params={
 
 }, headers = headers)
 
@@ -224,7 +227,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/products \
+curl -X GET https://api.india.delta.exchange/v2/products \
   -H 'Accept: application/json'
 
 ```
@@ -237,7 +240,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/products',
+result = RestClient.get 'https://api.india.delta.exchange/v2/products',
   params: {
   }, headers: headers
 
@@ -247,12 +250,14 @@ p JSON.parse(result)
 
 `GET /products`
 
+The endpoint provides details about all available trading products on the platform. Each product represents a financial instrument like perpetual futures, options, or contracts for specific asset pairs.
+
 <h3 id="get-list-of-products-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |contract_types|query|string|false|Comma separated list of contract types e.g. futures,perpetual_futures,call_options, put_options, interest_rate_swaps,move_options,spreads, turbo_call_options, turbo_put_options, spot|
-|states|query|string|false|Comma separated list of states e.g. upcoming,live,expired,settled to get expired contracts https://api.delta.exchange/v2/products?contract_types=call_options&states=expired |
+|states|query|string|false|Comma separated list of states e.g. upcoming,live,expired,settled to get expired contracts.|
 |after|query|string|false|after cursor for paginated request|
 |before|query|string|false|before cursor for paginated request|
 |page_size|query|string|false|size of a single page for paginated request, default: 100|
@@ -266,72 +271,81 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": 0,
-      "symbol": "string",
-      "description": "string",
-      "created_at": "string",
-      "updated_at": "string",
-      "settlement_time": "string",
+      "id": 27,
+      "symbol": "BTCUSD",
+      "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+      "created_at": "2023-12-18T13:10:39Z",
+      "updated_at": "2024-11-15T02:47:50Z",
+      "settlement_time": null,
       "notional_type": "vanilla",
-      "impact_size": 0,
-      "initial_margin": 0,
-      "maintenance_margin": "string",
-      "contract_value": "string",
-      "contract_unit_currency": "string",
-      "tick_size": "string",
-      "product_specs": {},
+      "impact_size": 10000,
+      "initial_margin": "0.5",
+      "maintenance_margin": "0.25",
+      "contract_value": "0.001",
+      "contract_unit_currency": "BTC",
+      "tick_size": "0.5",
+      "product_specs": {
+        "funding_clamp_value": 0.05,
+        "only_reduce_only_orders_allowed": false,
+        "tags": [
+          "layer_1"
+        ]
+      },
       "state": "live",
       "trading_status": "operational",
-      "max_leverage_notional": "string",
-      "default_leverage": "string",
-      "initial_margin_scaling_factor": "string",
-      "maintenance_margin_scaling_factor": "string",
-      "taker_commission_rate": "string",
-      "maker_commission_rate": "string",
-      "liquidation_penalty_factor": "string",
-      "contract_type": "string",
-      "position_size_limit": 0,
-      "basis_factor_max_limit": "string",
-      "is_quanto": true,
-      "funding_method": "string",
-      "annualized_funding": "string",
-      "price_band": "string",
+      "max_leverage_notional": "100000",
+      "default_leverage": "200",
+      "initial_margin_scaling_factor": "0.0000025",
+      "maintenance_margin_scaling_factor": "0.00000125",
+      "taker_commission_rate": "0.0005",
+      "maker_commission_rate": "0.0002",
+      "liquidation_penalty_factor": "0.5",
+      "contract_type": "perpetual_futures",
+      "position_size_limit": 229167,
+      "basis_factor_max_limit": "10.95",
+      "is_quanto": false,
+      "funding_method": "mark_price",
+      "annualized_funding": "10.95",
+      "price_band": "2.5",
       "underlying_asset": {
-        "id": 0,
-        "symbol": "string",
-        "precision": 0,
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
         "deposit_status": "enabled",
         "withdrawal_status": "enabled",
-        "base_withdrawal_fee": "string",
-        "min_withdrawal_amount": "string"
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000"
       },
       "quoting_asset": {
-        "id": 0,
-        "symbol": "string",
-        "precision": 0,
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
         "deposit_status": "enabled",
         "withdrawal_status": "enabled",
-        "base_withdrawal_fee": "string",
-        "min_withdrawal_amount": "string"
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000"
       },
       "settling_asset": {
-        "id": 0,
-        "symbol": "string",
-        "precision": 0,
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
         "deposit_status": "enabled",
         "withdrawal_status": "enabled",
-        "base_withdrawal_fee": "string",
-        "min_withdrawal_amount": "string"
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000"
       },
       "spot_index": {
-        "id": 0,
-        "symbol": "string",
+        "id": 14,
+        "symbol": ".DEXBTUSD",
         "constituent_exchanges": [
-          {}
+          {
+            "name": "ExchangeA",
+            "weight": 0.25
+          }
         ],
-        "underlying_asset_id": 0,
-        "quoting_asset_id": 0,
-        "tick_size": null,
+        "underlying_asset_id": 13,
+        "quoting_asset_id": 14,
+        "tick_size": "0.5",
         "index_type": "spot_pair"
       }
     }
@@ -343,7 +357,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of [products schema](#tocSproduct)|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of [Products](#tocSproduct)|Inline|
 
 <h3 id="get-list-of-products-responseschema">Response Schema</h3>
 
@@ -383,7 +397,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/products/{symbol}', params={
+r = requests.get('https://api.india.delta.exchange/v2/products/{symbol}', params={
 
 }, headers = headers)
 
@@ -393,7 +407,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/products/{symbol} \
+curl -X GET https://api.india.delta.exchange/v2/products/{symbol} \
   -H 'Accept: application/json'
 
 ```
@@ -406,7 +420,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/products/{symbol}',
+result = RestClient.get 'https://api.india.delta.exchange/v2/products/{symbol}',
   params: {
   }, headers: headers
 
@@ -416,11 +430,13 @@ p JSON.parse(result)
 
 `GET /products/{symbol}`
 
+The endpoint retrieves details of a specific product identified by its symbol (e.g., BTCUSD, ETHUSD).
+
 <h3 id="get-product-by-symbol-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|symbol|path|string|true|symbol of the desired product|
+|symbol|path|string|true|symbol of the desired product like BTCUSD, ETHUSD|
 
 > Example responses
 
@@ -430,72 +446,81 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": 0,
-    "symbol": "string",
-    "description": "string",
-    "created_at": "string",
-    "updated_at": "string",
-    "settlement_time": "string",
+    "id": 27,
+    "symbol": "BTCUSD",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+    "created_at": "2023-12-18T13:10:39Z",
+    "updated_at": "2024-11-15T02:47:50Z",
+    "settlement_time": null,
     "notional_type": "vanilla",
-    "impact_size": 0,
-    "initial_margin": 0,
-    "maintenance_margin": "string",
-    "contract_value": "string",
-    "contract_unit_currency": "string",
-    "tick_size": "string",
-    "product_specs": {},
+    "impact_size": 10000,
+    "initial_margin": "0.5",
+    "maintenance_margin": "0.25",
+    "contract_value": "0.001",
+    "contract_unit_currency": "BTC",
+    "tick_size": "0.5",
+    "product_specs": {
+      "funding_clamp_value": 0.05,
+      "only_reduce_only_orders_allowed": false,
+      "tags": [
+        "layer_1"
+      ]
+    },
     "state": "live",
     "trading_status": "operational",
-    "max_leverage_notional": "string",
-    "default_leverage": "string",
-    "initial_margin_scaling_factor": "string",
-    "maintenance_margin_scaling_factor": "string",
-    "taker_commission_rate": "string",
-    "maker_commission_rate": "string",
-    "liquidation_penalty_factor": "string",
-    "contract_type": "string",
-    "position_size_limit": 0,
-    "basis_factor_max_limit": "string",
-    "is_quanto": true,
-    "funding_method": "string",
-    "annualized_funding": "string",
-    "price_band": "string",
+    "max_leverage_notional": "100000",
+    "default_leverage": "200",
+    "initial_margin_scaling_factor": "0.0000025",
+    "maintenance_margin_scaling_factor": "0.00000125",
+    "taker_commission_rate": "0.0005",
+    "maker_commission_rate": "0.0002",
+    "liquidation_penalty_factor": "0.5",
+    "contract_type": "perpetual_futures",
+    "position_size_limit": 229167,
+    "basis_factor_max_limit": "10.95",
+    "is_quanto": false,
+    "funding_method": "mark_price",
+    "annualized_funding": "10.95",
+    "price_band": "2.5",
     "underlying_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "quoting_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "settling_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "spot_index": {
-      "id": 0,
-      "symbol": "string",
+      "id": 14,
+      "symbol": ".DEXBTUSD",
       "constituent_exchanges": [
-        {}
+        {
+          "name": "ExchangeA",
+          "weight": 0.25
+        }
       ],
-      "underlying_asset_id": 0,
-      "quoting_asset_id": 0,
-      "tick_size": null,
+      "underlying_asset_id": 13,
+      "quoting_asset_id": 14,
+      "tick_size": "0.5",
       "index_type": "spot_pair"
     }
   }
@@ -506,7 +531,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|[Product schema](#tocSproduct)|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|[Product](#tocSproduct)|Inline|
 
 <h3 id="get-product-by-symbol-responseschema">Response Schema</h3>
 
@@ -546,7 +571,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/tickers', params={
+r = requests.get('https://api.india.delta.exchange/v2/tickers', params={
 
 }, headers = headers)
 
@@ -556,7 +581,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/tickers \
+curl -X GET https://api.india.delta.exchange/v2/tickers \
   -H 'Accept: application/json'
 
 ```
@@ -569,7 +594,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/tickers',
+result = RestClient.get 'https://api.india.delta.exchange/v2/tickers',
   params: {
   }, headers: headers
 
@@ -579,11 +604,13 @@ p JSON.parse(result)
 
 `GET /tickers`
 
+This endpoint retrieves the live tickers for available trading products, with an optional filter by specified contract types. The contract types should be provided as a comma-separated list (e.g., futures, perpetual_futures, call_options). If no contract type is specified, data for all available products will be returned.
+
 <h3 id="get-tickers-for-products-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|contract_types|query|string|false|Comma separated list of contract types e.g. futures,perpetual_futures,call_options, put_options, interest_rate_swaps,move_options,spreads, turbo_call_options, turbo_put_options, spot|
+|contract_types|query|string|false|A comma-separated list of contract types to filter the tickers. Example values include futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.|
 
 > Example responses
 
@@ -594,46 +621,46 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "close": 0,
-      "contract_type": "string",
+      "close": 67321,
+      "contract_type": "futures",
       "greeks": {
-        "delta": "string",
-        "gamma": "string",
-        "rho": "string",
-        "theta": "string",
-        "vega": "string"
+        "delta": "0.25",
+        "gamma": "0.10",
+        "rho": "0.05",
+        "theta": "-0.02",
+        "vega": "0.15"
       },
-      "high": 0,
-      "low": 0,
-      "mark_price": "string",
-      "mark_vol": "string",
-      "oi": "string",
-      "oi_value": "string",
-      "oi_value_symbol": "string",
-      "oi_value_usd": "string",
-      "open": 0,
+      "high": 68500.5,
+      "low": 66300.25,
+      "mark_price": "67000.00",
+      "mark_vol": "500",
+      "oi": "15000",
+      "oi_value": "1000000",
+      "oi_value_symbol": "USD",
+      "oi_value_usd": "1050000",
+      "open": 67000,
       "price_band": {
-        "lower_limit": "string",
-        "upper_limit": "string"
+        "lower_limit": "61120.45",
+        "upper_limit": "72300.00"
       },
-      "product_id": 0,
+      "product_id": 123456,
       "quotes": {
-        "ask_iv": "string",
-        "ask_size": "string",
-        "best_ask": "string",
-        "best_bid": "string",
-        "bid_iv": "string",
-        "bid_size": "string"
+        "ask_iv": "0.25",
+        "ask_size": "100",
+        "best_ask": "150.00",
+        "best_bid": "148.00",
+        "bid_iv": "0.22",
+        "bid_size": "50"
       },
-      "size": 0,
-      "spot_price": "string",
-      "strike_price": "string",
-      "symbol": "string",
-      "timestamp": 0,
-      "turnover": 0,
-      "turnover_symbol": "string",
-      "turnover_usd": 0,
-      "volume": 0
+      "size": 100,
+      "spot_price": "67000.00",
+      "strike_price": "68000.00",
+      "symbol": "BTCUSD",
+      "timestamp": 1609459200,
+      "turnover": 5000000,
+      "turnover_symbol": "USD",
+      "turnover_usd": 5200000,
+      "volume": 25000
     }
   ]
 }
@@ -643,7 +670,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of live tickers for all products, including IV for option strikes|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of live [tickers](#tocSticker) for all products, including implied volatility (IV) for option strikes.|Inline|
 
 <h3 id="get-tickers-for-products-responseschema">Response Schema</h3>
 
@@ -663,7 +690,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/tickers/{symbol}', params={
+r = requests.get('https://api.india.delta.exchange/v2/tickers/{symbol}', params={
 
 }, headers = headers)
 
@@ -673,7 +700,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/tickers/{symbol} \
+curl -X GET https://api.india.delta.exchange/v2/tickers/{symbol} \
   -H 'Accept: application/json'
 
 ```
@@ -686,7 +713,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/tickers/{symbol}',
+result = RestClient.get 'https://api.india.delta.exchange/v2/tickers/{symbol}',
   params: {
   }, headers: headers
 
@@ -696,11 +723,13 @@ p JSON.parse(result)
 
 `GET /tickers/{symbol}`
 
+This endpoint retrieves the ticker data for a specific product, identified by its symbol. The ticker data includes live price data, open interest, implied volatility (IV) for options, and other related market data.
+
 <h3 id="get-ticker-for-a-product-by-symbol-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|symbol|path|string|true|symbol of the ticker|
+|symbol|path|string|true|The symbol of the product for which the ticker data is requested (e.g., BTCUSD, ETHUSD).|
 
 > Example responses
 
@@ -710,46 +739,46 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "close": 0,
-    "contract_type": "string",
+    "close": 67321,
+    "contract_type": "futures",
     "greeks": {
-      "delta": "string",
-      "gamma": "string",
-      "rho": "string",
-      "theta": "string",
-      "vega": "string"
+      "delta": "0.25",
+      "gamma": "0.10",
+      "rho": "0.05",
+      "theta": "-0.02",
+      "vega": "0.15"
     },
-    "high": 0,
-    "low": 0,
-    "mark_price": "string",
-    "mark_vol": "string",
-    "oi": "string",
-    "oi_value": "string",
-    "oi_value_symbol": "string",
-    "oi_value_usd": "string",
-    "open": 0,
+    "high": 68500.5,
+    "low": 66300.25,
+    "mark_price": "67000.00",
+    "mark_vol": "500",
+    "oi": "15000",
+    "oi_value": "1000000",
+    "oi_value_symbol": "USD",
+    "oi_value_usd": "1050000",
+    "open": 67000,
     "price_band": {
-      "lower_limit": "string",
-      "upper_limit": "string"
+      "lower_limit": "61120.45",
+      "upper_limit": "72300.00"
     },
-    "product_id": 0,
+    "product_id": 123456,
     "quotes": {
-      "ask_iv": "string",
-      "ask_size": "string",
-      "best_ask": "string",
-      "best_bid": "string",
-      "bid_iv": "string",
-      "bid_size": "string"
+      "ask_iv": "0.25",
+      "ask_size": "100",
+      "best_ask": "150.00",
+      "best_bid": "148.00",
+      "bid_iv": "0.22",
+      "bid_size": "50"
     },
-    "size": 0,
-    "spot_price": "string",
-    "strike_price": "string",
-    "symbol": "string",
-    "timestamp": 0,
-    "turnover": 0,
-    "turnover_symbol": "string",
-    "turnover_usd": 0,
-    "volume": 0
+    "size": 100,
+    "spot_price": "67000.00",
+    "strike_price": "68000.00",
+    "symbol": "BTCUSD",
+    "timestamp": 1609459200,
+    "turnover": 5000000,
+    "turnover_symbol": "USD",
+    "turnover_usd": 5200000,
+    "volume": 25000
   }
 }
 ```
@@ -758,7 +787,7 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|ticker data for requested product, including IV for option strikes|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|[Ticker](#tocSticker) data for the requested product, including implied volatility (IV) for option strikes, if applicable.|Inline|
 
 <h3 id="get-ticker-for-a-product-by-symbol-responseschema">Response Schema</h3>
 
@@ -786,7 +815,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/orders', params={
+r = requests.post('https://api.india.delta.exchange/v2/orders', params={
 
 }, headers = headers)
 
@@ -796,7 +825,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/orders \
+curl -X POST https://api.india.delta.exchange/v2/orders \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -817,7 +846,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/orders',
+result = RestClient.post 'https://api.india.delta.exchange/v2/orders',
   params: {
   }, headers: headers
 
@@ -831,26 +860,27 @@ p JSON.parse(result)
 
 ```json
 {
-  "product_id": 0,
-  "product_symbol": "string",
-  "limit_price": "string",
-  "size": 0,
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "limit_price": "59000",
+  "size": 10,
   "side": "buy",
   "order_type": "limit_order",
   "stop_order_type": "stop_loss_order",
-  "stop_price": "string",
-  "trail_amount": "string",
-  "stop_trigger_method": "mark_price",
-  "bracket_stop_loss_limit_price": "string",
-  "bracket_stop_loss_price": "string",
-  "bracket_take_profit_limit_price": "string",
-  "bracket_take_profit_price": "string",
+  "stop_price": "56000",
+  "trail_amount": "50",
+  "stop_trigger_method": "last_traded_price",
+  "bracket_stop_loss_limit_price": "57000",
+  "bracket_stop_loss_price": "56000",
+  "bracket_trail_amount": "50",
+  "bracket_take_profit_limit_price": "62000",
+  "bracket_take_profit_price": "61000",
   "time_in_force": "gtc",
   "mmp": "disabled",
-  "post_only": "true",
-  "reduce_only": "true",
-  "close_on_trigger": "true",
-  "client_order_id": "string"
+  "post_only": false,
+  "reduce_only": false,
+  "client_order_id": "34521712",
+  "cancel_orders_accepted": false
 }
 ```
 
@@ -868,23 +898,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": 0,
-    "user_id": 0,
-    "size": 0,
-    "unfilled_size": 0,
+    "id": 123,
+    "user_id": 453671,
+    "size": 10,
+    "unfilled_size": 2,
     "side": "buy",
     "order_type": "limit_order",
-    "limit_price": "string",
+    "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "paid_commission": "string",
-    "commission": "string",
-    "close_on_trigger": "false",
-    "client_order_id": "string",
+    "stop_price": "55000",
+    "paid_commission": "0.5432",
+    "commission": "0.5432",
+    "reduce_only": false,
+    "client_order_id": "34521712",
     "state": "open",
-    "created_at": "string",
-    "product_id": 0,
-    "product_symbol": "string"
+    "created_at": "1725865012000000",
+    "product_id": 27,
+    "product_symbol": "BTCUSD"
   }
 }
 ```
@@ -907,8 +937,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -934,7 +964,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.delete('https://api.delta.exchange/v2/orders', params={
+r = requests.delete('https://api.india.delta.exchange/v2/orders', params={
 
 }, headers = headers)
 
@@ -944,7 +974,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api.delta.exchange/v2/orders \
+curl -X DELETE https://api.india.delta.exchange/v2/orders \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -965,7 +995,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.delete 'https://api.delta.exchange/v2/orders',
+result = RestClient.delete 'https://api.india.delta.exchange/v2/orders',
   params: {
   }, headers: headers
 
@@ -979,8 +1009,9 @@ p JSON.parse(result)
 
 ```json
 {
-  "id": 0,
-  "product_id": 0
+  "id": 13452112,
+  "client_order_id": "34521712",
+  "product_id": 27
 }
 ```
 
@@ -998,23 +1029,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": 0,
-    "user_id": 0,
-    "size": 0,
-    "unfilled_size": 0,
+    "id": 123,
+    "user_id": 453671,
+    "size": 10,
+    "unfilled_size": 2,
     "side": "buy",
     "order_type": "limit_order",
-    "limit_price": "string",
+    "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "paid_commission": "string",
-    "commission": "string",
-    "close_on_trigger": "false",
-    "client_order_id": "string",
+    "stop_price": "55000",
+    "paid_commission": "0.5432",
+    "commission": "0.5432",
+    "reduce_only": false,
+    "client_order_id": "34521712",
     "state": "open",
-    "created_at": "string",
-    "product_id": 0,
-    "product_symbol": "string"
+    "created_at": "1725865012000000",
+    "product_id": 27,
+    "product_symbol": "BTCUSD"
   }
 }
 ```
@@ -1037,8 +1068,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -1064,7 +1095,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.put('https://api.delta.exchange/v2/orders', params={
+r = requests.put('https://api.india.delta.exchange/v2/orders', params={
 
 }, headers = headers)
 
@@ -1074,7 +1105,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.delta.exchange/v2/orders \
+curl -X PUT https://api.india.delta.exchange/v2/orders \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -1095,7 +1126,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.put 'https://api.delta.exchange/v2/orders',
+result = RestClient.put 'https://api.india.delta.exchange/v2/orders',
   params: {
   }, headers: headers
 
@@ -1109,13 +1140,16 @@ p JSON.parse(result)
 
 ```json
 {
-  "id": 0,
-  "product_id": 0,
-  "product_symbol": "string",
-  "limit_price": "string",
-  "size": 0,
+  "id": 34521712,
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "limit_price": "59000",
+  "size": 15,
   "mmp": "disabled",
-  "post_only": "false"
+  "post_only": false,
+  "cancel_orders_accepted": false,
+  "stop_price": "56000",
+  "trail_amount": "50"
 }
 ```
 
@@ -1133,23 +1167,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": 0,
-    "user_id": 0,
-    "size": 0,
-    "unfilled_size": 0,
+    "id": 123,
+    "user_id": 453671,
+    "size": 10,
+    "unfilled_size": 2,
     "side": "buy",
     "order_type": "limit_order",
-    "limit_price": "string",
+    "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "paid_commission": "string",
-    "commission": "string",
-    "close_on_trigger": "false",
-    "client_order_id": "string",
+    "stop_price": "55000",
+    "paid_commission": "0.5432",
+    "commission": "0.5432",
+    "reduce_only": false,
+    "client_order_id": "34521712",
     "state": "open",
-    "created_at": "string",
-    "product_id": 0,
-    "product_symbol": "string"
+    "created_at": "1725865012000000",
+    "product_id": 27,
+    "product_symbol": "BTCUSD"
   }
 }
 ```
@@ -1172,8 +1206,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -1198,7 +1232,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/orders', params={
+r = requests.get('https://api.india.delta.exchange/v2/orders', params={
 
 }, headers = headers)
 
@@ -1208,7 +1242,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/orders \
+curl -X GET https://api.india.delta.exchange/v2/orders \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -1227,7 +1261,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/orders',
+result = RestClient.get 'https://api.india.delta.exchange/v2/orders',
   params: {
   }, headers: headers
 
@@ -1247,8 +1281,8 @@ p JSON.parse(result)
 |order_types|query|string|false|comma separated order types|
 |start_time|query|integer|false|from time in micro-seconds in epoc; referring to the order creation time|
 |end_time|query|integer|false|from time in micro-seconds in epoc; referring to the order creation time|
-|after|query|string|false|after cursor for pagination|
-|before|query|string|false|before cursor for pagination|
+|after|query|string|false|after cursor for pagination; becomes null if page after the current one does not exist|
+|before|query|string|false|before cursor for pagination; becomes null if page before the current one does not exist|
 |page_size|query|integer|false|number of records per page|
 
 #### Enumerated Values
@@ -1274,28 +1308,28 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": 0,
-      "user_id": 0,
-      "size": 0,
-      "unfilled_size": 0,
+      "id": 123,
+      "user_id": 453671,
+      "size": 10,
+      "unfilled_size": 2,
       "side": "buy",
       "order_type": "limit_order",
-      "limit_price": "string",
+      "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
-      "stop_price": "string",
-      "paid_commission": "string",
-      "commission": "string",
-      "close_on_trigger": "false",
-      "client_order_id": "string",
+      "stop_price": "55000",
+      "paid_commission": "0.5432",
+      "commission": "0.5432",
+      "reduce_only": false,
+      "client_order_id": "34521712",
       "state": "open",
-      "created_at": "string",
-      "product_id": 0,
-      "product_symbol": "string"
+      "created_at": "1725865012000000",
+      "product_id": 27,
+      "product_symbol": "BTCUSD"
     }
   ],
   "meta": {
-    "after": "string",
-    "before": "string"
+    "after": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN",
+    "before": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
   }
 }
 ```
@@ -1317,8 +1351,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -1344,7 +1378,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/orders/bracket', params={
+r = requests.post('https://api.india.delta.exchange/v2/orders/bracket', params={
 
 }, headers = headers)
 
@@ -1354,7 +1388,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/orders/bracket \
+curl -X POST https://api.india.delta.exchange/v2/orders/bracket \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -1375,7 +1409,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/orders/bracket',
+result = RestClient.post 'https://api.india.delta.exchange/v2/orders/bracket',
   params: {
   }, headers: headers
 
@@ -1391,20 +1425,20 @@ A bracket order is a set of TP and SL order. For a bracket order , size need not
 
 ```json
 {
-  "product_id": 0,
-  "product_symbol": "string",
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
   "stop_loss_order": {
     "order_type": "limit_order",
-    "stop_price": "string",
-    "trail_amount": "string",
-    "limit_price": "string"
+    "stop_price": "56000",
+    "trail_amount": "50",
+    "limit_price": "55000"
   },
   "take_profit_order": {
     "order_type": "limit_order",
-    "stop_price": "string",
-    "limit_price": "string"
+    "stop_price": "65000",
+    "limit_price": "64000"
   },
-  "stop_trigger_method": "mark_price"
+  "bracket_stop_trigger_method": "last_traded_price"
 }
 ```
 
@@ -1451,7 +1485,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.put('https://api.delta.exchange/v2/orders/bracket', params={
+r = requests.put('https://api.india.delta.exchange/v2/orders/bracket', params={
 
 }, headers = headers)
 
@@ -1461,7 +1495,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.delta.exchange/v2/orders/bracket \
+curl -X PUT https://api.india.delta.exchange/v2/orders/bracket \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -1482,7 +1516,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.put 'https://api.delta.exchange/v2/orders/bracket',
+result = RestClient.put 'https://api.india.delta.exchange/v2/orders/bracket',
   params: {
   }, headers: headers
 
@@ -1498,14 +1532,15 @@ A bracket order is a set of TP and SL order. You can specify bracket order with 
 
 ```json
 {
-  "id": 0,
-  "product_id": 0,
-  "product_symbol": "string",
-  "bracket_stop_loss_limit_price": "string",
-  "bracket_stop_loss_price": "string",
-  "bracket_take_profit_limit_price": "string",
-  "bracket_take_profit_price": "string",
-  "bracket_trail_amount": "string"
+  "id": 34521712,
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "bracket_stop_loss_limit_price": "55000",
+  "bracket_stop_loss_price": "56000",
+  "bracket_take_profit_limit_price": "65000",
+  "bracket_take_profit_price": "64000",
+  "bracket_trail_amount": "50",
+  "bracket_stop_trigger_method": "last_traded_price"
 }
 ```
 
@@ -1552,7 +1587,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.delete('https://api.delta.exchange/v2/orders/all', params={
+r = requests.delete('https://api.india.delta.exchange/v2/orders/all', params={
 
 }, headers = headers)
 
@@ -1562,7 +1597,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api.delta.exchange/v2/orders/all \
+curl -X DELETE https://api.india.delta.exchange/v2/orders/all \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -1583,7 +1618,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.delete 'https://api.delta.exchange/v2/orders/all',
+result = RestClient.delete 'https://api.india.delta.exchange/v2/orders/all',
   params: {
   }, headers: headers
 
@@ -1599,10 +1634,11 @@ Cancels all orders for a given product id. If product id is not provided, it can
 
 ```json
 {
-  "product_id": 0,
-  "contract_types": "string",
-  "cancel_limit_orders": "true",
-  "cancel_stop_orders": "true"
+  "product_id": 27,
+  "contract_types": "perpetual_futures,put_options,call_options",
+  "cancel_limit_orders": false,
+  "cancel_stop_orders": false,
+  "cancel_reduce_only_orders": false
 }
 ```
 
@@ -1649,7 +1685,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/orders/batch', params={
+r = requests.post('https://api.india.delta.exchange/v2/orders/batch', params={
 
 }, headers = headers)
 
@@ -1659,7 +1695,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/orders/batch \
+curl -X POST https://api.india.delta.exchange/v2/orders/batch \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -1680,7 +1716,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/orders/batch',
+result = RestClient.post 'https://api.india.delta.exchange/v2/orders/batch',
   params: {
   }, headers: headers
 
@@ -1695,37 +1731,29 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
 > Body parameter
 
 ```json
-[
-  {
-    "product_id": 0,
-    "product_symbol": "string",
-    "limit_price": "string",
-    "size": 0,
-    "side": "buy",
-    "order_type": "limit_order",
-    "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "trail_amount": "string",
-    "stop_trigger_method": "mark_price",
-    "bracket_stop_loss_limit_price": "string",
-    "bracket_stop_loss_price": "string",
-    "bracket_take_profit_limit_price": "string",
-    "bracket_take_profit_price": "string",
-    "time_in_force": "gtc",
-    "mmp": "disabled",
-    "post_only": "true",
-    "reduce_only": "true",
-    "close_on_trigger": "true",
-    "client_order_id": "string"
-  }
-]
+{
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "orders": [
+    {
+      "limit_price": "59000",
+      "size": 10,
+      "side": "buy",
+      "order_type": "limit_order",
+      "time_in_force": "gtc",
+      "mmp": "disabled",
+      "post_only": false,
+      "client_order_id": "34521712"
+    }
+  ]
+}
 ```
 
 <h3 id="create-batch-orders-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[ArrayOfBatchCreateOrderRequest](#schemaarrayofbatchcreateorderrequest)|true|Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders|
+|body|body|[BatchCreateOrdersRequest](#schemabatchcreateordersrequest)|true|Does not support time_in_force flag for orders, All orders in batch create are assumed to be gtc orders. batch create does not support stop orders, it support only limit orders|
 
 > Example responses
 
@@ -1736,23 +1764,23 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
   "success": true,
   "result": [
     {
-      "id": 0,
-      "user_id": 0,
-      "size": 0,
-      "unfilled_size": 0,
+      "id": 123,
+      "user_id": 453671,
+      "size": 10,
+      "unfilled_size": 2,
       "side": "buy",
       "order_type": "limit_order",
-      "limit_price": "string",
+      "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
-      "stop_price": "string",
-      "paid_commission": "string",
-      "commission": "string",
-      "close_on_trigger": "false",
-      "client_order_id": "string",
+      "stop_price": "55000",
+      "paid_commission": "0.5432",
+      "commission": "0.5432",
+      "reduce_only": false,
+      "client_order_id": "34521712",
       "state": "open",
-      "created_at": "string",
-      "product_id": 0,
-      "product_symbol": "string"
+      "created_at": "1725865012000000",
+      "product_id": 27,
+      "product_symbol": "BTCUSD"
     }
   ]
 }
@@ -1776,8 +1804,8 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -1803,7 +1831,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.put('https://api.delta.exchange/v2/orders/batch', params={
+r = requests.put('https://api.india.delta.exchange/v2/orders/batch', params={
 
 }, headers = headers)
 
@@ -1813,7 +1841,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.delta.exchange/v2/orders/batch \
+curl -X PUT https://api.india.delta.exchange/v2/orders/batch \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -1834,7 +1862,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.put 'https://api.delta.exchange/v2/orders/batch',
+result = RestClient.put 'https://api.india.delta.exchange/v2/orders/batch',
   params: {
   }, headers: headers
 
@@ -1849,24 +1877,26 @@ Orders to be edited in a batch. Rate limits apply.
 > Body parameter
 
 ```json
-[
-  {
-    "id": 0,
-    "product_id": 0,
-    "product_symbol": "string",
-    "limit_price": "string",
-    "size": 0,
-    "mmp": "disabled",
-    "post_only": "false"
-  }
-]
+{
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "orders": [
+    {
+      "id": 34521712,
+      "limit_price": "59000",
+      "size": 15,
+      "mmp": "disabled",
+      "post_only": false
+    }
+  ]
+}
 ```
 
 <h3 id="edit-batch-orders-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[ArrayOfEditOrderRequest](#schemaarrayofeditorderrequest)|true|none|
+|body|body|[BatchEditOrdersRequest](#schemabatcheditordersrequest)|true|none|
 
 > Example responses
 
@@ -1877,23 +1907,23 @@ Orders to be edited in a batch. Rate limits apply.
   "success": true,
   "result": [
     {
-      "id": 0,
-      "user_id": 0,
-      "size": 0,
-      "unfilled_size": 0,
+      "id": 123,
+      "user_id": 453671,
+      "size": 10,
+      "unfilled_size": 2,
       "side": "buy",
       "order_type": "limit_order",
-      "limit_price": "string",
+      "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
-      "stop_price": "string",
-      "paid_commission": "string",
-      "commission": "string",
-      "close_on_trigger": "false",
-      "client_order_id": "string",
+      "stop_price": "55000",
+      "paid_commission": "0.5432",
+      "commission": "0.5432",
+      "reduce_only": false,
+      "client_order_id": "34521712",
       "state": "open",
-      "created_at": "string",
-      "product_id": 0,
-      "product_symbol": "string"
+      "created_at": "1725865012000000",
+      "product_id": 27,
+      "product_symbol": "BTCUSD"
     }
   ]
 }
@@ -1917,8 +1947,8 @@ Orders to be edited in a batch. Rate limits apply.
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -1944,7 +1974,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.delete('https://api.delta.exchange/v2/orders/batch', params={
+r = requests.delete('https://api.india.delta.exchange/v2/orders/batch', params={
 
 }, headers = headers)
 
@@ -1954,7 +1984,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api.delta.exchange/v2/orders/batch \
+curl -X DELETE https://api.india.delta.exchange/v2/orders/batch \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -1975,7 +2005,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.delete 'https://api.delta.exchange/v2/orders/batch',
+result = RestClient.delete 'https://api.india.delta.exchange/v2/orders/batch',
   params: {
   }, headers: headers
 
@@ -1988,19 +2018,23 @@ p JSON.parse(result)
 > Body parameter
 
 ```json
-[
-  {
-    "id": 0,
-    "product_id": 0
-  }
-]
+{
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "orders": [
+    {
+      "id": 13452112,
+      "client_order_id": "34521712"
+    }
+  ]
+}
 ```
 
 <h3 id="delete-batch-orders-parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|body|body|[ArrayOfDeleteOrderRequest](#schemaarrayofdeleteorderrequest)|true|none|
+|body|body|[BatchDeleteOrdersRequest](#schemabatchdeleteordersrequest)|true|none|
 
 > Example responses
 
@@ -2011,23 +2045,23 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": 0,
-      "user_id": 0,
-      "size": 0,
-      "unfilled_size": 0,
+      "id": 123,
+      "user_id": 453671,
+      "size": 10,
+      "unfilled_size": 2,
       "side": "buy",
       "order_type": "limit_order",
-      "limit_price": "string",
+      "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
-      "stop_price": "string",
-      "paid_commission": "string",
-      "commission": "string",
-      "close_on_trigger": "false",
-      "client_order_id": "string",
+      "stop_price": "55000",
+      "paid_commission": "0.5432",
+      "commission": "0.5432",
+      "reduce_only": false,
+      "client_order_id": "34521712",
       "state": "open",
-      "created_at": "string",
-      "product_id": 0,
-      "product_symbol": "string"
+      "created_at": "1725865012000000",
+      "product_id": 27,
+      "product_symbol": "BTCUSD"
     }
   ]
 }
@@ -2051,8 +2085,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -2077,7 +2111,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/orders/{order_id}', params={
+r = requests.get('https://api.india.delta.exchange/v2/orders/{order_id}', params={
 
 }, headers = headers)
 
@@ -2087,7 +2121,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/orders/{order_id} \
+curl -X GET https://api.india.delta.exchange/v2/orders/{order_id} \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2106,7 +2140,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/orders/{order_id}',
+result = RestClient.get 'https://api.india.delta.exchange/v2/orders/{order_id}',
   params: {
   }, headers: headers
 
@@ -2130,23 +2164,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": 0,
-    "user_id": 0,
-    "size": 0,
-    "unfilled_size": 0,
+    "id": 123,
+    "user_id": 453671,
+    "size": 10,
+    "unfilled_size": 2,
     "side": "buy",
     "order_type": "limit_order",
-    "limit_price": "string",
+    "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "paid_commission": "string",
-    "commission": "string",
-    "close_on_trigger": "false",
-    "client_order_id": "string",
+    "stop_price": "55000",
+    "paid_commission": "0.5432",
+    "commission": "0.5432",
+    "reduce_only": false,
+    "client_order_id": "34521712",
     "state": "open",
-    "created_at": "string",
-    "product_id": 0,
-    "product_symbol": "string"
+    "created_at": "1725865012000000",
+    "product_id": 27,
+    "product_symbol": "BTCUSD"
   }
 }
 ```
@@ -2168,8 +2202,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -2194,7 +2228,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/orders/client_order_id/{client_oid}', params={
+r = requests.get('https://api.india.delta.exchange/v2/orders/client_order_id/{client_oid}', params={
 
 }, headers = headers)
 
@@ -2204,7 +2238,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/orders/client_order_id/{client_oid} \
+curl -X GET https://api.india.delta.exchange/v2/orders/client_order_id/{client_oid} \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2223,7 +2257,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/orders/client_order_id/{client_oid}',
+result = RestClient.get 'https://api.india.delta.exchange/v2/orders/client_order_id/{client_oid}',
   params: {
   }, headers: headers
 
@@ -2247,23 +2281,23 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": 0,
-    "user_id": 0,
-    "size": 0,
-    "unfilled_size": 0,
+    "id": 123,
+    "user_id": 453671,
+    "size": 10,
+    "unfilled_size": 2,
     "side": "buy",
     "order_type": "limit_order",
-    "limit_price": "string",
+    "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "paid_commission": "string",
-    "commission": "string",
-    "close_on_trigger": "false",
-    "client_order_id": "string",
+    "stop_price": "55000",
+    "paid_commission": "0.5432",
+    "commission": "0.5432",
+    "reduce_only": false,
+    "client_order_id": "34521712",
     "state": "open",
-    "created_at": "string",
-    "product_id": 0,
-    "product_symbol": "string"
+    "created_at": "1725865012000000",
+    "product_id": 27,
+    "product_symbol": "BTCUSD"
   }
 }
 ```
@@ -2285,8 +2319,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -2312,7 +2346,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/products/{product_id}/orders/leverage', params={
+r = requests.post('https://api.india.delta.exchange/v2/products/{product_id}/orders/leverage', params={
 
 }, headers = headers)
 
@@ -2322,7 +2356,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/products/{product_id}/orders/leverage \
+curl -X POST https://api.india.delta.exchange/v2/products/{product_id}/orders/leverage \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -2343,7 +2377,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/products/{product_id}/orders/leverage',
+result = RestClient.post 'https://api.india.delta.exchange/v2/products/{product_id}/orders/leverage',
   params: {
   }, headers: headers
 
@@ -2357,7 +2391,7 @@ p JSON.parse(result)
 
 ```json
 {
-  "leverage": "string"
+  "leverage": 10
 }
 ```
 
@@ -2365,9 +2399,9 @@ p JSON.parse(result)
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|product_id|path|integer|true|none|
+|product_id|path|integer|true|Product id of the ordered product|
 |body|body|object|true|none|
-|» leverage|body|string|true|none|
+|» leverage|body|string|true|Order leverage|
 
 > Example responses
 
@@ -2377,9 +2411,9 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "leverage": "string",
-    "order_margin": "string",
-    "product_id": 0
+    "leverage": 10,
+    "order_margin": "563.2",
+    "product_id": 27
   }
 }
 ```
@@ -2412,7 +2446,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/products/{product_id}/orders/leverage', params={
+r = requests.get('https://api.india.delta.exchange/v2/products/{product_id}/orders/leverage', params={
 
 }, headers = headers)
 
@@ -2422,7 +2456,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/products/{product_id}/orders/leverage \
+curl -X GET https://api.india.delta.exchange/v2/products/{product_id}/orders/leverage \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2441,7 +2475,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/products/{product_id}/orders/leverage',
+result = RestClient.get 'https://api.india.delta.exchange/v2/products/{product_id}/orders/leverage',
   params: {
   }, headers: headers
 
@@ -2455,7 +2489,7 @@ p JSON.parse(result)
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|product_id|path|integer|true|none|
+|product_id|path|integer|true|Product id of the ordered product|
 
 > Example responses
 
@@ -2465,9 +2499,9 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "leverage": "string",
-    "order_margin": "string",
-    "product_id": 0
+    "leverage": 10,
+    "order_margin": "563.2",
+    "product_id": 27
   }
 }
 ```
@@ -2503,7 +2537,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/positions/margined', params={
+r = requests.get('https://api.india.delta.exchange/v2/positions/margined', params={
 
 }, headers = headers)
 
@@ -2513,7 +2547,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/positions/margined \
+curl -X GET https://api.india.delta.exchange/v2/positions/margined \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2532,7 +2566,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/positions/margined',
+result = RestClient.get 'https://api.india.delta.exchange/v2/positions/margined',
   params: {
   }, headers: headers
 
@@ -2613,7 +2647,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/positions', params={
+r = requests.get('https://api.india.delta.exchange/v2/positions', params={
 
 }, headers = headers)
 
@@ -2623,7 +2657,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/positions \
+curl -X GET https://api.india.delta.exchange/v2/positions \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2642,7 +2676,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/positions',
+result = RestClient.get 'https://api.india.delta.exchange/v2/positions',
   params: {
   }, headers: headers
 
@@ -2703,7 +2737,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.put('https://api.delta.exchange/v2/positions/auto_topup', params={
+r = requests.put('https://api.india.delta.exchange/v2/positions/auto_topup', params={
 
 }, headers = headers)
 
@@ -2713,7 +2747,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.delta.exchange/v2/positions/auto_topup \
+curl -X PUT https://api.india.delta.exchange/v2/positions/auto_topup \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -2734,7 +2768,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.put 'https://api.delta.exchange/v2/positions/auto_topup',
+result = RestClient.put 'https://api.india.delta.exchange/v2/positions/auto_topup',
   params: {
   }, headers: headers
 
@@ -2816,7 +2850,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/positions/change_margin', params={
+r = requests.post('https://api.india.delta.exchange/v2/positions/change_margin', params={
 
 }, headers = headers)
 
@@ -2826,7 +2860,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/positions/change_margin \
+curl -X POST https://api.india.delta.exchange/v2/positions/change_margin \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -2847,7 +2881,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/positions/change_margin',
+result = RestClient.post 'https://api.india.delta.exchange/v2/positions/change_margin',
   params: {
   }, headers: headers
 
@@ -2927,7 +2961,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/positions/close_all', params={
+r = requests.post('https://api.india.delta.exchange/v2/positions/close_all', params={
 
 }, headers = headers)
 
@@ -2937,7 +2971,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/positions/close_all \
+curl -X POST https://api.india.delta.exchange/v2/positions/close_all \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -2958,7 +2992,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/positions/close_all',
+result = RestClient.post 'https://api.india.delta.exchange/v2/positions/close_all',
   params: {
   }, headers: headers
 
@@ -3027,7 +3061,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/orders/history', params={
+r = requests.get('https://api.india.delta.exchange/v2/orders/history', params={
 
 }, headers = headers)
 
@@ -3037,7 +3071,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/orders/history \
+curl -X GET https://api.india.delta.exchange/v2/orders/history \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -3056,7 +3090,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/orders/history',
+result = RestClient.get 'https://api.india.delta.exchange/v2/orders/history',
   params: {
   }, headers: headers
 
@@ -3098,28 +3132,28 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": 0,
-      "user_id": 0,
-      "size": 0,
-      "unfilled_size": 0,
+      "id": 123,
+      "user_id": 453671,
+      "size": 10,
+      "unfilled_size": 2,
       "side": "buy",
       "order_type": "limit_order",
-      "limit_price": "string",
+      "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
-      "stop_price": "string",
-      "paid_commission": "string",
-      "commission": "string",
-      "close_on_trigger": "false",
-      "client_order_id": "string",
+      "stop_price": "55000",
+      "paid_commission": "0.5432",
+      "commission": "0.5432",
+      "reduce_only": false,
+      "client_order_id": "34521712",
       "state": "open",
-      "created_at": "string",
-      "product_id": 0,
-      "product_symbol": "string"
+      "created_at": "1725865012000000",
+      "product_id": 27,
+      "product_symbol": "BTCUSD"
     }
   ],
   "meta": {
-    "after": "string",
-    "before": "string"
+    "after": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN",
+    "before": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
   }
 }
 ```
@@ -3141,8 +3175,8 @@ p JSON.parse(result)
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -3167,7 +3201,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/fills', params={
+r = requests.get('https://api.india.delta.exchange/v2/fills', params={
 
 }, headers = headers)
 
@@ -3177,7 +3211,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/fills \
+curl -X GET https://api.india.delta.exchange/v2/fills \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -3196,7 +3230,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/fills',
+result = RestClient.get 'https://api.india.delta.exchange/v2/fills',
   params: {
   }, headers: headers
 
@@ -3258,8 +3292,8 @@ p JSON.parse(result)
     }
   ],
   "meta": {
-    "after": "string",
-    "before": "string"
+    "after": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN",
+    "before": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
   }
 }
 ```
@@ -3304,7 +3338,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/fills/history/download/csv', params={
+r = requests.get('https://api.india.delta.exchange/v2/fills/history/download/csv', params={
 
 }, headers = headers)
 
@@ -3314,7 +3348,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/fills/history/download/csv \
+curl -X GET https://api.india.delta.exchange/v2/fills/history/download/csv \
   -H 'api-key: ****' \
   -H 'signature: ****' \
   -H 'timestamp: ****'
@@ -3331,7 +3365,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/fills/history/download/csv',
+result = RestClient.get 'https://api.india.delta.exchange/v2/fills/history/download/csv',
   params: {
   }, headers: headers
 
@@ -3376,7 +3410,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/l2orderbook/{symbol}', params={
+r = requests.get('https://api.india.delta.exchange/v2/l2orderbook/{symbol}', params={
 
 }, headers = headers)
 
@@ -3386,7 +3420,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/l2orderbook/{symbol} \
+curl -X GET https://api.india.delta.exchange/v2/l2orderbook/{symbol} \
   -H 'Accept: application/json'
 
 ```
@@ -3399,7 +3433,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/l2orderbook/{symbol}',
+result = RestClient.get 'https://api.india.delta.exchange/v2/l2orderbook/{symbol}',
   params: {
   }, headers: headers
 
@@ -3439,7 +3473,7 @@ p JSON.parse(result)
         "size": 113752
       }
     ],
-    "symbol": "BTCUSDT"
+    "symbol": "BTCUSD"
   }
 }
 ```
@@ -3472,7 +3506,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/trades/{symbol}', params={
+r = requests.get('https://api.india.delta.exchange/v2/trades/{symbol}', params={
 
 }, headers = headers)
 
@@ -3482,7 +3516,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/trades/{symbol} \
+curl -X GET https://api.india.delta.exchange/v2/trades/{symbol} \
   -H 'Accept: application/json'
 
 ```
@@ -3495,7 +3529,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/trades/{symbol}',
+result = RestClient.get 'https://api.india.delta.exchange/v2/trades/{symbol}',
   params: {
   }, headers: headers
 
@@ -3569,7 +3603,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/wallet/balances', params={
+r = requests.get('https://api.india.delta.exchange/v2/wallet/balances', params={
 
 }, headers = headers)
 
@@ -3579,7 +3613,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/wallet/balances \
+curl -X GET https://api.india.delta.exchange/v2/wallet/balances \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -3598,7 +3632,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/wallet/balances',
+result = RestClient.get 'https://api.india.delta.exchange/v2/wallet/balances',
   params: {
   }, headers: headers
 
@@ -3673,7 +3707,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/wallet/transactions', params={
+r = requests.get('https://api.india.delta.exchange/v2/wallet/transactions', params={
 
 }, headers = headers)
 
@@ -3683,7 +3717,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/wallet/transactions \
+curl -X GET https://api.india.delta.exchange/v2/wallet/transactions \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -3702,7 +3736,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/wallet/transactions',
+result = RestClient.get 'https://api.india.delta.exchange/v2/wallet/transactions',
   params: {
   }, headers: headers
 
@@ -3745,8 +3779,8 @@ p JSON.parse(result)
     }
   ],
   "meta": {
-    "after": "string",
-    "before": "string"
+    "after": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN",
+    "before": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
   }
 }
 ```
@@ -3816,7 +3850,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/wallet/transactions/download', params={
+r = requests.get('https://api.india.delta.exchange/v2/wallet/transactions/download', params={
 
 }, headers = headers)
 
@@ -3826,7 +3860,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/wallet/transactions/download \
+curl -X GET https://api.india.delta.exchange/v2/wallet/transactions/download \
   -H 'api-key: ****' \
   -H 'signature: ****' \
   -H 'timestamp: ****'
@@ -3843,7 +3877,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/wallet/transactions/download',
+result = RestClient.get 'https://api.india.delta.exchange/v2/wallet/transactions/download',
   params: {
   }, headers: headers
 
@@ -3890,7 +3924,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/wallets/sub_account_balance_transfer', params={
+r = requests.post('https://api.india.delta.exchange/v2/wallets/sub_account_balance_transfer', params={
 
 }, headers = headers)
 
@@ -3900,7 +3934,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/wallets/sub_account_balance_transfer \
+curl -X POST https://api.india.delta.exchange/v2/wallets/sub_account_balance_transfer \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -3921,7 +3955,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/wallets/sub_account_balance_transfer',
+result = RestClient.post 'https://api.india.delta.exchange/v2/wallets/sub_account_balance_transfer',
   params: {
   }, headers: headers
 
@@ -3990,7 +4024,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/wallets/sub_accounts_transfer_history', params={
+r = requests.get('https://api.india.delta.exchange/v2/wallets/sub_accounts_transfer_history', params={
 
 }, headers = headers)
 
@@ -4000,7 +4034,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/wallets/sub_accounts_transfer_history \
+curl -X GET https://api.india.delta.exchange/v2/wallets/sub_accounts_transfer_history \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -4021,7 +4055,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/wallets/sub_accounts_transfer_history',
+result = RestClient.get 'https://api.india.delta.exchange/v2/wallets/sub_accounts_transfer_history',
   params: {
   }, headers: headers
 
@@ -4069,8 +4103,8 @@ This api returns the wallet balance transfers for subaccounts belonging to the p
     }
   ],
   "meta": {
-    "after": "string",
-    "before": "string"
+    "after": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN",
+    "before": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
   }
 }
 ```
@@ -4104,7 +4138,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/stats', params={
+r = requests.get('https://api.india.delta.exchange/v2/stats', params={
 
 }, headers = headers)
 
@@ -4114,7 +4148,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/stats \
+curl -X GET https://api.india.delta.exchange/v2/stats \
   -H 'Accept: application/json'
 
 ```
@@ -4127,7 +4161,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/stats',
+result = RestClient.get 'https://api.india.delta.exchange/v2/stats',
   params: {
   }, headers: headers
 
@@ -4184,7 +4218,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.put('https://api.delta.exchange/v2/users/update_mmp', params={
+r = requests.put('https://api.india.delta.exchange/v2/users/update_mmp', params={
 
 }, headers = headers)
 
@@ -4194,7 +4228,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.delta.exchange/v2/users/update_mmp \
+curl -X PUT https://api.india.delta.exchange/v2/users/update_mmp \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -4215,7 +4249,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.put 'https://api.delta.exchange/v2/users/update_mmp',
+result = RestClient.put 'https://api.india.delta.exchange/v2/users/update_mmp',
   params: {
   }, headers: headers
 
@@ -4293,7 +4327,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.put('https://api.delta.exchange/v2/users/reset_mmp', params={
+r = requests.put('https://api.india.delta.exchange/v2/users/reset_mmp', params={
 
 }, headers = headers)
 
@@ -4303,7 +4337,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.delta.exchange/v2/users/reset_mmp \
+curl -X PUT https://api.india.delta.exchange/v2/users/reset_mmp \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -4324,7 +4358,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.put 'https://api.delta.exchange/v2/users/reset_mmp',
+result = RestClient.put 'https://api.india.delta.exchange/v2/users/reset_mmp',
   params: {
   }, headers: headers
 
@@ -4390,7 +4424,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.post('https://api.delta.exchange/v2/orders/cancel_after', params={
+r = requests.post('https://api.india.delta.exchange/v2/orders/cancel_after', params={
 
 }, headers = headers)
 
@@ -4400,7 +4434,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X POST https://api.delta.exchange/v2/orders/cancel_after \
+curl -X POST https://api.india.delta.exchange/v2/orders/cancel_after \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
@@ -4421,7 +4455,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.post 'https://api.delta.exchange/v2/orders/cancel_after',
+result = RestClient.post 'https://api.india.delta.exchange/v2/orders/cancel_after',
   params: {
   }, headers: headers
 
@@ -4498,7 +4532,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/users/trading_preferences', params={
+r = requests.get('https://api.india.delta.exchange/v2/users/trading_preferences', params={
 
 }, headers = headers)
 
@@ -4508,7 +4542,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/users/trading_preferences \
+curl -X GET https://api.india.delta.exchange/v2/users/trading_preferences \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -4527,7 +4561,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/users/trading_preferences',
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/trading_preferences',
   params: {
   }, headers: headers
 
@@ -4581,7 +4615,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/sub_accounts', params={
+r = requests.get('https://api.india.delta.exchange/v2/sub_accounts', params={
 
 }, headers = headers)
 
@@ -4591,7 +4625,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/sub_accounts \
+curl -X GET https://api.india.delta.exchange/v2/sub_accounts \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -4610,7 +4644,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/sub_accounts',
+result = RestClient.get 'https://api.india.delta.exchange/v2/sub_accounts',
   params: {
   }, headers: headers
 
@@ -4675,7 +4709,7 @@ headers = {
   'timestamp': '****'
 }
 
-r = requests.get('https://api.delta.exchange/v2/profile', params={
+r = requests.get('https://api.india.delta.exchange/v2/profile', params={
 
 }, headers = headers)
 
@@ -4685,7 +4719,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/profile \
+curl -X GET https://api.india.delta.exchange/v2/profile \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -4704,7 +4738,7 @@ headers = {
   'timestamp' => '****'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/profile',
+result = RestClient.get 'https://api.india.delta.exchange/v2/profile',
   params: {
   }, headers: headers
 
@@ -4766,7 +4800,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/products/?states=expired', params={
+r = requests.get('https://api.india.delta.exchange/v2/products/?states=expired', params={
 
 }, headers = headers)
 
@@ -4776,7 +4810,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/products/?states=expired \
+curl -X GET https://api.india.delta.exchange/v2/products/?states=expired \
   -H 'Accept: application/json'
 
 ```
@@ -4789,7 +4823,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/products/?states=expired',
+result = RestClient.get 'https://api.india.delta.exchange/v2/products/?states=expired',
   params: {
   }, headers: headers
 
@@ -4803,7 +4837,7 @@ p JSON.parse(result)
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|states|query|string|false|Comma separated list of states e.g. to get expired contracts https://api.delta.exchange/v2/products?contract_types=call_options&states=expired |
+|states|query|string|false|Comma separated list of states e.g. to get expired contracts https://api.india.delta.exchange/v2/products?contract_types=call_options&states=expired |
 |page_size|query|string|false|size of a single page for paginated request, default: 100|
 
 > Example responses
@@ -4814,72 +4848,81 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": 0,
-    "symbol": "string",
-    "description": "string",
-    "created_at": "string",
-    "updated_at": "string",
-    "settlement_time": "string",
+    "id": 27,
+    "symbol": "BTCUSD",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+    "created_at": "2023-12-18T13:10:39Z",
+    "updated_at": "2024-11-15T02:47:50Z",
+    "settlement_time": null,
     "notional_type": "vanilla",
-    "impact_size": 0,
-    "initial_margin": 0,
-    "maintenance_margin": "string",
-    "contract_value": "string",
-    "contract_unit_currency": "string",
-    "tick_size": "string",
-    "product_specs": {},
+    "impact_size": 10000,
+    "initial_margin": "0.5",
+    "maintenance_margin": "0.25",
+    "contract_value": "0.001",
+    "contract_unit_currency": "BTC",
+    "tick_size": "0.5",
+    "product_specs": {
+      "funding_clamp_value": 0.05,
+      "only_reduce_only_orders_allowed": false,
+      "tags": [
+        "layer_1"
+      ]
+    },
     "state": "live",
     "trading_status": "operational",
-    "max_leverage_notional": "string",
-    "default_leverage": "string",
-    "initial_margin_scaling_factor": "string",
-    "maintenance_margin_scaling_factor": "string",
-    "taker_commission_rate": "string",
-    "maker_commission_rate": "string",
-    "liquidation_penalty_factor": "string",
-    "contract_type": "string",
-    "position_size_limit": 0,
-    "basis_factor_max_limit": "string",
-    "is_quanto": true,
-    "funding_method": "string",
-    "annualized_funding": "string",
-    "price_band": "string",
+    "max_leverage_notional": "100000",
+    "default_leverage": "200",
+    "initial_margin_scaling_factor": "0.0000025",
+    "maintenance_margin_scaling_factor": "0.00000125",
+    "taker_commission_rate": "0.0005",
+    "maker_commission_rate": "0.0002",
+    "liquidation_penalty_factor": "0.5",
+    "contract_type": "perpetual_futures",
+    "position_size_limit": 229167,
+    "basis_factor_max_limit": "10.95",
+    "is_quanto": false,
+    "funding_method": "mark_price",
+    "annualized_funding": "10.95",
+    "price_band": "2.5",
     "underlying_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "quoting_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "settling_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "spot_index": {
-      "id": 0,
-      "symbol": "string",
+      "id": 14,
+      "symbol": ".DEXBTUSD",
       "constituent_exchanges": [
-        {}
+        {
+          "name": "ExchangeA",
+          "weight": 0.25
+        }
       ],
-      "underlying_asset_id": 0,
-      "quoting_asset_id": 0,
-      "tick_size": null,
+      "underlying_asset_id": 13,
+      "quoting_asset_id": 14,
+      "tick_size": "0.5",
       "index_type": "spot_pair"
     }
   }
@@ -4932,7 +4975,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/history/candles', params={
+r = requests.get('https://api.india.delta.exchange/v2/history/candles', params={
   'resolution': '5m',  'symbol': 'BTCUSD',  'start': '1685618835',  'end': '1722511635'
 }, headers = headers)
 
@@ -4942,7 +4985,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/history/candles?resolution=5m&symbol=BTCUSD&start=1685618835&end=1722511635 \
+curl -X GET https://api.india.delta.exchange/v2/history/candles?resolution=5m&symbol=BTCUSD&start=1685618835&end=1722511635 \
   -H 'Accept: application/json'
 
 ```
@@ -4955,7 +4998,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/history/candles',
+result = RestClient.get 'https://api.india.delta.exchange/v2/history/candles',
   params: {
   'resolution' => '5m',
 'symbol' => 'BTCUSD',
@@ -5043,7 +5086,7 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.delta.exchange/v2/history/sparklines', params={
+r = requests.get('https://api.india.delta.exchange/v2/history/sparklines', params={
   'symbols': 'ETHUSD,MARK:BTCUSD'
 }, headers = headers)
 
@@ -5053,7 +5096,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.delta.exchange/v2/history/sparklines?symbols=ETHUSD%2CMARK%3ABTCUSD \
+curl -X GET https://api.india.delta.exchange/v2/history/sparklines?symbols=ETHUSD%2CMARK%3ABTCUSD \
   -H 'Accept: application/json'
 
 ```
@@ -5066,7 +5109,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.delta.exchange/v2/history/sparklines',
+result = RestClient.get 'https://api.india.delta.exchange/v2/history/sparklines',
   params: {
   'symbols' => 'ETHUSD,MARK:BTCUSD'
 }, headers: headers
@@ -5167,30 +5210,37 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "symbol": "string",
+  "id": 14,
+  "symbol": ".DEXBTUSD",
   "constituent_exchanges": [
-    {}
+    {
+      "name": "ExchangeA",
+      "weight": 0.25
+    }
   ],
-  "underlying_asset_id": 0,
-  "quoting_asset_id": 0,
-  "tick_size": null,
+  "underlying_asset_id": 13,
+  "quoting_asset_id": 14,
+  "tick_size": "0.5",
   "index_type": "spot_pair"
 }
 
 ```
 
+*Details of an index used in trading, including its constituents and characteristics.*
+
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer(int64)|false|none|none|
-|symbol|string|false|none|e.g. '.DE' followed by base asset + quoting asset|
-|constituent_exchanges|[object]|false|none|Details of name and weight of exchanges in index|
-|underlying_asset_id|integer|false|none|Asset ID for base symbol|
-|quoting_asset_id|integer|false|none|Asset ID for quoting symbol|
-|tick_size|string(Decimal)|false|none|Precision of the spot price|
-|index_type|string|false|none|Type of index|
+|id|integer(int64)|false|none|Unique identifier for the index.|
+|symbol|string|false|none|Symbol representing the index, typically prefixed by '.DE' followed by base asset and quoting asset.|
+|constituent_exchanges|[object]|false|none|Details of constituent exchanges, including their names and weights in the index.|
+|» name|string|false|none|Name of the constituent exchange.|
+|» weight|number|false|none|Weight of the exchange in the index.|
+|underlying_asset_id|integer|false|none|ID of the underlying asset for the index.|
+|quoting_asset_id|integer|false|none|ID of the quoting asset for the index.|
+|tick_size|string|false|none|Precision of the spot price in decimal format.|
+|index_type|string|false|none|Type of the index.|
 
 #### Enumerated Values
 
@@ -5207,14 +5257,17 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": 0,
-    "symbol": "string",
+    "id": 14,
+    "symbol": ".DEXBTUSD",
     "constituent_exchanges": [
-      {}
+      {
+        "name": "ExchangeA",
+        "weight": 0.25
+      }
     ],
-    "underlying_asset_id": 0,
-    "quoting_asset_id": 0,
-    "tick_size": null,
+    "underlying_asset_id": 13,
+    "quoting_asset_id": 14,
+    "tick_size": "0.5",
     "index_type": "spot_pair"
   }
 ]
@@ -5225,7 +5278,32 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[Index](#schemaindex)]|false|none|none|
+|*anonymous*|[[Index](#schemaindex)]|false|none|[Details of an index used in trading, including its constituents and characteristics.]|
+
+<h2 id="tocSproductspecs">ProductSpecs</h2>
+
+<a id="schemaproductspecs"></a>
+
+```json
+{
+  "funding_clamp_value": 0.05,
+  "only_reduce_only_orders_allowed": false,
+  "tags": [
+    "layer_1"
+  ]
+}
+
+```
+
+*Specifications related to the specific product or contract.*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|funding_clamp_value|number|false|none|The maximum allowable funding rate clamp value.|
+|only_reduce_only_orders_allowed|boolean|false|none|Indicates whether only reduce-only orders are allowed.|
+|tags|[string]|false|none|Tags associated with the product specifications.|
 
 <h2 id="tocSasset">Asset</h2>
 
@@ -5233,28 +5311,30 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "symbol": "string",
-  "precision": 0,
+  "id": 14,
+  "symbol": "USD",
+  "precision": 8,
   "deposit_status": "enabled",
   "withdrawal_status": "enabled",
-  "base_withdrawal_fee": "string",
-  "min_withdrawal_amount": "string"
+  "base_withdrawal_fee": "0.000000000000000000",
+  "min_withdrawal_amount": "0.000000000000000000"
 }
 
 ```
+
+*Details of the asset used in the product or contract.*
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer(int64)|false|none|none|
-|symbol|string|false|none|none|
-|precision|integer|false|none|none|
-|deposit_status|string|false|none|none|
-|withdrawal_status|string|false|none|none|
-|base_withdrawal_fee|string|false|none|none|
-|min_withdrawal_amount|string|false|none|Minimum value of allowed withdrawal|
+|id|integer(int64)|false|none|Unique identifier for the asset.|
+|symbol|string|false|none|Symbol representing the asset.|
+|precision|integer|false|none|Number of decimal places supported for the asset.|
+|deposit_status|string|false|none|Indicates if deposits are enabled for the asset.|
+|withdrawal_status|string|false|none|Indicates if withdrawals are enabled for the asset.|
+|base_withdrawal_fee|string|false|none|Fixed withdrawal fee for the asset.|
+|min_withdrawal_amount|string|false|none|Minimum allowable withdrawal amount for the asset.|
 
 #### Enumerated Values
 
@@ -5272,13 +5352,13 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": 0,
-    "symbol": "string",
-    "precision": 0,
+    "id": 14,
+    "symbol": "USD",
+    "precision": 8,
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
-    "base_withdrawal_fee": "string",
-    "min_withdrawal_amount": "string"
+    "base_withdrawal_fee": "0.000000000000000000",
+    "min_withdrawal_amount": "0.000000000000000000"
   }
 ]
 
@@ -5288,7 +5368,7 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[Asset](#schemaasset)]|false|none|none|
+|*anonymous*|[[Asset](#schemaasset)]|false|none|[Details of the asset used in the product or contract.]|
 
 <h2 id="tocSproduct">Product</h2>
 
@@ -5296,72 +5376,81 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "symbol": "string",
-  "description": "string",
-  "created_at": "string",
-  "updated_at": "string",
-  "settlement_time": "string",
+  "id": 27,
+  "symbol": "BTCUSD",
+  "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+  "created_at": "2023-12-18T13:10:39Z",
+  "updated_at": "2024-11-15T02:47:50Z",
+  "settlement_time": null,
   "notional_type": "vanilla",
-  "impact_size": 0,
-  "initial_margin": 0,
-  "maintenance_margin": "string",
-  "contract_value": "string",
-  "contract_unit_currency": "string",
-  "tick_size": "string",
-  "product_specs": {},
+  "impact_size": 10000,
+  "initial_margin": "0.5",
+  "maintenance_margin": "0.25",
+  "contract_value": "0.001",
+  "contract_unit_currency": "BTC",
+  "tick_size": "0.5",
+  "product_specs": {
+    "funding_clamp_value": 0.05,
+    "only_reduce_only_orders_allowed": false,
+    "tags": [
+      "layer_1"
+    ]
+  },
   "state": "live",
   "trading_status": "operational",
-  "max_leverage_notional": "string",
-  "default_leverage": "string",
-  "initial_margin_scaling_factor": "string",
-  "maintenance_margin_scaling_factor": "string",
-  "taker_commission_rate": "string",
-  "maker_commission_rate": "string",
-  "liquidation_penalty_factor": "string",
-  "contract_type": "string",
-  "position_size_limit": 0,
-  "basis_factor_max_limit": "string",
-  "is_quanto": true,
-  "funding_method": "string",
-  "annualized_funding": "string",
-  "price_band": "string",
+  "max_leverage_notional": "100000",
+  "default_leverage": "200",
+  "initial_margin_scaling_factor": "0.0000025",
+  "maintenance_margin_scaling_factor": "0.00000125",
+  "taker_commission_rate": "0.0005",
+  "maker_commission_rate": "0.0002",
+  "liquidation_penalty_factor": "0.5",
+  "contract_type": "perpetual_futures",
+  "position_size_limit": 229167,
+  "basis_factor_max_limit": "10.95",
+  "is_quanto": false,
+  "funding_method": "mark_price",
+  "annualized_funding": "10.95",
+  "price_band": "2.5",
   "underlying_asset": {
-    "id": 0,
-    "symbol": "string",
-    "precision": 0,
+    "id": 14,
+    "symbol": "USD",
+    "precision": 8,
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
-    "base_withdrawal_fee": "string",
-    "min_withdrawal_amount": "string"
+    "base_withdrawal_fee": "0.000000000000000000",
+    "min_withdrawal_amount": "0.000000000000000000"
   },
   "quoting_asset": {
-    "id": 0,
-    "symbol": "string",
-    "precision": 0,
+    "id": 14,
+    "symbol": "USD",
+    "precision": 8,
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
-    "base_withdrawal_fee": "string",
-    "min_withdrawal_amount": "string"
+    "base_withdrawal_fee": "0.000000000000000000",
+    "min_withdrawal_amount": "0.000000000000000000"
   },
   "settling_asset": {
-    "id": 0,
-    "symbol": "string",
-    "precision": 0,
+    "id": 14,
+    "symbol": "USD",
+    "precision": 8,
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
-    "base_withdrawal_fee": "string",
-    "min_withdrawal_amount": "string"
+    "base_withdrawal_fee": "0.000000000000000000",
+    "min_withdrawal_amount": "0.000000000000000000"
   },
   "spot_index": {
-    "id": 0,
-    "symbol": "string",
+    "id": 14,
+    "symbol": ".DEXBTUSD",
     "constituent_exchanges": [
-      {}
+      {
+        "name": "ExchangeA",
+        "weight": 0.25
+      }
     ],
-    "underlying_asset_id": 0,
-    "quoting_asset_id": 0,
-    "tick_size": null,
+    "underlying_asset_id": 13,
+    "quoting_asset_id": 14,
+    "tick_size": "0.5",
     "index_type": "spot_pair"
   }
 }
@@ -5372,40 +5461,40 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer(int64)|false|none|id of a product or a contract|
-|symbol|string|false|none|symbol of a product or a contract e.g. LINKBTC, XRPUSDQ|
-|description|string|false|none|description of a product or a contract|
-|created_at|string|false|none|product/contract creation date and time|
-|updated_at|string|false|none|product/contract update date and time|
-|settlement_time|string|false|none|settlement Timestamp of futures contract|
-|notional_type|string|false|none|whether notional is calculated using vanilla math or inverse math|
-|impact_size|integer|false|none|size of a typical trade. Used in the computation of mark price|
-|initial_margin|integer|false|none|The amount required to enter into a new position|
-|maintenance_margin|string|false|none|The amount necessary when a loss on a futures position requires you to allocate more funds to return the margin to the initial margin level.|
-|contract_value|string|false|none|The notional value of a futures contract is simply the spot price of the asset multiplied by the amount of the asset specified in the contract|
-|contract_unit_currency|string|false|none|This is the unit of  1 contract, for vanilla futures, its underlying asset. for inverse, it is settling asset. for quanto, its settling asset / quoting asset|
-|tick_size|string|false|none|The minimum gap between 2 consecutive prices.|
-|product_specs|object|false|none|Specs related to specific contract types (IRS indices, options volatility limits)|
-|state|string|false|none|current state of the product|
-|trading_status|string|false|none|trading status of the contract e.g. 'operational','disrupted_cancel_only' or 'disrupted_post_only'|
-|max_leverage_notional|string|false|none|maximum notional position size (in settling asset terms) that can be acquired at highest allowed leverage for a given contract.|
-|default_leverage|string|false|none|default leverage|
-|initial_margin_scaling_factor|string|false|none|none|
-|maintenance_margin_scaling_factor|string|false|none|none|
-|taker_commission_rate|string|false|none|rate at which commission fee will be calculated for a taker trade in given contract|
-|maker_commission_rate|string|false|none|rate at which maker rebate will be calculated|
-|liquidation_penalty_factor|string|false|none|Determines liquidation charge as per the following formula: liquidation_penalty_factor * minimum maintenance margin|
-|contract_type|string|false|none|Type of contracts e.g. futures, perpetual futures,|
-|position_size_limit|integer|false|none|Maximum size of contracts in a single order can be placed|
-|basis_factor_max_limit|string|false|none|Maximum allowed value of annualized basis|
-|is_quanto|boolean|false|none|Flag which denotes whether future contract is quanto or not|
-|funding_method|string|false|none|Method used to calculate funding for given contract. e.g. Fixed or mark price|
-|annualized_funding|string|false|none|Maximum allowed value of funding, expressed as annual rate.|
-|price_band|string|false|none|the range around mark price in which trading is allowed. This number is in percentage.|
-|underlying_asset|[Asset](#schemaasset)|false|none|none|
-|quoting_asset|[Asset](#schemaasset)|false|none|none|
-|settling_asset|[Asset](#schemaasset)|false|none|none|
-|spot_index|[Index](#schemaindex)|false|none|none|
+|id|integer(int64)|false|none|Unique identifier of a product or contract.|
+|symbol|string|false|none|Symbol of the product or contract like BTCUSD, ETHUSD.|
+|description|string|false|none|Detailed description of the product or contract.|
+|created_at|string|false|none|Creation timestamp of the product or contract.|
+|updated_at|string|false|none|Last update timestamp of the product or contract.|
+|settlement_time|string|false|none|Settlement timestamp for futures contracts.|
+|notional_type|string|false|none|Type of notional calculation.|
+|impact_size|integer|false|none|Size of a typical trade used for mark price computation.|
+|initial_margin|string|false|none|Margin required to open a position.|
+|maintenance_margin|string|false|none|Minimum margin required to maintain a position.|
+|contract_value|string|false|none|Notional value of the contract (spot price x contract amount).|
+|contract_unit_currency|string|false|none|Unit of the contract (underlying asset or settling asset).|
+|tick_size|string|false|none|Minimum price interval between two successive prices.|
+|product_specs|[ProductSpecs](#schemaproductspecs)|false|none|Specifications related to the specific product or contract.|
+|state|string|false|none|Current state of the product.|
+|trading_status|string|false|none|Trading status of the contract.|
+|max_leverage_notional|string|false|none|Maximum notional position size at the highest leverage.|
+|default_leverage|string|false|none|Default leverage assigned to the product.|
+|initial_margin_scaling_factor|string|false|none|Scaling factor for initial margin.|
+|maintenance_margin_scaling_factor|string|false|none|Scaling factor for maintenance margin.|
+|taker_commission_rate|string|false|none|Commission rate for taker trades.|
+|maker_commission_rate|string|false|none|Commission rate for maker trades.|
+|liquidation_penalty_factor|string|false|none|Factor used to calculate liquidation penalty.|
+|contract_type|string|false|none|Type of contract (e.g., futures, perpetual).|
+|position_size_limit|integer|false|none|Maximum size for a single contract order.|
+|basis_factor_max_limit|string|false|none|Maximum value for annualized basis.|
+|is_quanto|boolean|false|none|Indicates if the contract is quanto.|
+|funding_method|string|false|none|Method used for funding calculation.|
+|annualized_funding|string|false|none|Maximum allowed annualized funding rate.|
+|price_band|string|false|none|Price range allowed around the mark price (percentage).|
+|underlying_asset|[Asset](#schemaasset)|false|none|Details of the asset used in the product or contract.|
+|quoting_asset|[Asset](#schemaasset)|false|none|Details of the asset used in the product or contract.|
+|settling_asset|[Asset](#schemaasset)|false|none|Details of the asset used in the product or contract.|
+|spot_index|[Index](#schemaindex)|false|none|Details of an index used in trading, including its constituents and characteristics.|
 
 #### Enumerated Values
 
@@ -5456,72 +5545,81 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": 0,
-    "symbol": "string",
-    "description": "string",
-    "created_at": "string",
-    "updated_at": "string",
-    "settlement_time": "string",
+    "id": 27,
+    "symbol": "BTCUSD",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+    "created_at": "2023-12-18T13:10:39Z",
+    "updated_at": "2024-11-15T02:47:50Z",
+    "settlement_time": null,
     "notional_type": "vanilla",
-    "impact_size": 0,
-    "initial_margin": 0,
-    "maintenance_margin": "string",
-    "contract_value": "string",
-    "contract_unit_currency": "string",
-    "tick_size": "string",
-    "product_specs": {},
+    "impact_size": 10000,
+    "initial_margin": "0.5",
+    "maintenance_margin": "0.25",
+    "contract_value": "0.001",
+    "contract_unit_currency": "BTC",
+    "tick_size": "0.5",
+    "product_specs": {
+      "funding_clamp_value": 0.05,
+      "only_reduce_only_orders_allowed": false,
+      "tags": [
+        "layer_1"
+      ]
+    },
     "state": "live",
     "trading_status": "operational",
-    "max_leverage_notional": "string",
-    "default_leverage": "string",
-    "initial_margin_scaling_factor": "string",
-    "maintenance_margin_scaling_factor": "string",
-    "taker_commission_rate": "string",
-    "maker_commission_rate": "string",
-    "liquidation_penalty_factor": "string",
-    "contract_type": "string",
-    "position_size_limit": 0,
-    "basis_factor_max_limit": "string",
-    "is_quanto": true,
-    "funding_method": "string",
-    "annualized_funding": "string",
-    "price_band": "string",
+    "max_leverage_notional": "100000",
+    "default_leverage": "200",
+    "initial_margin_scaling_factor": "0.0000025",
+    "maintenance_margin_scaling_factor": "0.00000125",
+    "taker_commission_rate": "0.0005",
+    "maker_commission_rate": "0.0002",
+    "liquidation_penalty_factor": "0.5",
+    "contract_type": "perpetual_futures",
+    "position_size_limit": 229167,
+    "basis_factor_max_limit": "10.95",
+    "is_quanto": false,
+    "funding_method": "mark_price",
+    "annualized_funding": "10.95",
+    "price_band": "2.5",
     "underlying_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "quoting_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "settling_asset": {
-      "id": 0,
-      "symbol": "string",
-      "precision": 0,
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
-      "base_withdrawal_fee": "string",
-      "min_withdrawal_amount": "string"
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000"
     },
     "spot_index": {
-      "id": 0,
-      "symbol": "string",
+      "id": 14,
+      "symbol": ".DEXBTUSD",
       "constituent_exchanges": [
-        {}
+        {
+          "name": "ExchangeA",
+          "weight": 0.25
+        }
       ],
-      "underlying_asset_id": 0,
-      "quoting_asset_id": 0,
-      "tick_size": null,
+      "underlying_asset_id": 13,
+      "quoting_asset_id": 14,
+      "tick_size": "0.5",
       "index_type": "spot_pair"
     }
   }
@@ -5541,23 +5639,23 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "user_id": 0,
-  "size": 0,
-  "unfilled_size": 0,
+  "id": 123,
+  "user_id": 453671,
+  "size": 10,
+  "unfilled_size": 2,
   "side": "buy",
   "order_type": "limit_order",
-  "limit_price": "string",
+  "limit_price": "59000",
   "stop_order_type": "stop_loss_order",
-  "stop_price": "string",
-  "paid_commission": "string",
-  "commission": "string",
-  "close_on_trigger": "false",
-  "client_order_id": "string",
+  "stop_price": "55000",
+  "paid_commission": "0.5432",
+  "commission": "0.5432",
+  "reduce_only": false,
+  "client_order_id": "34521712",
   "state": "open",
-  "created_at": "string",
-  "product_id": 0,
-  "product_symbol": "string"
+  "created_at": "1725865012000000",
+  "product_id": 27,
+  "product_symbol": "BTCUSD"
 }
 
 ```
@@ -5568,23 +5666,23 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|none|
-|user_id|integer|false|none|none|
-|size|integer|false|none|none|
-|unfilled_size|integer|false|none|none|
-|side|string|false|none|side for which to place order|
-|order_type|string|false|none|none|
-|limit_price|string|false|none|none|
-|stop_order_type|string|false|none|none|
-|stop_price|string|false|none|none|
+|id|integer|false|none|Genraeted order id|
+|user_id|integer|false|none|Client id|
+|size|integer|false|none|Order size|
+|unfilled_size|integer|false|none|Order size which is not filled yet|
+|side|string|false|none|Side for which to place order|
+|order_type|string|false|none|Order type - limit_order/market_order|
+|limit_price|string|false|none|Price level on which order must be triggered|
+|stop_order_type|string|false|none|Stop order type - stop loss or take profit|
+|stop_price|string|false|none|Stop price level for the stop order|
 |paid_commission|string|false|none|Commission paid for filled order|
 |commission|string|false|none|Commission blocked for order|
-|close_on_trigger|string|false|none|none|
+|reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
 |client_order_id|string|false|none|client order id provided by the user while creating order|
 |state|string|false|none|Order Status|
-|created_at|string|false|none|none|
-|product_id|integer|false|none|none|
-|product_symbol|string|false|none|none|
+|created_at|string|false|none|Created at unix timestamp of the order in micro seconds|
+|product_id|integer|false|none|Product id of the ordered product|
+|product_symbol|string|false|none|Product symbol of the ordered product|
 
 #### Enumerated Values
 
@@ -5595,8 +5693,8 @@ This operation does not require authentication.
 |order_type|limit_order|
 |order_type|market_order|
 |stop_order_type|stop_loss_order|
-|close_on_trigger|false|
-|close_on_trigger|true|
+|reduce_only|false|
+|reduce_only|true|
 |state|open|
 |state|pending|
 |state|closed|
@@ -5609,23 +5707,23 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": 0,
-    "user_id": 0,
-    "size": 0,
-    "unfilled_size": 0,
+    "id": 123,
+    "user_id": 453671,
+    "size": 10,
+    "unfilled_size": 2,
     "side": "buy",
     "order_type": "limit_order",
-    "limit_price": "string",
+    "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "paid_commission": "string",
-    "commission": "string",
-    "close_on_trigger": "false",
-    "client_order_id": "string",
+    "stop_price": "55000",
+    "paid_commission": "0.5432",
+    "commission": "0.5432",
+    "reduce_only": false,
+    "client_order_id": "34521712",
     "state": "open",
-    "created_at": "string",
-    "product_id": 0,
-    "product_symbol": "string"
+    "created_at": "1725865012000000",
+    "product_id": 27,
+    "product_symbol": "BTCUSD"
   }
 ]
 
@@ -5643,26 +5741,27 @@ This operation does not require authentication.
 
 ```json
 {
-  "product_id": 0,
-  "product_symbol": "string",
-  "limit_price": "string",
-  "size": 0,
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "limit_price": "59000",
+  "size": 10,
   "side": "buy",
   "order_type": "limit_order",
   "stop_order_type": "stop_loss_order",
-  "stop_price": "string",
-  "trail_amount": "string",
-  "stop_trigger_method": "mark_price",
-  "bracket_stop_loss_limit_price": "string",
-  "bracket_stop_loss_price": "string",
-  "bracket_take_profit_limit_price": "string",
-  "bracket_take_profit_price": "string",
+  "stop_price": "56000",
+  "trail_amount": "50",
+  "stop_trigger_method": "last_traded_price",
+  "bracket_stop_loss_limit_price": "57000",
+  "bracket_stop_loss_price": "56000",
+  "bracket_trail_amount": "50",
+  "bracket_take_profit_limit_price": "62000",
+  "bracket_take_profit_price": "61000",
   "time_in_force": "gtc",
   "mmp": "disabled",
-  "post_only": "true",
-  "reduce_only": "true",
-  "close_on_trigger": "true",
-  "client_order_id": "string"
+  "post_only": false,
+  "reduce_only": false,
+  "client_order_id": "34521712",
+  "cancel_orders_accepted": false
 }
 
 ```
@@ -5675,24 +5774,25 @@ This operation does not require authentication.
 |---|---|---|---|---|
 |product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
 |product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
-|limit_price|string|false|none|none|
-|size|integer|false|none|none|
-|side|string|false|none|side for which to place order|
-|order_type|string|false|none|none|
-|stop_order_type|string|false|none|none|
-|stop_price|string|false|none|none|
-|trail_amount|string|false|none|none|
-|stop_trigger_method|string|false|none|none|
-|bracket_stop_loss_limit_price|string|false|none|none|
-|bracket_stop_loss_price|string|false|none|none|
-|bracket_take_profit_limit_price|string|false|none|none|
-|bracket_take_profit_price|string|false|none|none|
-|time_in_force|string|false|none|none|
-|mmp|string|false|none|none|
-|post_only|string|false|none|none|
-|reduce_only|string|false|none|none|
-|close_on_trigger|string|false|none|none|
-|client_order_id|string|false|none|none|
+|limit_price|string|false|none|Price level for limit orders|
+|size|integer|false|none|Order size|
+|side|string|false|none|Buy order or Sell order|
+|order_type|string|false|none|Limit order(limit_price must be defined) or Market order|
+|stop_order_type|string|false|none|Stop order type - stop loss or take profit|
+|stop_price|string|false|none|Stop loss price level if the order is stop order|
+|trail_amount|string|false|none|Use trail amount if you want a trailing stop order. Required if stop price is empty.|
+|stop_trigger_method|string|false|none|Stop order trigger method - mark_price/last_traded_price/spot_price|
+|bracket_stop_loss_limit_price|string|false|none|Bracket order stop loss limit price|
+|bracket_stop_loss_price|string|false|none|Bracket order stop loss trigger price|
+|bracket_trail_amount|string|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
+|bracket_take_profit_limit_price|string|false|none|Bracket order take profit limit price|
+|bracket_take_profit_price|string|false|none|take profit trigger price for bracket order|
+|time_in_force|string|false|none|GTC/IOC order type|
+|mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
+|post_only|string|false|none|Post only order|
+|reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
+|client_order_id|string|false|none|client order id provided by the user while creating order|
+|cancel_orders_accepted|string|false|none|if set, will cancel all existing orders for the product|
 
 #### Enumerated Values
 
@@ -5719,35 +5819,23 @@ This operation does not require authentication.
 |post_only|false|
 |reduce_only|true|
 |reduce_only|false|
-|close_on_trigger|true|
-|close_on_trigger|false|
+|cancel_orders_accepted|true|
+|cancel_orders_accepted|false|
 
-<h2 id="tocSbatchcreateorderrequest">BatchCreateOrderRequest</h2>
+<h2 id="tocSbatchcreateorder">BatchCreateOrder</h2>
 
-<a id="schemabatchcreateorderrequest"></a>
+<a id="schemabatchcreateorder"></a>
 
 ```json
 {
-  "product_id": 0,
-  "product_symbol": "string",
-  "limit_price": "string",
-  "size": 0,
+  "limit_price": "59000",
+  "size": 10,
   "side": "buy",
   "order_type": "limit_order",
-  "stop_order_type": "stop_loss_order",
-  "stop_price": "string",
-  "trail_amount": "string",
-  "stop_trigger_method": "mark_price",
-  "bracket_stop_loss_limit_price": "string",
-  "bracket_stop_loss_price": "string",
-  "bracket_take_profit_limit_price": "string",
-  "bracket_take_profit_price": "string",
   "time_in_force": "gtc",
   "mmp": "disabled",
-  "post_only": "true",
-  "reduce_only": "true",
-  "close_on_trigger": "true",
-  "client_order_id": "string"
+  "post_only": false,
+  "client_order_id": "34521712"
 }
 
 ```
@@ -5758,26 +5846,14 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
-|product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
-|limit_price|string|false|none|none|
-|size|integer|false|none|none|
-|side|string|false|none|side for which to place order|
-|order_type|string|false|none|none|
-|stop_order_type|string|false|none|none|
-|stop_price|string|false|none|none|
-|trail_amount|string|false|none|none|
-|stop_trigger_method|string|false|none|none|
-|bracket_stop_loss_limit_price|string|false|none|none|
-|bracket_stop_loss_price|string|false|none|none|
-|bracket_take_profit_limit_price|string|false|none|none|
-|bracket_take_profit_price|string|false|none|none|
-|time_in_force|string|false|none|none|
-|mmp|string|false|none|none|
-|post_only|string|false|none|none|
-|reduce_only|string|false|none|none|
-|close_on_trigger|string|false|none|none|
-|client_order_id|string|false|none|none|
+|limit_price|string|false|none|Price level for limit orders|
+|size|integer|false|none|Order size|
+|side|string|false|none|Buy order or Sell order|
+|order_type|string|false|none|Limit order(limit_price must be defined) or Market order|
+|time_in_force|string|false|none|GTC/IOC order type|
+|mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
+|post_only|string|false|none|Post only order|
+|client_order_id|string|false|none|client order id provided by the user while creating order|
 
 #### Enumerated Values
 
@@ -5787,12 +5863,8 @@ This operation does not require authentication.
 |side|sell|
 |order_type|limit_order|
 |order_type|market_order|
-|stop_order_type|stop_loss_order|
-|stop_order_type|take_profit_order|
-|stop_trigger_method|mark_price|
-|stop_trigger_method|last_traded_price|
-|stop_trigger_method|spot_price|
 |time_in_force|gtc|
+|time_in_force|ioc|
 |mmp|disabled|
 |mmp|mmp1|
 |mmp|mmp2|
@@ -5801,40 +5873,28 @@ This operation does not require authentication.
 |mmp|mmp5|
 |post_only|true|
 |post_only|false|
-|reduce_only|true|
-|reduce_only|false|
-|close_on_trigger|true|
-|close_on_trigger|false|
 
-<h2 id="tocSarrayofbatchcreateorderrequest">ArrayOfBatchCreateOrderRequest</h2>
+<h2 id="tocSbatchcreateordersrequest">BatchCreateOrdersRequest</h2>
 
-<a id="schemaarrayofbatchcreateorderrequest"></a>
+<a id="schemabatchcreateordersrequest"></a>
 
 ```json
-[
-  {
-    "product_id": 0,
-    "product_symbol": "string",
-    "limit_price": "string",
-    "size": 0,
-    "side": "buy",
-    "order_type": "limit_order",
-    "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "trail_amount": "string",
-    "stop_trigger_method": "mark_price",
-    "bracket_stop_loss_limit_price": "string",
-    "bracket_stop_loss_price": "string",
-    "bracket_take_profit_limit_price": "string",
-    "bracket_take_profit_price": "string",
-    "time_in_force": "gtc",
-    "mmp": "disabled",
-    "post_only": "true",
-    "reduce_only": "true",
-    "close_on_trigger": "true",
-    "client_order_id": "string"
-  }
-]
+{
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "orders": [
+    {
+      "limit_price": "59000",
+      "size": 10,
+      "side": "buy",
+      "order_type": "limit_order",
+      "time_in_force": "gtc",
+      "mmp": "disabled",
+      "post_only": false,
+      "client_order_id": "34521712"
+    }
+  ]
+}
 
 ```
 
@@ -5842,7 +5902,21 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[BatchCreateOrderRequest](#schemabatchcreateorderrequest)]|false|none|[A create order object]|
+|product_id|integer|false|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|false|none|Only one of either product_id or product_symbol must be sent.|
+|orders|[[BatchCreateOrder](#schemabatchcreateorder)]|false|none|[A create order object]|
+
+*oneOf*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|object|false|none|none|
+
+*xor*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|object|false|none|none|
 
 <h2 id="tocSarrayofcreateorderrequest">ArrayOfCreateOrderRequest</h2>
 
@@ -5851,26 +5925,27 @@ This operation does not require authentication.
 ```json
 [
   {
-    "product_id": 0,
-    "product_symbol": "string",
-    "limit_price": "string",
-    "size": 0,
+    "product_id": 27,
+    "product_symbol": "BTCUSD",
+    "limit_price": "59000",
+    "size": 10,
     "side": "buy",
     "order_type": "limit_order",
     "stop_order_type": "stop_loss_order",
-    "stop_price": "string",
-    "trail_amount": "string",
-    "stop_trigger_method": "mark_price",
-    "bracket_stop_loss_limit_price": "string",
-    "bracket_stop_loss_price": "string",
-    "bracket_take_profit_limit_price": "string",
-    "bracket_take_profit_price": "string",
+    "stop_price": "56000",
+    "trail_amount": "50",
+    "stop_trigger_method": "last_traded_price",
+    "bracket_stop_loss_limit_price": "57000",
+    "bracket_stop_loss_price": "56000",
+    "bracket_trail_amount": "50",
+    "bracket_take_profit_limit_price": "62000",
+    "bracket_take_profit_price": "61000",
     "time_in_force": "gtc",
     "mmp": "disabled",
-    "post_only": "true",
-    "reduce_only": "true",
-    "close_on_trigger": "true",
-    "client_order_id": "string"
+    "post_only": false,
+    "reduce_only": false,
+    "client_order_id": "34521712",
+    "cancel_orders_accepted": false
   }
 ]
 
@@ -5888,13 +5963,16 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "product_id": 0,
-  "product_symbol": "string",
-  "limit_price": "string",
-  "size": 0,
+  "id": 34521712,
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "limit_price": "59000",
+  "size": 15,
   "mmp": "disabled",
-  "post_only": "false"
+  "post_only": false,
+  "cancel_orders_accepted": false,
+  "stop_price": "56000",
+  "trail_amount": "50"
 }
 
 ```
@@ -5905,13 +5983,58 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|none|
+|id|integer|false|none|existing order id to be edited|
 |product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
 |product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
-|limit_price|string|false|none|none|
+|limit_price|string|false|none|Price level for limit orders|
 |size|integer|false|none|total size after editing order|
-|mmp|string|false|none|none|
-|post_only|string|false|none|none|
+|mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
+|post_only|string|false|none|Post only order|
+|cancel_orders_accepted|string|false|none|if set, will cancel all existing orders for the product|
+|stop_price|string|false|none|price to trigger stop order|
+|trail_amount|string|false|none|Use trail amount if you want a trailing stop order. Required if stop price is empty.|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|mmp|disabled|
+|mmp|mmp1|
+|mmp|mmp2|
+|mmp|mmp3|
+|mmp|mmp4|
+|mmp|mmp5|
+|post_only|true|
+|post_only|false|
+|cancel_orders_accepted|true|
+|cancel_orders_accepted|false|
+
+<h2 id="tocSbatcheditorder">BatchEditOrder</h2>
+
+<a id="schemabatcheditorder"></a>
+
+```json
+{
+  "id": 34521712,
+  "limit_price": "59000",
+  "size": 15,
+  "mmp": "disabled",
+  "post_only": false
+}
+
+```
+
+*edit order object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|integer|false|none|existing order id to be edited|
+|limit_price|string|false|none|Price level for limit orders|
+|size|integer|false|none|total size after editing order|
+|mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
+|post_only|string|false|none|Post only order|
 
 #### Enumerated Values
 
@@ -5926,22 +6049,24 @@ This operation does not require authentication.
 |post_only|false|
 |post_only|true|
 
-<h2 id="tocSarrayofeditorderrequest">ArrayOfEditOrderRequest</h2>
+<h2 id="tocSbatcheditordersrequest">BatchEditOrdersRequest</h2>
 
-<a id="schemaarrayofeditorderrequest"></a>
+<a id="schemabatcheditordersrequest"></a>
 
 ```json
-[
-  {
-    "id": 0,
-    "product_id": 0,
-    "product_symbol": "string",
-    "limit_price": "string",
-    "size": 0,
-    "mmp": "disabled",
-    "post_only": "false"
-  }
-]
+{
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "orders": [
+    {
+      "id": 34521712,
+      "limit_price": "59000",
+      "size": 15,
+      "mmp": "disabled",
+      "post_only": false
+    }
+  ]
+}
 
 ```
 
@@ -5949,7 +6074,21 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[EditOrderRequest](#schemaeditorderrequest)]|false|none|[edit order object]|
+|product_id|integer|false|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|false|none|Only one of either product_id or product_symbol must be sent.|
+|orders|[[BatchEditOrder](#schemabatcheditorder)]|false|none|[edit order object]|
+
+*oneOf*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|object|false|none|none|
+
+*xor*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|object|false|none|none|
 
 <h2 id="tocScreatebracketorderrequest">CreateBracketOrderRequest</h2>
 
@@ -5957,20 +6096,20 @@ This operation does not require authentication.
 
 ```json
 {
-  "product_id": 0,
-  "product_symbol": "string",
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
   "stop_loss_order": {
     "order_type": "limit_order",
-    "stop_price": "string",
-    "trail_amount": "string",
-    "limit_price": "string"
+    "stop_price": "56000",
+    "trail_amount": "50",
+    "limit_price": "55000"
   },
   "take_profit_order": {
     "order_type": "limit_order",
-    "stop_price": "string",
-    "limit_price": "string"
+    "stop_price": "65000",
+    "limit_price": "64000"
   },
-  "stop_trigger_method": "mark_price"
+  "bracket_stop_trigger_method": "last_traded_price"
 }
 
 ```
@@ -5984,15 +6123,15 @@ This operation does not require authentication.
 |product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
 |product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |stop_loss_order|object|false|none|none|
-|» order_type|string|false|none|none|
-|» stop_price|string|false|none|none|
+|» order_type|string|false|none|Limit order(limit_price must be defined) or Market order|
+|» stop_price|string|false|none|Stop loss price level|
 |» trail_amount|string|false|none|Use trail amount if you want a trailing stop order. Required if stop price is empty.|
-|» limit_price|string|false|none|Required if its a limit order|
+|» limit_price|string|false|none|required for limit orders|
 |take_profit_order|object|false|none|none|
-|» order_type|string|false|none|none|
-|» stop_price|string|false|none|none|
-|» limit_price|string|false|none|Required if its a limit order|
-|stop_trigger_method|string|false|none|none|
+|» order_type|string|false|none|Limit order(limit_price must be defined) or Market order|
+|» stop_price|string|false|none|Stop price level|
+|» limit_price|string|false|none|required for limit orders|
+|bracket_stop_trigger_method|string|false|none|stop order trigger method for bracket orders- mark_price/last_traded_price/spot_price|
 
 #### Enumerated Values
 
@@ -6002,9 +6141,9 @@ This operation does not require authentication.
 |order_type|market_order|
 |order_type|limit_order|
 |order_type|market_order|
-|stop_trigger_method|mark_price|
-|stop_trigger_method|last_traded_price|
-|stop_trigger_method|spot_price|
+|bracket_stop_trigger_method|mark_price|
+|bracket_stop_trigger_method|last_traded_price|
+|bracket_stop_trigger_method|spot_price|
 
 <h2 id="tocSeditbracketorderrequest">EditBracketOrderRequest</h2>
 
@@ -6012,14 +6151,15 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "product_id": 0,
-  "product_symbol": "string",
-  "bracket_stop_loss_limit_price": "string",
-  "bracket_stop_loss_price": "string",
-  "bracket_take_profit_limit_price": "string",
-  "bracket_take_profit_price": "string",
-  "bracket_trail_amount": "string"
+  "id": 34521712,
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "bracket_stop_loss_limit_price": "55000",
+  "bracket_stop_loss_price": "56000",
+  "bracket_take_profit_limit_price": "65000",
+  "bracket_take_profit_price": "64000",
+  "bracket_trail_amount": "50",
+  "bracket_stop_trigger_method": "last_traded_price"
 }
 
 ```
@@ -6033,20 +6173,29 @@ This operation does not require authentication.
 |id|integer|false|none|Order ID for which bracket params are being updated|
 |product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
 |product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
-|bracket_stop_loss_limit_price|string|false|none|none|
-|bracket_stop_loss_price|string|false|none|none|
-|bracket_take_profit_limit_price|string|false|none|none|
-|bracket_take_profit_price|string|false|none|none|
-|bracket_trail_amount|string|false|none|none|
+|bracket_stop_loss_limit_price|string|false|none|stop loss limit price for bracket order|
+|bracket_stop_loss_price|string|false|none|stop loss trigger price for bracket order|
+|bracket_take_profit_limit_price|string|false|none|take profit limit price for bracket order|
+|bracket_take_profit_price|string|false|none|take profit trigger price for bracket order|
+|bracket_trail_amount|string|false|none|trail amount of bracket order|
+|bracket_stop_trigger_method|string|false|none|stop order trigger method for bracket orders- mark_price/last_traded_price/spot_price|
 
-<h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
+#### Enumerated Values
 
-<a id="schemadeleteorderrequest"></a>
+|Property|Value|
+|---|---|
+|bracket_stop_trigger_method|mark_price|
+|bracket_stop_trigger_method|last_traded_price|
+|bracket_stop_trigger_method|spot_price|
+
+<h2 id="tocSbatchdeleteorder">BatchDeleteOrder</h2>
+
+<a id="schemabatchdeleteorder"></a>
 
 ```json
 {
-  "id": 0,
-  "product_id": 0
+  "id": 13452112,
+  "client_order_id": "34521712"
 }
 
 ```
@@ -6057,8 +6206,31 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|none|
-|product_id|integer|false|none|none|
+|id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
+|client_order_id|string|false|none|client order id provided by the user while creating order|
+
+<h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
+
+<a id="schemadeleteorderrequest"></a>
+
+```json
+{
+  "id": 13452112,
+  "client_order_id": "34521712",
+  "product_id": 27
+}
+
+```
+
+*A delete order object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
+|client_order_id|string|false|none|client order id provided by the user while creating order|
+|product_id|integer|false|none|product_id of the product in the order|
 
 <h2 id="tocScancelallfilterobject">CancelAllFilterObject</h2>
 
@@ -6066,10 +6238,11 @@ This operation does not require authentication.
 
 ```json
 {
-  "product_id": 0,
-  "contract_types": "string",
-  "cancel_limit_orders": "true",
-  "cancel_stop_orders": "true"
+  "product_id": 27,
+  "contract_types": "perpetual_futures,put_options,call_options",
+  "cancel_limit_orders": false,
+  "cancel_stop_orders": false,
+  "cancel_reduce_only_orders": false
 }
 
 ```
@@ -6080,10 +6253,11 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|product_id|integer|false|none|cancel all orders for particular product, cancels orders for all products if not provided|
+|product_id|integer|false|none|Only one of either product_id or product_symbol must be sent.|
 |contract_types|string|false|none|comma separated list of desired contract types|
-|cancel_limit_orders|string|false|none|set as true to cancel open limit orders|
+|cancel_limit_orders|string|false|none|set true to cancel open limit orders|
 |cancel_stop_orders|string|false|none|set as true to cancel stop orders|
+|cancel_reduce_only_orders|string|false|none|set as true to cancel reduce only orders|
 
 #### Enumerated Values
 
@@ -6093,18 +6267,24 @@ This operation does not require authentication.
 |cancel_limit_orders|false|
 |cancel_stop_orders|true|
 |cancel_stop_orders|false|
+|cancel_reduce_only_orders|true|
+|cancel_reduce_only_orders|false|
 
-<h2 id="tocSarrayofdeleteorderrequest">ArrayOfDeleteOrderRequest</h2>
+<h2 id="tocSbatchdeleteordersrequest">BatchDeleteOrdersRequest</h2>
 
-<a id="schemaarrayofdeleteorderrequest"></a>
+<a id="schemabatchdeleteordersrequest"></a>
 
 ```json
-[
-  {
-    "id": 0,
-    "product_id": 0
-  }
-]
+{
+  "product_id": 27,
+  "product_symbol": "BTCUSD",
+  "orders": [
+    {
+      "id": 13452112,
+      "client_order_id": "34521712"
+    }
+  ]
+}
 
 ```
 
@@ -6112,7 +6292,21 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[DeleteOrderRequest](#schemadeleteorderrequest)]|false|none|[A delete order object]|
+|product_id|integer|false|none|Only one of either product_id or product_symbol must be sent.|
+|product_symbol|string|false|none|Only one of either product_id or product_symbol must be sent.|
+|orders|[[BatchDeleteOrder](#schemabatchdeleteorder)]|false|none|[A delete order object]|
+
+*oneOf*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|object|false|none|none|
+
+*xor*
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|object|false|none|none|
 
 <h2 id="tocSposition">Position</h2>
 
@@ -6353,9 +6547,9 @@ This operation does not require authentication.
 
 ```json
 {
-  "leverage": "string",
-  "order_margin": "string",
-  "product_id": 0
+  "leverage": 10,
+  "order_margin": "563.2",
+  "product_id": 27
 }
 
 ```
@@ -6368,7 +6562,7 @@ This operation does not require authentication.
 |---|---|---|---|---|
 |leverage|string|false|none|Leverage of all open orders for this product|
 |order_margin|string|false|none|Margin blocked in open orders for this product|
-|product_id|integer|false|none|none|
+|product_id|integer|false|none|Product id of the ordered product|
 
 <h2 id="tocSl2orderbook">L2Orderbook</h2>
 
@@ -6391,7 +6585,7 @@ This operation does not require authentication.
       "size": 113752
     }
   ],
-  "symbol": "BTCUSDT"
+  "symbol": "BTCUSD"
 }
 
 ```
@@ -6844,24 +7038,26 @@ This operation does not require authentication.
 
 ```json
 {
-  "delta": "string",
-  "gamma": "string",
-  "rho": "string",
-  "theta": "string",
-  "vega": "string"
+  "delta": "0.25",
+  "gamma": "0.10",
+  "rho": "0.05",
+  "theta": "-0.02",
+  "vega": "0.15"
 }
 
 ```
+
+*The Greeks represent different factors that influence the pricing of options. These are key measures for assessing risk and managing option positions.*
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|delta|string|false|none|none|
-|gamma|string|false|none|none|
-|rho|string|false|none|none|
-|theta|string|false|none|none|
-|vega|string|false|none|none|
+|delta|string|false|none|The rate of change of the option price with respect to changes in the underlying asset price. A measure of sensitivity to the asset price movement.|
+|gamma|string|false|none|The rate of change of delta with respect to changes in the underlying asset price. A measure of the curvature of the option’s price sensitivity to the asset price.|
+|rho|string|false|none|The rate of change of the option price with respect to changes in the risk-free interest rate. A measure of interest rate sensitivity.|
+|theta|string|false|none|The rate of change of the option price with respect to time, often referred to as time decay. A measure of how the option's price declines as expiration approaches.|
+|vega|string|false|none|The rate of change of the option price with respect to changes in the volatility of the underlying asset. A measure of volatility sensitivity.|
 
 <h2 id="tocSprice_band">price_band</h2>
 
@@ -6869,18 +7065,20 @@ This operation does not require authentication.
 
 ```json
 {
-  "lower_limit": "string",
-  "upper_limit": "string"
+  "lower_limit": "61120.45",
+  "upper_limit": "72300.00"
 }
 
 ```
+
+*The price band defines the permissible price range for a product. The lower and upper limits represent the boundaries within which the product's price can fluctuate.*
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|lower_limit|string|false|none|none|
-|upper_limit|string|false|none|none|
+|lower_limit|string|false|none|The minimum price limit for the product. It defines the lowest allowable price before triggering a price band constraint.|
+|upper_limit|string|false|none|The maximum price limit for the product. It defines the highest allowable price before triggering a price band constraint.|
 
 <h2 id="tocSquotes">quotes</h2>
 
@@ -6888,26 +7086,28 @@ This operation does not require authentication.
 
 ```json
 {
-  "ask_iv": "string",
-  "ask_size": "string",
-  "best_ask": "string",
-  "best_bid": "string",
-  "bid_iv": "string",
-  "bid_size": "string"
+  "ask_iv": "0.25",
+  "ask_size": "100",
+  "best_ask": "150.00",
+  "best_bid": "148.00",
+  "bid_iv": "0.22",
+  "bid_size": "50"
 }
 
 ```
+
+*The 'quotes' object contains the latest bid and ask prices, their respective implied volatilities (IV), and order sizes for an asset. It provides key market data for understanding liquidity and pricing.*
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|ask_iv|string|false|none|none|
-|ask_size|string|false|none|none|
-|best_ask|string|false|none|none|
-|best_bid|string|false|none|none|
-|bid_iv|string|false|none|none|
-|bid_size|string|false|none|none|
+|ask_iv|string|false|none|The implied volatility (IV) for the ask price. Represents the market's expectation of the future volatility of the underlying asset.|
+|ask_size|string|false|none|The size of the ask order, representing the quantity of the asset available for sale at the ask price.|
+|best_ask|string|false|none|The best (lowest) ask price available in the market for the asset.|
+|best_bid|string|false|none|The best (highest) bid price available in the market for the asset.|
+|bid_iv|string|false|none|The implied volatility (IV) for the bid price. Represents the market's expectation of future volatility for the bid side of the order book.|
+|bid_size|string|false|none|The size of the bid order, representing the quantity of the asset that buyers are willing to purchase at the bid price.|
 
 <h2 id="tocSticker">Ticker</h2>
 
@@ -6915,78 +7115,80 @@ This operation does not require authentication.
 
 ```json
 {
-  "close": 0,
-  "contract_type": "string",
+  "close": 67321,
+  "contract_type": "futures",
   "greeks": {
-    "delta": "string",
-    "gamma": "string",
-    "rho": "string",
-    "theta": "string",
-    "vega": "string"
+    "delta": "0.25",
+    "gamma": "0.10",
+    "rho": "0.05",
+    "theta": "-0.02",
+    "vega": "0.15"
   },
-  "high": 0,
-  "low": 0,
-  "mark_price": "string",
-  "mark_vol": "string",
-  "oi": "string",
-  "oi_value": "string",
-  "oi_value_symbol": "string",
-  "oi_value_usd": "string",
-  "open": 0,
+  "high": 68500.5,
+  "low": 66300.25,
+  "mark_price": "67000.00",
+  "mark_vol": "500",
+  "oi": "15000",
+  "oi_value": "1000000",
+  "oi_value_symbol": "USD",
+  "oi_value_usd": "1050000",
+  "open": 67000,
   "price_band": {
-    "lower_limit": "string",
-    "upper_limit": "string"
+    "lower_limit": "61120.45",
+    "upper_limit": "72300.00"
   },
-  "product_id": 0,
+  "product_id": 123456,
   "quotes": {
-    "ask_iv": "string",
-    "ask_size": "string",
-    "best_ask": "string",
-    "best_bid": "string",
-    "bid_iv": "string",
-    "bid_size": "string"
+    "ask_iv": "0.25",
+    "ask_size": "100",
+    "best_ask": "150.00",
+    "best_bid": "148.00",
+    "bid_iv": "0.22",
+    "bid_size": "50"
   },
-  "size": 0,
-  "spot_price": "string",
-  "strike_price": "string",
-  "symbol": "string",
-  "timestamp": 0,
-  "turnover": 0,
-  "turnover_symbol": "string",
-  "turnover_usd": 0,
-  "volume": 0
+  "size": 100,
+  "spot_price": "67000.00",
+  "strike_price": "68000.00",
+  "symbol": "BTCUSD",
+  "timestamp": 1609459200,
+  "turnover": 5000000,
+  "turnover_symbol": "USD",
+  "turnover_usd": 5200000,
+  "volume": 25000
 }
 
 ```
+
+*The 'Ticker' object provides real-time trading data for a specific product, including prices, volumes, open interest, and Greek values (for options). This data is essential for analyzing market trends and asset performance.*
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|close|integer|false|none|none|
-|contract_type|string|false|none|none|
-|greeks|[greeks](#schemagreeks)|false|none|none|
-|high|number|false|none|none|
-|low|number|false|none|none|
-|mark_price|string|false|none|none|
-|mark_vol|string|false|none|none|
-|oi|string|false|none|none|
-|oi_value|string|false|none|none|
-|oi_value_symbol|string|false|none|none|
-|oi_value_usd|string|false|none|none|
-|open|number|false|none|none|
-|price_band|[price_band](#schemaprice_band)|false|none|none|
-|product_id|number|false|none|none|
-|quotes|[quotes](#schemaquotes)|false|none|none|
-|size|number|false|none|none|
-|spot_price|string|false|none|none|
-|strike_price|string|false|none|none|
-|symbol|string|false|none|none|
-|timestamp|number|false|none|none|
-|turnover|number|false|none|none|
-|turnover_symbol|string|false|none|none|
-|turnover_usd|number|false|none|none|
-|volume|integer|false|none|none|
+|close|integer|false|none|The closing price of the last trade for the product.|
+|contract_type|string|false|none|Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.|
+|greeks|[greeks](#schemagreeks)|false|none|The Greeks represent different factors that influence the pricing of options. These are key measures for assessing risk and managing option positions.|
+|high|number|false|none|The highest price reached during the trading session.|
+|low|number|false|none|The lowest price reached during the trading session.|
+|mark_price|string|false|none|The market price of the product, reflecting the most recent transaction.|
+|mark_vol|string|false|none|The market volume at the most recent trade price.|
+|oi|string|false|none|The open interest, or the number of outstanding contracts, for the product.|
+|oi_value|string|false|none|The value of the open interest in the base currency.|
+|oi_value_symbol|string|false|none|The symbol representing the currency of the open interest value.|
+|oi_value_usd|string|false|none|The open interest value converted to USD.|
+|open|number|false|none|The opening price at the start of the trading session.|
+|price_band|[price_band](#schemaprice_band)|false|none|The price band defines the permissible price range for a product. The lower and upper limits represent the boundaries within which the product's price can fluctuate.|
+|product_id|number|false|none|A unique identifier for the product.|
+|quotes|[quotes](#schemaquotes)|false|none|The 'quotes' object contains the latest bid and ask prices, their respective implied volatilities (IV), and order sizes for an asset. It provides key market data for understanding liquidity and pricing.|
+|size|number|false|none|The size of the most recent order executed in the market.|
+|spot_price|string|false|none|The current spot price of the underlying asset.|
+|strike_price|string|false|none|The strike price for options contracts associated with the product.|
+|symbol|string|false|none|The ticker symbol for the product.|
+|timestamp|number|false|none|The timestamp of the last trade or update to the ticker.|
+|turnover|number|false|none|The total turnover (value traded) for the product during the trading session.|
+|turnover_symbol|string|false|none|The symbol representing the currency in which the turnover is measured.|
+|turnover_usd|number|false|none|The turnover value converted to USD.|
+|volume|integer|false|none|The total trading volume for the product during the trading session.|
 
 <h2 id="tocSarrayoftickers">ArrayOfTickers</h2>
 
@@ -6995,46 +7197,46 @@ This operation does not require authentication.
 ```json
 [
   {
-    "close": 0,
-    "contract_type": "string",
+    "close": 67321,
+    "contract_type": "futures",
     "greeks": {
-      "delta": "string",
-      "gamma": "string",
-      "rho": "string",
-      "theta": "string",
-      "vega": "string"
+      "delta": "0.25",
+      "gamma": "0.10",
+      "rho": "0.05",
+      "theta": "-0.02",
+      "vega": "0.15"
     },
-    "high": 0,
-    "low": 0,
-    "mark_price": "string",
-    "mark_vol": "string",
-    "oi": "string",
-    "oi_value": "string",
-    "oi_value_symbol": "string",
-    "oi_value_usd": "string",
-    "open": 0,
+    "high": 68500.5,
+    "low": 66300.25,
+    "mark_price": "67000.00",
+    "mark_vol": "500",
+    "oi": "15000",
+    "oi_value": "1000000",
+    "oi_value_symbol": "USD",
+    "oi_value_usd": "1050000",
+    "open": 67000,
     "price_band": {
-      "lower_limit": "string",
-      "upper_limit": "string"
+      "lower_limit": "61120.45",
+      "upper_limit": "72300.00"
     },
-    "product_id": 0,
+    "product_id": 123456,
     "quotes": {
-      "ask_iv": "string",
-      "ask_size": "string",
-      "best_ask": "string",
-      "best_bid": "string",
-      "bid_iv": "string",
-      "bid_size": "string"
+      "ask_iv": "0.25",
+      "ask_size": "100",
+      "best_ask": "150.00",
+      "best_bid": "148.00",
+      "bid_iv": "0.22",
+      "bid_size": "50"
     },
-    "size": 0,
-    "spot_price": "string",
-    "strike_price": "string",
-    "symbol": "string",
-    "timestamp": 0,
-    "turnover": 0,
-    "turnover_symbol": "string",
-    "turnover_usd": 0,
-    "volume": 0
+    "size": 100,
+    "spot_price": "67000.00",
+    "strike_price": "68000.00",
+    "symbol": "BTCUSD",
+    "timestamp": 1609459200,
+    "turnover": 5000000,
+    "turnover_symbol": "USD",
+    "turnover_usd": 5200000,
+    "volume": 25000
   }
 ]
 
@@ -7044,7 +7246,7 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[Ticker](#schematicker)]|false|none|none|
+|*anonymous*|[[Ticker](#schematicker)]|false|none|[The 'Ticker' object provides real-time trading data for a specific product, including prices, volumes, open interest, and Greek values (for options). This data is essential for analyzing market trends and asset performance.]|
 
 <h2 id="tocSpaginationmeta">PaginationMeta</h2>
 
@@ -7052,8 +7254,8 @@ This operation does not require authentication.
 
 ```json
 {
-  "after": "string",
-  "before": "string"
+  "after": "g3QAAAACZAAKY3JlYXRlZF9hdHQAAAAN",
+  "before": "a2PQRSACZAAKY3JlYXRlZF3fnqHBBBNZL"
 }
 
 ```
@@ -7062,8 +7264,8 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|after|string|false|none|none|
-|before|string|false|none|none|
+|after|string|false|none|after cursor for pagination; becomes null if page after the current one does not exist|
+|before|string|false|none|before cursor for pagination; becomes null if page before the current one does not exist|
 
 <h2 id="tocSohlcdata">OHLCData</h2>
 
@@ -7197,9 +7399,9 @@ This operation does not require authentication.
 |asset|string|false|none|none|
 |window_interval|integer|false|none|Window interval in seconds|
 |freeze_interval|integer|false|none|MMP freeze interval in seconds. Setting this to zero will require a manual reset once mmp is triggered.|
-|trade_limit|string|false|none|Notional trade limit for mmp to trigger (in USDT)|
-|delta_limit|string|false|none|Delta Adjusted notional trade limit for mmp to trigger (in USDT)|
-|vega_limit|string|false|none|vega traded limit for mmp to trigger (in USDT)|
+|trade_limit|string|false|none|Notional trade limit for mmp to trigger (in USD)|
+|delta_limit|string|false|none|Delta Adjusted notional trade limit for mmp to trigger (in USD)|
+|vega_limit|string|false|none|vega traded limit for mmp to trigger (in USD)|
 |mmp|string|false|none|Specify mmp flag for the config update|
 
 #### Enumerated Values
