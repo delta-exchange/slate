@@ -386,6 +386,7 @@ Max interval (in case of same data): 5 secs
 }
 ```
 
+<!--
 ## l1ob
 
 **l1ob** channel provides best ask and bid price, size updates in the orderbook. You need to send the list of symbols for which you would like to subscribe. If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol's data was last sent.
@@ -477,6 +478,7 @@ Max interval (in case of same data): 5 secs
 }, ...
 ]
 ```
+-->
 
 
 ## l2_orderbook
