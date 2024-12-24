@@ -741,12 +741,6 @@
                     <a href="#l1_orderbook" class="toc-h2 toc-link" data-title="l1_orderbook">l1_orderbook</a>
                   </li>
                   <li>
-                    <a href="#l1ob" class="toc-h2 toc-link" data-title="l1ob">l1ob</a>
-                  </li>
-                  <li>
-                    <a href="#l1ob_c" class="toc-h2 toc-link" data-title="l1ob_c">l1ob_c</a>
-                  </li>
-                  <li>
                     <a href="#l2_orderbook" class="toc-h2 toc-link" data-title="l2_orderbook">l2_orderbook</a>
                   </li>
                   <li>
@@ -14644,16 +14638,20 @@ Max interval (in case of same data): 5 secs</p>
   "timestamp":1671603257645134,
   "type":"l1_orderbook"
 }
-</code></pre><h2 id='l1ob'>l1ob</h2>
-<p><strong>l1ob</strong> channel provides best ask and bid price, size updates in the orderbook. You need to send the list of symbols for which you would like to subscribe. If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol&#39;s data was last sent.
-Please note that if you subscribe to l1ob channel without specifying the symbols list, you will not receive any data.<br>
-Publish interval: 100 millisecs<br>
-Max interval (in case of same data): 5 secs</p>
+</code></pre>
 
-<blockquote>
-<p>l1ob subscribe Sample</p>
-</blockquote>
-<pre class="highlight plaintext"><code>//Subscribe
+<!--
+## l1ob
+
+**l1ob** channel provides best ask and bid price, size updates in the orderbook. You need to send the list of symbols for which you would like to subscribe. If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol's data was last sent.
+Please note that if you subscribe to l1ob channel without specifying the symbols list, you will not receive any data.  
+Publish interval: 100 millisecs  
+Max interval (in case of same data): 5 secs
+
+> l1ob subscribe Sample
+
+```
+//Subscribe
 {
     "type": "subscribe",
     "payload": {
@@ -14668,7 +14666,10 @@ Max interval (in case of same data): 5 secs</p>
         ]
     }
 }
-</code></pre><pre class="highlight plaintext"><code>// l1ob sample Response
+```
+
+```
+// l1ob sample Response
 {
   "type":"l1ob",
   "s":"BTCUSD",  //product symbol
@@ -14678,17 +14679,20 @@ Max interval (in case of same data): 5 secs</p>
   "t": 1701157803668868, //message publish time in microsec
   "T": 1701157444959989  //orderbook update time in microsec
 }
-</code></pre><h2 id='l1ob_c'>l1ob_c</h2>
-<p><strong>l1ob_c</strong> channel provides best ask and bid price, size updates in the orderbook for an Option chain. You can subscribe to a Asset_Expiry. e.g. To subscribe to data for all BTC Options expiring on 26th January 2024, send &quot;BTC_260124&quot;. If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol&#39;s data was last sent.
-The data is Brotli compressed and in base64 encoded string format, to use this data first Brotli decompress to get a list of json. 
-Please note that if you subscribe to l1ob_c channel without specifying the Asset_Expiry list, you will not receive any data.<br>
-Publish interval: 100 millisecs<br>
-Max interval (in case of same data): 5 secs</p>
+```
 
-<blockquote>
-<p>l1ob_c subscribe Sample</p>
-</blockquote>
-<pre class="highlight plaintext"><code>//Subscribe
+## l1ob_c
+
+**l1ob_c** channel provides best ask and bid price, size updates in the orderbook for an Option chain. You can subscribe to a Asset_Expiry. e.g. To subscribe to data for all BTC Options expiring on 26th January 2024, send "BTC_260124". If best ask/bid data is same for a symbol, same data will only be sent after the max interval (stated below) has passed since that symbol's data was last sent.
+The data is Brotli compressed and in base64 encoded string format, to use this data first Brotli decompress to get a list of json. 
+Please note that if you subscribe to l1ob_c channel without specifying the Asset_Expiry list, you will not receive any data.  
+Publish interval: 100 millisecs  
+Max interval (in case of same data): 5 secs
+
+> l1ob_c subscribe Sample
+
+```
+//Subscribe
 {
     "type": "subscribe",
     "payload": {
@@ -14703,7 +14707,10 @@ Max interval (in case of same data): 5 secs</p>
         ]
     }
 }
-</code></pre><pre class="highlight plaintext"><code>// l1ob_c Response
+```
+
+```
+// l1ob_c Response
 {
   "type":"l1ob_c",
   "s":"BTC_011223",  //Asset_Expiry
@@ -14724,7 +14731,11 @@ Max interval (in case of same data): 5 secs</p>
     "s":"C-BTC-37500-081223"
 }, ...
 ]
-</code></pre><h2 id='l2_orderbook'>l2_orderbook</h2>
+```
+-->
+
+<h2 id='l2_orderbook'>l2_orderbook</h2>
+
 <p><strong>l2_orderbook</strong> channel provides the complete level2 orderbook for the sepecified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. Unlike L1 orderbook channel, L2 orderbook channel does not accept product category names or &quot;all&quot; as valid symbols. 
 Please note that if you subscribe to L2 channel without specifying the symbols list, you will not receive any data.<br>
 Publish interval: 1 sec<br>
@@ -14733,6 +14744,7 @@ Max interval (in case of same data): 10 secs</p>
 <blockquote>
 <p>L2 Orderbook Sample</p>
 </blockquote>
+
 <pre class="highlight plaintext"><code>//Subscribe
 {
     "type": "subscribe",
