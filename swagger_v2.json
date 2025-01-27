@@ -2505,7 +2505,55 @@
             }
           }
         }
-      }
+      },
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Update users trading preferences",
+        "operationId": "updateTradingPreferences",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "trading_preferences",
+            "description": "trading preferences",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EditUserPreference"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User trading preferences attached to the account",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/UserPreference"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
     },
     "/sub_accounts": {
       "get": {
@@ -4694,28 +4742,170 @@
         }
       }
     },
-    "UserPreference": {
+    "UserPreference":  {
       "type": "object",
       "description": "User trading preferences",
       "properties": {
         "user_id": {
-          "type": "integer"
+          "type": "integer",
+          "example": 57354187,
+          "description": "Unique identifier for the user"
         },
         "default_auto_topup": {
           "type": "boolean",
-          "description": "Default auto topup setting for newly acquired positions (only for isolated mode)"
+          "example": true,
+          "description": "Default auto top-up setting for newly acquired positions (only for isolated mode)"
         },
         "mmp_config": {
-          "type": "object",
-          "description": "Config object for market maker protection (only for MMP enabled accounts)"
+          "type": ["object", "null"],
+          "example": null,
+          "description": "Config object for market maker protection (only for MMP-enabled accounts)"
         },
         "deto_for_commission": {
           "type": "boolean",
-          "description": "Flag to determine whether to pay commissions in deto"
+          "example": false,
+          "description": "Flag to determine whether to pay commissions in DETO"
         },
         "vip_level": {
           "type": "integer",
+          "example": 0,
           "description": "VIP level for this account. Customers get better fee discounting for higher VIP levels"
+        },
+        "vip_discount_factor": {
+          "type": "string",
+          "example": "0.00",
+          "description": "Discount factor based on the VIP level"
+        },
+        "volume_30d": {
+          "type": "string",
+          "example": "1060.675333",
+          "description": "30-day trading volume for the user"
+        },
+        "email_preferences": {
+          "type": "object",
+          "description": "Email preferences for different events",
+          "properties": {
+            "adl": { "type": "boolean", "example": true },
+            "liquidation": { "type": "boolean", "example": true },
+            "margin_topup": { "type": "boolean", "example": false },
+            "marketing": { "type": "boolean", "example": true },
+            "order_cancel": { "type": "boolean", "example": true },
+            "order_fill": { "type": "boolean", "example": true },
+            "stop_order_trigger": { "type": "boolean", "example": true }
+          }
+        },
+        "notification_preferences": {
+          "type": "object",
+          "description": "Notification preferences for different events",
+          "properties": {
+            "adl": { "type": "boolean", "example": true },
+            "liquidation": { "type": "boolean", "example": true },
+            "margin_topup": { "type": "boolean", "example": false },
+            "marketing": { "type": "boolean", "example": true },
+            "order_cancel": { "type": "boolean", "example": false },
+            "order_fill": { "type": "boolean", "example": true },
+            "price_alert": { "type": "boolean", "example": true },
+            "stop_order_trigger": { "type": "boolean", "example": true }
+          }
+        },
+        "price_alert_assets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": ["BTC", "ETH"],
+          "description": "Assets for which price alerts are set"
+        },
+        "enabled_portfolios": {
+          "type": "object",
+          "example": {},
+          "description": "Enabled portfolios for the user"
+        },
+        "interest_credit": {
+          "type": "boolean",
+          "example": false,
+          "description": "Whether the user is receiving interest credits"
+        }
+      }
+    },
+    "EditUserPreference": {
+      "type": "object",
+      "description": "Edit User Preference Object",
+      "properties": {
+        "default_auto_topup": {
+          "type": "boolean",
+          "example": true,
+          "description": "Default auto top-up setting for newly acquired positions"
+        },
+        "showMarketOrdersForOptionsInBracket": {
+          "type": "boolean",
+          "example": true,
+          "description": "Flag to display market orders for options in bracket orders"
+        },
+        "interest_credit": {
+          "type": "boolean",
+          "example": false,
+          "description": "Whether the user is receiving interest credits"
+        },
+        "email_preferences": {
+          "type": "object",
+          "description": "Email preferences for different events",
+          "properties": {
+            "adl": {
+              "type": "boolean",
+              "example": true
+            },
+            "liquidation": {
+              "type": "boolean",
+              "example": true
+            },
+            "order_fill": {
+              "type": "boolean",
+              "example": true
+            },
+            "stop_order_trigger": {
+              "type": "boolean",
+              "example": true
+            },
+            "order_cancel": {
+              "type": "boolean",
+              "example": true
+            },
+            "marketing": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "notification_preferences": {
+          "type": "object",
+          "description": "Notification preferences for different events",
+          "properties": {
+            "adl": {
+              "type": "boolean",
+              "example": false
+            },
+            "liquidation": {
+              "type": "boolean",
+              "example": true
+            },
+            "order_fill": {
+              "type": "boolean",
+              "example": true
+            },
+            "stop_order_trigger": {
+              "type": "boolean",
+              "example": true
+            },
+            "price_alert": {
+              "type": "boolean",
+              "example": true
+            },
+            "marketing": {
+              "type": "boolean",
+              "example": true
+            }
+          }
         }
       }
     },
