@@ -2634,6 +2634,59 @@
           }
         }
       }
+    },
+    "/api_keys/whitelist_ip": {
+      "post": {
+        "summary": "Whitelist ips",
+        "tags": [
+          "Whitelisting ips"
+        ],
+        "operationId": "whitelistIp",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "whitelistIp",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WhitelistIpReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {}
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Returns error code- Api key not found",
+            "schema": {
+              "$ref": "#/definitions/ApiErrorResponse"
+            }
+          }
+        },
+        "401": {
+          "description": "Returns error code",
+          "schema": {
+            "$ref": "#/definitions/ApiErrorResponse"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -4053,7 +4106,7 @@
       "example": {
         "buy": [
           {
-          "depth": "983",  
+          "depth": "983",
           "price": "9187.5",
           "size": 205640
           }
@@ -4061,7 +4114,7 @@
         "last_updated_at":1654589595784000,
         "sell": [
           {
-          "depth": "1185",  
+          "depth": "1185",
           "price": "9188.0",
           "size": 113752
           }
@@ -4247,6 +4300,38 @@
         "amount": {
           "type": "big_decimal",
           "description": "Amount to transfer. Only postive values allowed."
+        }
+      }
+    },
+    "WhitelistIpReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
+        "password": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
+        "mfa_code": {
+          "type": "string",
+          "description": "multi-factor authentication code for 2FA",
+          "required": true
+        },
+        "api_key": {
+          "type": "string",
+          "description": "",
+          "required": true
+        },
+        "ip_addresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "list of ips to be whitelisted"
         }
       }
     },
