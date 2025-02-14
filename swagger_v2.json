@@ -3147,7 +3147,10 @@
       "description": "A create order object",
       "required": [
         "product_id",
-        "product_symbol"
+        "product_symbol",
+        "size",
+        "side",
+        "order_type"
       ],
       "properties": {
         "product_id": {

@@ -5,23 +5,26 @@ To ensure that you are effectively using the api, we encourage you to go through
 2. All timestamps reported in the apis will be in microseconds
 3. All big decimal values are sent as string
 
-```
+
+```json
+// The new format supports sending meta data alongside response body. 
 // Success format
 {
-  success: true,
-  result: ...,              // response body
-  meta: {                   // response meta - like pagination info
-    ...
-  }
+  "success": true,
+  "result": {},         // response body
+  "meta": {
+    "after": "...",       // cursor for pagination, is returned in meta
+    "before": null,
+  },
 }
 
-// Error format
+// Error Format
 {
-  success: false,
-  error: {
-    code: ...,                // standard error code
-    context: {                // extra context data to explain the cause of error
-      ...
+  "success": false,
+  "error": {
+    "code": "insufficient_margin",             // error code
+    "context": {                              // error context
+      "additional_margin_required": "0.121"
     }
   }
 }

@@ -5,20 +5,14 @@ Websocket api can be used for the following use cases
 - Get real time feed of market data, this includes L2 and L3 orderbook and recent trades.
 - Get price feeds - Mark prices of different contracts, price feed of underlying indexes etc.
 - Get account specific notifications like fills, liquidations, [ADL](https://www.delta.exchange/user-guide/docs/trading-guide/ADL/) and PnL updates.
-- Get account specific updates on orders ,positions and wallets.
+- Get account specific updates on orders, positions and wallets.
 
-Access url for [Delta Exchange India](https://www.delta.exchange)
+Websocket url for [Delta Exchange](https://www.delta.exchange)
 
-- **Production-India** - wss://socket.india.delta.exchange
-- **Testnet-India** - wss://socket-ind.testnet.deltaex.org
+- **Production** - wss://socket.india.delta.exchange
+- **Testnet(Demo Account)** - wss://socket-ind.testnet.deltaex.org
 
-Access url for [Delta Exchange Global](https://global.delta.exchange)
-
-- **Production-Global** - wss://socket.delta.exchange
-- **Testnet-Global** - wss://testnet-socket.delta.exchange
-
-
- You will be disconnected, if there is no activity within 60 seconds after making connection.
+You will be disconnected, if there is no activity within **60 seconds** after making connection.
 
 # Subscribing to Channels
 
@@ -32,24 +26,23 @@ Once a subscribe message is received the server will respond with a subscription
 
 > Subscription Sample
 
-```
-// Request
-// Subscribe to BTCUSD_28Dec and ETHBTC_28Dec with the ticker and orderbookL2 channels,
+```json
+// Request: Subscribe to BTCUSD and ETHUSD with the ticker and orderbook(L2) channels.
 {
     "type": "subscribe",
     "payload": {
         "channels": [
             {
-                "name": "ticker",
+                "name": "/v2/ticker",
                 "symbols": [
-                    "BTCUSD_28Dec",
-                    "ETHBTC_28Dec"
+                    "BTCUSD",
+                    "ETHUSD"
                 ]
             },
             {
                 "name": "l2_orderbook",
                 "symbols": [
-                    "BTCUSD_28Dec"
+                    "BTCUSD"
                 ]
             },
             {
@@ -62,21 +55,21 @@ Once a subscribe message is received the server will respond with a subscription
     }
 }
 
-// Response
+// Response: Success
 {
     "type": "subscriptions",
     "channels": [
         {
             "name": "l2_orderbook",
             "symbols": [
-                "BTCUSD_28Dec"
+                "BTCUSD"
             ],
         },
         {
-            "name": "ticker",
+            "name": "v2/ticker",
             "symbols": [
-                "BTCUSD_28Dec",
-                "ETHBTC_28Dec"
+                "BTCUSD",
+                "ETHUSD"
             ]
         },
         {
@@ -88,14 +81,14 @@ Once a subscribe message is received the server will respond with a subscription
     ]
 }
 
-// Error Response 
+// Response: Error 
 {
     "type": "subscriptions",
     "channels": [
         {
             "name": "l2_orderbook",
             "symbols": [
-                "BTCUSD_28Dec"
+                "BTCUSD"
             ],
         },
         {
@@ -113,16 +106,16 @@ If you want to unsubscribe from channel/contracts pairs, send an "unsubscribe" m
 
 > Unsubscribe Sample
 
-```
-// Request
+```json
+// Request: Unbubscribe from BTCUSD and ETHUSD with the ticker and orderbook(L2) channels.
 {
     "type": "unsubscribe",
     "payload": {
         "channels": [
             {
-                "name": "ticker",          // unsubscribe from ticker channel only for BTCUSD_28Dec
+                "name": "v2/ticker",          // unsubscribe from ticker channel only for BTCUSD
                 "symbols": [
-                    "BTCUSD_28Dec"
+                    "BTCUSD"
                 ]
             },
             {
@@ -137,10 +130,9 @@ If you want to unsubscribe from channel/contracts pairs, send an "unsubscribe" m
 
 Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, [adl](/#trading-notitifications) and pnl updates.
 
-To authenticate, you need to send a signed request of type 'auth' on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.
+To authenticate, you need to send a signed request of type **'auth'** on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.
 
-The payload for the signed request will be
-'GET' + timestamp + '/live'
+The payload for the signed request will be ***'GET' + timestamp + '/live'***
 
 To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. 
 
@@ -151,7 +143,7 @@ To subscribe to private channels, the client needs to first send an auth event, 
 import websocket
 import hashlib
 import hmac
-import base64
+import time
 
 api_key = 'a207900b7693435a8fa9230a38195d'
 api_secret = '7b6f39dcf660ec1c7c664f612c60410a2bd0c258416b498bf0311f94228f'
@@ -162,18 +154,12 @@ def generate_signature(secret, message):
     hash = hmac.new(secret, message, hashlib.sha256)
     return hash.hexdigest()
 
-def get_time_stamp():
-    d = datetime.datetime.utcnow()
-    epoch = datetime.datetime(1970,1,1)
-    return str(int((d - epoch).total_seconds()))
-
 # Get open orders
 method = 'GET'
-timestamp = get_time_stamp()
+timestamp = str(int(time.time()))
 path = '/live'
 signature_data = method + timestamp + path
 signature = generate_signature(api_secret, signature_data)
-
 
 ws = websocket.WebSocketApp('wss://socket.india.delta.exchange')
 ws.send(json.dumps({
@@ -190,14 +176,13 @@ ws.send(json.dumps({
 
 ```
 
-To unsubscribe from all private channels, just send a 'unauth' message on the socket. This will automatically unsubscribe the connection from all authenticated channels.
+To unsubscribe from all private channels, just send a **'unauth'** message on the socket. This will automatically unsubscribe the connection from all authenticated channels.
 
 ```python
 ws.send(json.dumps({
     "type": 'unauth',
     "payload": {}
 }))
-
 ```
 
 # Detecting Connection Drops
@@ -213,7 +198,7 @@ The client can enable heartbeat on the socket. If heartbeat is enabled, the serv
 - When you receive a new heartbeat message, you reset the timer
 - If the timer is called, that means the client didn't receive any heartbeat in last 35 seconds. In this case, the client should exit the existing connection and try to reconnect. 
 
-```
+```python
 // Enable Heartbeat on successful connection
 ws.send({
     "type": "enable_heartbeat"
@@ -234,7 +219,7 @@ ws.send({
 ## Ping/Pong
 The client can periodically (~ every 30 seconds) send a ping frame or a raw ping message and the server will respond back with a pong frame or a raw pong response. If the client doesn't receive a pong response in next 5 seconds, the client should exit the existing connection and try to reconnect. 
 
-```
+```python
 // Ping Request
 ws.send({
     "type": "ping"
@@ -280,7 +265,7 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
             {
                 "name": "v2/ticker",
                 "symbols": [
-                    "BTCUSD_28Dec"
+                    "BTCUSD"
                 ]
             }
         ]
@@ -313,7 +298,7 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
     "mark_price": "0.00001325", // The current market price
     "mark_change_24h": "-0.1202", // Percentage change in market price over the last 24 hours
     "oi": "812.6100", // Open interest, indicating the total number of outstanding contracts
-    "product_id": 56, // The unique identifier for the product
+    "product_id": 27, // The unique identifier for the product
     "quotes": {
         "ask_iv": "0.25", // Implied volatility for the ask price (if available)
         "ask_size": "922", // The size of the ask (the amount available for sale)
@@ -334,7 +319,7 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
     },
     "size": 1254631, // Number of contracts traded
     "spot_price": "0.00001326", // Spot price at the time of the ticker
-    "symbol": "BTCUSD_28Dec", // The symbol of the contract
+    "symbol": "BTCUSD", // The symbol of the contract
     "timestamp": 1595242187705121, // The timestamp of the data (in microseconds)
     "turnover": 16.805033569999996, // The total turnover in the settling symbol
     "turnover_symbol": "BTC", // The symbol used for settling
@@ -354,7 +339,7 @@ Max interval (in case of same data): 5 secs
 
 > L1 Orderbook Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -371,7 +356,7 @@ Max interval (in case of same data): 5 secs
 }
 ```
 
-```
+```json
 // l1 orderbook Response
 {
   "ask_qty":"839",
@@ -437,7 +422,7 @@ Max interval (in case of same data): 5 secs
 
 > l1ob_c subscribe Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -455,7 +440,7 @@ Max interval (in case of same data): 5 secs
 }
 ```
 
-```
+```json
 // l1ob_c Response
 {
   "type":"l1ob_c",
@@ -464,7 +449,6 @@ Max interval (in case of same data): 5 secs
   //Brotli decompress this to get the below json.
   "t": 1701157556471116  //message publish time
 }
-
 //Brotli decompressed data format
 [{
     "T":1701105329216885,  //orderbook update time in microsec
@@ -490,7 +474,7 @@ Max interval (in case of same data): 10 secs
 
 > L2 Orderbook Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -507,7 +491,7 @@ Max interval (in case of same data): 10 secs
 }
 ```
 
-```
+```json
 // l2 orderbook Response
 {
   "type":"l2_orderbook"
@@ -542,7 +526,7 @@ Please note that if you subscribe to l2_updates channel without specifying the s
 Publish interval: 100 millisecs  
 "action"="update" messages wont be published till there is an orderbook change.
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -632,7 +616,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 
 > All Trades Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -649,7 +633,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 }
 ```
 
-```
+```json
 // All Trades Response Snapshot
 {
     "symbol": "BTCUSD",
@@ -667,7 +651,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
 }
 ```
 
-```
+```json
 // All Trades Response
 {
     symbol: "BTCUSD",
@@ -695,7 +679,7 @@ Publish interval: 2 secs.
 
 > Mark Price Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -712,7 +696,7 @@ Publish interval: 2 secs.
 }
 ```
 
-```
+```json
 // Mark Price Response
 {
     "ask_iv":null,
@@ -741,7 +725,7 @@ Publish interval: 2 secs.
 
 > Spot Price Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -758,7 +742,7 @@ Publish interval: 2 secs.
 }
 ```
 
-```
+```json
 // Spot Price Response
 {
     symbol: ".DEBNBBTC",
@@ -774,7 +758,7 @@ Publish interval: 1 sec
 
 > v2/spot_price Subscribe
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -791,7 +775,7 @@ Publish interval: 1 sec
 }
 ```
 
-```
+```json
 // Response
 {
     s: ".DEETHUSDT",   # spot index symbol
@@ -807,7 +791,7 @@ This is the price used for settlement of options. Specifying symbols when subscr
 
 > Spot Price 30mtwap Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -824,7 +808,7 @@ This is the price used for settlement of options. Specifying symbols when subscr
 }
 ```
 
-```
+```json
 // Spot 30 minutes twap Price Response
 {
     symbol: ".DEXBTUSDT",
@@ -844,7 +828,7 @@ Please note that if you subscribe to funding rate channel without specifying the
 
 > Funding Rate Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -861,7 +845,7 @@ Please note that if you subscribe to funding rate channel without specifying the
 }
 ```
 
-```
+```json
 // Funding Rate Response
 {
     symbol: "BTCUSD",
@@ -880,7 +864,7 @@ This channel provides updates when markets are disrupted and resumed. On opening
 
 >  Product Updates Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -894,7 +878,7 @@ This channel provides updates when markets are disrupted and resumed. On opening
 }
 ```
 
-```
+```json
 // Market Disruption Response
 {
     "type":"product_updates",
@@ -950,7 +934,7 @@ This channel provides updates on system wide announcements like scheduled mainte
 > Announcements Sample
 
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -964,7 +948,7 @@ This channel provides updates on system wide announcements like scheduled mainte
 }
 ```
 
-```
+```json
 // Maintenance Started Response
 {
     "type":"announcements",
@@ -995,11 +979,11 @@ Please note that if you subscribe to candlsticks channel without specifying the 
 
 >OHLC candles update sample
 
-```
+```json
 Sample Subscribe Request
 {
-  "name": "candlestick_1m",                 // "candlestick_" + resolution
-  "symbols": [ "BTCUSD" ]        // product symbol
+  "name": "candlestick_1m",       // "candlestick_" + resolution
+  "symbols": [ "BTCUSD" ]        // product symbol, use MARK:BTCUSD for mark_price
 }
 
 
@@ -1029,7 +1013,7 @@ This channel provides updates on wallet balances. Updates are sent for a specifi
 
 > Margins Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -1042,7 +1026,7 @@ This channel provides updates on wallet balances. Updates are sent for a specifi
     }
 }
 ```
-```
+```json
 // margin update
 {
     "action": "update",
@@ -1086,7 +1070,7 @@ Please note that if you subscribe to positions channel without specifying the sy
 
 > Positions Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -1094,7 +1078,7 @@ Please note that if you subscribe to positions channel without specifying the sy
         "channels": [
             {
                 "name": "positions",
-                "symbols": ["BTCUSD_29Mar"]
+                "symbols": ["BTCUSD"]
             }
         ]
     }
@@ -1114,13 +1098,13 @@ Please note that if you subscribe to positions channel without specifying the sy
 }
 ```
 
-```
+```json
 // Position update
 {
     "type": "positions",
     "action": "",                       // "create"/"update"/"delete"
     "reason": "",                       // null, "auto_topup"
-    "symbol": "BTCUSD_29Mar",           // Product Symbol
+    "symbol": "BTCUSD",           // Product Symbol
     "product_id": 1,                    // Product ID
     "size": -100,                       // Position size, if > 0 -> long else short
     "margin": "0.0121",                 // Margin blocked in the position
@@ -1182,7 +1166,7 @@ Please note that if you subscribe to orders channel without specifying the symbo
 
 > Orders Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -1190,21 +1174,21 @@ Please note that if you subscribe to orders channel without specifying the symbo
         "channels": [
             {
                 "name": "orders",
-                "symbols": ["BTCUSD_29Mar"]
+                "symbols": ["BTCUSD"]
             }
         ]
     }
 }
 ```
-```
+```json
 // Order update
 
 {
     "type": "orders",
     "action": "create",                 // "create"/"update"/"delete"
     "reason": "",                       // "fill"/"stop_update"/"stop_trigger"/"stop_cancel"/"liquidation"/"self_trade"/null
-    "symbol": "BTCUSD_29Mar",           // Product Symbol
-    "product_id": 1,                    // Product ID
+    "symbol": "BTCUSD",           // Product Symbol
+    "product_id": 27,                    // Product ID
     "order_id": 1234                    // Order id
     "client_order_id": ""               // Client order id
     "size": 100,                        // Order size
@@ -1226,7 +1210,9 @@ Please note that if you subscribe to orders channel without specifying the symbo
     "bracket_take_profit_limit_price": "9020"
     "bracket_trail_amount": "10.00"
 }
+```
 
+```json
 // Snapshot
 {
   "meta": {
@@ -1274,7 +1260,7 @@ Please note that if you subscribe to user trades channel without specifying the 
 
 > User Trades Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -1288,12 +1274,12 @@ Please note that if you subscribe to user trades channel without specifying the 
     }
 }
 ```
-```
+```json
 // user_trades
 {
     "symbol": "BNBBTC_30Nov",
     "fill_id": "1234-abcd-qwer-3456",
-    "reason": "normal"                      // "normal" or "adl"
+    "reason": "normal",                      // "normal" or "adl"
     "product_id": 7,
     "type": "user_trades",
     "user_id": 1998,
@@ -1322,7 +1308,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 
 > v2/user_trades Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -1336,7 +1322,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
     }
 }
 ```
-```
+```json
 // v2/user_trades
 {
     "type": "v2/user_trades",
@@ -1366,7 +1352,7 @@ UCF: is unrealised cashflows of your portfolio. These are the cashflows (negativ
 
 > Portfolio Margin Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -1380,7 +1366,7 @@ UCF: is unrealised cashflows of your portfolio. These are the cashflows (negativ
     }
 }
 ```
-```
+```json
 // portfolio margin update
 
 {
@@ -1388,7 +1374,7 @@ UCF: is unrealised cashflows of your portfolio. These are the cashflows (negativ
     "user_id": 1,
     "asset_id": 2,                   // BTC
     "index_symbol": ".DEXBTUSDT",
-    liquidation_risk: false,
+    "liquidation_risk": false,
     "blocked_margin": "100", // Margin blocked for current portfolio. Same as portfolio_margin in margins channel.
     "mm_wo_ucf": "80",
     "mm_w_ucf": "80",
@@ -1456,7 +1442,7 @@ Channel provides updates when MMP is triggered. Market maker protection is avail
 
 > MMP Trigger Sample
 
-```
+```json
 //Subscribe
 {
     "type": "subscribe",
@@ -1469,7 +1455,7 @@ Channel provides updates when MMP is triggered. Market maker protection is avail
     }
 }
 ```
-```
+```json
 // mmp_trigger response
 {
     user_id: 1,

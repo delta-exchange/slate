@@ -9,7 +9,7 @@
       "email" : "support@delta.exchange"
     }
   },
-  "host" : "api.delta.exchange",
+  "host" : "api.india.delta.exchange",
   "basePath" : "/",
   "tags" : [ {
     "name" : "Assets",

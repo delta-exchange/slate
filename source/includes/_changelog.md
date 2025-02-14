@@ -20,12 +20,12 @@ Our v2 Api is significantly faster than the v1 api. Our focus while rebuilding v
 
 > New Response Format
 
-```
+```json
 // The new format supports sending meta data alongside response body. 
 // Success format
 {
   success: true,
-  result: ....,         // response body
+  result: {}         // response body
   meta: {
     after: "...",       // cursor for pagination, is returned in meta
     before: null,
