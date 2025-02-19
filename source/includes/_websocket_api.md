@@ -494,7 +494,7 @@ Max interval (in case of same data): 10 secs
 ```json
 // l2 orderbook Response
 {
-  "type":"l2_orderbook"
+  "type":"l2_orderbook",
   "symbol":"ETHUSD",
   "product_id": 176,
   "buy": [
@@ -503,7 +503,6 @@ Max interval (in case of same data): 10 secs
         "size":10,              // For Futures & Options: number of contracts integer. Spot product: Asset token quantity in string.
         "depth":"10"            // total size from best bid
     },
-    ...
   ],
   "sell": [
     {
@@ -511,7 +510,6 @@ Max interval (in case of same data): 10 secs
         "size":20,
         "depth":"20"            // total size from best ask
     },
-    ...
   ],
   "last_sequence_no": 6435634,
   "last_updated_at": 1671600133884000,
@@ -646,7 +644,7 @@ Please note that if you subscribe to all_trades channel without specifying the s
             "price": "25816.5",
             "timestamp": 1686577411879974   // time of the trade.
         },
-        ... // More recent trades.
+         // More recent trades.
     ]
 }
 ```
@@ -654,13 +652,13 @@ Please note that if you subscribe to all_trades channel without specifying the s
 ```json
 // All Trades Response
 {
-    symbol: "BTCUSD",
-    price: "25816.5",
-    size: 100,
-    type: "all_trades",
-    buyer_role: "maker",
-    seller_role: "taker",
-    timestamp: 1686577411879974
+    "symbol": "BTCUSD",
+    "price": "25816.5",
+    "size": 100,
+    "type": "all_trades",
+    "buyer_role": "maker",
+    "seller_role": "taker",
+    "timestamp": 1686577411879974
 }
 ```
 
@@ -745,9 +743,9 @@ Publish interval: 2 secs.
 ```json
 // Spot Price Response
 {
-    symbol: ".DEBNBBTC",
-    price: "0.0014579",
-    type: "spot_price"
+    "symbol": ".DEBNBBTC",
+    "price": "0.0014579",
+    "type": "spot_price"
 }
 ```
 
@@ -778,9 +776,9 @@ Publish interval: 1 sec
 ```json
 // Response
 {
-    s: ".DEETHUSD",   # spot index symbol
-    p: 1349.3412141,   # spot price
-    type: "v2/spot_price"
+    "s": ".DEETHUSD",   # spot index symbol
+    "p": 1349.3412141,   # spot price
+    "type": "v2/spot_price"
 }
 ```
 
@@ -811,10 +809,10 @@ This is the price used for settlement of options. Specifying symbols when subscr
 ```json
 // Spot 30 minutes twap Price Response
 {
-    symbol: ".DEXBTUSD",
-    price: "0.0014579",
-    type: "spot_30mtwap_price",
-    timestamp: 1561634049751430
+    "symbol": ".DEXBTUSD",
+    "price": "0.0014579",
+    "type": "spot_30mtwap_price",
+    "timestamp": 1561634049751430
 }
 ```
 
@@ -848,14 +846,14 @@ Please note that if you subscribe to funding rate channel without specifying the
 ```json
 // Funding Rate Response
 {
-    symbol: "BTCUSD",
-    product_id: 139,
-    type: "funding_rate",
-    funding_rate: 0.005701298078111892,  // %
-    funding_rate_8h: 0.005701298078111892, // %
-    next_funding_realization: 1683734400000000 // %
-    predicted_funding_rate: 0.007221329334075148, // in us
-    timestamp: 1683711930547419   // in us
+    "symbol": "BTCUSD",
+    "product_id": 139,
+    "type": "funding_rate",
+    "funding_rate": 0.005701298078111892,  // %
+    "funding_rate_8h": 0.005701298078111892, // %
+    "next_funding_realization": 1683734400000000, // %
+    "predicted_funding_rate": 0.007221329334075148, // in us
+    "timestamp": 1683711930547419   // in us
 }
 ```
 
@@ -1189,25 +1187,25 @@ Please note that if you subscribe to orders channel without specifying the symbo
     "reason": "",                       // "fill"/"stop_update"/"stop_trigger"/"stop_cancel"/"liquidation"/"self_trade"/null
     "symbol": "BTCUSD",           // Product Symbol
     "product_id": 27,                    // Product ID
-    "order_id": 1234                    // Order id
-    "client_order_id": ""               // Client order id
+    "order_id": 1234,                    // Order id
+    "client_order_id": "",              // Client order id
     "size": 100,                        // Order size
     "unfilled_size": 55,                // Unfilled size
-    "average_fill_price": "8999.00"     // nil for unfilled orders
-    "limit_price": "9000.00"                  // Price of the order
-    "side": "buy"                       // Order side (buy or sell)
-    "cancellation_reason": "cancelled_by_user"        // Cancellation reason in case of cancelled order, null otherwise
+    "average_fill_price": "8999.00",     // nil for unfilled orders
+    "limit_price": "9000.00",                  // Price of the order
+    "side": "buy",                       // Order side (buy or sell)
+    "cancellation_reason": "cancelled_by_user",        // Cancellation reason in case of cancelled order, null otherwise
     "stop_order_type": "stop_loss_order",             // If a Stop Order -> "stop_loss_order"/"take_profit_order", null otherwise
-    "bracket_order": false              // true for a bracket_order, false otherwise
-    "state": "open"                     // "open"/"pending"/"closed"/"cancelled"
-    "seq_no": 1                         // Incremental sequence number
-    "timestamp": 1594105083998848       // Unix timestamp in microseconds
-    "stop_price": "9010.00"                             // stop_price of stop order        
-    "trigger_price_max_or_min": "9020.00"               // for trailing stop orders
-    "bracket_stop_loss_price": "8090.00"
-    "bracket_stop_loss_limit_price": "8090.00"
-    "bracket_take_profit_price": "9020"      
-    "bracket_take_profit_limit_price": "9020"
+    "bracket_order": false,              // true for a bracket_order, false otherwise
+    "state": "open",                     // "open"/"pending"/"closed"/"cancelled"
+    "seq_no": 1,                         // Incremental sequence number
+    "timestamp": 1594105083998848,       // Unix timestamp in microseconds
+    "stop_price": "9010.00",                             // stop_price of stop order        
+    "trigger_price_max_or_min": "9020.00",               // for trailing stop orders
+    "bracket_stop_loss_price": "8090.00",
+    "bracket_stop_loss_limit_price": "8090.00",
+    "bracket_take_profit_price": "9020",      
+    "bracket_take_profit_limit_price": "9020",
     "bracket_trail_amount": "10.00"
 }
 ```
@@ -1328,7 +1326,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
     "type": "v2/user_trades",
     "sy": "BTCUSD",             // symbol
     "f": "1234-abcd-qwer-3456",  // fill_id
-    "R": "normal"                // reason: "normal" or "adl"
+    "R": "normal",                // reason: "normal" or "adl"
     "u": 1998,                   // user_id
     "o": 3283999,                // order_id
     "S": "buy",                  // side: "buy" or "sell"
@@ -1458,8 +1456,8 @@ Channel provides updates when MMP is triggered. Market maker protection is avail
 ```json
 // mmp_trigger response
 {
-    user_id: 1,
-    asset: "BTC",
-    frozen_till: 1561634049751430     # timestamp is microseconds, will be -1 if manual reset is enabled 
+    "user_id": 1,
+    "asset": "BTC",
+    "frozen_till": 1561634049751430     # timestamp is microseconds, will be -1 if manual reset is enabled 
 }
 ```
