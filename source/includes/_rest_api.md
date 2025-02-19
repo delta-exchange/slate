@@ -1,17 +1,30 @@
+---
+title: Delta Exchange Api V2 v1.0.0
+language_tabs:
+  - python: Python
+  - shell: Shell
+  - ruby: Ruby
+language_clients:
+  - python: ""
+  - shell: ""
+  - ruby: ""
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2
+
+---
+
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
 
 If you are looking for the old api documentation, here is the link to [v1 api](https://github.com/delta-exchange/slate/blob/master/source/includes/_rest_api_v1.md) docs (now deprecated). 
 
-REST API Endpoint URL for [Delta Exchange India](https://www.delta.exchange)
+REST API Endpoint URL for [Delta Exchange](https://www.delta.exchange)
 
- - **Production-India** - https://api.india.delta.exchange/v2
- - **Testnet-India** - https://cdn-ind.testnet.deltaex.org/v2
-
-REST API Endpoint URL for [Delta Exchange Global](https://global.delta.exchange/)
-
-- **Production-Global** - https://api.delta.exchange/v2
-- **Testnet-Global** - https://testnet-api.delta.exchange/v2
+ - **Production** - https://api.india.delta.exchange
+ - **Testnet(Demo Account)** - https://cdn-ind.testnet.deltaex.org
 
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
 
@@ -4289,11 +4302,38 @@ Channel provides updates when MMP is triggered. Market maker protection is avail
 {
   "success": true,
   "result": {
-    "user_id": 0,
+    "user_id": 57354187,
     "default_auto_topup": true,
-    "mmp_config": {},
-    "deto_for_commission": true,
-    "vip_level": 0
+    "mmp_config": null,
+    "deto_for_commission": false,
+    "vip_level": 0,
+    "vip_discount_factor": "0.00",
+    "volume_30d": "1060.675333",
+    "email_preferences": {
+      "adl": true,
+      "liquidation": true,
+      "margin_topup": false,
+      "marketing": true,
+      "order_cancel": true,
+      "order_fill": true,
+      "stop_order_trigger": true
+    },
+    "notification_preferences": {
+      "adl": true,
+      "liquidation": true,
+      "margin_topup": false,
+      "marketing": true,
+      "order_cancel": false,
+      "order_fill": true,
+      "price_alert": true,
+      "stop_order_trigger": true
+    },
+    "price_alert_assets": [
+      "BTC",
+      "ETH"
+    ],
+    "enabled_portfolios": {},
+    "interest_credit": false
   }
 }
 ```
@@ -4579,11 +4619,38 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "user_id": 0,
+    "user_id": 57354187,
     "default_auto_topup": true,
-    "mmp_config": {},
-    "deto_for_commission": true,
-    "vip_level": 0
+    "mmp_config": null,
+    "deto_for_commission": false,
+    "vip_level": 0,
+    "vip_discount_factor": "0.00",
+    "volume_30d": "1060.675333",
+    "email_preferences": {
+      "adl": true,
+      "liquidation": true,
+      "margin_topup": false,
+      "marketing": true,
+      "order_cancel": true,
+      "order_fill": true,
+      "stop_order_trigger": true
+    },
+    "notification_preferences": {
+      "adl": true,
+      "liquidation": true,
+      "margin_topup": false,
+      "marketing": true,
+      "order_cancel": false,
+      "order_fill": true,
+      "price_alert": true,
+      "stop_order_trigger": true
+    },
+    "price_alert_assets": [
+      "BTC",
+      "ETH"
+    ],
+    "enabled_portfolios": {},
+    "interest_credit": false
   }
 }
 ```
@@ -4595,6 +4662,151 @@ p JSON.parse(result)
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User trading preferences attached to the account|Inline|
 
 <h3 id="get-users-trading-preferences-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## Update users trading preferences
+
+<a id="opIdupdateTradingPreferences"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.put('https://api.india.delta.exchange/v2/users/trading_preferences', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X PUT https://api.india.delta.exchange/v2/users/trading_preferences \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.put 'https://api.india.delta.exchange/v2/users/trading_preferences',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`PUT /users/trading_preferences`
+
+> Body parameter
+
+```json
+{
+  "default_auto_topup": true,
+  "showMarketOrdersForOptionsInBracket": true,
+  "interest_credit": false,
+  "email_preferences": {
+    "adl": true,
+    "liquidation": true,
+    "order_fill": true,
+    "stop_order_trigger": true,
+    "order_cancel": true,
+    "marketing": true
+  },
+  "notification_preferences": {
+    "adl": false,
+    "liquidation": true,
+    "order_fill": true,
+    "stop_order_trigger": true,
+    "price_alert": true,
+    "marketing": true
+  }
+}
+```
+
+<h3 id="update-users-trading-preferences-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[EditUserPreference](#schemaedituserpreference)|true|trading preferences|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "user_id": 57354187,
+    "default_auto_topup": true,
+    "mmp_config": null,
+    "deto_for_commission": false,
+    "vip_level": 0,
+    "vip_discount_factor": "0.00",
+    "volume_30d": "1060.675333",
+    "email_preferences": {
+      "adl": true,
+      "liquidation": true,
+      "margin_topup": false,
+      "marketing": true,
+      "order_cancel": true,
+      "order_fill": true,
+      "stop_order_trigger": true
+    },
+    "notification_preferences": {
+      "adl": true,
+      "liquidation": true,
+      "margin_topup": false,
+      "marketing": true,
+      "order_cancel": false,
+      "order_fill": true,
+      "price_alert": true,
+      "stop_order_trigger": true
+    },
+    "price_alert_assets": [
+      "BTC",
+      "ETH"
+    ],
+    "enabled_portfolios": {},
+    "interest_credit": false
+  }
+}
+```
+
+<h3 id="update-users-trading-preferences-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User trading preferences attached to the account|Inline|
+
+<h3 id="update-users-trading-preferences-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -5775,9 +5987,9 @@ This operation does not require authentication.
 |product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
 |product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |limit_price|string|false|none|Price level for limit orders|
-|size|integer|false|none|Order size|
-|side|string|false|none|Buy order or Sell order|
-|order_type|string|false|none|Limit order(limit_price must be defined) or Market order|
+|size|integer|true|none|Order size|
+|side|string|true|none|Buy order or Sell order|
+|order_type|string|true|none|Limit order(limit_price must be defined) or Market order|
 |stop_order_type|string|false|none|Stop order type - stop loss or take profit|
 |stop_price|string|false|none|Stop loss price level if the order is stop order|
 |trail_amount|string|false|none|Use trail amount if you want a trailing stop order. Required if stop price is empty.|
@@ -7451,11 +7663,38 @@ This operation does not require authentication.
 
 ```json
 {
-  "user_id": 0,
+  "user_id": 57354187,
   "default_auto_topup": true,
-  "mmp_config": {},
-  "deto_for_commission": true,
-  "vip_level": 0
+  "mmp_config": null,
+  "deto_for_commission": false,
+  "vip_level": 0,
+  "vip_discount_factor": "0.00",
+  "volume_30d": "1060.675333",
+  "email_preferences": {
+    "adl": true,
+    "liquidation": true,
+    "margin_topup": false,
+    "marketing": true,
+    "order_cancel": true,
+    "order_fill": true,
+    "stop_order_trigger": true
+  },
+  "notification_preferences": {
+    "adl": true,
+    "liquidation": true,
+    "margin_topup": false,
+    "marketing": true,
+    "order_cancel": false,
+    "order_fill": true,
+    "price_alert": true,
+    "stop_order_trigger": true
+  },
+  "price_alert_assets": [
+    "BTC",
+    "ETH"
+  ],
+  "enabled_portfolios": {},
+  "interest_credit": false
 }
 
 ```
@@ -7466,11 +7705,86 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|user_id|integer|false|none|none|
-|default_auto_topup|boolean|false|none|Default auto topup setting for newly acquired positions (only for isolated mode)|
-|mmp_config|object|false|none|Config object for market maker protection (only for MMP enabled accounts)|
-|deto_for_commission|boolean|false|none|Flag to determine whether to pay commissions in deto|
+|user_id|integer|false|none|Unique identifier for the user|
+|default_auto_topup|boolean|false|none|Default auto top-up setting for newly acquired positions (only for isolated mode)|
+|mmp_config|object¦null|false|none|Config object for market maker protection (only for MMP-enabled accounts)|
+|deto_for_commission|boolean|false|none|Flag to determine whether to pay commissions in DETO|
 |vip_level|integer|false|none|VIP level for this account. Customers get better fee discounting for higher VIP levels|
+|vip_discount_factor|string|false|none|Discount factor based on the VIP level|
+|volume_30d|string|false|none|30-day trading volume for the user|
+|email_preferences|object|false|none|Email preferences for different events|
+|» adl|boolean|false|none|none|
+|» liquidation|boolean|false|none|none|
+|» margin_topup|boolean|false|none|none|
+|» marketing|boolean|false|none|none|
+|» order_cancel|boolean|false|none|none|
+|» order_fill|boolean|false|none|none|
+|» stop_order_trigger|boolean|false|none|none|
+|notification_preferences|object|false|none|Notification preferences for different events|
+|» adl|boolean|false|none|none|
+|» liquidation|boolean|false|none|none|
+|» margin_topup|boolean|false|none|none|
+|» marketing|boolean|false|none|none|
+|» order_cancel|boolean|false|none|none|
+|» order_fill|boolean|false|none|none|
+|» price_alert|boolean|false|none|none|
+|» stop_order_trigger|boolean|false|none|none|
+|price_alert_assets|[string]|false|none|Assets for which price alerts are set|
+|enabled_portfolios|object|false|none|Enabled portfolios for the user|
+|interest_credit|boolean|false|none|Whether the user is receiving interest credits|
+
+<h2 id="tocSedituserpreference">EditUserPreference</h2>
+
+<a id="schemaedituserpreference"></a>
+
+```json
+{
+  "default_auto_topup": true,
+  "showMarketOrdersForOptionsInBracket": true,
+  "interest_credit": false,
+  "email_preferences": {
+    "adl": true,
+    "liquidation": true,
+    "order_fill": true,
+    "stop_order_trigger": true,
+    "order_cancel": true,
+    "marketing": true
+  },
+  "notification_preferences": {
+    "adl": false,
+    "liquidation": true,
+    "order_fill": true,
+    "stop_order_trigger": true,
+    "price_alert": true,
+    "marketing": true
+  }
+}
+
+```
+
+*Edit User Preference Object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|default_auto_topup|boolean|false|none|Default auto top-up setting for newly acquired positions|
+|showMarketOrdersForOptionsInBracket|boolean|false|none|Flag to display market orders for options in bracket orders|
+|interest_credit|boolean|false|none|Whether the user is receiving interest credits|
+|email_preferences|object|false|none|Email preferences for different events|
+|» adl|boolean|false|none|none|
+|» liquidation|boolean|false|none|none|
+|» order_fill|boolean|false|none|none|
+|» stop_order_trigger|boolean|false|none|none|
+|» order_cancel|boolean|false|none|none|
+|» marketing|boolean|false|none|none|
+|notification_preferences|object|false|none|Notification preferences for different events|
+|» adl|boolean|false|none|none|
+|» liquidation|boolean|false|none|none|
+|» order_fill|boolean|false|none|none|
+|» stop_order_trigger|boolean|false|none|none|
+|» price_alert|boolean|false|none|none|
+|» marketing|boolean|false|none|none|
 
 <h2 id="tocScancelafterrequest">CancelAfterRequest</h2>
 

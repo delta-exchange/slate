@@ -1,13 +1,13 @@
 # Place order errors
 This section lists various errors returned by the system while placing order. The error format looks like this 
 
-```
+```json
 {
-  success: false,
-  error: {
-    code: ...,        // error code
-    context: {
-      ...
+  "success": false,
+  "error": {
+    "code": "...",        // error code
+    "context": {
+      "..."
     }
   }
 }

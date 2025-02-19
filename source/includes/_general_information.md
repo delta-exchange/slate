@@ -61,13 +61,13 @@ Wallet transactions|/v2/wallet/transactions
 
 In API response, meta data will contain the cursors as show below
 
-```
+```json
 {
-  success: true,
-  result: [ {}, {}, .....],
-  meta: {
-    after: "an_arbitary_string",
-    before: "another_arbitary_string"
+  "success": true,
+  "result": [],
+  "meta": {
+    "after": "an_arbitary_string",
+    "before": "another_arbitary_string"
   }
 }
 ```

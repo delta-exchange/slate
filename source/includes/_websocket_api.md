@@ -33,7 +33,7 @@ Once a subscribe message is received the server will respond with a subscription
     "payload": {
         "channels": [
             {
-                "name": "/v2/ticker",
+                "name": "v2/ticker",
                 "symbols": [
                     "BTCUSD",
                     "ETHUSD"
