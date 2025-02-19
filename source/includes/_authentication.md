@@ -55,6 +55,8 @@ All Authenticated requests must contain the following headers:
 
 **timestamp**: A timestamp for your request.
 
+**User-Agent**: Your programming language or library that you are using. e.g. "python-3.10" or "java". This is for our internal stats, this header must be sent to avoid 4XX error.
+
 
 All request bodies should have content type application/json and be valid JSON.
 
@@ -114,7 +116,7 @@ req_headers = {
   'api-key': api_key,
   'timestamp': timestamp,
   'signature': signature,
-  'User-Agent': 'rest-client',
+  'User-Agent': 'python-rest-client',
   'Content-Type': 'application/json'
 }
 

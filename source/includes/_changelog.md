@@ -1,5 +1,12 @@
 # Changelog
 
+## 20.02.25
+1. Removed Websocket RPC section. Use REST API endpoints with normal HTTP requests (RPC requests still work, it is recommended not to use them).
+2. Fixed documentation: "User-Agent" header is necessary for authenticated HTTP requests.
+3. Fixed documentation: Better examples and documentation under 'General Information', 'Authentication', etc tabs.
+4. Created separate documentation site for Indian and Global site for easier understanding and better examples for both.
+
+
 ## 18.10.2024
 1. Added clickable links to the corresponding API response json schemas under some API "Responses" table. Updated some schemas to match the response. (This is a documentation fix, no changes in API)
 2. Added "Testnet-India" REST and Websocket host endpoints.

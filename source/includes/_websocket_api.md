@@ -767,7 +767,7 @@ Publish interval: 1 sec
             {
                 "name": "v2/spot_price",
                 "symbols": [
-                    ".DEETHUSDT"
+                    ".DEETHUSD"
                 ]
             }
         ]
@@ -778,7 +778,7 @@ Publish interval: 1 sec
 ```json
 // Response
 {
-    s: ".DEETHUSDT",   # spot index symbol
+    s: ".DEETHUSD",   # spot index symbol
     p: 1349.3412141,   # spot price
     type: "v2/spot_price"
 }
@@ -800,7 +800,7 @@ This is the price used for settlement of options. Specifying symbols when subscr
             {
                 "name": "spot_30mtwap_price",
                 "symbols": [
-                    ".DEXBTUSDT"
+                    ".DEXBTUSD"
                 ]
             }
         ]
@@ -811,7 +811,7 @@ This is the price used for settlement of options. Specifying symbols when subscr
 ```json
 // Spot 30 minutes twap Price Response
 {
-    symbol: ".DEXBTUSDT",
+    symbol: ".DEXBTUSD",
     price: "0.0014579",
     type: "spot_30mtwap_price",
     timestamp: 1561634049751430
@@ -1360,7 +1360,7 @@ UCF: is unrealised cashflows of your portfolio. These are the cashflows (negativ
         "channels": [
             {
                 "name": "portfolio_margins",
-                "symbols": [".DEXBTUSDT"]
+                "symbols": [".DEXBTUSD"]
             }
         ]
     }
@@ -1373,7 +1373,7 @@ UCF: is unrealised cashflows of your portfolio. These are the cashflows (negativ
     "type": "portfolio_margins",
     "user_id": 1,
     "asset_id": 2,                   // BTC
-    "index_symbol": ".DEXBTUSDT",
+    "index_symbol": ".DEXBTUSD",
     "liquidation_risk": false,
     "blocked_margin": "100", // Margin blocked for current portfolio. Same as portfolio_margin in margins channel.
     "mm_wo_ucf": "80",

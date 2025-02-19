@@ -6,15 +6,15 @@
 
    - **Quoting Asset:** The asset in which price of the quoting is called the quoting asset. For e.g. the BTCUSD contract is quoted in USD. Therefore, the quoting asset of the contract is USD.
    
-   - **Settling Asset:** The asset in which the margin and Profit/ Loss of a contract is denominated. For e.g. the BTCUSD contract is margined and settled in BTC. Therefore, the settling asset of the contract is BTC.
+   - **Settling Asset:** The asset in which the margin and Profit/ Loss of a contract is denominated. For e.g. the BTCUSD contract is margined and settled in USD. Therefore, the settling asset of the contract is USD.
 
 **Products**: are the derivative contracts listed on Delta Exchange. Each contract can be referred by either its Product ID (e.g. 27 is the Product ID of BTCUSD contract) or Symbol (BTCUSD is the symbol for BTCUSD contract). It is worth noting that Orders, Orderbook APIs expect Product IDs. 
 e.g.
 
 product_id| symbol |product_type| description
 --|--|--|--
-27  |BTCUSD|perpetual_futures|Bitcoin Perpetual futures
-3136|ETHUSD|perpetual_futures|Ethereum perpetual futures
+27  |BTCUSD|perpetual_futures|Bitcoin Perpetual futures quoted in USD
+3136|ETHUSD|perpetual_futures|Ethereum perpetual futures quoted in USD
 2000|P-BTC-38100-230124|put_options|BTC put option strike price $38100 and expiring on 23/01/2024
 5000|C-BTC-55800-170224|call_options|BTC call option strike price $55800 and expiring on 17/02/2024
 
@@ -23,9 +23,15 @@ product_id| symbol |product_type| description
 
 **Contract symbol:** has the following format
 
-    Underlying Asset| Quoting Asset|Q (optional; applicable only to quanto contracts)|_|Matruity Date (optional, applicable only for futures contracts)
+    Underlying Asset| Quoting Asset|_|Matruity Date (optional, applicable only for futures contracts)
     
-    e.g. BTCUSD, ETHUSD, C-BTC-55800-170224
+    e.g. BTCUSD, ETHUSD
+
+    For Options symbol:  
+    Option Type |-| Underlying Asset |-| Price Strikes |-| Expiry Date in ddMMYY   
+    e.g. C-BTC-90000-310125: C (Call Option) BTC (Bitcoin) 90000 strike price expiring on 31st Jan 2025
+    
+
   
 **Mark Price:** Each contract has a unique [Mark Price](https://www.delta.exchange/user-guide/)  which can be referred to by: **MARK: Contract_Symbol (MARK:BTCUSD)** 
 
