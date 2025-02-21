@@ -3307,6 +3307,11 @@
     "BatchCreateOrder": {
       "type": "object",
       "description": "A create order object",
+      "required": [
+        "size",
+        "side",
+        "order_type"
+      ],
       "properties": {
         "limit_price": {
           "type": "string",
@@ -3415,8 +3420,10 @@
       "type": "object",
       "description": "edit order object",
       "required": [
+        "id",
         "product_id",
-        "product_symbol"
+        "product_symbol",
+        "size"
       ],
       "properties": {
         "id": {
@@ -3492,6 +3499,11 @@
     "BatchEditOrder": {
       "type": "object",
       "description": "edit order object",
+      "required": [
+        "id",
+        "size",
+        "order_type"
+      ],
       "properties": {
         "id": {
           "type": "integer",
@@ -3646,6 +3658,7 @@
       "type": "object",
       "description": "bracket order object",
       "required": [
+        "id",
         "product_id",
         "product_symbol"
       ],
