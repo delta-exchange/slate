@@ -13,8 +13,8 @@ e.g.
 
 product_id| symbol |product_type| description
 --|--|--|--
-27  |BTCUSD|perpetual_futures|Bitcoin Perpetual futures quoted in USD
-3136|ETHUSD|perpetual_futures|Ethereum perpetual futures quoted in USD
+27  |BTCUSD|perpetual_futures|Bitcoin Perpetual futures quoted and settled in USD
+3136|ETHUSD|perpetual_futures|Ethereum perpetual futures quoted and settled in USD
 2000|P-BTC-38100-230124|put_options|BTC put option strike price $38100 and expiring on 23/01/2024
 5000|C-BTC-55800-170224|call_options|BTC call option strike price $55800 and expiring on 17/02/2024
 
