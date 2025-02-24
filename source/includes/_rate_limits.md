@@ -31,9 +31,7 @@ Total quota used: 300 + 150 + 1000 + 500 = 1950 quota used. If this is greater t
 ### Product
 We have also introduced rate limits to manage operations within the matching engine. The current rate limit is set at 500 operations per second for each product. For example, placing 50 orders in a batch counts as 50 operations, as each individual order will be processed by the matching engine.
 
-Important: Rate limits do not apply when cancelling orders.
-
-In addition to rate limiting on the REST API level, we've also implemented rate limiting at the product level. This means that there can be 500 operations per product per second. This measure is in place to prevent excessive operations on the matching engine, which could slow down its performance.
+This measure is in place to prevent excessive operations on the matching engine, which could slow down its performance.
 
 Even if you have not exceeded the rate limit on the REST API level, your requests may still fail with a 429 error if you breach the product-level rate limit.
 
