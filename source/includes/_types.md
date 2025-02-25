@@ -18,7 +18,7 @@ Integer numbers (like contract size, product_id and impact size) are unquoted.
 
 ## IDs
 
-Most identifiers are UUID unless otherwise specified. When making a request which requires a UUID, both forms (with and without dashes) are accepted.
+Most identifiers are big integers unless otherwise specified. When making a request that requires an ID, ensure it is passed as a numeric value without formatting changes. When making a request which requires a UUID, both forms (with and without dashes) are accepted.
 
 `167ja7cg-678e-6876-d6g3-f803ce49qsc9`  or  `167ja7cg678e6876d6g3f803ce49qsc9`
 
