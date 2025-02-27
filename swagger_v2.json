@@ -153,7 +153,7 @@
           {
             "in": "query",
             "name": "contract_types",
-            "description": "Comma separated list of contract types e.g. futures,perpetual_futures,call_options, put_options, interest_rate_swaps,move_options,spreads, turbo_call_options, turbo_put_options, spot",
+            "description": "Comma separated list of contract types e.g. perpetual_futures,call_options, put_options",
             "type": "string"
           },
           {
@@ -259,7 +259,7 @@
           {
             "name": "contract_types",
             "in": "query",
-            "description": "A comma-separated list of contract types to filter the tickers. Example values include futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.",
+            "description": "A comma-separated list of contract types to filter the tickers. Example values include perpetual_futures, call_options, put_options.",
             "required": false,
             "type": "string",
             "example": "futures,perpetual_futures,call_options"
@@ -2829,7 +2829,7 @@
         "description": {
           "type": "string",
           "description": "Detailed description of the product or contract.",
-          "example": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar"
+          "example": "Bitcoin Perpetual futures, quoted, settled & margined in INR"
         },
         "created_at": {
           "type": "string",
@@ -4504,7 +4504,7 @@
         },
         "contract_type": {
           "type": "string",
-          "description": "Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.",
+          "description": "Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options.",
           "example": "futures"
         },
         "greeks": {

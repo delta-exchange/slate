@@ -185,6 +185,154 @@ ws.send(json.dumps({
 }))
 ```
 
+# Sample Python Code
+
+## Public Channels
+
+**Summary:** 
+The python script(right panel) connects to the Delta Exchange WebSocket to receive real-time market data.
+
+- It opens a connection.
+- Subscribes to `v2/ticker`(tickers data) and `candlestick_1m`(1 minute ohlc candlesticks) channels. (**MARK:BTCUSD** - mark price ohlc in candlesticks channel)
+- When data arrives, it processes and prints it.
+- If an error occurs, it prints an error message.
+- If the connection closes, it notifies the user.
+- The connection remains open indefinitely to keep receiving updates.
+
+```python
+import websocket
+import json
+
+# production websocket base url
+WEBSOCKET_URL = "wss://socket.india.delta.exchange"
+
+def on_error(ws, error):
+    print(f"Socket Error: {error}")
+
+def on_close(ws, close_status_code, close_msg):
+    print(f"Socket closed with status: {close_status_code} and message: {close_msg}")
+
+def on_open(ws):
+  print(f"Socket opened")
+  # subscribe tickers of perpetual futures - BTCUSD & ETHUSD, call option C-BTC-95200-200225 and put option - P-BTC-95200-200225
+  subscribe(ws, "v2/ticker", ["BTCUSD", "ETHUSD", "C-BTC-95200-200225", "P-BTC-95200-200225"])
+  # subscribe 1 minute ohlc candlestick of perpetual futures - MARK:BTCUSD(mark price) & ETHUSD(ltp), call option C-BTC-95200-200225(ltp) and put option - P-BTC-95200-200225(ltp).
+  subscribe(ws, "candlestick_1m", ["MARK:BTCUSD", "ETHUSD", "C-BTC-95200-200225", "P-BTC-95200-200225"])
+
+def subscribe(ws, channel, symbols):
+    payload = {
+        "type": "subscribe",
+        "payload": {
+            "channels": [
+                {
+                    "name": channel,
+                    "symbols": symbols
+                }
+            ]
+        }
+    }
+    ws.send(json.dumps(payload))
+
+def on_message(ws, message):
+    # print json response
+    message_json = json.loads(message)
+    print(message_json)
+
+if __name__ == "__main__":
+  ws = websocket.WebSocketApp(WEBSOCKET_URL, on_message=on_message, on_error=on_error, on_close=on_close)
+  ws.on_open = on_open
+  ws.run_forever() # runs indefinitely
+```
+
+## Private Channels
+
+**Summary:** 
+The python script(right panel) connects to the Delta Exchange WebSocket to receive real-time market data.
+
+- It opens a connection.
+- Sends authentication payload over socket with api_key, signature & timestamp.
+- When authentication update arrives, it checks for success and then sends subscription for `orders` and `positions` channels for all contracts.
+- Prints all other updates in json format.
+- If an error occurs, it prints an error message.
+- If the connection closes, it notifies the user.
+- The connection remains open indefinitely to keep receiving updates.
+
+```python
+import websocket
+import hashlib
+import hmac
+import json
+import time
+
+# production websocket base url and api keys/secrets
+WEBSOCKET_URL = "wss://socket.india.delta.exchange"
+API_KEY = 'a207900b7693435a8fa9230a38195d'
+API_SECRET = '7b6f39dcf660ec1c7c664f612c60410a2bd0c258416b498bf0311f94228f'
+
+def on_error(ws, error):
+    print(f"Socket Error: {error}")
+
+def on_close(ws, close_status_code, close_msg):
+    print(f"Socket closed with status: {close_status_code} and message: {close_msg}")
+
+def on_open(ws):
+    print(f"Socket opened")
+    # api key authentication
+    send_authentication(ws)
+
+def send_authentication(ws):
+    method = 'GET'
+    timestamp = str(int(time.time()))
+    path = '/live'
+    signature_data = method + timestamp + path
+    signature = generate_signature(API_SECRET, signature_data)
+    ws.send(json.dumps({
+        "type": "auth",
+        "payload": {
+            "api-key": API_KEY,
+            "signature": signature,
+            "timestamp": timestamp
+        }
+    }))
+
+def generate_signature(secret, message):
+    message = bytes(message, 'utf-8')
+    secret = bytes(secret, 'utf-8')
+    hash = hmac.new(secret, message, hashlib.sha256)
+    return hash.hexdigest()
+
+def on_message(ws, message):
+    message_json = json.loads(message)
+    # subscribe private channels after successful authentication
+    if message_json['type'] == 'success' and message_json['message'] == 'Authenticated':
+         # subscribe orders channel for order updates for all contracts
+        subscribe(ws, "orders", ["all"])
+        # subscribe positions channel for position updates for all contracts
+        subscribe(ws, "positions", ["all"])
+    else:
+      print(message_json)
+
+def subscribe(ws, channel, symbols):
+    payload = {
+        "type": "subscribe",
+        "payload": {
+            "channels": [
+                {
+                    "name": channel,
+                    "symbols": symbols
+                }
+            ]
+        }
+    }
+    ws.send(json.dumps(payload))
+
+if __name__ == "__main__":
+  ws = websocket.WebSocketApp(WEBSOCKET_URL, on_message=on_message, on_error=on_error, on_close=on_close)
+  ws.on_open = on_open
+  ws.run_forever() # runs indefinitely
+```
+
+
 # Detecting Connection Drops
 Some client libraries might not detect connection drops properly. We provide two methods for the clients to ensure they are connected and getting subscribed data.
 
