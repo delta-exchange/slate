@@ -1487,7 +1487,6 @@
             "description": "comma separated list of desired contract types. If not specified any parameters then, all the open positions will be returned",
             "type": "string",
             "enum":[
-              "futures",
               "perpetual_futures",
               "call_options",
               "put_options"
@@ -2553,7 +2552,7 @@
             }
           }
         }
-      },
+      }
     },
     "/sub_accounts": {
       "get": {
@@ -2630,6 +2629,65 @@
                   }
                 }
               ]
+            }
+          }
+        }
+      }
+    },
+    "/users/margin_mode": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Change margin mode",
+        "operationId": "changeMarginMode",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "change_margin_mode",
+            "description": "changes margin mode of the user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangeMarginModeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the [profile](#tocSuser) with the updated margin mode",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/User"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Returns error if margin mode could not be changed",
+            "schema": {
+              "$ref": "#/definitions/ApiErrorResponse"
             }
           }
         }
@@ -4758,6 +4816,25 @@
         }
       }
     },
+    "ChangeMarginModeRequest": {
+      "type": "object",
+      "description": "Request to change the margin mode for a main or subaccount.",
+      "properties": {
+        "margin_mode": {
+          "type": "string",
+          "description": "The target margin mode: 'isolated' or 'portfolio'.",
+          "enum": ["isolated", "portfolio"],
+          "required": true,
+          "example": "isolated"
+        },
+        "subaccount_user_id": {
+          "type": "string",
+          "description": "The user ID of the account. Provide the main user ID for the main account or the respective subaccount user ID.",
+          "required": true,
+          "example": "5112346"
+        }
+      }
+    },
     "UserPreference":  {
       "type": "object",
       "description": "User trading preferences",
@@ -4956,46 +5033,68 @@
     },
     "User": {
       "type": "object",
-      "description": "User Object",
+      "description": "Represents a user account with personal and account-related details.",
       "properties": {
         "id": {
-          "type": "integer_or_string",
-          "description": "id"
+          "type": "string",
+          "description": "Unique user identifier, which can be an integer or string.",
+          "example": "98765432"
         },
         "email": {
           "type": "string",
-          "description": "email"
+          "description": "User's email address.",
+          "example": "rajtrader2342@gmail.com"
         },
         "account_name": {
-          "type": "string"
+          "type": "string",
+          "description": "The main account or subaccount name.",
+          "example": "Main"
         },
         "first_name": {
-          "type": "string"
+          "type": "string",
+          "description": "User's first name.",
+          "example": "Rajesh"
         },
         "last_name": {
-          "type": "string"
+          "type": "string",
+          "description": "User's last name.",
+          "example": "Sharma"
         },
         "dob": {
-          "type": "string"
+          "type": "string",
+          "format": "date",
+          "description": "Date of birth in YYYY-MM-DD format.",
+          "example": "1985-08-25"
         },
         "country": {
-          "type": "string"
+          "type": "string",
+          "description": "User's country of residence.",
+          "example": "India"
         },
         "phone_number": {
-          "type": "string"
+          "type": "string",
+          "description": "User's phone number with country code.",
+          "example": "9876543210"
         },
         "margin_mode": {
-          "type": "string"
+          "type": "string",
+          "description": "The user's margin mode, which can be 'isolated' or 'portfolio'.",
+          "example": "isolated"
         },
         "pf_index_symbol": {
           "type": "string",
-          "description": "Portfolio index symbol if account is at portfolio margin mode."
+          "description": "Portfolio index symbol if the account is in portfolio margin mode.",
+          "example": ".DEXBTUSD"
         },
         "is_sub_account": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Indicates if the user account is a sub-account.",
+          "example": false
         },
         "is_kyc_done": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Indicates if the user's KYC verification is completed.",
+          "example": true
         }
       }
     },
