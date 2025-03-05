@@ -483,6 +483,9 @@
                   <li>
                     <a href="#get-user" class="toc-h2 toc-link" data-title="Get user">Get user</a>
                   </li>
+                  <li>
+                    <a href="#change-margin-mode" class="toc-h2 toc-link" data-title="Change margin mode">Change margin mode</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -676,6 +679,9 @@
                     <a href="#tocSmmpresetrequest" class="toc-h2 toc-link" data-title="MMPResetRequest">MMPResetRequest</a>
                   </li>
                   <li>
+                    <a href="#tocSchangemarginmoderequest" class="toc-h2 toc-link" data-title="ChangeMarginModeRequest">ChangeMarginModeRequest</a>
+                  </li>
+                  <li>
                     <a href="#tocSuserpreference" class="toc-h2 toc-link" data-title="UserPreference">UserPreference</a>
                   </li>
                   <li>
@@ -727,6 +733,17 @@
               </ul>
           </li>
           <li>
+            <a href="#sample-python-code" class="toc-h1 toc-link" data-title="Sample Python Code">Sample Python Code</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#public-channels" class="toc-h2 toc-link" data-title="Public Channels">Public Channels</a>
+                  </li>
+                  <li>
+                    <a href="#private-channels" class="toc-h2 toc-link" data-title="Private Channels">Private Channels</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#detecting-connection-drops" class="toc-h1 toc-link" data-title="Detecting Connection Drops">Detecting Connection Drops</a>
               <ul class="toc-list-h2">
                   <li>
@@ -738,7 +755,7 @@
               </ul>
           </li>
           <li>
-            <a href="#public-channels" class="toc-h1 toc-link" data-title="Public Channels">Public Channels</a>
+            <a href="#public-channels-2" class="toc-h1 toc-link" data-title="Public Channels">Public Channels</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#v2-ticker" class="toc-h2 toc-link" data-title="v2 ticker">v2 ticker</a>
@@ -782,7 +799,7 @@
               </ul>
           </li>
           <li>
-            <a href="#private-channels" class="toc-h1 toc-link" data-title="Private Channels">Private Channels</a>
+            <a href="#private-channels-2" class="toc-h1 toc-link" data-title="Private Channels">Private Channels</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#margins" class="toc-h2 toc-link" data-title="Margins">Margins</a>
@@ -893,13 +910,13 @@ e.g.</p>
 <td>27</td>
 <td>BTCUSD</td>
 <td>perpetual_futures</td>
-<td>Bitcoin Perpetual futures quoted and settled in USD</td>
+<td>Bitcoin Perpetual futures margined and settled in INR</td>
 </tr>
 <tr>
 <td>3136</td>
 <td>ETHUSD</td>
 <td>perpetual_futures</td>
-<td>Ethereum perpetual futures quoted and settled in USD</td>
+<td>Ethereum perpetual futures margined and settled in INR</td>
 </tr>
 <tr>
 <td>2000</td>
@@ -1591,7 +1608,7 @@ curl -X GET https://api.india.delta.exchange/v2/products <span class="se">\</spa
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>Comma separated list of contract types e.g. futures,perpetual_futures,call_options, put_options, interest_rate_swaps,move_options,spreads, turbo_call_options, turbo_put_options, spot</td>
+<td>Comma separated list of contract types e.g. perpetual_futures,call_options, put_options</td>
 </tr>
 <tr>
 <td>states</td>
@@ -1635,7 +1652,7 @@ curl -X GET https://api.india.delta.exchange/v2/products <span class="se">\</spa
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
       </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in US Dollar"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in INR"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-18T13:10:39Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-15T02:47:50Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1882,7 +1899,7 @@ curl -X GET https://api.india.delta.exchange/v2/products/<span class="o">{</span
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in US Dollar"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in INR"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-18T13:10:39Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-15T02:47:50Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -2113,7 +2130,7 @@ curl -X GET https://api.india.delta.exchange/v2/tickers <span class="se">\</span
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>A comma-separated list of contract types to filter the tickers. Example values include futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.</td>
+<td>A comma-separated list of contract types to filter the tickers. Example values include perpetual_futures, call_options, put_options.</td>
 </tr>
 </tbody></table>
 
@@ -4950,10 +4967,6 @@ curl -X GET https://api.india.delta.exchange/v2/positions/margined <span class="
 <th>Value</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>contract_types</td>
-<td>futures</td>
-</tr>
 <tr>
 <td>contract_types</td>
 <td>perpetual_futures</td>
@@ -8127,17 +8140,17 @@ curl -X GET https://api.india.delta.exchange/v2/sub_accounts <span class="se">\<
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98765432"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rajtrader2342@gmail.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rajesh"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sharma"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-08-25"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"India"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9876543210"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEXBTUSD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"is_kyc_done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -8228,17 +8241,17 @@ curl -X GET https://api.india.delta.exchange/v2/profile <span class="se">\</span
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98765432"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rajtrader2342@gmail.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rajesh"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sharma"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-08-25"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"India"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9876543210"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEXBTUSD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"is_kyc_done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -8263,6 +8276,143 @@ curl -X GET https://api.india.delta.exchange/v2/profile <span class="se">\</span
 </tbody></table>
 
 <h3 id="get-user-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h2 id='change-margin-mode'>Change margin mode</h2>
+
+<p><a id="opIdchangeMarginMode"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://api.india.delta.exchange/v2/users/margin_mode'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X PUT https://api.india.delta.exchange/v2/users/margin_mode <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">put</span> <span class="s1">'https://api.india.delta.exchange/v2/users/margin_mode'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>PUT /users/margin_mode</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"subaccount_user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5112346"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="change-margin-mode-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemachangemarginmoderequest">ChangeMarginModeRequest</a></td>
+<td>true</td>
+<td>changes margin mode of the user</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98765432"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rajtrader2342@gmail.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rajesh"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sharma"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-08-25"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"India"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9876543210"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEXBTUSD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_kyc_done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="change-margin-mode-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns the <a href="#tocSuser">profile</a> with the updated margin mode</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Returns error if margin mode could not be changed</td>
+<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="change-margin-mode-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -8348,7 +8498,7 @@ curl -X GET https://api.india.delta.exchange/v2/products/?states<span class="o">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in US Dollar"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in INR"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-18T13:10:39Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-15T02:47:50Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -9254,7 +9404,7 @@ This operation does not require authentication.
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
   </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in US Dollar"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in INR"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-18T13:10:39Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-15T02:47:50Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -9700,7 +9850,7 @@ This operation does not require authentication.
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">
     </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in US Dollar"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin Perpetual futures, quoted, settled &amp; margined in INR"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-12-18T13:10:39Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-15T02:47:50Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"settlement_time"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -13449,7 +13599,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.</td>
+<td>Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options.</td>
 </tr>
 <tr>
 <td>greeks</td>
@@ -14076,6 +14226,64 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocSchangemarginmoderequest">ChangeMarginModeRequest</h2>
+
+<p><a id="schemachangemarginmoderequest"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"subaccount_user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5112346"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Request to change the margin mode for a main or subaccount.</em></p>
+
+<h3 id='properties-57'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>margin_mode</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>The target margin mode: &#39;isolated&#39; or &#39;portfolio&#39;.</td>
+</tr>
+<tr>
+<td>subaccount_user_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>The user ID of the account. Provide the main user ID for the main account or the respective subaccount user ID.</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-40'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>margin_mode</td>
+<td>isolated</td>
+</tr>
+<tr>
+<td>margin_mode</td>
+<td>portfolio</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSuserpreference">UserPreference</h2>
 
 <p><a id="schemauserpreference"></a></p>
@@ -14119,7 +14327,7 @@ This operation does not require authentication.
 
 <p><em>User trading preferences</em></p>
 
-<h3 id='properties-57'>Properties</h3>
+<h3 id='properties-58'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -14351,7 +14559,7 @@ This operation does not require authentication.
 
 <p><em>Edit User Preference Object</em></p>
 
-<h3 id='properties-58'>Properties</h3>
+<h3 id='properties-59'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -14495,7 +14703,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Request Object</em></p>
 
-<h3 id='properties-59'>Properties</h3>
+<h3 id='properties-60'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -14528,7 +14736,7 @@ This operation does not require authentication.
 
 <p><em>Cancel After Response Object</em></p>
 
-<h3 id='properties-60'>Properties</h3>
+<h3 id='properties-61'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -14555,7 +14763,7 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h4 id='enumerated-values-40'>Enumerated Values</h4>
+<h4 id='enumerated-values-41'>Enumerated Values</h4>
 
 <table><thead>
 <tr>
@@ -14578,25 +14786,25 @@ This operation does not require authentication.
 <p><a id="schemauser"></a></p>
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98765432"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rajtrader2342@gmail.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rajesh"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sharma"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-08-25"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"India"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9876543210"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEXBTUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"is_kyc_done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
 
-<p><em>User Object</em></p>
+<p><em>Represents a user account with personal and account-related details.</em></p>
 
-<h3 id='properties-61'>Properties</h3>
+<h3 id='properties-62'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -14609,87 +14817,87 @@ This operation does not require authentication.
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>integer_or_string</td>
+<td>string</td>
 <td>false</td>
 <td>none</td>
-<td>id</td>
+<td>Unique user identifier, which can be an integer or string.</td>
 </tr>
 <tr>
 <td>email</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>email</td>
+<td>User&#39;s email address.</td>
 </tr>
 <tr>
 <td>account_name</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>The main account or subaccount name.</td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>User&#39;s first name.</td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>User&#39;s last name.</td>
 </tr>
 <tr>
 <td>dob</td>
-<td>string</td>
+<td>string(date)</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Date of birth in YYYY-MM-DD format.</td>
 </tr>
 <tr>
 <td>country</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>User&#39;s country of residence.</td>
 </tr>
 <tr>
 <td>phone_number</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>User&#39;s phone number with country code.</td>
 </tr>
 <tr>
 <td>margin_mode</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>The user&#39;s margin mode, which can be &#39;isolated&#39; or &#39;portfolio&#39;.</td>
 </tr>
 <tr>
 <td>pf_index_symbol</td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Portfolio index symbol if account is at portfolio margin mode.</td>
+<td>Portfolio index symbol if the account is in portfolio margin mode.</td>
 </tr>
 <tr>
 <td>is_sub_account</td>
 <td>boolean</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Indicates if the user account is a sub-account.</td>
 </tr>
 <tr>
 <td>is_kyc_done</td>
 <td>boolean</td>
 <td>false</td>
 <td>none</td>
-<td>none</td>
+<td>Indicates if the user&#39;s KYC verification is completed.</td>
 </tr>
 </tbody></table>
 
@@ -14699,22 +14907,22 @@ This operation does not require authentication.
 
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98765432"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rajtrader2342@gmail.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rajesh"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sharma"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-08-25"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"India"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9876543210"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEXBTUSD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"is_kyc_done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-62'>Properties</h3>
+</span></code></pre><h3 id='properties-63'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -14729,7 +14937,7 @@ This operation does not require authentication.
 <td>[<a href="#schemauser">User</a>]</td>
 <td>false</td>
 <td>none</td>
-<td>[User Object]</td>
+<td>[Represents a user account with personal and account-related details.]</td>
 </tr>
 </tbody></table>
 
@@ -15024,6 +15232,145 @@ This operation does not require authentication.
     <span class="s">"type"</span><span class="p">:</span> <span class="s">'unauth'</span><span class="p">,</span>
     <span class="s">"payload"</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}))</span>
+</code></pre><h1 id='sample-python-code'>Sample Python Code</h1><h2 id='public-channels'>Public Channels</h2>
+<p><strong>Summary:</strong> 
+The python script(right panel) connects to the Delta Exchange WebSocket to receive real-time market data.</p>
+
+<ul>
+<li>It opens a connection.</li>
+<li>Subscribes to <code>v2/ticker</code>(tickers data) and <code>candlestick_1m</code>(1 minute ohlc candlesticks) channels. (<strong>MARK:BTCUSD</strong> - mark price ohlc in candlesticks channel)</li>
+<li>When data arrives, it processes and prints it.</li>
+<li>If an error occurs, it prints an error message.</li>
+<li>If the connection closes, it notifies the user.</li>
+<li>The connection remains open indefinitely to keep receiving updates.</li>
+</ul>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">websocket</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c"># production websocket base url</span>
+<span class="n">WEBSOCKET_URL</span> <span class="o">=</span> <span class="s">"wss://socket.india.delta.exchange"</span>
+
+<span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Socket Error: {error}"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">close_status_code</span><span class="p">,</span> <span class="n">close_msg</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Socket closed with status: {close_status_code} and message: {close_msg}"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Socket opened"</span><span class="p">)</span>
+  <span class="c"># subscribe tickers of perpetual futures - BTCUSD &amp; ETHUSD, call option C-BTC-95200-200225 and put option - P-BTC-95200-200225</span>
+  <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"v2/ticker"</span><span class="p">,</span> <span class="p">[</span><span class="s">"BTCUSD"</span><span class="p">,</span> <span class="s">"ETHUSD"</span><span class="p">,</span> <span class="s">"C-BTC-95200-200225"</span><span class="p">,</span> <span class="s">"P-BTC-95200-200225"</span><span class="p">])</span>
+  <span class="c"># subscribe 1 minute ohlc candlestick of perpetual futures - MARK:BTCUSD(mark price) &amp; ETHUSD(ltp), call option C-BTC-95200-200225(ltp) and put option - P-BTC-95200-200225(ltp).</span>
+  <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"candlestick_1m"</span><span class="p">,</span> <span class="p">[</span><span class="s">"MARK:BTCUSD"</span><span class="p">,</span> <span class="s">"ETHUSD"</span><span class="p">,</span> <span class="s">"C-BTC-95200-200225"</span><span class="p">,</span> <span class="s">"P-BTC-95200-200225"</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">symbols</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"type"</span><span class="p">:</span> <span class="s">"subscribe"</span><span class="p">,</span>
+        <span class="s">"payload"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"channels"</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s">"name"</span><span class="p">:</span> <span class="n">channel</span><span class="p">,</span>
+                    <span class="s">"symbols"</span><span class="p">:</span> <span class="n">symbols</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="c"># print json response</span>
+    <span class="n">message_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message_json</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+  <span class="n">ws</span> <span class="o">=</span> <span class="n">websocket</span><span class="o">.</span><span class="n">WebSocketApp</span><span class="p">(</span><span class="n">WEBSOCKET_URL</span><span class="p">,</span> <span class="n">on_message</span><span class="o">=</span><span class="n">on_message</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">,</span> <span class="n">on_close</span><span class="o">=</span><span class="n">on_close</span><span class="p">)</span>
+  <span class="n">ws</span><span class="o">.</span><span class="n">on_open</span> <span class="o">=</span> <span class="n">on_open</span>
+  <span class="n">ws</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span> <span class="c"># runs indefinitely</span>
+</code></pre><h2 id='private-channels'>Private Channels</h2>
+<p><strong>Summary:</strong> 
+The python script(right panel) connects to the Delta Exchange WebSocket to receive real-time market data.</p>
+
+<ul>
+<li>It opens a connection.</li>
+<li>Sends authentication payload over socket with api_key, signature &amp; timestamp.</li>
+<li>When authentication update arrives, it checks for success and then sends subscription for <code>orders</code> and <code>positions</code> channels for all contracts.</li>
+<li>Prints all other updates in json format.</li>
+<li>If an error occurs, it prints an error message.</li>
+<li>If the connection closes, it notifies the user.</li>
+<li>The connection remains open indefinitely to keep receiving updates.</li>
+</ul>
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">websocket</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c"># production websocket base url and api keys/secrets</span>
+<span class="n">WEBSOCKET_URL</span> <span class="o">=</span> <span class="s">"wss://socket.india.delta.exchange"</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'a207900b7693435a8fa9230a38195d'</span>
+<span class="n">API_SECRET</span> <span class="o">=</span> <span class="s">'7b6f39dcf660ec1c7c664f612c60410a2bd0c258416b498bf0311f94228f'</span>
+
+<span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Socket Error: {error}"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">close_status_code</span><span class="p">,</span> <span class="n">close_msg</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Socket closed with status: {close_status_code} and message: {close_msg}"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Socket opened"</span><span class="p">)</span>
+    <span class="c"># api key authentication</span>
+    <span class="n">send_authentication</span><span class="p">(</span><span class="n">ws</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">send_authentication</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="s">'GET'</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/live'</span>
+    <span class="n">signature_data</span> <span class="o">=</span> <span class="n">method</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">path</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="n">API_SECRET</span><span class="p">,</span> <span class="n">signature_data</span><span class="p">)</span>
+    <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+        <span class="s">"type"</span><span class="p">:</span> <span class="s">"auth"</span><span class="p">,</span>
+        <span class="s">"payload"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"api-key"</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
+            <span class="s">"signature"</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
+            <span class="s">"timestamp"</span><span class="p">:</span> <span class="n">timestamp</span>
+        <span class="p">}</span>
+    <span class="p">}))</span>
+
+<span class="k">def</span> <span class="nf">generate_signature</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s">'utf-8'</span><span class="p">)</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="s">'utf-8'</span><span class="p">)</span>
+    <span class="nb">hash</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="n">message_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="c"># subscribe private channels after successful authentication</span>
+    <span class="k">if</span> <span class="n">message_json</span><span class="p">[</span><span class="s">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'success'</span> <span class="ow">and</span> <span class="n">message_json</span><span class="p">[</span><span class="s">'message'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'Authenticated'</span><span class="p">:</span>
+         <span class="c"># subscribe orders channel for order updates for all contracts</span>
+        <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"orders"</span><span class="p">,</span> <span class="p">[</span><span class="s">"all"</span><span class="p">])</span>
+        <span class="c"># subscribe positions channel for position updates for all contracts</span>
+        <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"positions"</span><span class="p">,</span> <span class="p">[</span><span class="s">"all"</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="n">message_json</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">symbols</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"type"</span><span class="p">:</span> <span class="s">"subscribe"</span><span class="p">,</span>
+        <span class="s">"payload"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"channels"</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s">"name"</span><span class="p">:</span> <span class="n">channel</span><span class="p">,</span>
+                    <span class="s">"symbols"</span><span class="p">:</span> <span class="n">symbols</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+  <span class="n">ws</span> <span class="o">=</span> <span class="n">websocket</span><span class="o">.</span><span class="n">WebSocketApp</span><span class="p">(</span><span class="n">WEBSOCKET_URL</span><span class="p">,</span> <span class="n">on_message</span><span class="o">=</span><span class="n">on_message</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">,</span> <span class="n">on_close</span><span class="o">=</span><span class="n">on_close</span><span class="p">)</span>
+  <span class="n">ws</span><span class="o">.</span><span class="n">on_open</span> <span class="o">=</span> <span class="n">on_open</span>
+  <span class="n">ws</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span> <span class="c"># runs indefinitely</span>
 </code></pre><h1 id='detecting-connection-drops'>Detecting Connection Drops</h1>
 
 <p>Some client libraries might not detect connection drops properly. We provide two methods for the clients to ensure they are connected and getting subscribed data.</p>
@@ -15066,7 +15413,7 @@ This operation does not require authentication.
 <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">({</span>
     <span class="s">"type"</span><span class="p">:</span> <span class="s">"pong"</span>
 <span class="p">})</span>
-</code></pre><h1 id='public-channels'>Public Channels</h1><h2 id='v2-ticker'>v2 ticker</h2>
+</code></pre><h1 id='public-channels-2'>Public Channels</h1><h2 id='v2-ticker'>v2 ticker</h2>
 <p>The ticker channel provides <strong>price change data</strong> for the last <strong>24 hrs</strong> (rolling window).<br>
 It is published every <strong>5 seconds</strong>.</p>
 
@@ -15754,7 +16101,7 @@ Please note that if you subscribe to candlsticks channel without specifying the 
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"candlestick_1m"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='private-channels'>Private Channels</h1>
+</span></code></pre><h1 id='private-channels-2'>Private Channels</h1>
 <p>Private channels require clients to authenticate.</p>
 <h2 id='margins'>Margins</h2>
 <p>This channel provides updates on wallet balances. Updates are sent for a specific asset whenever there is a change in wallet balances and margins for that asset. </p>
