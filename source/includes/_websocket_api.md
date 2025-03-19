@@ -865,6 +865,47 @@ Publish interval: 2 secs.
 }
 ```
 
+## candlesticks
+This channel provides last ohlc candle for given time resolution. Traded price candles and Mark Price candles data can be received by sending appropriate symbol string. "product_symbol" gives traded_price candles, and "MARK:product_symbol" gives mark_price candles.  
+e.g. symbols: ["BTCUSD"] gives you Traded Price candlestick data for BTCUSD  
+symbols: ["MARK:C-BTC-75000-310325"] gives you Mark Price candlestick data for C-BTC-75000-310325
+
+Subscribe to **candlestick_${resolution}** channel for updates. 
+
+List of supported resolutions
+["1m","3m","5m","15m","30m","1h","2h","4h","6h","12h","1d","1w","2w","30d"]
+ 
+You need to send the list of symbols for which you would like to subscribe to candlesticks channel. 
+You can also subscribe to candlesticks updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
+Please note that if you subscribe to candlesticks channel without specifying the symbols list, you will not receive any data.
+
+>OHLC candles update sample
+
+```json
+Sample Subscribe Request
+{
+  "name": "candlestick_1m",       // "candlestick_" + resolution
+  "symbols": [ "BTCUSD", "MARK:ETHUSD" ]  // gives BTCUSD traded price, ETHUSD mark price candle data.
+}
+
+
+
+Sample feed response
+
+{
+    "candle_start_time": 1596015240000000,
+    "close": 9223,
+    "high": 9228,
+    "low": 9220,
+    "open": 9221,
+    "resolution": "1m",
+    "symbol": "BTCUSD",
+    "timestamp": 1596015289339699,
+    "type": "candlestick_1m",
+    "volume": 1.2            // volume not present in Mark Price candlestick
+}
+```
+
 ## spot_price
 
 **spot_price** channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: ***"all"***
@@ -1075,7 +1116,10 @@ You can read more about the single price auction [here](https://www.delta.exchan
 
 
 ## announcements
-This channel provides updates on system wide announcements like scheduled maintenance, new contract launches etc. No need to pass any symbols while subscribing to this channel.
+This channel provides updates on system wide announcements like scheduled maintenance, maintenance started etc. No need to pass any symbols while subscribing to this channel. Below are types and examples of messages sent for more details:  
+1. "event": "maintenance_scheduled" is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Contains estimated start and finish time for maintenance.  
+2. "event": "maintenance_started" is sent when maintenance actually starts and markets are disrupted. Contains estimated finish time for maintenance.  
+3. "event": "maintenance_finished" is sent when maintenance finishes and market is set in auction node for short duration; then trading is resumed.  
 
 > Announcements Sample
 
@@ -1095,11 +1139,20 @@ This channel provides updates on system wide announcements like scheduled mainte
 ```
 
 ```json
+// Maintenance Scheduled Response
+{
+    "type": "announcements",
+    "event": "maintenance_scheduled",
+    "maintenance_start_time": 1742301546000000,   // estimated maintenance start time in microseconds
+    "maintenance_finish_time": 1742301647000000   // estimated finish time
+}
+
+```json
 // Maintenance Started Response
 {
     "type":"announcements",
     "event":"maintenance_started",
-    "maintenance_finish_time": 1561638049751430,
+    "maintenance_finish_time": 1561638049751430, // estimated finish time in microseconds.
     "timestamp": 1561634049751430,
 }
 
@@ -1108,45 +1161,6 @@ This channel provides updates on system wide announcements like scheduled mainte
     "type":"announcements",
     "event":"maintenance_finished",
     "timestamp": 1561634049751430,
-}
-```
-
-## candlesticks
-This channel provides last ohlc candle for given time resolution.
-
-Subscribe to **candlestick_${resolution}** channel for updates. 
-
-List of supported resolutions
-["1m","3m","5m","15m","30m","1h","2h","4h","6h","12h","1d","1w","2w","30d"]
- 
-You need to send the list of symbols for which you would like to subscribe to candlesticks channel. You can also subscribe to candlesticks
-updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
-Please note that if you subscribe to candlsticks channel without specifying the symbols list, you will not receive any data.
-
->OHLC candles update sample
-
-```json
-Sample Subscribe Request
-{
-  "name": "candlestick_1m",       // "candlestick_" + resolution
-  "symbols": [ "BTCUSD" ]        // product symbol, use MARK:BTCUSD for mark_price
-}
-
-
-
-Sample feed response
-
-{
-    "candle_start_time": 1596015240000000,
-    "close": 9223,
-    "high": 9228,
-    "low": 9220,
-    "open": 9221,
-    "resolution": "1m",
-    "symbol": "BTCUSD",
-    "timestamp": 1596015289339699,
-    "type": "candlestick_1m",
-    "volume": 1.2
 }
 ```
 

@@ -251,7 +251,7 @@ The endpoint provides details about all available trading products on the platfo
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|contract_types|query|string|false|Comma separated list of contract types e.g. futures,perpetual_futures,call_options, put_options, interest_rate_swaps,move_options,spreads, turbo_call_options, turbo_put_options, spot|
+|contract_types|query|string|false|Comma separated list of contract types e.g. perpetual_futures,call_options, put_options|
 |states|query|string|false|Comma separated list of states e.g. upcoming,live,expired,settled to get expired contracts.|
 |after|query|string|false|after cursor for paginated request|
 |before|query|string|false|before cursor for paginated request|
@@ -268,7 +268,7 @@ The endpoint provides details about all available trading products on the platfo
     {
       "id": 27,
       "symbol": "BTCUSD",
-      "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+      "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
       "created_at": "2023-12-18T13:10:39Z",
       "updated_at": "2024-11-15T02:47:50Z",
       "settlement_time": null,
@@ -443,7 +443,7 @@ The endpoint retrieves details of a specific product identified by its symbol (e
   "result": {
     "id": 27,
     "symbol": "BTCUSD",
-    "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
     "created_at": "2023-12-18T13:10:39Z",
     "updated_at": "2024-11-15T02:47:50Z",
     "settlement_time": null,
@@ -605,7 +605,7 @@ This endpoint retrieves the live tickers for available trading products, with an
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|contract_types|query|string|false|A comma-separated list of contract types to filter the tickers. Example values include futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.|
+|contract_types|query|string|false|A comma-separated list of contract types to filter the tickers. Example values include perpetual_futures, call_options, put_options.|
 
 > Example responses
 
@@ -2584,7 +2584,6 @@ Change in position may take upto 10secs to reflect. Use 'GET /position' for real
 
 |Parameter|Value|
 |---|---|
-|contract_types|futures|
 |contract_types|perpetual_futures|
 |contract_types|call_options|
 |contract_types|put_options|
@@ -2643,7 +2642,7 @@ headers = {
 }
 
 r = requests.get('https://api.india.delta.exchange/v2/positions', params={
-
+  'product_id': '27'
 }, headers = headers)
 
 print r.json()
@@ -2652,7 +2651,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.india.delta.exchange/v2/positions \
+curl -X GET https://api.india.delta.exchange/v2/positions?product_id=27 \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2673,7 +2672,8 @@ headers = {
 
 result = RestClient.get 'https://api.india.delta.exchange/v2/positions',
   params: {
-  }, headers: headers
+  'product_id' => '27'
+}, headers: headers
 
 p JSON.parse(result)
 
@@ -2687,8 +2687,8 @@ Get real-time positions data.
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|product_id|query|integer|false|id of the product|
-|underlying_asset_symbol|query|string|false|Underlying asset symbol. e.g. 'BTC', 'ETH'. This gives a list of all positions in products which have the given underlying asset|
+|product_id|query|integer|true|id of the product. Only send either product_id or underlying_asset_symbol.|
+|underlying_asset_symbol|query|string|false|Underlying asset symbol. e.g. 'BTC', 'ETH'. This gives a list of all positions in products which have the given underlying asset. Only send either product_id or underlying_asset_symbol.|
 
 > Example responses
 
@@ -2698,7 +2698,7 @@ Get real-time positions data.
 {
   "success": true,
   "result": {
-    "size": 0,
+    "size": 12,
     "entry_price": "string"
   }
 }
@@ -4859,17 +4859,17 @@ This api returns all the subaccounts belonging to the same parent/main user. Mak
   "success": true,
   "result": [
     {
-      "id": null,
-      "email": "string",
-      "account_name": "string",
-      "first_name": "string",
-      "last_name": "string",
-      "dob": "string",
-      "country": "string",
-      "phone_number": "string",
-      "margin_mode": "string",
-      "pf_index_symbol": "string",
-      "is_sub_account": true,
+      "id": "98765432",
+      "email": "rajtrader2342@gmail.com",
+      "account_name": "Main",
+      "first_name": "Rajesh",
+      "last_name": "Sharma",
+      "dob": "1985-08-25",
+      "country": "India",
+      "phone_number": "9876543210",
+      "margin_mode": "isolated",
+      "pf_index_symbol": ".DEXBTUSD",
+      "is_sub_account": false,
       "is_kyc_done": true
     }
   ]
@@ -4952,17 +4952,17 @@ This api returns the user object.
 {
   "success": true,
   "result": {
-    "id": null,
-    "email": "string",
-    "account_name": "string",
-    "first_name": "string",
-    "last_name": "string",
-    "dob": "string",
-    "country": "string",
-    "phone_number": "string",
-    "margin_mode": "string",
-    "pf_index_symbol": "string",
-    "is_sub_account": true,
+    "id": "98765432",
+    "email": "rajtrader2342@gmail.com",
+    "account_name": "Main",
+    "first_name": "Rajesh",
+    "last_name": "Sharma",
+    "dob": "1985-08-25",
+    "country": "India",
+    "phone_number": "9876543210",
+    "margin_mode": "isolated",
+    "pf_index_symbol": ".DEXBTUSD",
+    "is_sub_account": false,
     "is_kyc_done": true
   }
 }
@@ -4975,6 +4975,115 @@ This api returns the user object.
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User Object|Inline|
 
 <h3 id="get-user-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## Change margin mode
+
+<a id="opIdchangeMarginMode"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.put('https://api.india.delta.exchange/v2/users/margin_mode', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X PUT https://api.india.delta.exchange/v2/users/margin_mode \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.put 'https://api.india.delta.exchange/v2/users/margin_mode',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`PUT /users/margin_mode`
+
+> Body parameter
+
+```json
+{
+  "margin_mode": "isolated",
+  "subaccount_user_id": "5112346"
+}
+```
+
+<h3 id="change-margin-mode-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ChangeMarginModeRequest](#schemachangemarginmoderequest)|true|changes margin mode of the user|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "id": "98765432",
+    "email": "rajtrader2342@gmail.com",
+    "account_name": "Main",
+    "first_name": "Rajesh",
+    "last_name": "Sharma",
+    "dob": "1985-08-25",
+    "country": "India",
+    "phone_number": "9876543210",
+    "margin_mode": "isolated",
+    "pf_index_symbol": ".DEXBTUSD",
+    "is_sub_account": false,
+    "is_kyc_done": true
+  }
+}
+```
+
+<h3 id="change-margin-mode-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns the [profile](#tocSuser) with the updated margin mode|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns error if margin mode could not be changed|[ApiErrorResponse](#schemaapierrorresponse)|
+
+<h3 id="change-margin-mode-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -5044,7 +5153,7 @@ p JSON.parse(result)
   "result": {
     "id": 27,
     "symbol": "BTCUSD",
-    "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
     "created_at": "2023-12-18T13:10:39Z",
     "updated_at": "2024-11-15T02:47:50Z",
     "settlement_time": null,
@@ -5572,7 +5681,7 @@ This operation does not require authentication.
 {
   "id": 27,
   "symbol": "BTCUSD",
-  "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+  "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
   "created_at": "2023-12-18T13:10:39Z",
   "updated_at": "2024-11-15T02:47:50Z",
   "settlement_time": null,
@@ -5741,7 +5850,7 @@ This operation does not require authentication.
   {
     "id": 27,
     "symbol": "BTCUSD",
-    "description": "Bitcoin Perpetual futures, quoted, settled & margined in US Dollar",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
     "created_at": "2023-12-18T13:10:39Z",
     "updated_at": "2024-11-15T02:47:50Z",
     "settlement_time": null,
@@ -6041,9 +6150,9 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |limit_price|string|false|none|Price level for limit orders|
-|size|integer|false|none|Order size|
-|side|string|false|none|Buy order or Sell order|
-|order_type|string|false|none|Limit order(limit_price must be defined) or Market order|
+|size|integer|true|none|Order size|
+|side|string|true|none|Buy order or Sell order|
+|order_type|string|true|none|Limit order(limit_price must be defined) or Market order|
 |time_in_force|string|false|none|GTC/IOC order type|
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
@@ -6177,11 +6286,11 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|existing order id to be edited|
+|id|integer|true|none|existing order id to be edited|
 |product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
 |product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |limit_price|string|false|none|Price level for limit orders|
-|size|integer|false|none|total size after editing order|
+|size|integer|true|none|total size after editing order|
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
 |cancel_orders_accepted|string|false|none|if set, will cancel all existing orders for the product|
@@ -6224,9 +6333,9 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|existing order id to be edited|
+|id|integer|true|none|existing order id to be edited|
 |limit_price|string|false|none|Price level for limit orders|
-|size|integer|false|none|total size after editing order|
+|size|integer|true|none|total size after editing order|
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
 
@@ -6364,7 +6473,7 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|Order ID for which bracket params are being updated|
+|id|integer|true|none|Order ID for which bracket params are being updated|
 |product_id|integer|true|none|Only one of either product_id or product_symbol must be sent.|
 |product_symbol|string|true|none|Only one of either product_id or product_symbol must be sent.|
 |bracket_stop_loss_limit_price|string|false|none|stop loss limit price for bracket order|
@@ -7360,7 +7469,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |close|integer|false|none|The closing price of the last trade for the product.|
-|contract_type|string|false|none|Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options, interest_rate_swaps, move_options, spreads, turbo_call_options, turbo_put_options, and spot.|
+|contract_type|string|false|none|Comma-separated list of contract types, such as futures, perpetual_futures, call_options, put_options.|
 |greeks|[greeks](#schemagreeks)|false|none|The Greeks represent different factors that influence the pricing of options. These are key measures for assessing risk and managing option positions.|
 |high|number|false|none|The highest price reached during the trading session.|
 |low|number|false|none|The lowest price reached during the trading session.|
@@ -7639,6 +7748,34 @@ This operation does not require authentication.
 |mmp|mmp4|
 |mmp|mmp5|
 
+<h2 id="tocSchangemarginmoderequest">ChangeMarginModeRequest</h2>
+
+<a id="schemachangemarginmoderequest"></a>
+
+```json
+{
+  "margin_mode": "isolated",
+  "subaccount_user_id": "5112346"
+}
+
+```
+
+*Request to change the margin mode for a main or subaccount.*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|margin_mode|string|false|none|The target margin mode: 'isolated' or 'portfolio'.|
+|subaccount_user_id|string|false|none|The user ID of the account. Provide the main user ID for the main account or the respective subaccount user ID.|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|margin_mode|isolated|
+|margin_mode|portfolio|
+
 <h2 id="tocSuserpreference">UserPreference</h2>
 
 <a id="schemauserpreference"></a>
@@ -7821,40 +7958,40 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": null,
-  "email": "string",
-  "account_name": "string",
-  "first_name": "string",
-  "last_name": "string",
-  "dob": "string",
-  "country": "string",
-  "phone_number": "string",
-  "margin_mode": "string",
-  "pf_index_symbol": "string",
-  "is_sub_account": true,
+  "id": "98765432",
+  "email": "rajtrader2342@gmail.com",
+  "account_name": "Main",
+  "first_name": "Rajesh",
+  "last_name": "Sharma",
+  "dob": "1985-08-25",
+  "country": "India",
+  "phone_number": "9876543210",
+  "margin_mode": "isolated",
+  "pf_index_symbol": ".DEXBTUSD",
+  "is_sub_account": false,
   "is_kyc_done": true
 }
 
 ```
 
-*User Object*
+*Represents a user account with personal and account-related details.*
 
 ### Properties
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer_or_string|false|none|id|
-|email|string|false|none|email|
-|account_name|string|false|none|none|
-|first_name|string|false|none|none|
-|last_name|string|false|none|none|
-|dob|string|false|none|none|
-|country|string|false|none|none|
-|phone_number|string|false|none|none|
-|margin_mode|string|false|none|none|
-|pf_index_symbol|string|false|none|Portfolio index symbol if account is at portfolio margin mode.|
-|is_sub_account|boolean|false|none|none|
-|is_kyc_done|boolean|false|none|none|
+|id|string|false|none|Unique user identifier, which can be an integer or string.|
+|email|string|false|none|User's email address.|
+|account_name|string|false|none|The main account or subaccount name.|
+|first_name|string|false|none|User's first name.|
+|last_name|string|false|none|User's last name.|
+|dob|string(date)|false|none|Date of birth in YYYY-MM-DD format.|
+|country|string|false|none|User's country of residence.|
+|phone_number|string|false|none|User's phone number with country code.|
+|margin_mode|string|false|none|The user's margin mode, which can be 'isolated' or 'portfolio'.|
+|pf_index_symbol|string|false|none|Portfolio index symbol if the account is in portfolio margin mode.|
+|is_sub_account|boolean|false|none|Indicates if the user account is a sub-account.|
+|is_kyc_done|boolean|false|none|Indicates if the user's KYC verification is completed.|
 
 <h2 id="tocSarrayofsubaccouns">ArrayOfSubaccouns</h2>
 
@@ -7863,17 +8000,17 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": null,
-    "email": "string",
-    "account_name": "string",
-    "first_name": "string",
-    "last_name": "string",
-    "dob": "string",
-    "country": "string",
-    "phone_number": "string",
-    "margin_mode": "string",
-    "pf_index_symbol": "string",
-    "is_sub_account": true,
+    "id": "98765432",
+    "email": "rajtrader2342@gmail.com",
+    "account_name": "Main",
+    "first_name": "Rajesh",
+    "last_name": "Sharma",
+    "dob": "1985-08-25",
+    "country": "India",
+    "phone_number": "9876543210",
+    "margin_mode": "isolated",
+    "pf_index_symbol": ".DEXBTUSD",
+    "is_sub_account": false,
     "is_kyc_done": true
   }
 ]
@@ -7884,5 +8021,5 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|*anonymous*|[[User](#schemauser)]|false|none|[User Object]|
+|*anonymous*|[[User](#schemauser)]|false|none|[Represents a user account with personal and account-related details.]|
 
