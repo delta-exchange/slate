@@ -1537,16 +1537,16 @@
           {
             "name": "product_id",
             "in": "query",
-            "required": false,
+            "required": true,
             "type": "integer",
-            "description": "id of the product"
+            "description": "id of the product. Only send either product_id or underlying_asset_symbol."
           },
           {
             "name": "underlying_asset_symbol",
             "in": "query",
             "required": false,
             "type": "string",
-            "description": "Underlying asset symbol. e.g. 'BTC', 'ETH'. This gives a list of all positions in products which have the given underlying asset"
+            "description": "Underlying asset symbol. e.g. 'BTC', 'ETH'. This gives a list of all positions in products which have the given underlying asset. Only send either product_id or underlying_asset_symbol."
           }
         ],
         "responses": {
@@ -2887,7 +2887,7 @@
         "description": {
           "type": "string",
           "description": "Detailed description of the product or contract.",
-          "example": "Bitcoin Perpetual futures, quoted, settled & margined in INR"
+          "example": "Bitcoin Perpetual futures, quoted, settled & margined in USD"
         },
         "created_at": {
           "type": "string",

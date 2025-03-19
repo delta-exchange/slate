@@ -1,5 +1,11 @@
 # Changelog
 
+## 21.03.25
+1. Better documentation for Websocket public channel 'candlesticks', now clearly states even Mark Price candles can be fetched.
+2. /positions REST API fixed documentation for query parameters.
+3. Better documentation for Websocket public channel 'announcements'.
+
+
 ## 20.02.25
 1. Removed Websocket RPC section. Use REST API endpoints with normal HTTP requests (RPC requests still work, it is recommended not to use them).
 2. Fixed documentation: "User-Agent" header is necessary for authenticated HTTP requests.
