@@ -20,7 +20,7 @@ You should use ntp timestamp to sync local clocks in order to avoid following is
 
   Check api key have required permissions like trading permission
 
-* ```{"success": False, "error": {"code": "ip_blocked_for_api_key"}}```
+* ```{"success": False, "error": {"code": "ip_not_whitelisted_for_api_key"}}```
 
   API call made from a machine with IP address that isn't whitelisted. Check the below docs for common issues and fixes.
 

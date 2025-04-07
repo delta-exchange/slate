@@ -262,7 +262,23 @@
             "description": "A comma-separated list of contract types to filter the tickers. Example values include perpetual_futures, call_options, put_options.",
             "required": false,
             "type": "string",
-            "example": "futures,perpetual_futures,call_options"
+            "example": "futures,perpetual_futures,call_options,put_options"
+          },
+          {
+            "name": "underlying_asset_symbols",
+            "in": "query",
+            "description": "A comma-separated list of underlying asset symbols to filter the tickers. Example values include BTC, ETH, SOL etc.",
+            "required": false,
+            "type": "string",
+            "example": "BTC,ETH,SOL"
+          },
+          {
+            "name": "expiry_date",
+            "in": "query",
+            "description": "Expiry date(format: DD-MM-YYYY) to filter the tickers.",
+            "required": false,
+            "type": "string",
+            "example": "03-04-2025"
           }
         ],
         "responses": {
@@ -321,6 +337,62 @@
                   "properties": {
                     "result": {
                       "$ref": "#/definitions/Ticker"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/tickers?contract_types=call_options,put_options&underlying_asset_symbols={underlying_asset_symbols}&expiry_date={expiry_date}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get option chain",
+        "description": "Fetch option chain data for a given product and expiry date.\n\nFor example, to get BTC call and put options expiring on 04-04-2025, use:\n\n\n**contract_types=call_options,put_options&underlying_asset_symbols=BTC&expiry_date=04-04-2025**\n",
+        "operationId": "getOptionChain",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "contract_types",
+            "in": "query",
+            "description": "A comma-separated list of contract types to filter the products. Only `call_options` and `put_options` are supported.",
+            "type": "string",
+            "example": "call_options,put_options"
+          },
+          {
+            "name": "underlying_asset_symbols",
+            "in": "query",
+            "description": "The underlying asset symbol (single value) for the option chain. Examples: `BTC`, `ETH`, `SOL`.",
+            "type": "string",
+            "example": "BTC"
+          },
+          {
+            "name": "expiry_date",
+            "in": "query",
+            "description": "Expiry date of the contracts in `DD-MM-YYYY` format.",
+            "type": "string",
+            "example": "03-04-2025"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of live [tickers](#tocSticker) for all products, including **implied volatility (IV)** for option strikes.",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/ArrayOfTickers"
                     }
                   }
                 }
