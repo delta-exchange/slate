@@ -322,6 +322,9 @@
                   <li>
                     <a href="#get-ticker-for-a-product-by-symbol" class="toc-h2 toc-link" data-title="Get ticker for a product by symbol">Get ticker for a product by symbol</a>
                   </li>
+                  <li>
+                    <a href="#get-option-chain" class="toc-h2 toc-link" data-title="Get option chain">Get option chain</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1051,7 +1054,7 @@ You should use ntp timestamp to sync local clocks in order to avoid following is
 <p>Check api key have required permissions like trading permission</p>
 
 <ul>
-<li><code>{&quot;success&quot;: False, &quot;error&quot;: {&quot;code&quot;: &quot;ip_blocked_for_api_key&quot;}}</code></li>
+<li><code>{&quot;success&quot;: False, &quot;error&quot;: {&quot;code&quot;: &quot;ip_not_whitelisted_for_api_key&quot;}}</code></li>
 </ul>
 
 <p>API call made from a machine with IP address that isn&#39;t whitelisted. Check the below docs for common issues and fixes.</p>
@@ -2135,6 +2138,20 @@ curl -X GET https://api.india.delta.exchange/v2/tickers <span class="se">\</span
 <td>false</td>
 <td>A comma-separated list of contract types to filter the tickers. Example values include perpetual_futures, call_options, put_options.</td>
 </tr>
+<tr>
+<td>underlying_asset_symbols</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>A comma-separated list of underlying asset symbols to filter the tickers. Example values include BTC, ETH, SOL etc.</td>
+</tr>
+<tr>
+<td>expiry_date</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>Expiry date(format: DD-MM-YYYY) to filter the tickers.</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -2350,6 +2367,165 @@ curl -X GET https://api.india.delta.exchange/v2/tickers/<span class="o">{</span>
 </tbody></table>
 
 <h3 id="get-ticker-for-a-product-by-symbol-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication.
+</aside>
+
+<h2 id='get-option-chain'>Get option chain</h2>
+
+<p><a id="opIdgetOptionChain"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.india.delta.exchange/v2/tickers?contract_types=call_options,put_options&amp;underlying_asset_symbols={underlying_asset_symbols}&amp;expiry_date={expiry_date}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.india.delta.exchange/v2/tickers?contract_types<span class="o">=</span>call_options,put_options&amp;underlying_asset_symbols<span class="o">={</span>underlying_asset_symbols<span class="o">}</span>&amp;expiry_date<span class="o">={</span>expiry_date<span class="o">}</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.india.delta.exchange/v2/tickers?contract_types=call_options,put_options&amp;underlying_asset_symbols={underlying_asset_symbols}&amp;expiry_date={expiry_date}'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>GET /tickers?contract_types=call_options,put_options&amp;underlying_asset_symbols={underlying_asset_symbols}&amp;expiry_date={expiry_date}</code></p>
+
+<p>Fetch option chain data for a given product and expiry date.</p>
+
+<p>For example, to get BTC call and put options expiring on 04-04-2025, use:</p>
+
+<p><strong>contract_types=call_options,put_options&amp;underlying_asset_symbols=BTC&amp;expiry_date=04-04-2025</strong></p>
+
+<h3 id="get-option-chain-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contract_types</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>A comma-separated list of contract types to filter the products. Only <code>call_options</code> and <code>put_options</code> are supported.</td>
+</tr>
+<tr>
+<td>underlying_asset_symbols</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>The underlying asset symbol (single value) for the option chain. Examples: <code>BTC</code>, <code>ETH</code>, <code>SOL</code>.</td>
+</tr>
+<tr>
+<td>expiry_date</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>Expiry date of the contracts in <code>DD-MM-YYYY</code> format.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mi">67321</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contract_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"futures"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"greeks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.25"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.10"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"rho"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.05"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.02"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.15"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">68500.5</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">66300.25</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mark_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67000.00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mark_vol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"500"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"oi"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15000"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"oi_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000000"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"oi_value_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"oi_value_usd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1050000"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">67000</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"price_band"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"lower_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61120.45"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"upper_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"72300.00"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123456</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"quotes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"ask_iv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.25"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ask_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"best_ask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"150.00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"best_bid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"148.00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"bid_iv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.22"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"spot_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67000.00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"strike_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"68000.00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1609459200</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"turnover"</span><span class="p">:</span><span class="w"> </span><span class="mi">5000000</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"turnover_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mi">5200000</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">25000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="get-option-chain-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Returns a list of live <a href="#tocSticker">tickers</a> for all products, including <strong>implied volatility (IV)</strong> for option strikes.</td>
+<td>Inline</td>
+</tr>
+</tbody></table>
+
+<h3 id="get-option-chain-responseschema">Response Schema</h3>
 
 <aside class="success">
 This operation does not require authentication.
