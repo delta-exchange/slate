@@ -1206,10 +1206,18 @@
           {
             "in": "path",
             "name": "product_id",
-            "description": "Product id of the ordered product",
+            "description": "Product id of the ordered product. Either product_id or product_symbol must be preseent.",
             "type": "integer",
-            "required": true,
+            "required": false,
             "example": 27
+          },
+          {
+            "in": "path",
+            "name": "product_symbol",
+            "description": "Product symbol of the ordered product. Either product_id or product_symbol must be preseent.",
+            "type": "string",
+            "required": false,
+            "example": "BTCUSD"
           }
         ],
         "responses": {
@@ -3350,6 +3358,17 @@
           "default": "mark_price",
           "example": "last_traded_price"
         },
+        "bracket_stop_trigger_method": {
+          "type": "string",
+          "description": "stop order trigger method for bracket orders - mark_price/last_traded_price/spot_price",
+          "enum": [
+            "mark_price",
+            "last_traded_price",
+            "spot_price"
+          ],
+          "default": "mark_price",
+          "example": "last_traded_price"
+        },
         "bracket_stop_loss_limit_price": {
           "type": "string",
           "description": "Bracket order stop loss limit price",
@@ -3880,7 +3899,7 @@
         "product_id": {
           "type": "integer",
           "description": "product_id of the product in the order",
-          "example": 27 
+          "example": 27
         }
       }
     },
@@ -4199,7 +4218,7 @@
       "example": {
         "buy": [
           {
-          "depth": "983",  
+          "depth": "983",
           "price": "9187.5",
           "size": 205640
           }
@@ -4207,7 +4226,7 @@
         "last_updated_at":1654589595784000,
         "sell": [
           {
-          "depth": "1185",  
+          "depth": "1185",
           "price": "9188.0",
           "size": 113752
           }

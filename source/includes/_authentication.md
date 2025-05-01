@@ -5,24 +5,129 @@ Api endpoints that place orders or fetch account related information needs to au
 
 
 ## Common Errors
-**Note**
-You should use ntp timestamp to sync local clocks in order to avoid following issue:
 
-* ```{ "error: "SignatureExpired", message:"your signature has expired" }```
+### SignatureExpired Error
 
- Signature created in the last 5 seconds is allowed. if signature reaches delta system post 5 seconds of generation, then it will fail.
+* ```{ "error": "SignatureExpired", "message": "your signature has expired" }```
 
-* ```{ "error": "InvalidApiKey", message: "Api Key not found"}```
+**Explanation:**  This error occurs when the timestamp used to generate your API request signature is more than **5 seconds** old by the time it reaches Delta Exchange servers. The platform enforces this time window to prevent replay attacks. You can check server time and request time in the api error response too.
 
-  above error will be thrown if you are not using correct key, please check hostname e.g. erroneously Testnet.Delta.exchange api key have been used instead of Delta.exchange api key
+### 🔧 Troubleshooting
 
-* ```{ "error: "UnauthorizedApiAccess", message:"Api Key not authorised to access this endpoint" }```
+**1. Sync Your System Clock**
 
-  Check api key have required permissions like trading permission
+- Ensure your system time is accurate using NTP (Network Time Protocol).
+  - **Linux/macOS:** `sudo ntpdate pool.ntp.org`
+  - **Windows:** Make sure the *Windows Time* service is running and properly synced.
+- Enable automatic time synchronization in your system settings to prevent future drifts.
 
-* ```{"success": False, "error": {"code": "ip_not_whitelisted_for_api_key"}}```
+**2. Check Network Latency**
 
-  API call made from a machine with IP address that isn't whitelisted. Check the below docs for common issues and fixes.
+- Check for any network latency on your side.
+- Use a stable and high-speed internet connection.
+
+**3. Verify Timestamp Generation**
+
+- Use Unix timestamp format (seconds since epoch).
+- Don't reuse stale timestamps; update the timestamp before every request.
+- Ensure the timestamp used in the signature matches the one sent in the request.
+- Refer to the sample code block on the right.
+
+```
+# python code to generate signature
+timestamp = str(int(time.time()))
+signature_data = method + timestamp + path + query_string + payload
+signature = generate_signature(api_secret, signature_data)
+```
+
+### InvalidApiKey Error
+
+* ```{ "error": "InvalidApiKey", "message": "Api Key not found" }```
+
+**Explanation:**  The API key in your request doesn't exist or is invalid. This can happen due to using keys from the wrong environment or deleted keys. 
+
+### 🔧 Troubleshooting
+
+**1. Verify the Correct Environment**
+
+- API keys created at [Delta India](https://www.delta.exchange) account must be used only with production apis.(prod api - [https://api.india.delta.exchange](https://api.india.delta.exchange))
+- API keys created at [Demo](https://demo.delta.exchange) account must be used only with testnet apis.(testnet api - [https://cdn-ind.testnet.deltaex.org](https://cdn-ind.testnet.deltaex.org))
+- Please not that the api url [https://api.delta.exchange](https://api.delta.exchange) belongs to Delta Global and it can not used here. 
+
+**2. Check API Key Validity**
+
+- Log into Delta Exchange and confirm the key exists and is active.  
+- Check for any typos in the key too.
+
+
+### UnauthorizedApiAccess Error
+
+* ```{ "error": "UnauthorizedApiAccess", "message": "Api Key not authorised to access this endpoint" }```
+
+**Explanation:**  Your API key doesn't have permission to access this endpoint. Delta Exchange allows permission-based control for each key. There are two permissions given 1. Read Data ✅ 2. Trading ✅
+
+### 🔧 Troubleshooting
+
+**1. Check API Key Permissions**
+
+- Go to API Management on Delta Exchange.  
+- Verify respective permissions: 1. Read Data 2. Trading, are enabled ✅ or not.
+- If required, create a new api key with the right permissions enabled ✅.
+
+**2. Verify Endpoint Requirements**
+
+- Market data: requires Read Data permissions only. 
+- Orders, Positions, Wallets: requires Trading permission.
+
+**3. Consider Security Best Practices**
+
+- Grant only necessary permissions.  
+- Use separate keys for different use-cases.
+
+
+### IP Not Whitelisted Error
+
+* ```{ "success": false, "error": { "code": "ip_not_whitelisted_for_api_key" } }```
+
+**Explanation:**  This occurs when the request originates from an IP not allowed for the given API key. Delta Exchange enforces IP whitelisting as a security measure. Consider whitelisting he IP returned into the api error response.
+
+### 🔧 Troubleshooting
+
+**1. Update IP Whitelist**
+
+- Log into Delta Exchange > API Management  
+- Add your IP to the API key’s whitelist. The IP can be found into the api error response. 
+- You can whitelist a list of IPs too. Enter them as comma separated list.
+- Delta support both IPv4 and IPv6 formats for whitelisting.
+
+**2. Consider Network Behavior**
+
+- VPNs or ISPs with dynamic IPs may require frequent updates.  
+- Consider cloud hosted machine with static IP for production to avoid whitelisting repeatedly.
+
+
+### Signature Mismatch Error
+
+* ```{ "success": false, "error": { "code": "Signature Mismatch" } }```
+
+**Explanation:**  This error occurs when the signature generated on your end does not match the one received by Delta Exchange. This can happen due to incorrect timestamp, payload, or method used in the signature generation.
+
+### 🔧 Troubleshooting
+
+**1. Verify Signature Generation**
+
+- Ensure you are using the correct http method (GET/POST) and the same payload as in the request.
+- Check that the timestamp used in the signature matches the one sent in the request.
+- Ensure you are using the correct API secret for the signature generation.
+- Make sure you are using the correct endpoint path and query parameters in the signature generation.
+- Ensure that the payload is properly formatted and matches the request body.
+- Check for any extra spaces or characters in the signature string.
+- Refer to the sample code block (see [Signing a Message](/#signing-a-message)).
+
+By following these troubleshooting steps, you can resolve common Delta Exchange API authentication and authorization issues. For persistent problems, contact Delta Exchange support.
+
+(Note - **api key creation blocked - When user enters wrong otp/mfa code more than 5 times, Delta exchange blocks api key creation for next 30 mins. After then, users can try creating again.**)
+
 
 ## Generating an API Key
 
