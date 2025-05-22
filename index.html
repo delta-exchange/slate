@@ -15375,7 +15375,7 @@ This operation does not require authentication.
 <p>Websocket api can be used for the following use cases</p>
 
 <ul>
-<li>Get real time feed of market data, this includes L2 and L3 orderbook and recent trades.</li>
+<li>Get real time feed of market data, this includes L2 orderbook and recent trades.</li>
 <li>Get price feeds - Mark prices of different contracts, price feed of underlying indexes etc.</li>
 <li>Get account specific notifications like fills, liquidations, <a href="https://www.delta.exchange/user-guide/docs/trading-guide/ADL/">ADL</a> and PnL updates.</li>
 <li>Get account specific updates on orders, positions and wallets.</li>
@@ -15387,6 +15387,8 @@ This operation does not require authentication.
 <li><strong>Production</strong> - wss://socket.india.delta.exchange</li>
 <li><strong>Testnet(Demo Account)</strong> - wss://socket-ind.testnet.deltaex.org</li>
 </ul>
+
+<p>There is a limit of 150 connections every 5 minutes per IP address. A connection attempt that goes beyond the limit will be disconnected with 429 HTTP status error. On receiving this error, wait for 5 to 10 minutes before making new connection requests.</p>
 
 <p>You will be disconnected, if there is no activity within <strong>60 seconds</strong> after making connection.</p>
 
