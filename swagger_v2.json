@@ -5191,11 +5191,16 @@
     },
     "ChangeMarginModeResponse": {
       "type": "object",
-      "description": "Change margin mode api response structure",
+      "description": "Response returned after changing the user's margin mode",
       "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the user(user_id) whose margin mode was updated",
+          "example": "5112346"
+        },
         "margin_mode": {
           "type": "string",
-          "description": "New margin mode set by the user - isolated/portfolio/cross",
+          "description": "The updated margin mode. Possible values: isolated, portfolio, or cross",
           "example": "isolated"
         }
       }
