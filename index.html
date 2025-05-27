@@ -700,6 +700,9 @@
                     <a href="#tocSuser" class="toc-h2 toc-link" data-title="User">User</a>
                   </li>
                   <li>
+                    <a href="#tocSchangemarginmoderesponse" class="toc-h2 toc-link" data-title="ChangeMarginModeResponse">ChangeMarginModeResponse</a>
+                  </li>
+                  <li>
                     <a href="#tocSarrayofsubaccouns" class="toc-h2 toc-link" data-title="ArrayOfSubaccouns">ArrayOfSubaccouns</a>
                   </li>
               </ul>
@@ -8662,18 +8665,8 @@ curl -X PUT https://api.india.delta.exchange/v2/users/margin_mode <span class="s
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98765432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rajtrader2342@gmail.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rajesh"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sharma"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-08-25"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"India"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9876543210"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEXBTUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"is_kyc_done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5112346"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -8691,7 +8684,7 @@ curl -X PUT https://api.india.delta.exchange/v2/users/margin_mode <span class="s
 <tr>
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>Returns the <a href="#tocSuser">profile</a> with the updated margin mode</td>
+<td>Returns the <a href="#tocSchangemarginmoderesponse">ChangeMarginModeResponse</a> with the updated margin mode</td>
 <td>Inline</td>
 </tr>
 <tr>
@@ -15212,6 +15205,46 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocSchangemarginmoderesponse">ChangeMarginModeResponse</h2>
+
+<p><a id="schemachangemarginmoderesponse"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5112346"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Response returned after changing the user&#39;s margin mode</em></p>
+
+<h3 id='properties-63'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Unique identifier of the user(user_id) whose margin mode was updated</td>
+</tr>
+<tr>
+<td>margin_mode</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>The updated margin mode. Possible values: isolated, portfolio, or cross</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSarrayofsubaccouns">ArrayOfSubaccouns</h2>
 
 <p><a id="schemaarrayofsubaccouns"></a></p>
@@ -15233,7 +15266,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-63'>Properties</h3>
+</span></code></pre><h3 id='properties-64'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>

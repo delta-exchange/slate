@@ -2747,7 +2747,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the [profile](#tocSuser) with the updated margin mode",
+            "description": "Returns the [ChangeMarginModeResponse](#tocSchangemarginmoderesponse) with the updated margin mode",
             "schema": {
               "allOf": [
                 {
@@ -2757,7 +2757,7 @@
                   "type": "object",
                   "properties": {
                     "result": {
-                      "$ref": "#/definitions/User"
+                      "$ref": "#/definitions/ChangeMarginModeResponse"
                     }
                   }
                 }
@@ -5186,6 +5186,22 @@
           "type": "boolean",
           "description": "Indicates if the user's KYC verification is completed.",
           "example": true
+        }
+      }
+    },
+    "ChangeMarginModeResponse": {
+      "type": "object",
+      "description": "Response returned after changing the user's margin mode",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the user(user_id) whose margin mode was updated",
+          "example": "5112346"
+        },
+        "margin_mode": {
+          "type": "string",
+          "description": "The updated margin mode. Possible values: isolated, portfolio, or cross",
+          "example": "isolated"
         }
       }
     },
