@@ -1,5 +1,10 @@
 # Changelog
 
+## 01.06.25
+1. Added reason:"liquidation" for v2/user_trades websocket channel. Updated documentation for the v2/user_trades channel.
+2. Added Connection rate limit for websocket URL endpoint of 150 connections per IP address per 5 minutes. Updated this info under 'Websocket Info' tab.
+
+
 ## 21.03.25
 1. Better documentation for Websocket public channel 'candlesticks', now clearly states even Mark Price candles can be fetched.
 2. /positions REST API fixed documentation for query parameters.
