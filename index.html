@@ -834,6 +834,9 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#01-06-25" class="toc-h2 toc-link" data-title="01.06.25">01.06.25</a>
+                  </li>
+                  <li>
                     <a href="#21-03-25" class="toc-h2 toc-link" data-title="21.03.25">21.03.25</a>
                   </li>
                   <li>
@@ -16735,10 +16738,10 @@ Please note that if you subscribe to user trades channel without specifying the 
 
 <p>All updates will have incremental sequence_id. sequence_id is separate for each symbol, useful for identifying if any v2/user_trades messages were missed/dropped. The sequence_id will reset to 1 after our systems restart. (usually after maintainaince/market disruption).</p>
 
-<p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot; in the user_trades channel.
-You need to send the list of symbols for which you would like to subscribe to v2/user_trades channel. You can also subscribe to v2/user_trades
-updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
-If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
+<p>Auto Deleverage Liquidations of a position can be tracked by reason: &quot;adl&quot;.
+Liquidation of a position can be tracked by reason: &quot;liquidation&quot;.<br>
+You need to send the list of symbols for which you would like to subscribe to v2/user_trades channel. You can also subscribe to v2/user_trades updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.<br>
+If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.<br>
 Please note that if you subscribe to v2/user_trades channel without specifying the symbols list, you will not receive any data.</p>
 
 <blockquote>
@@ -16759,9 +16762,9 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">v</span><span class="mi">2</span><span class="err">/user_trades</span><span class="w">
 </span><span class="p">{</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2/user_trades"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"sy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">             </span><span class="err">//</span><span class="w"> </span><span class="err">symbol</span><span class="w">
+    </span><span class="s2">"sy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">              </span><span class="err">//</span><span class="w"> </span><span class="err">symbol</span><span class="w">
     </span><span class="s2">"f"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234-abcd-qwer-3456"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">fill_id</span><span class="w">
-    </span><span class="s2">"R"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">                </span><span class="err">//</span><span class="w"> </span><span class="err">reason</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="s2">"adl"</span><span class="w">
+    </span><span class="s2">"R"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">               </span><span class="err">//</span><span class="w"> </span><span class="err">reason</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w"> </span><span class="s2">"adl"</span><span class="p">,</span><span class="w"> </span><span class="s2">"liquidation"</span><span class="w">
     </span><span class="s2">"u"</span><span class="p">:</span><span class="w"> </span><span class="mi">1998</span><span class="p">,</span><span class="w">                   </span><span class="err">//</span><span class="w"> </span><span class="err">user_id</span><span class="w">
     </span><span class="s2">"o"</span><span class="p">:</span><span class="w"> </span><span class="mi">3283999</span><span class="p">,</span><span class="w">                </span><span class="err">//</span><span class="w"> </span><span class="err">order_id</span><span class="w">
     </span><span class="s2">"S"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">                  </span><span class="err">//</span><span class="w"> </span><span class="err">side</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="s2">"sell"</span><span class="w">
@@ -16893,7 +16896,12 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='21-03-25'>21.03.25</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='01-06-25'>01.06.25</h2>
+<ol>
+<li>Added reason:&quot;liquidation&quot; for v2/user_trades websocket channel. Updated documentation for the v2/user_trades channel.</li>
+<li>Added Connection rate limit for websocket URL endpoint of 150 connections per IP address per 5 minutes. Updated this info under &#39;Websocket Info&#39; tab.</li>
+</ol>
+<h2 id='21-03-25'>21.03.25</h2>
 <ol>
 <li>Better documentation for Websocket public channel &#39;candlesticks&#39;, now clearly states even Mark Price candles can be fetched.</li>
 <li>/positions REST API fixed documentation for query parameters.</li>
