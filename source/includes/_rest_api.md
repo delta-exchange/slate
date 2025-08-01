@@ -4426,7 +4426,7 @@ p JSON.parse(result)
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
 
-<h1 id="delta-exchange-api-v2-dead-man-s-switch-auto-cancel-">Dead Man's Switch (Auto Cancel)</h1>
+<!-- <h1 id="delta-exchange-api-v2-dead-man-s-switch-auto-cancel-">Dead Man's Switch (Auto Cancel)</h1>
 
 Set up timers for auto orders cancel in case of network malfunctions 
 
@@ -4533,7 +4533,7 @@ p JSON.parse(result)
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
-</aside>
+</aside> -->
 
 <h1 id="delta-exchange-api-v2-account">Account</h1>
 
@@ -7905,7 +7905,7 @@ This operation does not require authentication.
 |» price_alert|boolean|false|none|none|
 |» marketing|boolean|false|none|none|
 
-<h2 id="tocScancelafterrequest">CancelAfterRequest</h2>
+<!-- <h2 id="tocScancelafterrequest">CancelAfterRequest</h2>
 
 <a id="schemacancelafterrequest"></a>
 
@@ -7950,7 +7950,7 @@ This operation does not require authentication.
 |Property|Value|
 |---|---|
 |cancel_after_enabled|false|
-|cancel_after_enabled|true|
+|cancel_after_enabled|true| -->
 
 <h2 id="tocSuser">User</h2>
 

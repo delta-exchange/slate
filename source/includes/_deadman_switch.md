@@ -53,14 +53,12 @@ Creates a new heartbeat with specific configuration for automatic actions.
 | `impact` | string | Yes | Impact : `contracts`, `products` |
 | `contract_types` | array | Yes | Array of contract types to monitor, required if impact is contracts |
 | `underlying_assets` | array | No | Array of underlying assets to monitor |
-| `product_symbols` | array | Yes | Array of specific product symbols to monitor, reuired if impact is products |
+| `product_symbols` | array | Yes | Array of specific product symbols to monitor, required if impact is products |
 | `config` | array | Yes | Array of action configurations |
 
 **Config Actions:**
 
 - `cancel_orders`: Cancels all open orders
-- `disrupt`: Disrupts market trading
-- `speed_bump`: Adds speed bump to orders
 - `spreads`: Adds spreads to orders
 
 **Response:**
@@ -69,15 +67,14 @@ Creates a new heartbeat with specific configuration for automatic actions.
 {
   "success": true,
   "result": {
-    "heartbeat_id": "my_trading_bot_001",
-    "status": "active"
+    "heartbeat_id": "my_trading_bot_001"
   }
 }
 ```
 
 ### Heartbeat Acknowledgment
 
-Sends an acknowledgment to keep the heartbeat active.
+Sends an acknowledgment to keep the heartbeat active. Set ttl to 0 to disable heartbeat. 
 
 **Endpoint:** `POST /heartbeat`
 
@@ -103,9 +100,8 @@ Sends an acknowledgment to keep the heartbeat active.
 {
   "success": true,
   "result": {
-    "heartbeat_id": "my_trading_bot_001",
-    "status": "acknowledged",
-    "next_ack_required_by": 1640995200000
+    "heartbeat_timestamp": "1243453435", //next expiry timestamp
+    "process_enabled": "true" // true/false
   }
 }
 ```
@@ -169,7 +165,7 @@ class DeadmanSwitch:
         self.base_url = base_url
         self.heartbeat_id = "trading_bot_" + str(int(time.time()))
         
-    def create_heartbeat(self, user_id):
+    def create_heartbeat(self):
         """Create a new heartbeat"""
         url = f"{self.base_url}/heartbeat/create"
         headers = self._get_auth_headers()
@@ -189,7 +185,7 @@ class DeadmanSwitch:
         response = requests.post(url, json=payload, headers=headers)
         return response.json()
     
-    def send_heartbeat(self, user_id):
+    def send_heartbeat(self):
         """Send heartbeat acknowledgment"""
         url = f"{self.base_url}/heartbeat"
         headers = self._get_auth_headers()
@@ -202,11 +198,11 @@ class DeadmanSwitch:
         response = requests.post(url, json=payload, headers=headers)
         return response.json()
     
-    def start_heartbeat_loop(self, user_id):
+    def start_heartbeat_loop(self):
         """Start continuous heartbeat loop"""
         while True:
             try:
-                result = self.send_heartbeat(user_id)
+                result = self.send_heartbeat()
                 print(f"Heartbeat sent: {result}")
                 time.sleep(25)  # Send every 25 seconds (TTL is 30)
             except Exception as e:
@@ -223,8 +219,8 @@ class DeadmanSwitch:
 
 # Usage example
 deadman = DeadmanSwitch("your_api_key", "your_api_secret", "https://api.delta.exchange")
-deadman.create_heartbeat(12345)
-deadman.start_heartbeat_loop(12345)
+deadman.create_heartbeat()
+deadman.start_heartbeat_loop()
 ```
 
 ### Node.js Example
@@ -241,12 +237,11 @@ class DeadmanSwitch {
         this.heartbeatId = `trading_bot_${Date.now()}`;
     }
     
-    async createHeartbeat(userId) {
+    async createHeartbeat() {
         const url = `${this.baseUrl}/heartbeat/create`;
         const headers = this.getAuthHeaders();
         
         const payload = {
-            user_id: userId,
             heartbeat_id: this.heartbeatId,
             impact: "contracts",
             contract_types: ["perpetual_futures"],
@@ -262,7 +257,7 @@ class DeadmanSwitch {
         return response.data;
     }
     
-    async sendHeartbeat(userId) {
+    async sendHeartbeat() {
         const url = `${this.baseUrl}/heartbeat`;
         const headers = this.getAuthHeaders();
         
@@ -275,10 +270,10 @@ class DeadmanSwitch {
         return response.data;
     }
     
-    startHeartbeatLoop(userId) {
+    startHeartbeatLoop() {
         setInterval(async () => {
             try {
-                const result = await this.sendHeartbeat(userId);
+                const result = await this.sendHeartbeat();
                 console.log('Heartbeat sent:', result);
             } catch (error) {
                 console.error('Heartbeat failed:', error);
@@ -298,8 +293,8 @@ class DeadmanSwitch {
 
 // Usage example
 const deadman = new DeadmanSwitch('your_api_key', 'your_api_secret', 'https://api.delta.exchange');
-deadman.createHeartbeat(12345);
-deadman.startHeartbeatLoop(12345);
+deadman.createHeartbeat();
+deadman.startHeartbeatLoop();
 ```
 
 ## Error Codes
@@ -308,12 +303,6 @@ deadman.startHeartbeatLoop(12345);
 |------------|-------------|
 | `unauthorized` | Authentication failed |
 | `rate_limit_exceeded` | Too many requests |
-
-## Rate Limits
-
-- Heartbeat acknowledgments: 10 requests per minute per user
-- Heartbeat creation: 5 requests per minute per user
-- Cancel after: 10 requests per minute per user
 
 ## Security Considerations
 
