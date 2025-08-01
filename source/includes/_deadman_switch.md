@@ -9,7 +9,6 @@ The Deadman Switch system consists of several components:
 - **Heartbeat Creation**: Clients register a heartbeat with specific configuration
 - **Heartbeat Acknowledgment**: Clients periodically send acknowledgments to keep the heartbeat alive
 - **Automatic Actions**: When heartbeats expire, the system automatically executes configured actions
-- **Cancel After**: A simplified mechanism to automatically cancel all orders after a specified time
 
 ## Authentication
 
@@ -27,21 +26,15 @@ Creates a new heartbeat with specific configuration for automatic actions.
 
 ```json
 {
-  "user_id": 12345,
   "heartbeat_id": "my_trading_bot_001",
-  "impact": "high",
-  "contract_types": ["futures", "options"],
+  "impact": "contracts",
+  "contract_types": ["perpetual_futures", "call_options"],
   "underlying_assets": ["BTC", "ETH"],
   "product_symbols": ["BTCUSD", "ETHUSD"],
   "config": [
     {
       "action": "cancel_orders",
-      "unhealthy_count": 1,
-      "tag": "mmp"
-    },
-    {
-      "action": "disrupt",
-      "unhealthy_count": 2
+      "unhealthy_count": 1
     },
     {
       "action": "spreads",
@@ -56,12 +49,11 @@ Creates a new heartbeat with specific configuration for automatic actions.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `user_id` | integer/string | Yes | User ID |
 | `heartbeat_id` | string | Yes | Unique identifier for the heartbeat |
-| `impact` | string | Yes | Impact level: `low`, `medium`, `high` |
-| `contract_types` | array | No | Array of contract types to monitor |
+| `impact` | string | Yes | Impact : `contracts`, `products` |
+| `contract_types` | array | Yes | Array of contract types to monitor, required if impact is contracts |
 | `underlying_assets` | array | No | Array of underlying assets to monitor |
-| `product_symbols` | array | No | Array of specific product symbols to monitor |
+| `product_symbols` | array | Yes | Array of specific product symbols to monitor, reuired if impact is products |
 | `config` | array | Yes | Array of action configurations |
 
 **Config Actions:**
@@ -93,7 +85,6 @@ Sends an acknowledgment to keep the heartbeat active.
 
 ```json
 {
-  "user_id": 12345,
   "heartbeat_id": "my_trading_bot_001",
   "ttl": 30000
 }
@@ -103,7 +94,6 @@ Sends an acknowledgment to keep the heartbeat active.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `user_id` | integer/string | Yes | User ID |
 | `heartbeat_id` | string | Yes | Heartbeat identifier |
 | `ttl` | integer/string | Yes | Time to live in milliseconds |
 
@@ -130,7 +120,6 @@ Retrieves all active heartbeats for a user.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `user_id` | integer/string | Yes | User ID |
 | `heartbeat_id` | string | No | Specific heartbeat ID to retrieve |
 
 **Response:**
@@ -140,59 +129,20 @@ Retrieves all active heartbeats for a user.
   "success": true,
   "result": [
     {
+      "user_id": "user_id",
       "heartbeat_id": "my_trading_bot_001",
-      "impact": "high",
-      "contract_types": ["futures", "options"],
+      "impact": "contracts",
+      "contract_types": ["perpetual_futures", "call_options"],
       "underlying_assets": ["BTC", "ETH"],
       "product_symbols": ["BTCUSD", "ETHUSD"],
       "config": [
         {
           "action": "cancel_orders",
-          "unhealthy_count": 1,
-          "tag": "mmp"
+          "unhealthy_count": 1
         }
-      ],
-      "status": "active",
-      "last_ack": 1640995200000,
-      "next_ack_required_by": 1640995230000
+      ]
     }
   ]
-}
-```
-
-## Cancel After
-
-A simplified mechanism to automatically cancel all orders after a specified time period.
-
-### Set Cancel After
-
-**Endpoint:** `POST /orders/cancel_after`
-
-**Request Body:**
-
-```json
-{
-  "user_id": 12345,
-  "cancel_after": 300000
-}
-```
-
-**Parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `user_id` | integer/string | Yes | User ID |
-| `cancel_after` | integer/string | Yes | Time in milliseconds after which all orders will be cancelled (0 to disable) |
-
-**Response:**
-
-```json
-{
-  "success": true,
-  "result": {
-    "cancel_after_enabled": true,
-    "cancel_after_timestamp": 1640995500000
-  }
 }
 ```
 
@@ -225,13 +175,13 @@ class DeadmanSwitch:
         headers = self._get_auth_headers()
         
         payload = {
-            "user_id": user_id,
             "heartbeat_id": self.heartbeat_id,
-            "impact": "high",
+            "impact": "contracts",
+            "contract_types": ["perpetual_futures"],
             "config": [
                 {
                     "action": "cancel_orders",
-                    "unhealthy_count": 1
+                    "unhealthy_count": 1 # if heartbeat missed 1 time than cancel all orders
                 }
             ]
         }
@@ -245,7 +195,6 @@ class DeadmanSwitch:
         headers = self._get_auth_headers()
         
         payload = {
-            "user_id": user_id,
             "heartbeat_id": self.heartbeat_id,
             "ttl": 30000  # 30 seconds
         }
@@ -299,7 +248,8 @@ class DeadmanSwitch {
         const payload = {
             user_id: userId,
             heartbeat_id: this.heartbeatId,
-            impact: "high",
+            impact: "contracts",
+            contract_types: ["perpetual_futures"],
             config: [
                 {
                     action: "cancel_orders",
@@ -317,7 +267,6 @@ class DeadmanSwitch {
         const headers = this.getAuthHeaders();
         
         const payload = {
-            user_id: userId,
             heartbeat_id: this.heartbeatId,
             ttl: 30000
         };
@@ -357,9 +306,6 @@ deadman.startHeartbeatLoop(12345);
 
 | Error Code | Description |
 |------------|-------------|
-| `invalid_heartbeat_id` | Invalid heartbeat identifier |
-| `heartbeat_not_found` | Heartbeat does not exist |
-| `invalid_config` | Invalid heartbeat configuration |
 | `unauthorized` | Authentication failed |
 | `rate_limit_exceeded` | Too many requests |
 
