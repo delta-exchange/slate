@@ -464,14 +464,6 @@
               </ul>
           </li>
           <li>
-            <a href="#delta-exchange-api-v2-dead-man-s-switch-auto-cancel-" class="toc-h1 toc-link" data-title="Dead Man's Switch (Auto Cancel)">Dead Man's Switch (Auto Cancel)</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#cancel-after" class="toc-h2 toc-link" data-title="Cancel After">Cancel After</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
             <a href="#delta-exchange-api-v2-account" class="toc-h1 toc-link" data-title="Account">Account</a>
               <ul class="toc-list-h2">
                   <li>
@@ -488,6 +480,20 @@
                   </li>
                   <li>
                     <a href="#change-margin-mode" class="toc-h2 toc-link" data-title="Change margin mode">Change margin mode</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#delta-exchange-api-v2-heartbeat-management" class="toc-h1 toc-link" data-title="Heartbeat Management">Heartbeat Management</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-heartbeat" class="toc-h2 toc-link" data-title="Create Heartbeat">Create Heartbeat</a>
+                  </li>
+                  <li>
+                    <a href="#send-heartbeat-acknowledgment" class="toc-h2 toc-link" data-title="Send Heartbeat Acknowledgment">Send Heartbeat Acknowledgment</a>
+                  </li>
+                  <li>
+                    <a href="#get-heartbeats" class="toc-h2 toc-link" data-title="Get Heartbeats">Get Heartbeats</a>
                   </li>
               </ul>
           </li>
@@ -691,19 +697,57 @@
                     <a href="#tocSedituserpreference" class="toc-h2 toc-link" data-title="EditUserPreference">EditUserPreference</a>
                   </li>
                   <li>
-                    <a href="#tocScancelafterrequest" class="toc-h2 toc-link" data-title="CancelAfterRequest">CancelAfterRequest</a>
-                  </li>
-                  <li>
-                    <a href="#tocScancelafterresponse" class="toc-h2 toc-link" data-title="CancelAfterResponse">CancelAfterResponse</a>
-                  </li>
-                  <li>
                     <a href="#tocSuser" class="toc-h2 toc-link" data-title="User">User</a>
                   </li>
                   <li>
                     <a href="#tocSchangemarginmoderesponse" class="toc-h2 toc-link" data-title="ChangeMarginModeResponse">ChangeMarginModeResponse</a>
                   </li>
                   <li>
+                    <a href="#tocScreateheartbeat" class="toc-h2 toc-link" data-title="CreateHeartbeat">CreateHeartbeat</a>
+                  </li>
+                  <li>
+                    <a href="#tocSheartbeatconfig" class="toc-h2 toc-link" data-title="HeartbeatConfig">HeartbeatConfig</a>
+                  </li>
+                  <li>
+                    <a href="#tocSheartbeatresponse" class="toc-h2 toc-link" data-title="HeartbeatResponse">HeartbeatResponse</a>
+                  </li>
+                  <li>
+                    <a href="#tocSheartbeatack" class="toc-h2 toc-link" data-title="HeartbeatAck">HeartbeatAck</a>
+                  </li>
+                  <li>
+                    <a href="#tocSheartbeatackresponse" class="toc-h2 toc-link" data-title="HeartbeatAckResponse">HeartbeatAckResponse</a>
+                  </li>
+                  <li>
+                    <a href="#tocSarrayofheartbeats" class="toc-h2 toc-link" data-title="ArrayOfHeartbeats">ArrayOfHeartbeats</a>
+                  </li>
+                  <li>
+                    <a href="#tocSheartbeat" class="toc-h2 toc-link" data-title="Heartbeat">Heartbeat</a>
+                  </li>
+                  <li>
                     <a href="#tocSarrayofsubaccouns" class="toc-h2 toc-link" data-title="ArrayOfSubaccouns">ArrayOfSubaccouns</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#deadman-switch" class="toc-h1 toc-link" data-title="Deadman Switch">Deadman Switch</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
+                  </li>
+                  <li>
+                    <a href="#authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
+                  </li>
+                  <li>
+                    <a href="#heartbeat-management" class="toc-h2 toc-link" data-title="Heartbeat Management">Heartbeat Management</a>
+                  </li>
+                  <li>
+                    <a href="#implementation-guidelines" class="toc-h2 toc-link" data-title="Implementation Guidelines">Implementation Guidelines</a>
+                  </li>
+                  <li>
+                    <a href="#error-codes" class="toc-h2 toc-link" data-title="Error Codes">Error Codes</a>
+                  </li>
+                  <li>
+                    <a href="#security-considerations" class="toc-h2 toc-link" data-title="Security Considerations">Security Considerations</a>
                   </li>
               </ul>
           </li>
@@ -7937,154 +7981,6 @@ curl -X PUT https://api.india.delta.exchange/v2/users/reset_mmp <span class="se"
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
 
-<h1 id="delta-exchange-api-v2-dead-man-s-switch-auto-cancel-">Dead Man's Switch (Auto Cancel)</h1>
-
-<p>Set up timers for auto orders cancel in case of network malfunctions </p>
-
-<h2 id='cancel-after'>Cancel After</h2>
-
-<p><a id="opIdcancelAfter"></a></p>
-
-<blockquote>
-<p>Code samples</p>
-</blockquote>
-
-<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
-  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
-  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
-  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
-  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
-<span class="p">}</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.india.delta.exchange/v2/orders/cancel_after'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-
-<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
-
-<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X POST https://api.india.delta.exchange/v2/orders/cancel_after <span class="se">\</span>
-  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
-  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
-  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
-  -H <span class="s1">'timestamp: ****'</span>
-
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
-<span class="nb">require</span> <span class="s1">'json'</span>
-
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
-  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
-  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
-  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
-  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
-<span class="p">}</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.india.delta.exchange/v2/orders/cancel_after'</span><span class="p">,</span>
-  <span class="ss">params: </span><span class="p">{</span>
-  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
-
-<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre>
-
-<p><code>POST /orders/cancel_after</code></p>
-
-<blockquote>
-<p>Body parameter</p>
-</blockquote>
-
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"cancel_after"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5000"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<h3 id="cancel-after-parameters">Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>In</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>body</td>
-<td>body</td>
-<td><a href="#schemacancelafterrequest">CancelAfterRequest</a></td>
-<td>true</td>
-<td>cancel after details</td>
-</tr>
-</tbody></table>
-
-<blockquote>
-<p>Example responses</p>
-
-<p>200 Response</p>
-</blockquote>
-
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"cancel_after_enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cancel_after_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1669119262000"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<h3 id="cancel-after-responses">Responses</h3>
-
-<table><thead>
-<tr>
-<th>Status</th>
-<th>Meaning</th>
-<th>Description</th>
-<th>Schema</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>Returns back the cancel_after configs set</td>
-<td>Inline</td>
-</tr>
-<tr>
-<td>400</td>
-<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
-<td>Returns if configs couldnt be set</td>
-<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
-</tr>
-</tbody></table>
-
-<h3 id="cancel-after-responseschema">Response Schema</h3>
-
-<h4 id='enumerated-values-21'>Enumerated Values</h4>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>cancel_after_enabled</td>
-<td>false</td>
-</tr>
-<tr>
-<td>cancel_after_enabled</td>
-<td>true</td>
-</tr>
-</tbody></table>
-
-<aside class="warning">
-To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
-</aside>
-
 <h1 id="delta-exchange-api-v2-account">Account</h1>
 
 <p>Account level settings</p>
@@ -8699,6 +8595,439 @@ curl -X PUT https://api.india.delta.exchange/v2/users/margin_mode <span class="s
 </tbody></table>
 
 <h3 id="change-margin-mode-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h1 id="delta-exchange-api-v2-heartbeat-management">Heartbeat Management</h1>
+
+<h2 id='create-heartbeat'>Create Heartbeat</h2>
+
+<p><a id="opIdcreateHeartbeat"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.india.delta.exchange/v2/heartbeat/create'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.india.delta.exchange/v2/heartbeat/create <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.india.delta.exchange/v2/heartbeat/create'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>POST /heartbeat/create</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"low"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"underlying_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="create-heartbeat-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacreateheartbeat">CreateHeartbeat</a></td>
+<td>true</td>
+<td>heartbeat creation details</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="create-heartbeat-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Heartbeat created successfully</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Returns if heartbeat couldnt be created</td>
+<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="create-heartbeat-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h2 id='send-heartbeat-acknowledgment'>Send Heartbeat Acknowledgment</h2>
+
+<p><a id="opIdsendHeartbeat"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.india.delta.exchange/v2/heartbeat'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.india.delta.exchange/v2/heartbeat <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.india.delta.exchange/v2/heartbeat'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>POST /heartbeat</code></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ttl"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="send-heartbeat-acknowledgment-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemaheartbeatack">HeartbeatAck</a></td>
+<td>true</td>
+<td>heartbeat acknowledgment details</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"process_enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"heartbeat_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="send-heartbeat-acknowledgment-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Heartbeat acknowledged successfully</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Returns if heartbeat acknowledgment failed</td>
+<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="send-heartbeat-acknowledgment-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h2 id='get-heartbeats'>Get Heartbeats</h2>
+
+<p><a id="opIdgetHeartbeats"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
+  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.india.delta.exchange/v2/heartbeat'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+  <span class="s">'user_id'</span><span class="p">:</span> <span class="s">'0'</span>
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.india.delta.exchange/v2/heartbeat?user_id<span class="o">=</span>0 <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
+  -H <span class="s1">'timestamp: ****'</span>
+
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
+  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.india.delta.exchange/v2/heartbeat'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="s1">'user_id'</span> <span class="o">=&gt;</span> <span class="s1">'0'</span>
+<span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+</code></pre>
+
+<p><code>GET /heartbeat</code></p>
+
+<h3 id="get-heartbeats-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>user_id</td>
+<td>query</td>
+<td>integer</td>
+<td>true</td>
+<td>User ID</td>
+</tr>
+<tr>
+<td>heartbeat_id</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>Specific heartbeat ID to retrieve</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>200 Response</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"string"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"underlying_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"string"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"string"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"last_ack"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"next_ack_required_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="get-heartbeats-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>List of active heartbeats</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Returns if heartbeats couldnt be retrieved</td>
+<td><a href="#schemaapierrorresponse">ApiErrorResponse</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="get-heartbeats-responseschema">Response Schema</h3>
+
+<h4 id='enumerated-values-21'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>action</td>
+<td>cancel_orders</td>
+</tr>
+<tr>
+<td>action</td>
+<td>spreads</td>
+</tr>
+</tbody></table>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -14998,96 +15327,6 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
-<h2 id="tocScancelafterrequest">CancelAfterRequest</h2>
-
-<p><a id="schemacancelafterrequest"></a></p>
-
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"cancel_after"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5000"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-
-<p><em>Cancel After Request Object</em></p>
-
-<h3 id='properties-60'>Properties</h3>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>cancel_after</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>Timer value in milliseconds after which orders are to be cancelled. To disable deadman switch and keep your orders open, set cancel_after to 0.</td>
-</tr>
-</tbody></table>
-
-<h2 id="tocScancelafterresponse">CancelAfterResponse</h2>
-
-<p><a id="schemacancelafterresponse"></a></p>
-
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"cancel_after_enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cancel_after_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1669119262000"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-
-<p><em>Cancel After Response Object</em></p>
-
-<h3 id='properties-61'>Properties</h3>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Restrictions</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>cancel_after_enabled</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>none</td>
-</tr>
-<tr>
-<td>cancel_after_timestamp</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>timestamp after which orders will get cancelled</td>
-</tr>
-</tbody></table>
-
-<h4 id='enumerated-values-41'>Enumerated Values</h4>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Value</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>cancel_after_enabled</td>
-<td>false</td>
-</tr>
-<tr>
-<td>cancel_after_enabled</td>
-<td>true</td>
-</tr>
-</tbody></table>
-
 <h2 id="tocSuser">User</h2>
 
 <p><a id="schemauser"></a></p>
@@ -15111,7 +15350,7 @@ This operation does not require authentication.
 
 <p><em>Represents a user account with personal and account-related details.</em></p>
 
-<h3 id='properties-62'>Properties</h3>
+<h3 id='properties-60'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -15221,7 +15460,7 @@ This operation does not require authentication.
 
 <p><em>Response returned after changing the user&#39;s margin mode</em></p>
 
-<h3 id='properties-63'>Properties</h3>
+<h3 id='properties-61'>Properties</h3>
 
 <table><thead>
 <tr>
@@ -15248,6 +15487,454 @@ This operation does not require authentication.
 </tr>
 </tbody></table>
 
+<h2 id="tocScreateheartbeat">CreateHeartbeat</h2>
+
+<p><a id="schemacreateheartbeat"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"low"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"underlying_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Create Heartbeat Request Object</em></p>
+
+<h3 id='properties-62'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>heartbeat_id</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>Unique identifier for the heartbeat</td>
+</tr>
+<tr>
+<td>impact</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>Impact level</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>[string]</td>
+<td>false</td>
+<td>none</td>
+<td>Array of contract types to monitor</td>
+</tr>
+<tr>
+<td>underlying_assets</td>
+<td>[string]</td>
+<td>false</td>
+<td>none</td>
+<td>Array of underlying assets to monitor</td>
+</tr>
+<tr>
+<td>product_symbols</td>
+<td>[string]</td>
+<td>false</td>
+<td>none</td>
+<td>Array of specific product symbols to monitor</td>
+</tr>
+<tr>
+<td>config</td>
+<td>[<a href="#schemaheartbeatconfig">HeartbeatConfig</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>Array of action configurations</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-41'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>impact</td>
+<td>low</td>
+</tr>
+<tr>
+<td>impact</td>
+<td>medium</td>
+</tr>
+<tr>
+<td>impact</td>
+<td>high</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSheartbeatconfig">HeartbeatConfig</h2>
+
+<p><a id="schemaheartbeatconfig"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Heartbeat Configuration Object</em></p>
+
+<h3 id='properties-63'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>action</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>Action to take when heartbeat expires</td>
+</tr>
+<tr>
+<td>unhealthy_count</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>Number of unhealthy heartbeats before action</td>
+</tr>
+<tr>
+<td>tag</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Tag for the action (e.g., &#39;mmp&#39;)</td>
+</tr>
+</tbody></table>
+
+<h4 id='enumerated-values-42'>Enumerated Values</h4>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>action</td>
+<td>cancel_orders</td>
+</tr>
+<tr>
+<td>action</td>
+<td>spreads</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSheartbeatresponse">HeartbeatResponse</h2>
+
+<p><a id="schemaheartbeatresponse"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Heartbeat Response Object</em></p>
+
+<h3 id='properties-64'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>heartbeat_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSheartbeatack">HeartbeatAck</h2>
+
+<p><a id="schemaheartbeatack"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ttl"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Heartbeat Acknowledgment Request Object</em></p>
+
+<h3 id='properties-65'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>heartbeat_id</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>Heartbeat identifier</td>
+</tr>
+<tr>
+<td>ttl</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>Time to live in milliseconds</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSheartbeatackresponse">HeartbeatAckResponse</h2>
+
+<p><a id="schemaheartbeatackresponse"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"process_enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"heartbeat_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Heartbeat Acknowledgment Response Object</em></p>
+
+<h3 id='properties-66'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>process_enabled</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Acknowledgement status (true/false)</td>
+</tr>
+<tr>
+<td>heartbeat_timestamp</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Expiry timestamp after which actions will be triggered</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSarrayofheartbeats">ArrayOfHeartbeats</h2>
+
+<p><a id="schemaarrayofheartbeats"></a></p>
+
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"underlying_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_ack"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"next_ack_required_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='properties-67'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><em>anonymous</em></td>
+<td>[<a href="#schemaheartbeat">Heartbeat</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>[Heartbeat Object]</td>
+</tr>
+</tbody></table>
+
+<h2 id="tocSheartbeat">Heartbeat</h2>
+
+<p><a id="schemaheartbeat"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"underlying_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"string"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"last_ack"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"next_ack_required_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+
+<p><em>Heartbeat Object</em></p>
+
+<h3 id='properties-68'>Properties</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>heartbeat_id</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>impact</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>contract_types</td>
+<td>[string]</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>underlying_assets</td>
+<td>[string]</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>product_symbols</td>
+<td>[string]</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>config</td>
+<td>[<a href="#schemaheartbeatconfig">HeartbeatConfig</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>[Heartbeat Configuration Object]</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>last_ack</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>next_ack_required_by</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody></table>
+
 <h2 id="tocSarrayofsubaccouns">ArrayOfSubaccouns</h2>
 
 <p><a id="schemaarrayofsubaccouns"></a></p>
@@ -15269,7 +15956,7 @@ This operation does not require authentication.
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
-</span></code></pre><h3 id='properties-64'>Properties</h3>
+</span></code></pre><h3 id='properties-69'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -15287,6 +15974,362 @@ This operation does not require authentication.
 <td>[Represents a user account with personal and account-related details.]</td>
 </tr>
 </tbody></table>
+
+<h1 id='deadman-switch'>Deadman Switch</h1>
+<p>The Deadman Switch is a safety mechanism that automatically cancels orders or takes other protective actions when a client fails to send heartbeat signals within specified time intervals. This feature is essential for risk management and preventing unwanted positions from accumulating due to client disconnections or failures.</p>
+<h2 id='overview'>Overview</h2>
+<p>The Deadman Switch system consists of several components:</p>
+
+<ul>
+<li><strong>Heartbeat Creation</strong>: Clients register a heartbeat with specific configuration</li>
+<li><strong>Heartbeat Acknowledgment</strong>: Clients periodically send acknowledgments to keep the heartbeat alive</li>
+<li><strong>Automatic Actions</strong>: When heartbeats expire, the system automatically executes configured actions</li>
+</ul>
+<h2 id='authentication'>Authentication</h2>
+<p>All Deadman Switch endpoints require authentication. Include your API key and signature in the request headers as described in the <a href="#authentication">Authentication</a> section.</p>
+<h2 id='heartbeat-management'>Heartbeat Management</h2><h3 id='create-heartbeat'>Create Heartbeat</h3>
+<p>Creates a new heartbeat with specific configuration for automatic actions.</p>
+
+<p><strong>Endpoint:</strong> <code>POST /heartbeat/create</code></p>
+
+<p><strong>Request Body:</strong></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my_trading_bot_001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contracts"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"perpetual_futures"</span><span class="p">,</span><span class="w"> </span><span class="s2">"call_options"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"underlying_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"BTC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ETHUSD"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spreads"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>heartbeat_id</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>Unique identifier for the heartbeat</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>Impact : <code>contracts</code>, <code>products</code></td>
+</tr>
+<tr>
+<td><code>contract_types</code></td>
+<td>array</td>
+<td>Yes</td>
+<td>Array of contract types to monitor, required if impact is contracts</td>
+</tr>
+<tr>
+<td><code>underlying_assets</code></td>
+<td>array</td>
+<td>No</td>
+<td>Array of underlying assets to monitor</td>
+</tr>
+<tr>
+<td><code>product_symbols</code></td>
+<td>array</td>
+<td>Yes</td>
+<td>Array of specific product symbols to monitor, required if impact is products</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>array</td>
+<td>Yes</td>
+<td>Array of action configurations</td>
+</tr>
+</tbody></table>
+
+<p><strong>Config Actions:</strong></p>
+
+<ul>
+<li><code>cancel_orders</code>: Cancels all open orders</li>
+<li><code>spreads</code>: Adds spreads to orders</li>
+</ul>
+
+<p><strong>Response:</strong></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my_trading_bot_001"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='heartbeat-acknowledgment'>Heartbeat Acknowledgment</h3>
+<p>Sends an acknowledgment to keep the heartbeat active. Set ttl to 0 to disable heartbeat. </p>
+
+<p><strong>Endpoint:</strong> <code>POST /heartbeat</code></p>
+
+<p><strong>Request Body:</strong></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my_trading_bot_001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ttl"</span><span class="p">:</span><span class="w"> </span><span class="mi">30000</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>heartbeat_id</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>Heartbeat identifier</td>
+</tr>
+<tr>
+<td><code>ttl</code></td>
+<td>integer/string</td>
+<td>Yes</td>
+<td>Time to live in milliseconds</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response:</strong></p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"heartbeat_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1243453435"</span><span class="p">,</span><span class="w"> </span><span class="err">//next</span><span class="w"> </span><span class="err">expiry</span><span class="w"> </span><span class="err">timestamp</span><span class="w">
+    </span><span class="s2">"process_enabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="kc">true</span><span class="err">/</span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='get-heartbeats'>Get Heartbeats</h3>
+<p>Retrieves all active heartbeats for a user.</p>
+
+<p><strong>Endpoint:</strong> <code>GET /heartbeat</code></p>
+
+<p><strong>Query Parameters:</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>heartbeat_id</code></td>
+<td>string</td>
+<td>No</td>
+<td>Specific heartbeat ID to retrieve</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response:</strong></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_id"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my_trading_bot_001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contracts"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"perpetual_futures"</span><span class="p">,</span><span class="w"> </span><span class="s2">"call_options"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"underlying_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"BTC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ETH"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ETHUSD"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='implementation-guidelines'>Implementation Guidelines</h2><h3 id='best-practices'>Best Practices</h3>
+<ol>
+<li><strong>Regular Heartbeats</strong>: Send heartbeat acknowledgments at regular intervals (recommended: every 30 seconds)</li>
+<li><strong>Error Handling</strong>: Implement proper error handling for heartbeat failures</li>
+<li><strong>Monitoring</strong>: Monitor heartbeat status and implement alerts for failures</li>
+<li><strong>Graceful Shutdown</strong>: Properly disable heartbeats when shutting down trading systems</li>
+</ol>
+<h3 id='python-example'>Python Example</h3><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">class</span> <span class="nc">DeadmanSwitch</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">,</span> <span class="n">base_url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">api_secret</span> <span class="o">=</span> <span class="n">api_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_id</span> <span class="o">=</span> <span class="s">"trading_bot_"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">create_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Create a new heartbeat"""</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"{self.base_url}/heartbeat/create"</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_auth_headers</span><span class="p">()</span>
+
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">"heartbeat_id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_id</span><span class="p">,</span>
+            <span class="s">"impact"</span><span class="p">:</span> <span class="s">"contracts"</span><span class="p">,</span>
+            <span class="s">"contract_types"</span><span class="p">:</span> <span class="p">[</span><span class="s">"perpetual_futures"</span><span class="p">],</span>
+            <span class="s">"config"</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s">"action"</span><span class="p">:</span> <span class="s">"cancel_orders"</span><span class="p">,</span>
+                    <span class="s">"unhealthy_count"</span><span class="p">:</span> <span class="mi">1</span> <span class="c"># if heartbeat missed 1 time than cancel all orders</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">send_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Send heartbeat acknowledgment"""</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">"{self.base_url}/heartbeat"</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_auth_headers</span><span class="p">()</span>
+
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">"heartbeat_id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_id</span><span class="p">,</span>
+            <span class="s">"ttl"</span><span class="p">:</span> <span class="mi">30000</span>  <span class="c"># 30 seconds</span>
+        <span class="p">}</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">start_heartbeat_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">"""Start continuous heartbeat loop"""</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_heartbeat</span><span class="p">()</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Heartbeat sent: {result}"</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>  <span class="c"># Send every 25 seconds (TTL is 30)</span>
+            <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Heartbeat failed: {e}"</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_auth_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Implement authentication headers</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s">"Content-Type"</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
+            <span class="s">"api-key"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span><span class="p">,</span>
+            <span class="c"># Add signature generation logic</span>
+        <span class="p">}</span>
+
+<span class="c"># Usage example</span>
+<span class="n">deadman</span> <span class="o">=</span> <span class="n">DeadmanSwitch</span><span class="p">(</span><span class="s">"your_api_key"</span><span class="p">,</span> <span class="s">"your_api_secret"</span><span class="p">,</span> <span class="s">"https://api.delta.exchange"</span><span class="p">)</span>
+<span class="n">deadman</span><span class="o">.</span><span class="n">create_heartbeat</span><span class="p">()</span>
+<span class="n">deadman</span><span class="o">.</span><span class="n">start_heartbeat_loop</span><span class="p">()</span>
+</code></pre><h3 id='node-js-example'>Node.js Example</h3><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'crypto'</span><span class="p">);</span>
+
+<span class="kr">class</span> <span class="nx">DeadmanSwitch</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">apiKey</span><span class="p">,</span> <span class="nx">apiSecret</span><span class="p">,</span> <span class="nx">baseUrl</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">apiKey</span> <span class="o">=</span> <span class="nx">apiKey</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">apiSecret</span> <span class="o">=</span> <span class="nx">apiSecret</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">baseUrl</span> <span class="o">=</span> <span class="nx">baseUrl</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">heartbeatId</span> <span class="o">=</span> <span class="s2">`trading_bot_</span><span class="p">${</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()}</span><span class="s2">`</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">async</span> <span class="nx">createHeartbeat</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">baseUrl</span><span class="p">}</span><span class="s2">/heartbeat/create`</span><span class="p">;</span>
+        <span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getAuthHeaders</span><span class="p">();</span>
+
+        <span class="kr">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="na">heartbeat_id</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">heartbeatId</span><span class="p">,</span>
+            <span class="na">impact</span><span class="p">:</span> <span class="s2">"contracts"</span><span class="p">,</span>
+            <span class="na">contract_types</span><span class="p">:</span> <span class="p">[</span><span class="s2">"perpetual_futures"</span><span class="p">],</span>
+            <span class="na">config</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="na">action</span><span class="p">:</span> <span class="s2">"cancel_orders"</span><span class="p">,</span>
+                    <span class="na">unhealthy_count</span><span class="p">:</span> <span class="mi">1</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">};</span>
+
+        <span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">payload</span><span class="p">,</span> <span class="p">{</span> <span class="nx">headers</span> <span class="p">});</span>
+        <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">async</span> <span class="nx">sendHeartbeat</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">baseUrl</span><span class="p">}</span><span class="s2">/heartbeat`</span><span class="p">;</span>
+        <span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getAuthHeaders</span><span class="p">();</span>
+
+        <span class="kr">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="na">heartbeat_id</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">heartbeatId</span><span class="p">,</span>
+            <span class="na">ttl</span><span class="p">:</span> <span class="mi">30000</span>
+        <span class="p">};</span>
+
+        <span class="kr">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">axios</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">payload</span><span class="p">,</span> <span class="p">{</span> <span class="nx">headers</span> <span class="p">});</span>
+        <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">startHeartbeatLoop</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">setInterval</span><span class="p">(</span><span class="nx">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">sendHeartbeat</span><span class="p">();</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Heartbeat sent:'</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">'Heartbeat failed:'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">},</span> <span class="mi">25000</span><span class="p">);</span> <span class="c1">// Send every 25 seconds</span>
+    <span class="p">}</span>
+
+    <span class="nx">getAuthHeaders</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Implement authentication headers</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">'Content-Type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+            <span class="s1">'api-key'</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">apiKey</span><span class="p">,</span>
+            <span class="c1">// Add signature generation logic</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage example</span>
+<span class="kr">const</span> <span class="nx">deadman</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DeadmanSwitch</span><span class="p">(</span><span class="s1">'your_api_key'</span><span class="p">,</span> <span class="s1">'your_api_secret'</span><span class="p">,</span> <span class="s1">'https://api.delta.exchange'</span><span class="p">);</span>
+<span class="nx">deadman</span><span class="p">.</span><span class="nx">createHeartbeat</span><span class="p">();</span>
+<span class="nx">deadman</span><span class="p">.</span><span class="nx">startHeartbeatLoop</span><span class="p">();</span>
+</code></pre><h2 id='error-codes'>Error Codes</h2>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>unauthorized</code></td>
+<td>Authentication failed</td>
+</tr>
+<tr>
+<td><code>rate_limit_exceeded</code></td>
+<td>Too many requests</td>
+</tr>
+</tbody></table>
+<h2 id='security-considerations'>Security Considerations</h2>
+<ol>
+<li><strong>API Key Security</strong>: Keep your API keys secure and never expose them in client-side code</li>
+<li><strong>Network Security</strong>: Use HTTPS for all API communications</li>
+<li><strong>Monitoring</strong>: Implement proper monitoring and alerting for heartbeat failures</li>
+<li><strong>Backup Systems</strong>: Consider implementing backup heartbeat mechanisms for critical trading systems </li>
+</ol>
 
 <h1 id='place-order-errors'>Place order errors</h1>
 <p>This section lists various errors returned by the system while placing order. The error format looks like this </p>
