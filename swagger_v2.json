@@ -1014,13 +1014,14 @@
         }
       }
     },
-    "/orders/cancel_after": {
+
+    "/heartbeat/create": {
       "post": {
         "tags": [
-          "Dead Man's Switch (Auto Cancel)"
+          "Heartbeat Management"
         ],
-        "summary": "Cancel After",
-        "operationId": "cancelAfter",
+        "summary": "Create Heartbeat",
+        "operationId": "createHeartbeat",
         "consumes": [
           "application/json"
         ],
@@ -1037,17 +1038,17 @@
         "parameters": [
           {
             "in": "body",
-            "name": "cancel after details",
-            "description": "cancel after details",
+            "name": "heartbeat creation details",
+            "description": "heartbeat creation details",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CancelAfterRequest"
+              "$ref": "#/definitions/CreateHeartbeat"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Returns back the cancel_after configs set",
+            "description": "Heartbeat created successfully",
             "schema": {
               "allOf": [
                 {
@@ -1057,7 +1058,7 @@
                   "type": "object",
                   "properties": {
                     "result": {
-                      "$ref": "#/definitions/CancelAfterResponse"
+                      "$ref": "#/definitions/HeartbeatResponse"
                     }
                   }
                 }
@@ -1065,7 +1066,125 @@
             }
           },
           "400": {
-            "description": "Returns if configs couldnt be set",
+            "description": "Returns if heartbeat couldnt be created",
+            "schema": {
+              "$ref": "#/definitions/ApiErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/heartbeat": {
+      "post": {
+        "tags": [
+          "Heartbeat Management"
+        ],
+        "summary": "Send Heartbeat Acknowledgment",
+        "operationId": "sendHeartbeat",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "heartbeat acknowledgment details",
+            "description": "heartbeat acknowledgment details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HeartbeatAck"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Heartbeat acknowledged successfully",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/HeartbeatAckResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Returns if heartbeat acknowledgment failed",
+            "schema": {
+              "$ref": "#/definitions/ApiErrorResponse"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Heartbeat Management"
+        ],
+        "summary": "Get Heartbeats",
+        "operationId": "getHeartbeats",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "user_id",
+            "description": "User ID",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "heartbeat_id",
+            "description": "Specific heartbeat ID to retrieve",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of active heartbeats",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/ArrayOfHeartbeats"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Returns if heartbeats couldnt be retrieved",
             "schema": {
               "$ref": "#/definitions/ApiErrorResponse"
             }
@@ -5093,35 +5212,7 @@
         }
       }
     },
-    "CancelAfterRequest": {
-      "type": "object",
-      "description": "Cancel After Request Object",
-      "properties": {
-        "cancel_after": {
-          "type": "string",
-          "description": "Timer value in milliseconds after which orders are to be cancelled. To disable deadman switch and keep your orders open, set cancel_after to 0."
-        }
-      },
-      "example": { "cancel_after": "5000"}
-    },
-    "CancelAfterResponse": {
-      "type": "object",
-      "description": "Cancel After Response Object",
-      "properties": {
-        "cancel_after_enabled": {
-          "type": "string",
-          "enum": [
-            "false",
-            "true"
-          ]
-        },
-        "cancel_after_timestamp": {
-          "type": "string",
-          "description": "timestamp after which orders will get cancelled"
-        }
-      },
-      "example": { "cancel_after_enabled": "true", "cancel_after_timestamp": "1669119262000"}
-    },
+
     "User": {
       "type": "object",
       "description": "Represents a user account with personal and account-related details.",
@@ -5202,6 +5293,162 @@
           "type": "string",
           "description": "The updated margin mode. Possible values: isolated, portfolio, or cross",
           "example": "isolated"
+        }
+      }
+    },
+    "CreateHeartbeat": {
+      "type": "object",
+      "description": "Create Heartbeat Request Object",
+      "properties": {
+        "heartbeat_id": {
+          "type": "string",
+          "description": "Unique identifier for the heartbeat"
+        },
+        "impact": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Impact level"
+        },
+        "contract_types": {
+          "type": "array",
+          "description": "Array of contract types to monitor",
+          "items": {
+            "type": "string"
+          }
+        },
+        "underlying_assets": {
+          "type": "array",
+          "description": "Array of underlying assets to monitor",
+          "items": {
+            "type": "string"
+          }
+        },
+        "product_symbols": {
+          "type": "array",
+          "description": "Array of specific product symbols to monitor",
+          "items": {
+            "type": "string"
+          }
+        },
+        "config": {
+          "type": "array",
+          "description": "Array of action configurations",
+          "items": {
+            "$ref": "#/definitions/HeartbeatConfig"
+          }
+        }
+      },
+      "required": ["heartbeat_id", "impact", "config"]
+    },
+    "HeartbeatConfig": {
+      "type": "object",
+      "description": "Heartbeat Configuration Object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["cancel_orders", "spreads"],
+          "description": "Action to take when heartbeat expires"
+        },
+        "unhealthy_count": {
+          "type": "integer",
+          "description": "Number of unhealthy heartbeats before action"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag for the action (e.g., 'mmp')"
+        }
+      },
+      "required": ["action", "unhealthy_count"]
+    },
+    "HeartbeatResponse": {
+      "type": "object",
+      "description": "Heartbeat Response Object",
+      "properties": {
+        "heartbeat_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "HeartbeatAck": {
+      "type": "object",
+      "description": "Heartbeat Acknowledgment Request Object",
+      "properties": {
+        "heartbeat_id": {
+          "type": "string",
+          "description": "Heartbeat identifier"
+        },
+        "ttl": {
+          "type": "integer",
+          "description": "Time to live in milliseconds"
+        }
+      },
+      "required": ["heartbeat_id", "ttl"]
+    },
+    "HeartbeatAckResponse": {
+      "type": "object",
+      "description": "Heartbeat Acknowledgment Response Object",
+      "properties": {
+        "process_enabled": {
+          "type": "string",
+          "description": "Acknowledgement status (true/false)"
+        },
+        "heartbeat_timestamp": {
+          "type": "string",
+          "description": "Expiry timestamp after which actions will be triggered"
+        }
+      }
+    },
+    "ArrayOfHeartbeats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Heartbeat"
+      }
+    },
+    "Heartbeat": {
+      "type": "object",
+      "description": "Heartbeat Object",
+      "properties": {
+        "heartbeat_id": {
+          "type": "string"
+        },
+        "impact": {
+          "type": "string"
+        },
+        "contract_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "underlying_assets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "product_symbols": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "config": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HeartbeatConfig"
+          }
+        },
+        "status": {
+          "type": "string"
+        },
+        "last_ack": {
+          "type": "string"
+        },
+        "next_ack_required_by": {
+          "type": "string"
         }
       }
     },
