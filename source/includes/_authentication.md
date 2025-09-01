@@ -105,6 +105,28 @@ signature = generate_signature(api_secret, signature_data)
 - VPNs or ISPs with dynamic IPs may require frequent updates.  
 - Consider cloud hosted machine with static IP for production to avoid whitelisting repeatedly.
 
+### Request Forbidden Error
+
+* ```{ "error": "Forbidden", "message": "Request blocked by CDN" } ```
+
+**Explanation:**  Your request was blocked before reaching the Delta API gateway. This usually happens when required headers are missing (e.g., User-Agent), or when requests originate from environments where the IP is hidden or blocked by the CDN.
+
+### 🔧 Troubleshooting
+
+**1. Add a User-Agent Manually**
+
+- Some HTTP clients (e.g., in certain programming languages) do not send a User-Agent header by default.
+- Set a valid User-Agent string in your request to avoid being rejected.
+
+**2. Trace Request Headers**
+
+- Inspect the request/response headers using tools like curl -v, Postman, or your language’s HTTP client debugger.
+- Check if required headers are present and correctly passed through.
+
+**3. Verify Request IP**
+
+- Some hosted environments or proxies mask the client IP.
+- Confirm that the request includes a valid IP address visible to the CDN. If the IP is hidden or blocked, the request will be rejected.
 
 ### Signature Mismatch Error
 

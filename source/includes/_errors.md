@@ -6,6 +6,7 @@ Delta API uses the following error codes:
 | ---------- | ----------------------------------------------------------------------------------------- |
 | 400        | Bad Request -- Your request is invalid.                                                   |
 | 401        | Unauthorized -- Your API key/Signature is wrong.                                          |
+| 403        | Forbidden Error -- Request blocked by CDN (e.g., missing User-Agent header or hidden/blocked IP from certain hosted environments).                                          |
 | 404        | Not Found -- The specified resource could not be found.                                     |
 | 405        | Method Not Allowed -- You tried to access a resource with an invalid method.                |
 | 406        | Not Acceptable -- You requested a format that isn't json.                                 |  |  |
