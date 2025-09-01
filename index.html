@@ -1189,13 +1189,40 @@ signature = generate_signature(api_secret, signature_data)
 <li>VPNs or ISPs with dynamic IPs may require frequent updates.<br></li>
 <li>Consider cloud hosted machine with static IP for production to avoid whitelisting repeatedly.</li>
 </ul>
+<h3 id='request-forbidden-error'>Request Forbidden Error</h3>
+<ul>
+<li><code>{ &quot;error&quot;: &quot;Forbidden&quot;, &quot;message&quot;: &quot;Request blocked by CDN&quot; }</code></li>
+</ul>
+
+<p><strong>Explanation:</strong>  Your request was blocked before reaching the Delta API gateway. This usually happens when required headers are missing (e.g., User-Agent), or when requests originate from environments where the IP is hidden or blocked by the CDN.</p>
+<h3 id='troubleshooting-5'>🔧 Troubleshooting</h3>
+<p><strong>1. Add a User-Agent Manually</strong></p>
+
+<ul>
+<li>Some HTTP clients (e.g., in certain programming languages) do not send a User-Agent header by default.</li>
+<li>Set a valid User-Agent string in your request to avoid being rejected.</li>
+</ul>
+
+<p><strong>2. Trace Request Headers</strong></p>
+
+<ul>
+<li>Inspect the request/response headers using tools like curl -v, Postman, or your language’s HTTP client debugger.</li>
+<li>Check if required headers are present and correctly passed through.</li>
+</ul>
+
+<p><strong>3. Verify Request IP</strong></p>
+
+<ul>
+<li>Some hosted environments or proxies mask the client IP.</li>
+<li>Confirm that the request includes a valid IP address visible to the CDN. If the IP is hidden or blocked, the request will be rejected.</li>
+</ul>
 <h3 id='signature-mismatch-error'>Signature Mismatch Error</h3>
 <ul>
 <li><code>{ &quot;success&quot;: false, &quot;error&quot;: { &quot;code&quot;: &quot;Signature Mismatch&quot; } }</code></li>
 </ul>
 
 <p><strong>Explanation:</strong>  This error occurs when the signature generated on your end does not match the one received by Delta Exchange. This can happen due to incorrect timestamp, payload, or method used in the signature generation.</p>
-<h3 id='troubleshooting-5'>🔧 Troubleshooting</h3>
+<h3 id='troubleshooting-6'>🔧 Troubleshooting</h3>
 <p><strong>1. Verify Signature Generation</strong></p>
 
 <ul>
@@ -16403,6 +16430,10 @@ This operation does not require authentication.
 <tr>
 <td>401</td>
 <td>Unauthorized -- Your API key/Signature is wrong.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden Error -- Request blocked by CDN (e.g., missing User-Agent header or hidden/blocked IP from certain hosted environments).</td>
 </tr>
 <tr>
 <td>404</td>
