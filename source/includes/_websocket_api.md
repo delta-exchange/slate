@@ -128,17 +128,11 @@ If you want to unsubscribe from channel/contracts pairs, send an "unsubscribe" m
 }
 ```
 
-## Authenticating a connection
+# Authenticating
 
-Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, [adl](/#trading-notitifications) and pnl updates.
+## Current method
 
-To authenticate, you need to send a signed request of type **'auth'** on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.
-
-The payload for the signed request will be ***'GET' + timestamp + '/live'***
-
-To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. 
-
-> Authentication sample
+Authentication allows clients to subscribe to user account related trading notifications using private channels like positions, orders, etc. This allows users to get real-time updates related to their orders, fills, liquidations, [adl](/#trading-notitifications) and pnl updates.
 
 ```python
 # auth message with signed request
@@ -164,28 +158,84 @@ signature_data = method + timestamp + path
 signature = generate_signature(api_secret, signature_data)
 
 ws = websocket.WebSocketApp('wss://socket.india.delta.exchange')
+
 ws.send(json.dumps({
-    "type": "auth",
+    "type": "key-auth",
     "payload": {
         "api-key": api_key,
         "signature": signature,
         "timestamp": timestamp
     }
 }))
-```
 
-```nodejs
-
-```
-
-To unsubscribe from all private channels, just send a **'unauth'** message on the socket. This will automatically unsubscribe the connection from all authenticated channels.
-
-```python
 ws.send(json.dumps({
     "type": 'unauth',
     "payload": {}
 }))
 ```
+
+**Note**: For users migrating from older authentication method, the change is: "type" in request payload must be changed from "auth" to "key-auth". Rest of the request payload will remain the same. The response payloads have major changes. Check below for the response payloads.  
+
+
+To authenticate, you must send a request of type **'key-auth'** on your socket connection. Authentication request is a json of the format:  
+`{"type":"key-auth","payload":{"api-key":"#KEY#","timestamp":#TIMESTAMP#,"signature":"#SIGNATURE#"}}`  
+**KEY** here is your API-key string.  
+**TIMESTAMP** is current epoch Unix timestamp in seconds as a number.  
+**SIGNATURE** is hash string of HMAC created using `'GET' + string(TIMESTAMP) + '/live'` and your API-secret.  
+Note: Same timestamp must be used for TIMESTAMP and in generating SIGNATURE. 
+
+Refer to the right side for a sample code.
+
+<br><br><br>
+
+**Authentication Responses**  
+All authentication responses will be json containing following keys:  
+**"type"** will always be "key-auth"  
+**"success"** is a boolean indicating whether the authentication was a success or failure.  
+**"status_code"** is number just like HTTP response status.  
+**"status"** is a string describing the response status.  
+**"message"** is a string which may be present describing authentication failure reason.
+
+
+Success response:  
+`{"type":"key-auth", "success":true, "status_code":200, "status":"authenticated"}`
+
+
+Error responses:  
+
+1. Lacking 'api-key' or 'sign' or 'timestamp' in the payload:  
+`{"type":"key-auth", "success":false, "status_code":400, "status":"incomplete_payload", "message":"Incomplete payload"}`  
+
+2. Request received after 5 secs:   
+`{"type":"key-auth", "success":false, "status_code":408, "status":"request_expired", "message":"Timestamp header outside of allowed time window"}}`  
+
+3. ApiKey does not exist:  
+`{"type":"key-auth", "success":false, "status_code":404, "status":"api_key_not_found", "message":"ApiKey not found"}}`  
+
+4. Invalid/wrong Signature:  
+`{"type":"key-auth", "success":false, "status_code":401, "status":"invalid_signature", "message":"Invalid Signature"}`  
+
+5. IP address not whitelisted for the API-key:  
+`{"type":"key-auth", "success":false, "status_code":401, "status":"ip_not_whitelisted", "message":"IP address not whitelisted. Your IP: 172.16.19.91"}`  
+
+6. Some internal server error:  
+`{"type":"key-auth", "success":false, "status_code":500, "status":"internal_server_error", "message": "Internal Server Error. Code: 1001"`
+
+
+## Old method
+
+Note: This method of authentication will stop working from 31st December 2025.
+
+Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, [adl](/#trading-notitifications) and pnl updates.
+
+To authenticate, you need to send a signed request of type **'auth'** on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.
+
+The payload for the signed request will be ***'GET' + timestamp + '/live'***
+
+To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. 
+
+To unsubscribe from all private channels, just send a **'unauth'** message on the socket. This will automatically unsubscribe the connection from all authenticated channels.
+
 
 # Sample Python Code
 
@@ -289,7 +339,7 @@ def send_authentication(ws):
     signature_data = method + timestamp + path
     signature = generate_signature(API_SECRET, signature_data)
     ws.send(json.dumps({
-        "type": "auth",
+        "type": "key-auth",
         "payload": {
             "api-key": API_KEY,
             "signature": signature,
@@ -303,16 +353,21 @@ def generate_signature(secret, message):
     hash = hmac.new(secret, message, hashlib.sha256)
     return hash.hexdigest()
 
-def on_message(ws, message):
-    message_json = json.loads(message)
+def on_message(ws, json_message):
+    message = json.loads(json_message)
     # subscribe private channels after successful authentication
-    if message_json['type'] == 'success' and message_json['message'] == 'Authenticated':
-         # subscribe orders channel for order updates for all contracts
-        subscribe(ws, "orders", ["all"])
-        # subscribe positions channel for position updates for all contracts
-        subscribe(ws, "positions", ["all"])
+    if message['type'] == 'key-auth':
+        if message['success']:
+            print("Authentication successful")
+            # subscribe orders channel for order updates for all contracts
+            subscribe(ws, "orders", ["all"])
+            # subscribe positions channel for position updates for all contracts
+            subscribe(ws, "positions", ["all"])
+        else:
+            print("Authentication failed")
+            print(message)
     else:
-      print(message_json)
+        print(json_message)
 
 def subscribe(ws, channel, symbols):
     payload = {
