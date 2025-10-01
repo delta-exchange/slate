@@ -1,5 +1,10 @@
 # Changelog
 
+## 02.10.25
+1. Added new websocket authentication method, {"type":"key-auth"}, which includes new formats of request and responses.  
+2. Previous websocket authentication method, {"type":"auth"}, is now marked as deprecated. This method will stop working after 31st December 2025, users are requested to migrate to the newer websocket authentication.
+
+
 ## 01.06.25
 1. Added reason:"liquidation" for v2/user_trades websocket channel. Updated documentation for the v2/user_trades channel.
 2. Added Connection rate limit for websocket URL endpoint of 150 connections per IP address per 5 minutes. Updated this info under 'Websocket Info' tab.
