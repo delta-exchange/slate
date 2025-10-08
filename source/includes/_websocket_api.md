@@ -930,7 +930,7 @@ symbols: ["MARK:C-BTC-75000-310325"] gives you Mark Price candlestick data for C
 Subscribe to **candlestick_${resolution}** channel for updates. 
 
 List of supported resolutions
-["1m","3m","5m","15m","30m","1h","2h","4h","6h","12h","1d","1w","2w","30d"]
+["1m","3m","5m","15m","30m","1h","2h","4h","6h","12h","1d","1w"]
  
 You need to send the list of symbols for which you would like to subscribe to candlesticks channel. 
 You can also subscribe to candlesticks updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
