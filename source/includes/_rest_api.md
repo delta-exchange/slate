@@ -5340,10 +5340,7 @@ It returns historical Open-High-Low-Close(ohlc) candles data of the symbol as pe
 |resolution|4h|
 |resolution|6h|
 |resolution|1d|
-|resolution|7d|
-|resolution|30d|
 |resolution|1w|
-|resolution|2w|
 
 > Example responses
 
