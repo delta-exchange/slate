@@ -777,8 +777,16 @@
                   <li>
                     <a href="#unsubscribe" class="toc-h2 toc-link" data-title="Unsubscribe">Unsubscribe</a>
                   </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#authenticating" class="toc-h1 toc-link" data-title="Authenticating">Authenticating</a>
+              <ul class="toc-list-h2">
                   <li>
-                    <a href="#authenticating-a-connection" class="toc-h2 toc-link" data-title="Authenticating a connection">Authenticating a connection</a>
+                    <a href="#current-method" class="toc-h2 toc-link" data-title="Current method">Current method</a>
+                  </li>
+                  <li>
+                    <a href="#old-method" class="toc-h2 toc-link" data-title="Old method">Old method</a>
                   </li>
               </ul>
           </li>
@@ -877,6 +885,9 @@
           <li>
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#08-10-25" class="toc-h2 toc-link" data-title="08.10.25">08.10.25</a>
+                  </li>
                   <li>
                     <a href="#01-06-25" class="toc-h2 toc-link" data-title="01.06.25">01.06.25</a>
                   </li>
@@ -9452,19 +9463,7 @@ curl -X GET https://api.india.delta.exchange/v2/history/candles?resolution<span 
 </tr>
 <tr>
 <td>resolution</td>
-<td>7d</td>
-</tr>
-<tr>
-<td>resolution</td>
-<td>30d</td>
-</tr>
-<tr>
-<td>resolution</td>
 <td>1w</td>
-</tr>
-<tr>
-<td>resolution</td>
-<td>2w</td>
 </tr>
 </tbody></table>
 
@@ -16605,18 +16604,8 @@ This operation does not require authentication.
         </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='authenticating-a-connection'>Authenticating a connection</h2>
-<p>Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, <a href="/#trading-notitifications">adl</a> and pnl updates.</p>
-
-<p>To authenticate, you need to send a signed request of type <strong>&#39;auth&#39;</strong> on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.</p>
-
-<p>The payload for the signed request will be <strong><em>&#39;GET&#39; + timestamp + &#39;/live&#39;</em></strong></p>
-
-<p>To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. </p>
-
-<blockquote>
-<p>Authentication sample</p>
-</blockquote>
+</span></code></pre><h1 id='authenticating'>Authenticating</h1><h2 id='current-method'>Current method</h2>
+<p>Authentication allows clients to subscribe to user account related trading notifications using private channels like positions, orders, etc. This allows users to get real-time updates related to their orders, fills, liquidations, <a href="/#trading-notitifications">adl</a> and pnl updates.</p>
 <pre class="highlight python tab-python"><code><span class="c"># auth message with signed request</span>
 <span class="kn">import</span> <span class="nn">websocket</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
@@ -16640,22 +16629,74 @@ This operation does not require authentication.
 <span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="n">api_secret</span><span class="p">,</span> <span class="n">signature_data</span><span class="p">)</span>
 
 <span class="n">ws</span> <span class="o">=</span> <span class="n">websocket</span><span class="o">.</span><span class="n">WebSocketApp</span><span class="p">(</span><span class="s">'wss://socket.india.delta.exchange'</span><span class="p">)</span>
+
 <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-    <span class="s">"type"</span><span class="p">:</span> <span class="s">"auth"</span><span class="p">,</span>
+    <span class="s">"type"</span><span class="p">:</span> <span class="s">"key-auth"</span><span class="p">,</span>
     <span class="s">"payload"</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">"api-key"</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span>
         <span class="s">"signature"</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
         <span class="s">"timestamp"</span><span class="p">:</span> <span class="n">timestamp</span>
     <span class="p">}</span>
 <span class="p">}))</span>
-</code></pre><pre class="highlight plaintext"><code>
-</code></pre>
-<p>To unsubscribe from all private channels, just send a <strong>&#39;unauth&#39;</strong> message on the socket. This will automatically unsubscribe the connection from all authenticated channels.</p>
-<pre class="highlight python tab-python"><code><span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+
+<span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
     <span class="s">"type"</span><span class="p">:</span> <span class="s">'unauth'</span><span class="p">,</span>
     <span class="s">"payload"</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}))</span>
-</code></pre><h1 id='sample-python-code'>Sample Python Code</h1><h2 id='public-channels'>Public Channels</h2>
+</code></pre>
+<p><strong>Note</strong>: For users migrating from older authentication method, the change is: &quot;type&quot; in request payload must be changed from &quot;auth&quot; to &quot;key-auth&quot;. Rest of the request payload will remain the same. The response payloads have major changes. Check below for the response payloads.  </p>
+
+<p>To authenticate, you must send a request of type <strong>&#39;key-auth&#39;</strong> on your socket connection. Authentication request is a json of the format:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;,&quot;payload&quot;:{&quot;api-key&quot;:&quot;#KEY#&quot;,&quot;timestamp&quot;:#TIMESTAMP#,&quot;signature&quot;:&quot;#SIGNATURE#&quot;}}</code><br>
+<strong>KEY</strong> here is your API-key string.<br>
+<strong>TIMESTAMP</strong> is current epoch Unix timestamp in seconds as a number.<br>
+<strong>SIGNATURE</strong> is hash string of HMAC created using <code>&#39;GET&#39; + string(TIMESTAMP) + &#39;/live&#39;</code> and your API-secret.<br>
+Note: Same timestamp must be used for TIMESTAMP and in generating SIGNATURE. </p>
+
+<p>Refer to the right side for a sample code.</p>
+
+<p><br><br><br></p>
+
+<p><strong>Authentication Responses</strong><br>
+All authentication responses will be json containing following keys:<br>
+<strong>&quot;type&quot;</strong> will always be &quot;key-auth&quot;<br>
+<strong>&quot;success&quot;</strong> is a boolean indicating whether the authentication was a success or failure.<br>
+<strong>&quot;status_code&quot;</strong> is number just like HTTP response status.<br>
+<strong>&quot;status&quot;</strong> is a string describing the response status.<br>
+<strong>&quot;message&quot;</strong> is a string which may be present describing authentication failure reason.</p>
+
+<p>Success response:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:true, &quot;status_code&quot;:200, &quot;status&quot;:&quot;authenticated&quot;}</code></p>
+
+<p>Error responses:  </p>
+
+<ol>
+<li><p>Lacking &#39;api-key&#39; or &#39;sign&#39; or &#39;timestamp&#39; in the payload:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:false, &quot;status_code&quot;:400, &quot;status&quot;:&quot;incomplete_payload&quot;, &quot;message&quot;:&quot;Incomplete payload&quot;}</code>  </p></li>
+<li><p>Request received after 5 secs:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:false, &quot;status_code&quot;:408, &quot;status&quot;:&quot;request_expired&quot;, &quot;message&quot;:&quot;Timestamp header outside of allowed time window&quot;}}</code>  </p></li>
+<li><p>ApiKey does not exist:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:false, &quot;status_code&quot;:404, &quot;status&quot;:&quot;api_key_not_found&quot;, &quot;message&quot;:&quot;ApiKey not found&quot;}}</code>  </p></li>
+<li><p>Invalid/wrong Signature:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:false, &quot;status_code&quot;:401, &quot;status&quot;:&quot;invalid_signature&quot;, &quot;message&quot;:&quot;Invalid Signature&quot;}</code>  </p></li>
+<li><p>IP address not whitelisted for the API-key:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:false, &quot;status_code&quot;:401, &quot;status&quot;:&quot;ip_not_whitelisted&quot;, &quot;message&quot;:&quot;IP address not whitelisted. Your IP: 172.16.19.91&quot;}</code>  </p></li>
+<li><p>Some internal server error:<br>
+<code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:false, &quot;status_code&quot;:500, &quot;status&quot;:&quot;internal_server_error&quot;, &quot;message&quot;: &quot;Internal Server Error. Code: 1001&quot;</code></p></li>
+</ol>
+<h2 id='old-method'>Old method</h2>
+<p>Note: This method of authentication will stop working from 31st December 2025.</p>
+
+<p>Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, <a href="/#trading-notitifications">adl</a> and pnl updates.</p>
+
+<p>To authenticate, you need to send a signed request of type <strong>&#39;auth&#39;</strong> on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.</p>
+
+<p>The payload for the signed request will be <strong><em>&#39;GET&#39; + timestamp + &#39;/live&#39;</em></strong></p>
+
+<p>To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. </p>
+
+<p>To unsubscribe from all private channels, just send a <strong>&#39;unauth&#39;</strong> message on the socket. This will automatically unsubscribe the connection from all authenticated channels.</p>
+<h1 id='sample-python-code'>Sample Python Code</h1><h2 id='public-channels'>Public Channels</h2>
 <p><strong>Summary:</strong> 
 The python script(right panel) connects to the Delta Exchange WebSocket to receive real-time market data.</p>
 
@@ -16751,7 +16792,7 @@ The python script(right panel) connects to the Delta Exchange WebSocket to recei
     <span class="n">signature_data</span> <span class="o">=</span> <span class="n">method</span> <span class="o">+</span> <span class="n">timestamp</span> <span class="o">+</span> <span class="n">path</span>
     <span class="n">signature</span> <span class="o">=</span> <span class="n">generate_signature</span><span class="p">(</span><span class="n">API_SECRET</span><span class="p">,</span> <span class="n">signature_data</span><span class="p">)</span>
     <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-        <span class="s">"type"</span><span class="p">:</span> <span class="s">"auth"</span><span class="p">,</span>
+        <span class="s">"type"</span><span class="p">:</span> <span class="s">"key-auth"</span><span class="p">,</span>
         <span class="s">"payload"</span><span class="p">:</span> <span class="p">{</span>
             <span class="s">"api-key"</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
             <span class="s">"signature"</span><span class="p">:</span> <span class="n">signature</span><span class="p">,</span>
@@ -16765,16 +16806,21 @@ The python script(right panel) connects to the Delta Exchange WebSocket to recei
     <span class="nb">hash</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">hash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-    <span class="n">message_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">json_message</span><span class="p">):</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_message</span><span class="p">)</span>
     <span class="c"># subscribe private channels after successful authentication</span>
-    <span class="k">if</span> <span class="n">message_json</span><span class="p">[</span><span class="s">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'success'</span> <span class="ow">and</span> <span class="n">message_json</span><span class="p">[</span><span class="s">'message'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'Authenticated'</span><span class="p">:</span>
-         <span class="c"># subscribe orders channel for order updates for all contracts</span>
-        <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"orders"</span><span class="p">,</span> <span class="p">[</span><span class="s">"all"</span><span class="p">])</span>
-        <span class="c"># subscribe positions channel for position updates for all contracts</span>
-        <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"positions"</span><span class="p">,</span> <span class="p">[</span><span class="s">"all"</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="s">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'key-auth'</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="s">'success'</span><span class="p">]:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Authentication successful"</span><span class="p">)</span>
+            <span class="c"># subscribe orders channel for order updates for all contracts</span>
+            <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"orders"</span><span class="p">,</span> <span class="p">[</span><span class="s">"all"</span><span class="p">])</span>
+            <span class="c"># subscribe positions channel for position updates for all contracts</span>
+            <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"positions"</span><span class="p">,</span> <span class="p">[</span><span class="s">"all"</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Authentication failed"</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="k">print</span><span class="p">(</span><span class="n">message_json</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">json_message</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">symbols</span><span class="p">):</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
@@ -17288,7 +17334,7 @@ symbols: [&quot;MARK:C-BTC-75000-310325&quot;] gives you Mark Price candlestick 
 <p>Subscribe to <strong>candlestick_${resolution}</strong> channel for updates. </p>
 
 <p>List of supported resolutions
-[&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;,&quot;2w&quot;,&quot;30d&quot;]</p>
+[&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;]</p>
 
 <p>You need to send the list of symbols for which you would like to subscribe to candlesticks channel. 
 You can also subscribe to candlesticks updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
@@ -17970,7 +18016,13 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='01-06-25'>01.06.25</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='08-10-25'>08.10.25</h2>
+<ol>
+<li>Added new websocket authentication method, {&quot;type&quot;:&quot;key-auth&quot;}, which includes new formats of request and responses.<br></li>
+<li>Previous websocket authentication method, {&quot;type&quot;:&quot;auth&quot;}, is now marked as deprecated. This method will stop working after 31st December 2025, users are requested to migrate to the newer websocket authentication.</li>
+<li>We will be deprecating support for historical candlestick OHLC resolution 7d, 2w and 30d from 18th October 2025. The REST API <code>/history/candles</code> and websocket public channel <code>candlesticks</code> will stop supporting these resolutions. These resolutions have been removed from the documentation.</li>
+</ol>
+<h2 id='01-06-25'>01.06.25</h2>
 <ol>
 <li>Added reason:&quot;liquidation&quot; for v2/user_trades websocket channel. Updated documentation for the v2/user_trades channel.</li>
 <li>Added Connection rate limit for websocket URL endpoint of 150 connections per IP address per 5 minutes. Updated this info under &#39;Websocket Info&#39; tab.</li>
