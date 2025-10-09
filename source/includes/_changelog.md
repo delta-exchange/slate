@@ -4,6 +4,7 @@
 1. Added new websocket authentication method, {"type":"key-auth"}, which includes new formats of request and responses.  
 2. Previous websocket authentication method, {"type":"auth"}, is now marked as deprecated. This method will stop working after 31st December 2025, users are requested to migrate to the newer websocket authentication.
 3. We will be deprecating support for historical candlestick OHLC resolution 7d, 2w and 30d from 18th October 2025. The REST API `/history/candles` and websocket public channel `candlesticks` will stop supporting these resolutions. These resolutions have been removed from the documentation.
+4. 'client_order_id' parameter in all Orders API is now restricted to max 32 length. e.g. REST API `POST /orders` parameter 'client_order_id' can be max 32 length string.
 
 
 ## 01.06.25

@@ -939,10 +939,17 @@ Please note that if you subscribe to candlesticks channel without specifying the
 >OHLC candles update sample
 
 ```json
-Sample Subscribe Request
+//Sample Subscribe Request
 {
-  "name": "candlestick_1m",       // "candlestick_" + resolution
-  "symbols": [ "BTCUSD", "MARK:ETHUSD" ]  // gives BTCUSD traded price, ETHUSD mark price candle data.
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "candlestick_5m",        // "candlestick_" + resolution
+                "symbols": ["BTCUSD", "C-BTC-75000-271224"]
+            }
+        ]
+    }
 }
 
 

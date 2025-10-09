@@ -1260,7 +1260,7 @@
           {
             "in": "path",
             "name": "client_oid",
-            "description": "Client provided order id",
+            "description": "Custom user provided order id (max 32 length)",
             "type": "string"
           }
         ],
@@ -3362,8 +3362,8 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "client order id provided by the user while creating order",
-          "example": "34521712"
+          "description": "custom id provided by user when creating order (max 32 length)",
+          "example": "my_signal_34521712"
         },
         "state": {
           "type": "string",
@@ -3557,8 +3557,8 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "client order id provided by the user while creating order",
-          "example": "34521712"
+          "description": "custom id provided by user when creating order (max 32 length)",
+          "example": "my_signal_345212"
         },
         "cancel_orders_accepted": {
           "type": "string",
@@ -3644,8 +3644,8 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "client order id provided by the user while creating order",
-          "example": "34521712"
+          "description": "custom id provided by user when creating order (max 32 length)",
+          "example": "my_signal_34521712"
         }
       }
     },
@@ -3996,8 +3996,8 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "client order id provided by the user while creating order",
-          "example": "34521712"
+          "description": "custom id provided by user when creating order (max 32 length)",
+          "example": "my_signal_34521712"
         }
       }
     },
@@ -4012,8 +4012,8 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "client order id provided by the user while creating order",
-          "example": "34521712"
+          "description": "custom id provided by user when creating order (max 32 length)",
+          "example": "my_signal_34521712"
         },
         "product_id": {
           "type": "integer",
