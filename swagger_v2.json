@@ -2891,6 +2891,739 @@
           }
         }
       }
+    },
+    "/rate_limits/quota": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get current rate limit quota",
+        "operationId": "currentRateLimitQuota",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "This api returns the current rate limit quota.",
+            "schema": {
+              "$ref": "#/definitions/RateLimitQuotaResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/pnl": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics pnl",
+        "operationId": "getAnalyticsPnl",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics PnL data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/DetoEarnedDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/share_cards": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics share cards",
+        "operationId": "getAnalyticsShareCards",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "API to get Win rate and Return of interest for share card",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/ShareCardsDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/activity": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics activity",
+        "operationId": "getAnalyticsActivity",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics activity data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/AccountActivityDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/funding_chart": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics funding chart",
+        "operationId": "getAnalyticsFundingChart",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics funding chart data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/FundingChartDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/pnl_chart": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics pnl chart",
+        "operationId": "getAnalyticsPnlChart",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics pnl chart data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/PnlChartDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/equity_change": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics equity change",
+        "operationId": "getAnalyticsEquityChange",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GET users account analytics equity change",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/EquityChangeDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/statistics": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics statistics",
+        "operationId": "getAnalyticsStatistics",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics statistics data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/StatisticsDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/withdrawal_and_deposits": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics withdrawal and deposits",
+        "operationId": "getAnalyticsWithdrawalAndDeposits",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics withdrawal and deposits data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/FundingTransactionsResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/volume": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics futures and options volume",
+        "operationId": "getAnalyticsFuturesAndOptionsVolume",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics futures and options volume data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/FuturesAndOptionsVolumeResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/fees_paid": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics futures and options paid fee",
+        "operationId": "getAnalyticsFutures&OptionsPaidFee",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics futures and options paid fee data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/TradingFeesDataResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/daily_pnl_chart": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics daily pnl chart",
+        "operationId": "getUserAccountDailyPnlChart",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "asset_id",
+            "description": "Id for assets like BTC",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics daily pnl chart data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/DailyPnlChartResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/account_equity": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics account equity",
+        "operationId": "getUserAccountEquity",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start_time",
+            "description": "from time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          },
+          {
+            "in": "query",
+            "name": "end_time",
+            "description": "to time in YYYY-MM-DD hh:mm:ss format",
+            "type": "integer",
+            "required" : "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics account equity data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/AccountEquityResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/users/account_analytics/pnl_summary": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get analytics pnl summary",
+        "operationId": "getUserAccountPnlSummary",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "api-key": [],
+            "signature": [],
+            "timestamp": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User account analytics pnl summary data",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiSuccessResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/definitions/PnlSummaryResponse"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -5456,6 +6189,613 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/User"
+      }
+    },
+    "RateLimitQuotaResponse": {
+      "type": "object",
+      "properties": {
+        "current_quota": {
+          "type": "long",
+          "example": 42
+        },
+        "remaining_time_in_minutes": {
+          "type": "long",
+          "example": 120632
+        }
+      }
+    },
+    "DetoEarnedDataResponse": {
+      "type": "object",
+      "properties": {
+        "deto_earned_data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "example": "2024-11-07"
+              },
+              "amount_usd": {
+                "type": "integer",
+                "example": 25.00
+              },
+              "amount": {
+                "type": "integer",
+                "example": 100.0
+              },
+              "txn_type": {
+                "type": "string",
+                "example": "trade_farming_reward"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ShareCardsDataResponse": {
+      "type": "object",
+      "properties": {
+        "avg_account_equity": {
+          "type": "string",
+          "example": "12897.24"
+        },
+        "number_of_trades": {
+          "type": "integer",
+          "example": 120
+        },
+        "realized_pnl": {
+          "type": "string",
+          "example": "1634.70"
+        },
+        "return_on_equity": {
+          "type": "integer",
+          "example": 12.30
+        },
+        "win_rate": {
+          "type": "integer",
+          "example": 52.5
+        }
+      }
+    },
+    "AccountActivityDataResponse": {
+      "type": "object",
+      "properties": {
+        "fee_paid_data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "string",
+                "example": "2024-04-24"
+              },
+              "amount_usd": {
+                "type": "integer",
+                "example": 12.50
+              },
+              "txn_type": {
+                "type": "string",
+                "example": "commission"
+              },
+              "asset_symbol": {
+                "type": "string",
+                "example": "USDT"
+              }
+            }
+          }
+        },
+        "volume_traded_data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "string",
+                "example": "2024-04-24"
+              },
+              "volume_usd": {
+                "type": "integer",
+                "example": 150000.00
+              }
+            }
+          }
+        }
+      }
+    },
+    "FundingChartDataResponse": {
+      "type": "object",
+      "properties": {
+        "funding_data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "string",
+                "example": "2024-04-24"
+              },
+              "funding": {
+                "type": "integer",
+                "example": 12.50
+              }
+            }
+          }
+        }
+      }
+    },
+    "PnlChartDataResponse": {
+      "type": "object",
+      "properties": {
+        "futures_pnl_data": {
+          "type": "object",
+          "properties": {
+            "USDT": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "day": {
+                    "type": "string",
+                    "example": "2024-04-24"
+                  },
+                  "pnl": {
+                    "type": "integer",
+                    "example": 100.00
+                  },
+                  "commission": {
+                    "type": "integer",
+                    "example": 5.00
+                  }
+                }
+              }
+            },
+            "BTC": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "day": {
+                    "type": "string",
+                    "example": "2024-04-24"
+                  },
+                  "pnl": {
+                    "type": "integer",
+                    "example": 0.005
+                  },
+                  "commission": {
+                    "type": "integer",
+                    "example": 0.0001
+                  }
+                }
+              }
+            }
+          }
+        },
+        "options_pnl_data": {
+          "type": "object",
+          "properties": {
+            "USDT": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "day": {
+                    "type": "string",
+                    "example": "2024-04-24"
+                  },
+                  "pnl": {
+                    "type": "integer",
+                    "example": 70.00
+                  },
+                  "commission": {
+                    "type": "integer",
+                    "example": 2.00
+                  }
+                }
+              }
+            },
+            "ETH": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "day": {
+                    "type": "string",
+                    "example": "2024-04-24"
+                  },
+                  "pnl": {
+                    "type": "integer",
+                    "example": 0.03
+                  },
+                  "commission": {
+                    "type": "integer",
+                    "example": 0.01
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "EquityChangeDataResponse": {
+      "type": "object",
+      "properties": {
+        "curr_ae": {
+          "type": "string",
+          "example": "10250.006675"
+        },
+        "previous_ae": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "asset_symbol": {
+                "type": "string",
+                "example": "USD"
+              },
+              "total_amount_usd": {
+                "type": "string",
+                "example": "200"
+              }
+            }
+          }
+        },
+        "upnl": {
+          "type": "string",
+          "example": "200.00"
+        }
+      }
+    },
+    "StatisticsDataResponse": {
+      "type": "object",
+      "properties": {
+        "all_trades": {
+          "type": "object",
+          "properties": {
+            "avg_loss": {
+              "type": "integer", 
+              "example": -20.0 
+            },
+            "avg_win": {
+              "type": "integer",
+              "example": 25.0 
+            },
+            "loss_rate": { 
+              "type": "integer",
+              "example": 45.0 
+            },
+            "negative_trades": {
+              "type": "integer", 
+              "example": 45 
+            },
+            "positive_trades": { 
+              "type": "integer",
+              "example": 55 
+            },
+            "total_trades": {
+              "type": "integer",
+              "example": 100 
+            },
+            "win_rate": {
+              "type": "integer",
+              "example": 55.0 
+            }
+          }
+        },
+        "futures_trades": {
+          "type": "object",
+          "properties": {
+            "avg_loss": {
+              "type": "string",
+              "example": "-18.00" 
+            },
+            "avg_win": {
+              "type": "string",
+              "example": "30.00" 
+            },
+            "loss_rate": {
+              "type": "integer",
+              "example": 40.00 
+            },
+            "negative_trades": {
+              "type": "integer",
+              "example": 28 
+            },
+            "positive_trades": {
+              "type": "integer",
+              "example": 42 
+            },
+            "total_trades": {
+              "type": "integer",
+              "example": 70.00 
+            },
+            "win_rate": {
+              "type": "integer",
+              "example": 60.00 
+            }
+          }
+        },
+        "options_trades": {
+          "type": "object",
+          "properties": {
+            "avg_loss": {
+              "type": "string",
+              "example": "-22.00" 
+            },
+            "avg_win": {
+              "type": "string",
+              "example": "20.00" 
+            },
+            "loss_rate": {
+              "type": "integer",
+              "example": 55.0
+             },
+            "negative_trades": { 
+              "type": "integer", 
+              "example": 17 
+            },
+            "positive_trades": {
+              "type": "integer",
+              "example": 13 
+            },
+            "total_trades": {
+              "type": "integer",
+              "example": 0
+             },
+            "win_rate": {
+              "type": "integer",
+              "example": 45.0 
+            }
+          }
+        }
+      }
+    },
+    "FundingTransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "deposits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "integer",
+                "example": 200.00
+              },
+              "asset_symbol": {
+                "type": "string",
+                "example": "USDT"
+              },
+              "created_at": {
+                "type": "string",
+                "example": "2025-11-08 11:00:00"
+              }
+            }
+          }
+        },
+        "sub_account_transfers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "integer",
+                "example": -100.00
+              },
+              "asset_symbol": {
+                "type": "string",
+                "example": "USDT"
+              },
+              "created_at": {
+                "type": "string",
+                "example": "2025-11-07 10:00:00"
+              }
+            }
+          }
+        },
+        "withdrawals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "integer",
+                "example": 50.00
+              },
+              "asset_symbol": {
+                "type": "string",
+                "example": "BTC"
+              },
+              "created_at": {
+                "type": "string",
+                "example": "2025-11-09 12:00:00"
+              }
+            }
+          }
+        }
+      }
+    },
+    "FuturesAndOptionsVolumeResponse": {
+      "type": "object",
+      "properties": {
+        "futures_volume": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "string",
+                "example": "2024-11-07"
+              },
+              "volume_usd": {
+                "type": "integer",
+                "example": 50000.00
+              }
+            }
+          }
+        },
+        "options_volume": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "string",
+                "example": "2024-11-08"
+              },
+              "volume_usd": {
+                "type": "integer",
+                "example": 75000.00
+              }
+            }
+          }
+        }
+      }
+    },
+    "TradingFeesDataResponse": {
+      "type": "object",
+      "properties": {
+        "futures_fees": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "string",
+                "example": "2024-11-07"
+              },
+              "commission": {
+                "type": "integer",
+                "example": 30.00
+              },
+              "commission_deto": {
+                "type": "integer",
+                "example": 5.00
+              },
+              "commission_tfc": {
+                "type": "integer",
+                "example": 2.00
+              },
+              "pnl": {
+                "type": "integer",
+                "example": 100.00
+              },
+              "commission_deto_usd": {
+                "type": "integer",
+                "example": 2.50
+              }
+            }
+          }
+        },
+        "options_fees": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "string",
+                "example": "2024-11-07"
+              },
+              "commission": {
+                "type": "integer",
+                "example": 40.00
+              },
+              "commission_deto": {
+                "type": "integer",
+                "example": 6.00
+              },
+              "commission_tfc": {
+                "type": "integer",
+                "example": 3.00
+              },
+              "pnl": {
+                "type": "integer",
+                "example": 120.00
+              },
+              "commission_deto_usd": {
+                "type": "integer",
+                "example": 2.80
+              }
+            }
+          }
+        }
+      }
+    },
+    "DailyPnlChartResponse": {
+      "type": "object",
+      "properties": {
+        "daily_trading_pnl_data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "example": "2024-11-07"
+              },
+              "realized_pnl": {
+                "type": "integer",
+                "example": 50.00
+              },
+              "unrealized_pnl": {
+                "type": "integer",
+                "example": 10.00
+              }
+            }
+          }
+        }
+      }
+    },
+    "AccountEquityResponse": {
+      "type": "object",
+      "properties": {
+        "account_equity_data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "equity": {
+                "type": "string",
+                "example": "200"
+              },
+              "time": {
+                "type": "string",
+                "example": "2025-11-07T00:00:00Z"
+              },
+              "trading_credits": {
+                "type": "string",
+                "example": "0"
+              }
+            }
+          }
+        },
+        "liquidation_fees_data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "time": {
+                "type": "string",
+                "example": "2025-11-07T00:00:00Z"
+              },
+              "liquidation_fee": {
+                "type": "integer",
+                "example": 10.2
+              }
+            }
+          }
+        }
+      }
+    },
+    "PnlSummaryResponse": {
+      "type": "object",
+      "properties": {
+        "unrealized_pnl": {
+          "type": "string",
+          "example": "10"
+        }
       }
     }
   }
