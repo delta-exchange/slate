@@ -1,3 +1,21 @@
+---
+title: Delta Exchange Api V2 v1.0.0
+language_tabs:
+  - python: Python
+  - shell: Shell
+  - ruby: Ruby
+language_clients:
+  - python: ""
+  - shell: ""
+  - ruby: ""
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2
+
+---
+
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
 
@@ -268,7 +286,7 @@ The endpoint provides details about all available trading products on the platfo
     {
       "id": 27,
       "symbol": "BTCUSD",
-      "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
+      "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
       "created_at": "2023-12-18T13:10:39Z",
       "updated_at": "2024-11-15T02:47:50Z",
       "settlement_time": null,
@@ -443,7 +461,7 @@ The endpoint retrieves details of a specific product identified by its symbol (e
   "result": {
     "id": 27,
     "symbol": "BTCUSD",
-    "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
     "created_at": "2023-12-18T13:10:39Z",
     "updated_at": "2024-11-15T02:47:50Z",
     "settlement_time": null,
@@ -606,6 +624,8 @@ This endpoint retrieves the live tickers for available trading products, with an
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |contract_types|query|string|false|A comma-separated list of contract types to filter the tickers. Example values include perpetual_futures, call_options, put_options.|
+|underlying_asset_symbols|query|string|false|A comma-separated list of underlying asset symbols to filter the tickers. Example values include BTC, ETH, SOL etc.|
+|expiry_date|query|string|false|Expiry date(format: DD-MM-YYYY) to filter the tickers.|
 
 > Example responses
 
@@ -790,6 +810,131 @@ This endpoint retrieves the ticker data for a specific product, identified by it
 This operation does not require authentication.
 </aside>
 
+## Get option chain
+
+<a id="opIdgetOptionChain"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/tickers?contract_types=call_options,put_options&underlying_asset_symbols={underlying_asset_symbols}&expiry_date={expiry_date}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/tickers?contract_types=call_options,put_options&underlying_asset_symbols={underlying_asset_symbols}&expiry_date={expiry_date} \
+  -H 'Accept: application/json'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/tickers?contract_types=call_options,put_options&underlying_asset_symbols={underlying_asset_symbols}&expiry_date={expiry_date}',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /tickers?contract_types=call_options,put_options&underlying_asset_symbols={underlying_asset_symbols}&expiry_date={expiry_date}`
+
+Fetch option chain data for a given product and expiry date.
+
+For example, to get BTC call and put options expiring on 04-04-2025, use:
+
+**contract_types=call_options,put_options&underlying_asset_symbols=BTC&expiry_date=04-04-2025**
+
+<h3 id="get-option-chain-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|contract_types|query|string|false|A comma-separated list of contract types to filter the products. Only `call_options` and `put_options` are supported.|
+|underlying_asset_symbols|query|string|false|The underlying asset symbol (single value) for the option chain. Examples: `BTC`, `ETH`, `SOL`.|
+|expiry_date|query|string|false|Expiry date of the contracts in `DD-MM-YYYY` format.|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": [
+    {
+      "close": 67321,
+      "contract_type": "futures",
+      "greeks": {
+        "delta": "0.25",
+        "gamma": "0.10",
+        "rho": "0.05",
+        "theta": "-0.02",
+        "vega": "0.15"
+      },
+      "high": 68500.5,
+      "low": 66300.25,
+      "mark_price": "67000.00",
+      "mark_vol": "500",
+      "oi": "15000",
+      "oi_value": "1000000",
+      "oi_value_symbol": "USD",
+      "oi_value_usd": "1050000",
+      "open": 67000,
+      "price_band": {
+        "lower_limit": "61120.45",
+        "upper_limit": "72300.00"
+      },
+      "product_id": 123456,
+      "quotes": {
+        "ask_iv": "0.25",
+        "ask_size": "100",
+        "best_ask": "150.00",
+        "best_bid": "148.00",
+        "bid_iv": "0.22",
+        "bid_size": "50"
+      },
+      "size": 100,
+      "spot_price": "67000.00",
+      "strike_price": "68000.00",
+      "symbol": "BTCUSD",
+      "timestamp": 1609459200,
+      "turnover": 5000000,
+      "turnover_symbol": "USD",
+      "turnover_usd": 5200000,
+      "volume": 25000
+    }
+  ]
+}
+```
+
+<h3 id="get-option-chain-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns a list of live [tickers](#tocSticker) for all products, including **implied volatility (IV)** for option strikes.|Inline|
+
+<h3 id="get-option-chain-responseschema">Response Schema</h3>
+
+<aside class="success">
+This operation does not require authentication.
+</aside>
+
 <h1 id="delta-exchange-api-v2-orders">Orders</h1>
 
 Placing Orders, Cancelling Orders, Placing batch orders, Cancelling batch orders, Get Open orders, Change Orders Leverage. Rate limits have been introduced recently that allows only set number of operations inside a matching engine in a timeframe. The current rate limits is 500 operations/sec for each product. For ex - placing 50 orders in a batch is equivalent to 50 operations as these orders will be processed by matching engine. Rate limits do not apply when cancelling orders.
@@ -865,6 +1010,7 @@ p JSON.parse(result)
   "stop_price": "56000",
   "trail_amount": "50",
   "stop_trigger_method": "last_traded_price",
+  "bracket_stop_trigger_method": "last_traded_price",
   "bracket_stop_loss_limit_price": "57000",
   "bracket_stop_loss_price": "56000",
   "bracket_trail_amount": "50",
@@ -874,7 +1020,7 @@ p JSON.parse(result)
   "mmp": "disabled",
   "post_only": false,
   "reduce_only": false,
-  "client_order_id": "34521712",
+  "client_order_id": "my_signal_345212",
   "cancel_orders_accepted": false
 }
 ```
@@ -905,7 +1051,7 @@ p JSON.parse(result)
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
-    "client_order_id": "34521712",
+    "client_order_id": "my_signal_34521712",
     "state": "open",
     "created_at": "1725865012000000",
     "product_id": 27,
@@ -1005,7 +1151,7 @@ p JSON.parse(result)
 ```json
 {
   "id": 13452112,
-  "client_order_id": "34521712",
+  "client_order_id": "my_signal_34521712",
   "product_id": 27
 }
 ```
@@ -1036,7 +1182,7 @@ p JSON.parse(result)
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
-    "client_order_id": "34521712",
+    "client_order_id": "my_signal_34521712",
     "state": "open",
     "created_at": "1725865012000000",
     "product_id": 27,
@@ -1174,7 +1320,7 @@ p JSON.parse(result)
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
-    "client_order_id": "34521712",
+    "client_order_id": "my_signal_34521712",
     "state": "open",
     "created_at": "1725865012000000",
     "product_id": 27,
@@ -1315,7 +1461,7 @@ p JSON.parse(result)
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
-      "client_order_id": "34521712",
+      "client_order_id": "my_signal_34521712",
       "state": "open",
       "created_at": "1725865012000000",
       "product_id": 27,
@@ -1738,7 +1884,7 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
       "time_in_force": "gtc",
       "mmp": "disabled",
       "post_only": false,
-      "client_order_id": "34521712"
+      "client_order_id": "my_signal_34521712"
     }
   ]
 }
@@ -1771,7 +1917,7 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
-      "client_order_id": "34521712",
+      "client_order_id": "my_signal_34521712",
       "state": "open",
       "created_at": "1725865012000000",
       "product_id": 27,
@@ -1914,7 +2060,7 @@ Orders to be edited in a batch. Rate limits apply.
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
-      "client_order_id": "34521712",
+      "client_order_id": "my_signal_34521712",
       "state": "open",
       "created_at": "1725865012000000",
       "product_id": 27,
@@ -2019,7 +2165,7 @@ p JSON.parse(result)
   "orders": [
     {
       "id": 13452112,
-      "client_order_id": "34521712"
+      "client_order_id": "my_signal_34521712"
     }
   ]
 }
@@ -2052,7 +2198,7 @@ p JSON.parse(result)
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
-      "client_order_id": "34521712",
+      "client_order_id": "my_signal_34521712",
       "state": "open",
       "created_at": "1725865012000000",
       "product_id": 27,
@@ -2171,7 +2317,7 @@ p JSON.parse(result)
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
-    "client_order_id": "34521712",
+    "client_order_id": "my_signal_34521712",
     "state": "open",
     "created_at": "1725865012000000",
     "product_id": 27,
@@ -2266,7 +2412,7 @@ p JSON.parse(result)
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|client_oid|path|string|true|Client provided order id|
+|client_oid|path|string|true|Custom user provided order id (max 32 length)|
 
 > Example responses
 
@@ -2288,7 +2434,7 @@ p JSON.parse(result)
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
-    "client_order_id": "34521712",
+    "client_order_id": "my_signal_34521712",
     "state": "open",
     "created_at": "1725865012000000",
     "product_id": 27,
@@ -2394,7 +2540,8 @@ p JSON.parse(result)
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|product_id|path|integer|true|Product id of the ordered product|
+|product_id|path|integer|true|Product id of the ordered product. Either product_id or product_symbol must be preseent.|
+|product_symbol|path|string|true|Product symbol of the ordered product. Either product_id or product_symbol must be preseent.|
 |body|body|object|true|none|
 |» leverage|body|string|true|Order leverage|
 
@@ -2642,7 +2789,7 @@ headers = {
 }
 
 r = requests.get('https://api.india.delta.exchange/v2/positions', params={
-  'product_id': '27'
+  'product_id': '0'
 }, headers = headers)
 
 print r.json()
@@ -2651,7 +2798,7 @@ print r.json()
 
 ```shell
 # You can also use wget
-curl -X GET https://api.india.delta.exchange/v2/positions?product_id=27 \
+curl -X GET https://api.india.delta.exchange/v2/positions?product_id=0 \
   -H 'Accept: application/json' \
   -H 'api-key: ****' \
   -H 'signature: ****' \
@@ -2672,7 +2819,7 @@ headers = {
 
 result = RestClient.get 'https://api.india.delta.exchange/v2/positions',
   params: {
-  'product_id' => '27'
+  'product_id' => '0'
 }, headers: headers
 
 p JSON.parse(result)
@@ -2698,7 +2845,7 @@ Get real-time positions data.
 {
   "success": true,
   "result": {
-    "size": 12,
+    "size": 0,
     "entry_price": "string"
   }
 }
@@ -3139,7 +3286,7 @@ p JSON.parse(result)
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
-      "client_order_id": "34521712",
+      "client_order_id": "my_signal_34521712",
       "state": "open",
       "created_at": "1725865012000000",
       "product_id": 27,
@@ -4426,115 +4573,6 @@ p JSON.parse(result)
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
 </aside>
 
-<!-- <h1 id="delta-exchange-api-v2-dead-man-s-switch-auto-cancel-">Dead Man's Switch (Auto Cancel)</h1>
-
-Set up timers for auto orders cancel in case of network malfunctions 
-
-## Cancel After
-
-<a id="opIdcancelAfter"></a>
-
-> Code samples
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'api-key': '****',
-  'signature': '****',
-  'timestamp': '****'
-}
-
-r = requests.post('https://api.india.delta.exchange/v2/orders/cancel_after', params={
-
-}, headers = headers)
-
-print r.json()
-
-```
-
-```shell
-# You can also use wget
-curl -X POST https://api.india.delta.exchange/v2/orders/cancel_after \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'api-key: ****' \
-  -H 'signature: ****' \
-  -H 'timestamp: ****'
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json',
-  'api-key' => '****',
-  'signature' => '****',
-  'timestamp' => '****'
-}
-
-result = RestClient.post 'https://api.india.delta.exchange/v2/orders/cancel_after',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-`POST /orders/cancel_after`
-
-> Body parameter
-
-```json
-{
-  "cancel_after": "5000"
-}
-```
-
-<h3 id="cancel-after-parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[CancelAfterRequest](#schemacancelafterrequest)|true|cancel after details|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "success": true,
-  "result": {
-    "cancel_after_enabled": "true",
-    "cancel_after_timestamp": "1669119262000"
-  }
-}
-```
-
-<h3 id="cancel-after-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns back the cancel_after configs set|Inline|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns if configs couldnt be set|[ApiErrorResponse](#schemaapierrorresponse)|
-
-<h3 id="cancel-after-responseschema">Response Schema</h3>
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|cancel_after_enabled|false|
-|cancel_after_enabled|true|
-
-<aside class="warning">
-To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
-</aside> -->
-
 <h1 id="delta-exchange-api-v2-account">Account</h1>
 
 Account level settings
@@ -5060,18 +5098,8 @@ p JSON.parse(result)
 {
   "success": true,
   "result": {
-    "id": "98765432",
-    "email": "rajtrader2342@gmail.com",
-    "account_name": "Main",
-    "first_name": "Rajesh",
-    "last_name": "Sharma",
-    "dob": "1985-08-25",
-    "country": "India",
-    "phone_number": "9876543210",
-    "margin_mode": "isolated",
-    "pf_index_symbol": ".DEXBTUSD",
-    "is_sub_account": false,
-    "is_kyc_done": true
+    "id": "5112346",
+    "margin_mode": "isolated"
   }
 }
 ```
@@ -5080,10 +5108,1716 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns the [profile](#tocSuser) with the updated margin mode|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns the [ChangeMarginModeResponse](#tocSchangemarginmoderesponse) with the updated margin mode|Inline|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns error if margin mode could not be changed|[ApiErrorResponse](#schemaapierrorresponse)|
 
 <h3 id="change-margin-mode-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## Get current rate limit quota
+
+<a id="opIdcurrentRateLimitQuota"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/rate_limits/quota', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/rate_limits/quota \
+  -H 'Accept: application/json'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/rate_limits/quota',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /rate_limits/quota`
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "current_quota": 42,
+  "remaining_time_in_minutes": 120632
+}
+```
+
+<h3 id="get-current-rate-limit-quota-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|This api returns the current rate limit quota.|[RateLimitQuotaResponse](#schemaratelimitquotaresponse)|
+
+<aside class="success">
+This operation does not require authentication.
+</aside>
+
+## GET users account analytics pnl
+
+<a id="opIdgetAccountAnalyticsPnl"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/pnl', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/pnl?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/pnl',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/pnl`
+
+<h3 id="get-users-account-analytics-pnl-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "deto_earned_data": [
+      {
+        "date": "2024-11-07",
+        "amount_usd": 25,
+        "amount": 100,
+        "txn_type": "trade_farming_reward"
+      }
+    ]
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-pnl-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics PnL data|Inline|
+
+<h3 id="get-users-account-analytics-pnl-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics share cards
+
+<a id="opIdgetAccountAnalyticsShareCards"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/share_cards', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/share_cards \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/share_cards',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/share_cards`
+
+<h3 id="get-users-account-analytics-share-cards-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "avg_account_equity": "12897.24",
+    "number_of_trades": 120,
+    "realized_pnl": "1634.70",
+    "return_on_equity": 12.3,
+    "win_rate": 52.5
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-share-cards-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|API to get Win rate and Return of interest for share card|Inline|
+
+<h3 id="get-users-account-analytics-share-cards-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics activity
+
+<a id="opIdgetAccountAnalyticsActivity"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/activity', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/activity?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/activity',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/activity`
+
+<h3 id="get-users-account-analytics-activity-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "fee_paid_data": [
+      {
+        "created_at": "2024-04-24",
+        "amount_usd": 12.5,
+        "txn_type": "commission",
+        "asset_symbol": "USDT"
+      }
+    ],
+    "volume_traded_data": [
+      {
+        "created_at": "2024-04-24",
+        "volume_usd": 150000
+      }
+    ]
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-activity-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics activity data|Inline|
+
+<h3 id="get-users-account-analytics-activity-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics funding chart
+
+<a id="opIdgetAccountAnalyticsFundingChart"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/funding_chart', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/funding_chart?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/funding_chart',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/funding_chart`
+
+<h3 id="get-users-account-analytics-funding-chart-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "funding_data": [
+      {
+        "day": "2024-04-24",
+        "funding": 12.5
+      }
+    ]
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-funding-chart-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics funding chart data|Inline|
+
+<h3 id="get-users-account-analytics-funding-chart-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics pnl chart
+
+<a id="opIdgetAccountAnalyticsPnlChart"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/pnl_chart', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/pnl_chart?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/pnl_chart',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/pnl_chart`
+
+<h3 id="get-users-account-analytics-pnl-chart-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "futures_pnl_data": {
+      "USDT": [
+        {
+          "day": "2024-04-24",
+          "pnl": 100,
+          "commission": 5
+        }
+      ],
+      "BTC": [
+        {
+          "day": "2024-04-24",
+          "pnl": 0.005,
+          "commission": 0.0001
+        }
+      ]
+    },
+    "options_pnl_data": {
+      "USDT": [
+        {
+          "day": "2024-04-24",
+          "pnl": 70,
+          "commission": 2
+        }
+      ],
+      "ETH": [
+        {
+          "day": "2024-04-24",
+          "pnl": 0.03,
+          "commission": 0.01
+        }
+      ]
+    }
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-pnl-chart-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics pnl chart data|Inline|
+
+<h3 id="get-users-account-analytics-pnl-chart-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics equity change
+
+<a id="opIdgetAccountAnalyticsEquityChange"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/equity_change', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/equity_change \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/equity_change',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/equity_change`
+
+<h3 id="get-users-account-analytics-equity-change-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "curr_ae": "10250.006675",
+    "previous_ae": [
+      {
+        "asset_symbol": "USD",
+        "total_amount_usd": "200"
+      }
+    ],
+    "upnl": "200.00"
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-equity-change-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|GET users account analytics equity change|Inline|
+
+<h3 id="get-users-account-analytics-equity-change-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics statistics
+
+<a id="opIdgetAccountAnalyticsStatistics"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/statistics', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/statistics?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/statistics',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/statistics`
+
+<h3 id="get-users-account-analytics-statistics-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "all_trades": {
+      "avg_loss": -20,
+      "avg_win": 25,
+      "loss_rate": 45,
+      "negative_trades": 45,
+      "positive_trades": 55,
+      "total_trades": 100,
+      "win_rate": 55
+    },
+    "futures_trades": {
+      "avg_loss": "-18.00",
+      "avg_win": "30.00",
+      "loss_rate": 40,
+      "negative_trades": 28,
+      "positive_trades": 42,
+      "total_trades": 70,
+      "win_rate": 60
+    },
+    "options_trades": {
+      "avg_loss": "-22.00",
+      "avg_win": "20.00",
+      "loss_rate": 55,
+      "negative_trades": 17,
+      "positive_trades": 13,
+      "total_trades": 0,
+      "win_rate": 45
+    }
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-statistics-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics statistics data|Inline|
+
+<h3 id="get-users-account-analytics-statistics-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics withdrawal and deposits
+
+<a id="opIdgetAccountWithdrawalAndDeposits"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/withdrawal_and_deposits', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/withdrawal_and_deposits?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/withdrawal_and_deposits',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/withdrawal_and_deposits`
+
+<h3 id="get-users-account-analytics-withdrawal-and-deposits-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "deposits": [
+      {
+        "amount": 200,
+        "asset_symbol": "USDT",
+        "created_at": "2025-11-08 11:00:00"
+      }
+    ],
+    "sub_account_transfers": [
+      {
+        "amount": -100,
+        "asset_symbol": "USDT",
+        "created_at": "2025-11-07 10:00:00"
+      }
+    ],
+    "withdrawals": [
+      {
+        "amount": 50,
+        "asset_symbol": "BTC",
+        "created_at": "2025-11-09 12:00:00"
+      }
+    ]
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-withdrawal-and-deposits-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics withdrawal and deposits data|Inline|
+
+<h3 id="get-users-account-analytics-withdrawal-and-deposits-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics futures and options volume
+
+<a id="opIdgetAccountAnalyticsVolume"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/volume', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/volume?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/volume',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/volume`
+
+<h3 id="get-users-account-analytics-futures-and-options-volume-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "futures_volume": [
+      {
+        "day": "2024-11-07",
+        "volume_usd": 50000
+      }
+    ],
+    "options_volume": [
+      {
+        "day": "2024-11-08",
+        "volume_usd": 75000
+      }
+    ]
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-futures-and-options-volume-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics futures and options volume data|Inline|
+
+<h3 id="get-users-account-analytics-futures-and-options-volume-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics futures and options paid fee
+
+<a id="opIdgetAccountAnalyticsFutures&OptionsPaidFee"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/fees_paid', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/fees_paid?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/fees_paid',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/fees_paid`
+
+<h3 id="get-users-account-analytics-futures-and-options-paid-fee-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "futures_fees": [
+      {
+        "day": "2024-11-07",
+        "commission": 30,
+        "commission_deto": 5,
+        "commission_tfc": 2,
+        "pnl": 100,
+        "commission_deto_usd": 2.5
+      }
+    ],
+    "options_fees": [
+      {
+        "day": "2024-11-07",
+        "commission": 40,
+        "commission_deto": 6,
+        "commission_tfc": 3,
+        "pnl": 120,
+        "commission_deto_usd": 2.8
+      }
+    ]
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-futures-and-options-paid-fee-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics futures and options paid fee data|Inline|
+
+<h3 id="get-users-account-analytics-futures-and-options-paid-fee-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics daily pnl chart
+
+<a id="opIdgetUserAccountDailyPnlChart"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/daily_pnl_chart', params={
+  'asset_id': '0',  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/daily_pnl_chart?asset_id=0&start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/daily_pnl_chart',
+  params: {
+  'asset_id' => '0',
+'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/daily_pnl_chart`
+
+<h3 id="get-users-account-analytics-daily-pnl-chart-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|asset_id|query|integer|true|Id for assets like BTC|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "daily_trading_pnl_data": [
+      {
+        "date": "2024-11-07",
+        "realized_pnl": 50,
+        "unrealized_pnl": 10
+      }
+    ]
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-daily-pnl-chart-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics daily pnl chart data|Inline|
+
+<h3 id="get-users-account-analytics-daily-pnl-chart-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics account equity
+
+<a id="opIdgetUserAccountEquity"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/account_equity', params={
+  'start_time': '0',  'end_time': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/account_equity?start_time=0&end_time=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/account_equity',
+  params: {
+  'start_time' => '0',
+'end_time' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/account_equity`
+
+<h3 id="get-users-account-analytics-account-equity-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+|start_time|query|integer|true|from time in YYYY-MM-DD hh:mm:ss format|
+|end_time|query|integer|true|to time in YYYY-MM-DD hh:mm:ss format|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "account_equity_data": [
+      {
+        "equity": "200",
+        "time": "2025-11-07T00:00:00Z",
+        "trading_credits": "0"
+      }
+    ],
+    "liquidation_fees_data": []
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-account-equity-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics account equity data|Inline|
+
+<h3 id="get-users-account-analytics-account-equity-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## GET users account analytics pnl summary
+
+<a id="opIdgetUserAccountPnlSummary"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/users/account_analytics/pnl_summary', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/users/account_analytics/pnl_summary \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/users/account_analytics/pnl_summary',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /users/account_analytics/pnl_summary`
+
+<h3 id="get-users-account-analytics-pnl-summary-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|false|Unique identifier for the user|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "deto_mined": {
+      "amount": "100",
+      "amount_usd": "1"
+    },
+    "unrealized_pnl": "10"
+  }
+}
+```
+
+<h3 id="get-users-account-analytics-pnl-summary-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User account analytics pnl summary data|Inline|
+
+<h3 id="get-users-account-analytics-pnl-summary-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+<h1 id="delta-exchange-api-v2-heartbeat-management">Heartbeat Management</h1>
+
+## Create Heartbeat
+
+<a id="opIdcreateHeartbeat"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.post('https://api.india.delta.exchange/v2/heartbeat/create', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X POST https://api.india.delta.exchange/v2/heartbeat/create \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.post 'https://api.india.delta.exchange/v2/heartbeat/create',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`POST /heartbeat/create`
+
+> Body parameter
+
+```json
+{
+  "heartbeat_id": "string",
+  "impact": "low",
+  "contract_types": [
+    "string"
+  ],
+  "underlying_assets": [
+    "string"
+  ],
+  "product_symbols": [
+    "string"
+  ],
+  "config": [
+    {
+      "action": "cancel_orders",
+      "unhealthy_count": 0,
+      "tag": "string"
+    }
+  ]
+}
+```
+
+<h3 id="create-heartbeat-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateHeartbeat](#schemacreateheartbeat)|true|heartbeat creation details|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "heartbeat_id": "string",
+    "status": "string"
+  }
+}
+```
+
+<h3 id="create-heartbeat-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Heartbeat created successfully|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns if heartbeat couldnt be created|[ApiErrorResponse](#schemaapierrorresponse)|
+
+<h3 id="create-heartbeat-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## Send Heartbeat Acknowledgment
+
+<a id="opIdsendHeartbeat"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.post('https://api.india.delta.exchange/v2/heartbeat', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X POST https://api.india.delta.exchange/v2/heartbeat \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.post 'https://api.india.delta.exchange/v2/heartbeat',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`POST /heartbeat`
+
+> Body parameter
+
+```json
+{
+  "heartbeat_id": "string",
+  "ttl": 0
+}
+```
+
+<h3 id="send-heartbeat-acknowledgment-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[HeartbeatAck](#schemaheartbeatack)|true|heartbeat acknowledgment details|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "process_enabled": "string",
+    "heartbeat_timestamp": "string"
+  }
+}
+```
+
+<h3 id="send-heartbeat-acknowledgment-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Heartbeat acknowledged successfully|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns if heartbeat acknowledgment failed|[ApiErrorResponse](#schemaapierrorresponse)|
+
+<h3 id="send-heartbeat-acknowledgment-responseschema">Response Schema</h3>
+
+<aside class="warning">
+To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
+</aside>
+
+## Get Heartbeats
+
+<a id="opIdgetHeartbeats"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'api-key': '****',
+  'signature': '****',
+  'timestamp': '****'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/heartbeat', params={
+  'user_id': '0'
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/heartbeat?user_id=0 \
+  -H 'Accept: application/json' \
+  -H 'api-key: ****' \
+  -H 'signature: ****' \
+  -H 'timestamp: ****'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'api-key' => '****',
+  'signature' => '****',
+  'timestamp' => '****'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/heartbeat',
+  params: {
+  'user_id' => '0'
+}, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /heartbeat`
+
+<h3 id="get-heartbeats-parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|user_id|query|integer|true|User ID|
+|heartbeat_id|query|string|false|Specific heartbeat ID to retrieve|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": [
+    {
+      "heartbeat_id": "string",
+      "impact": "string",
+      "contract_types": [
+        "string"
+      ],
+      "underlying_assets": [
+        "string"
+      ],
+      "product_symbols": [
+        "string"
+      ],
+      "config": [
+        {
+          "action": "cancel_orders",
+          "unhealthy_count": 0,
+          "tag": "string"
+        }
+      ],
+      "status": "string",
+      "last_ack": "string",
+      "next_ack_required_by": "string"
+    }
+  ]
+}
+```
+
+<h3 id="get-heartbeats-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of active heartbeats|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns if heartbeats couldnt be retrieved|[ApiErrorResponse](#schemaapierrorresponse)|
+
+<h3 id="get-heartbeats-responseschema">Response Schema</h3>
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|action|cancel_orders|
+|action|spreads|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -5153,7 +6887,7 @@ p JSON.parse(result)
   "result": {
     "id": 27,
     "symbol": "BTCUSD",
-    "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
     "created_at": "2023-12-18T13:10:39Z",
     "updated_at": "2024-11-15T02:47:50Z",
     "settlement_time": null,
@@ -5678,7 +7412,7 @@ This operation does not require authentication.
 {
   "id": 27,
   "symbol": "BTCUSD",
-  "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
+  "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
   "created_at": "2023-12-18T13:10:39Z",
   "updated_at": "2024-11-15T02:47:50Z",
   "settlement_time": null,
@@ -5847,7 +7581,7 @@ This operation does not require authentication.
   {
     "id": 27,
     "symbol": "BTCUSD",
-    "description": "Bitcoin Perpetual futures, quoted, settled & margined in INR",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
     "created_at": "2023-12-18T13:10:39Z",
     "updated_at": "2024-11-15T02:47:50Z",
     "settlement_time": null,
@@ -5951,7 +7685,7 @@ This operation does not require authentication.
   "paid_commission": "0.5432",
   "commission": "0.5432",
   "reduce_only": false,
-  "client_order_id": "34521712",
+  "client_order_id": "my_signal_34521712",
   "state": "open",
   "created_at": "1725865012000000",
   "product_id": 27,
@@ -5978,7 +7712,7 @@ This operation does not require authentication.
 |paid_commission|string|false|none|Commission paid for filled order|
 |commission|string|false|none|Commission blocked for order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
 |state|string|false|none|Order Status|
 |created_at|string|false|none|Created at unix timestamp of the order in micro seconds|
 |product_id|integer|false|none|Product id of the ordered product|
@@ -6019,7 +7753,7 @@ This operation does not require authentication.
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
-    "client_order_id": "34521712",
+    "client_order_id": "my_signal_34521712",
     "state": "open",
     "created_at": "1725865012000000",
     "product_id": 27,
@@ -6051,6 +7785,7 @@ This operation does not require authentication.
   "stop_price": "56000",
   "trail_amount": "50",
   "stop_trigger_method": "last_traded_price",
+  "bracket_stop_trigger_method": "last_traded_price",
   "bracket_stop_loss_limit_price": "57000",
   "bracket_stop_loss_price": "56000",
   "bracket_trail_amount": "50",
@@ -6060,7 +7795,7 @@ This operation does not require authentication.
   "mmp": "disabled",
   "post_only": false,
   "reduce_only": false,
-  "client_order_id": "34521712",
+  "client_order_id": "my_signal_345212",
   "cancel_orders_accepted": false
 }
 
@@ -6082,6 +7817,7 @@ This operation does not require authentication.
 |stop_price|string|false|none|Stop loss price level if the order is stop order|
 |trail_amount|string|false|none|Use trail amount if you want a trailing stop order. Required if stop price is empty.|
 |stop_trigger_method|string|false|none|Stop order trigger method - mark_price/last_traded_price/spot_price|
+|bracket_stop_trigger_method|string|false|none|stop order trigger method for bracket orders - mark_price/last_traded_price/spot_price|
 |bracket_stop_loss_limit_price|string|false|none|Bracket order stop loss limit price|
 |bracket_stop_loss_price|string|false|none|Bracket order stop loss trigger price|
 |bracket_trail_amount|string|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
@@ -6091,7 +7827,7 @@ This operation does not require authentication.
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
 |cancel_orders_accepted|string|false|none|if set, will cancel all existing orders for the product|
 
 #### Enumerated Values
@@ -6107,6 +7843,9 @@ This operation does not require authentication.
 |stop_trigger_method|mark_price|
 |stop_trigger_method|last_traded_price|
 |stop_trigger_method|spot_price|
+|bracket_stop_trigger_method|mark_price|
+|bracket_stop_trigger_method|last_traded_price|
+|bracket_stop_trigger_method|spot_price|
 |time_in_force|gtc|
 |time_in_force|ioc|
 |mmp|disabled|
@@ -6135,7 +7874,7 @@ This operation does not require authentication.
   "time_in_force": "gtc",
   "mmp": "disabled",
   "post_only": false,
-  "client_order_id": "34521712"
+  "client_order_id": "my_signal_34521712"
 }
 
 ```
@@ -6153,7 +7892,7 @@ This operation does not require authentication.
 |time_in_force|string|false|none|GTC/IOC order type|
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
 
 #### Enumerated Values
 
@@ -6191,7 +7930,7 @@ This operation does not require authentication.
       "time_in_force": "gtc",
       "mmp": "disabled",
       "post_only": false,
-      "client_order_id": "34521712"
+      "client_order_id": "my_signal_34521712"
     }
   ]
 }
@@ -6235,6 +7974,7 @@ This operation does not require authentication.
     "stop_price": "56000",
     "trail_amount": "50",
     "stop_trigger_method": "last_traded_price",
+    "bracket_stop_trigger_method": "last_traded_price",
     "bracket_stop_loss_limit_price": "57000",
     "bracket_stop_loss_price": "56000",
     "bracket_trail_amount": "50",
@@ -6244,7 +7984,7 @@ This operation does not require authentication.
     "mmp": "disabled",
     "post_only": false,
     "reduce_only": false,
-    "client_order_id": "34521712",
+    "client_order_id": "my_signal_345212",
     "cancel_orders_accepted": false
   }
 ]
@@ -6495,7 +8235,7 @@ This operation does not require authentication.
 ```json
 {
   "id": 13452112,
-  "client_order_id": "34521712"
+  "client_order_id": "my_signal_34521712"
 }
 
 ```
@@ -6507,7 +8247,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
 
 <h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
 
@@ -6516,7 +8256,7 @@ This operation does not require authentication.
 ```json
 {
   "id": 13452112,
-  "client_order_id": "34521712",
+  "client_order_id": "my_signal_34521712",
   "product_id": 27
 }
 
@@ -6529,7 +8269,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
 |product_id|integer|false|none|product_id of the product in the order|
 
 <h2 id="tocScancelallfilterobject">CancelAllFilterObject</h2>
@@ -6581,7 +8321,7 @@ This operation does not require authentication.
   "orders": [
     {
       "id": 13452112,
-      "client_order_id": "34521712"
+      "client_order_id": "my_signal_34521712"
     }
   ]
 }
@@ -7902,53 +9642,6 @@ This operation does not require authentication.
 |» price_alert|boolean|false|none|none|
 |» marketing|boolean|false|none|none|
 
-<!-- <h2 id="tocScancelafterrequest">CancelAfterRequest</h2>
-
-<a id="schemacancelafterrequest"></a>
-
-```json
-{
-  "cancel_after": "5000"
-}
-
-```
-
-*Cancel After Request Object*
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|cancel_after|string|false|none|Timer value in milliseconds after which orders are to be cancelled. To disable deadman switch and keep your orders open, set cancel_after to 0.|
-
-<h2 id="tocScancelafterresponse">CancelAfterResponse</h2>
-
-<a id="schemacancelafterresponse"></a>
-
-```json
-{
-  "cancel_after_enabled": "true",
-  "cancel_after_timestamp": "1669119262000"
-}
-
-```
-
-*Cancel After Response Object*
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|cancel_after_enabled|string|false|none|none|
-|cancel_after_timestamp|string|false|none|timestamp after which orders will get cancelled|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|cancel_after_enabled|false|
-|cancel_after_enabled|true| -->
-
 <h2 id="tocSuser">User</h2>
 
 <a id="schemauser"></a>
@@ -7990,6 +9683,255 @@ This operation does not require authentication.
 |is_sub_account|boolean|false|none|Indicates if the user account is a sub-account.|
 |is_kyc_done|boolean|false|none|Indicates if the user's KYC verification is completed.|
 
+<h2 id="tocSchangemarginmoderesponse">ChangeMarginModeResponse</h2>
+
+<a id="schemachangemarginmoderesponse"></a>
+
+```json
+{
+  "id": "5112346",
+  "margin_mode": "isolated"
+}
+
+```
+
+*Response returned after changing the user's margin mode*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|false|none|Unique identifier of the user(user_id) whose margin mode was updated|
+|margin_mode|string|false|none|The updated margin mode. Possible values: isolated, portfolio, or cross|
+
+<h2 id="tocScreateheartbeat">CreateHeartbeat</h2>
+
+<a id="schemacreateheartbeat"></a>
+
+```json
+{
+  "heartbeat_id": "string",
+  "impact": "low",
+  "contract_types": [
+    "string"
+  ],
+  "underlying_assets": [
+    "string"
+  ],
+  "product_symbols": [
+    "string"
+  ],
+  "config": [
+    {
+      "action": "cancel_orders",
+      "unhealthy_count": 0,
+      "tag": "string"
+    }
+  ]
+}
+
+```
+
+*Create Heartbeat Request Object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|heartbeat_id|string|true|none|Unique identifier for the heartbeat|
+|impact|string|true|none|Impact level|
+|contract_types|[string]|false|none|Array of contract types to monitor|
+|underlying_assets|[string]|false|none|Array of underlying assets to monitor|
+|product_symbols|[string]|false|none|Array of specific product symbols to monitor|
+|config|[[HeartbeatConfig](#schemaheartbeatconfig)]|true|none|Array of action configurations|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|impact|low|
+|impact|medium|
+|impact|high|
+
+<h2 id="tocSheartbeatconfig">HeartbeatConfig</h2>
+
+<a id="schemaheartbeatconfig"></a>
+
+```json
+{
+  "action": "cancel_orders",
+  "unhealthy_count": 0,
+  "tag": "string"
+}
+
+```
+
+*Heartbeat Configuration Object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|action|string|true|none|Action to take when heartbeat expires|
+|unhealthy_count|integer|true|none|Number of unhealthy heartbeats before action|
+|tag|string|false|none|Tag for the action (e.g., 'mmp')|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|action|cancel_orders|
+|action|spreads|
+
+<h2 id="tocSheartbeatresponse">HeartbeatResponse</h2>
+
+<a id="schemaheartbeatresponse"></a>
+
+```json
+{
+  "heartbeat_id": "string",
+  "status": "string"
+}
+
+```
+
+*Heartbeat Response Object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|heartbeat_id|string|false|none|none|
+|status|string|false|none|none|
+
+<h2 id="tocSheartbeatack">HeartbeatAck</h2>
+
+<a id="schemaheartbeatack"></a>
+
+```json
+{
+  "heartbeat_id": "string",
+  "ttl": 0
+}
+
+```
+
+*Heartbeat Acknowledgment Request Object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|heartbeat_id|string|true|none|Heartbeat identifier|
+|ttl|integer|true|none|Time to live in milliseconds|
+
+<h2 id="tocSheartbeatackresponse">HeartbeatAckResponse</h2>
+
+<a id="schemaheartbeatackresponse"></a>
+
+```json
+{
+  "process_enabled": "string",
+  "heartbeat_timestamp": "string"
+}
+
+```
+
+*Heartbeat Acknowledgment Response Object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|process_enabled|string|false|none|Acknowledgement status (true/false)|
+|heartbeat_timestamp|string|false|none|Expiry timestamp after which actions will be triggered|
+
+<h2 id="tocSarrayofheartbeats">ArrayOfHeartbeats</h2>
+
+<a id="schemaarrayofheartbeats"></a>
+
+```json
+[
+  {
+    "heartbeat_id": "string",
+    "impact": "string",
+    "contract_types": [
+      "string"
+    ],
+    "underlying_assets": [
+      "string"
+    ],
+    "product_symbols": [
+      "string"
+    ],
+    "config": [
+      {
+        "action": "cancel_orders",
+        "unhealthy_count": 0,
+        "tag": "string"
+      }
+    ],
+    "status": "string",
+    "last_ack": "string",
+    "next_ack_required_by": "string"
+  }
+]
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|*anonymous*|[[Heartbeat](#schemaheartbeat)]|false|none|[Heartbeat Object]|
+
+<h2 id="tocSheartbeat">Heartbeat</h2>
+
+<a id="schemaheartbeat"></a>
+
+```json
+{
+  "heartbeat_id": "string",
+  "impact": "string",
+  "contract_types": [
+    "string"
+  ],
+  "underlying_assets": [
+    "string"
+  ],
+  "product_symbols": [
+    "string"
+  ],
+  "config": [
+    {
+      "action": "cancel_orders",
+      "unhealthy_count": 0,
+      "tag": "string"
+    }
+  ],
+  "status": "string",
+  "last_ack": "string",
+  "next_ack_required_by": "string"
+}
+
+```
+
+*Heartbeat Object*
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|heartbeat_id|string|false|none|none|
+|impact|string|false|none|none|
+|contract_types|[string]|false|none|none|
+|underlying_assets|[string]|false|none|none|
+|product_symbols|[string]|false|none|none|
+|config|[[HeartbeatConfig](#schemaheartbeatconfig)]|false|none|[Heartbeat Configuration Object]|
+|status|string|false|none|none|
+|last_ack|string|false|none|none|
+|next_ack_required_by|string|false|none|none|
+
 <h2 id="tocSarrayofsubaccouns">ArrayOfSubaccouns</h2>
 
 <a id="schemaarrayofsubaccouns"></a>
@@ -8019,4 +9961,504 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |*anonymous*|[[User](#schemauser)]|false|none|[Represents a user account with personal and account-related details.]|
+
+<h2 id="tocSratelimitquotaresponse">RateLimitQuotaResponse</h2>
+
+<a id="schemaratelimitquotaresponse"></a>
+
+```json
+{
+  "current_quota": 42,
+  "remaining_time_in_minutes": 120632
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|current_quota|long|false|none|none|
+|remaining_time_in_minutes|long|false|none|none|
+
+<h2 id="tocSdetoearneddataresponse">DetoEarnedDataResponse</h2>
+
+<a id="schemadetoearneddataresponse"></a>
+
+```json
+{
+  "deto_earned_data": [
+    {
+      "date": "2024-11-07",
+      "amount_usd": 25,
+      "amount": 100,
+      "txn_type": "trade_farming_reward"
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deto_earned_data|[object]|false|none|none|
+|» date|string|false|none|none|
+|» amount_usd|integer|false|none|none|
+|» amount|integer|false|none|none|
+|» txn_type|string|false|none|none|
+
+<h2 id="tocSsharecardsdataresponse">ShareCardsDataResponse</h2>
+
+<a id="schemasharecardsdataresponse"></a>
+
+```json
+{
+  "avg_account_equity": "12897.24",
+  "number_of_trades": 120,
+  "realized_pnl": "1634.70",
+  "return_on_equity": 12.3,
+  "win_rate": 52.5
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|avg_account_equity|string|false|none|none|
+|number_of_trades|integer|false|none|none|
+|realized_pnl|string|false|none|none|
+|return_on_equity|integer|false|none|none|
+|win_rate|integer|false|none|none|
+
+<h2 id="tocSaccountactivitydataresponse">AccountActivityDataResponse</h2>
+
+<a id="schemaaccountactivitydataresponse"></a>
+
+```json
+{
+  "fee_paid_data": [
+    {
+      "created_at": "2024-04-24",
+      "amount_usd": 12.5,
+      "txn_type": "commission",
+      "asset_symbol": "USDT"
+    }
+  ],
+  "volume_traded_data": [
+    {
+      "created_at": "2024-04-24",
+      "volume_usd": 150000
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|fee_paid_data|[object]|false|none|none|
+|» created_at|string|false|none|none|
+|» amount_usd|integer|false|none|none|
+|» txn_type|string|false|none|none|
+|» asset_symbol|string|false|none|none|
+|volume_traded_data|[object]|false|none|none|
+|» created_at|string|false|none|none|
+|» volume_usd|integer|false|none|none|
+
+<h2 id="tocSfundingchartdataresponse">FundingChartDataResponse</h2>
+
+<a id="schemafundingchartdataresponse"></a>
+
+```json
+{
+  "funding_data": [
+    {
+      "day": "2024-04-24",
+      "funding": 12.5
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|funding_data|[object]|false|none|none|
+|» day|string|false|none|none|
+|» funding|integer|false|none|none|
+
+<h2 id="tocSpnlchartdataresponse">PnlChartDataResponse</h2>
+
+<a id="schemapnlchartdataresponse"></a>
+
+```json
+{
+  "futures_pnl_data": {
+    "USDT": [
+      {
+        "day": "2024-04-24",
+        "pnl": 100,
+        "commission": 5
+      }
+    ],
+    "BTC": [
+      {
+        "day": "2024-04-24",
+        "pnl": 0.005,
+        "commission": 0.0001
+      }
+    ]
+  },
+  "options_pnl_data": {
+    "USDT": [
+      {
+        "day": "2024-04-24",
+        "pnl": 70,
+        "commission": 2
+      }
+    ],
+    "ETH": [
+      {
+        "day": "2024-04-24",
+        "pnl": 0.03,
+        "commission": 0.01
+      }
+    ]
+  }
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|futures_pnl_data|object|false|none|none|
+|» USDT|[object]|false|none|none|
+|»» day|string|false|none|none|
+|»» pnl|integer|false|none|none|
+|»» commission|integer|false|none|none|
+|» BTC|[object]|false|none|none|
+|»» day|string|false|none|none|
+|»» pnl|integer|false|none|none|
+|»» commission|integer|false|none|none|
+|options_pnl_data|object|false|none|none|
+|» USDT|[object]|false|none|none|
+|»» day|string|false|none|none|
+|»» pnl|integer|false|none|none|
+|»» commission|integer|false|none|none|
+|» ETH|[object]|false|none|none|
+|»» day|string|false|none|none|
+|»» pnl|integer|false|none|none|
+|»» commission|integer|false|none|none|
+
+<h2 id="tocSequitychangedataresponse">EquityChangeDataResponse</h2>
+
+<a id="schemaequitychangedataresponse"></a>
+
+```json
+{
+  "curr_ae": "10250.006675",
+  "previous_ae": [
+    {
+      "asset_symbol": "USD",
+      "total_amount_usd": "200"
+    }
+  ],
+  "upnl": "200.00"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|curr_ae|string|false|none|none|
+|previous_ae|[object]|false|none|none|
+|» asset_symbol|string|false|none|none|
+|» total_amount_usd|string|false|none|none|
+|upnl|string|false|none|none|
+
+<h2 id="tocSstatisticsdataresponse">StatisticsDataResponse</h2>
+
+<a id="schemastatisticsdataresponse"></a>
+
+```json
+{
+  "all_trades": {
+    "avg_loss": -20,
+    "avg_win": 25,
+    "loss_rate": 45,
+    "negative_trades": 45,
+    "positive_trades": 55,
+    "total_trades": 100,
+    "win_rate": 55
+  },
+  "futures_trades": {
+    "avg_loss": "-18.00",
+    "avg_win": "30.00",
+    "loss_rate": 40,
+    "negative_trades": 28,
+    "positive_trades": 42,
+    "total_trades": 70,
+    "win_rate": 60
+  },
+  "options_trades": {
+    "avg_loss": "-22.00",
+    "avg_win": "20.00",
+    "loss_rate": 55,
+    "negative_trades": 17,
+    "positive_trades": 13,
+    "total_trades": 0,
+    "win_rate": 45
+  }
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|all_trades|object|false|none|none|
+|» avg_loss|integer|false|none|none|
+|» avg_win|integer|false|none|none|
+|» loss_rate|integer|false|none|none|
+|» negative_trades|integer|false|none|none|
+|» positive_trades|integer|false|none|none|
+|» total_trades|integer|false|none|none|
+|» win_rate|integer|false|none|none|
+|futures_trades|object|false|none|none|
+|» avg_loss|string|false|none|none|
+|» avg_win|string|false|none|none|
+|» loss_rate|integer|false|none|none|
+|» negative_trades|integer|false|none|none|
+|» positive_trades|integer|false|none|none|
+|» total_trades|integer|false|none|none|
+|» win_rate|integer|false|none|none|
+|options_trades|object|false|none|none|
+|» avg_loss|string|false|none|none|
+|» avg_win|string|false|none|none|
+|» loss_rate|integer|false|none|none|
+|» negative_trades|integer|false|none|none|
+|» positive_trades|integer|false|none|none|
+|» total_trades|integer|false|none|none|
+|» win_rate|integer|false|none|none|
+
+<h2 id="tocSfundingtransactionsresponse">FundingTransactionsResponse</h2>
+
+<a id="schemafundingtransactionsresponse"></a>
+
+```json
+{
+  "deposits": [
+    {
+      "amount": 200,
+      "asset_symbol": "USDT",
+      "created_at": "2025-11-08 11:00:00"
+    }
+  ],
+  "sub_account_transfers": [
+    {
+      "amount": -100,
+      "asset_symbol": "USDT",
+      "created_at": "2025-11-07 10:00:00"
+    }
+  ],
+  "withdrawals": [
+    {
+      "amount": 50,
+      "asset_symbol": "BTC",
+      "created_at": "2025-11-09 12:00:00"
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deposits|[object]|false|none|none|
+|» amount|integer|false|none|none|
+|» asset_symbol|string|false|none|none|
+|» created_at|string|false|none|none|
+|sub_account_transfers|[object]|false|none|none|
+|» amount|integer|false|none|none|
+|» asset_symbol|string|false|none|none|
+|» created_at|string|false|none|none|
+|withdrawals|[object]|false|none|none|
+|» amount|integer|false|none|none|
+|» asset_symbol|string|false|none|none|
+|» created_at|string|false|none|none|
+
+<h2 id="tocSfuturesandoptionsvolumeresponse">FuturesAndOptionsVolumeResponse</h2>
+
+<a id="schemafuturesandoptionsvolumeresponse"></a>
+
+```json
+{
+  "futures_volume": [
+    {
+      "day": "2024-11-07",
+      "volume_usd": 50000
+    }
+  ],
+  "options_volume": [
+    {
+      "day": "2024-11-08",
+      "volume_usd": 75000
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|futures_volume|[object]|false|none|none|
+|» day|string|false|none|none|
+|» volume_usd|integer|false|none|none|
+|options_volume|[object]|false|none|none|
+|» day|string|false|none|none|
+|» volume_usd|integer|false|none|none|
+
+<h2 id="tocStradingfeesdataresponse">TradingFeesDataResponse</h2>
+
+<a id="schematradingfeesdataresponse"></a>
+
+```json
+{
+  "futures_fees": [
+    {
+      "day": "2024-11-07",
+      "commission": 30,
+      "commission_deto": 5,
+      "commission_tfc": 2,
+      "pnl": 100,
+      "commission_deto_usd": 2.5
+    }
+  ],
+  "options_fees": [
+    {
+      "day": "2024-11-07",
+      "commission": 40,
+      "commission_deto": 6,
+      "commission_tfc": 3,
+      "pnl": 120,
+      "commission_deto_usd": 2.8
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|futures_fees|[object]|false|none|none|
+|» day|string|false|none|none|
+|» commission|number|false|none|none|
+|» commission_deto|number|false|none|none|
+|» commission_tfc|number|false|none|none|
+|» pnl|number|false|none|none|
+|» commission_deto_usd|number|false|none|none|
+|options_fees|[object]|false|none|none|
+|» day|string|false|none|none|
+|» commission|number|false|none|none|
+|» commission_deto|number|false|none|none|
+|» commission_tfc|number|false|none|none|
+|» pnl|number|false|none|none|
+|» commission_deto_usd|number|false|none|none|
+
+<h2 id="tocSdailypnlchartresponse">DailyPnlChartResponse</h2>
+
+<a id="schemadailypnlchartresponse"></a>
+
+```json
+{
+  "daily_trading_pnl_data": [
+    {
+      "date": "2024-11-07",
+      "realized_pnl": 50,
+      "unrealized_pnl": 10
+    }
+  ]
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|daily_trading_pnl_data|[object]|false|none|none|
+|» date|string|false|none|none|
+|» realized_pnl|number|false|none|none|
+|» unrealized_pnl|number|false|none|none|
+
+<h2 id="tocSaccountequityresponse">AccountEquityResponse</h2>
+
+<a id="schemaaccountequityresponse"></a>
+
+```json
+{
+  "account_equity_data": [
+    {
+      "equity": "200",
+      "time": "2025-11-07T00:00:00Z",
+      "trading_credits": "0"
+    }
+  ],
+  "liquidation_fees_data": []
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|account_equity_data|[object]|false|none|none|
+|» equity|string|false|none|none|
+|» time|string(date-time)|false|none|none|
+|» trading_credits|string|false|none|none|
+|liquidation_fees_data|[object]|false|none|none|
+
+<h2 id="tocSpnlsummaryresponse">PnlSummaryResponse</h2>
+
+<a id="schemapnlsummaryresponse"></a>
+
+```json
+{
+  "deto_mined": {
+    "amount": "100",
+    "amount_usd": "1"
+  },
+  "unrealized_pnl": "10"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|deto_mined|object|false|none|none|
+|» amount|string|false|none|none|
+|» amount_usd|string|false|none|none|
+|unrealized_pnl|string|false|none|none|
 
