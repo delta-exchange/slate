@@ -2891,6 +2891,26 @@
           }
         }
       }
+    },
+    "/rate_limits/quota": {
+      "get":{
+        "tags":[
+          "Account"
+        ],
+        "summary": "Get current rate limit quota",
+        "operationId": "currentRateLimitQuota",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "This api returns the current rate limit quota.",
+            "schema": {
+              "$ref": "#/definitions/RateLimitQuotaResponse"
+            }
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -5456,6 +5476,19 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/User"
+      }
+    },
+    "RateLimitQuotaResponse": {
+      "type": "object",
+      "properties": {
+        "current_quota": {
+          "type": "integer",
+          "example": 42
+        },
+        "remaining_time_in_milliseconds": {
+          "type": "integer",
+          "example": 120632
+        }
       }
     }
   }
