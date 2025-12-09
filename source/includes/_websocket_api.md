@@ -1228,6 +1228,79 @@ This channel provides updates on system wide announcements like scheduled mainte
 }
 ```
 
+## system_status
+This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation.No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:                                                     
+1. "event": "maintenance_scheduled" is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Includes estimated start and finish times.                                                     
+2. "event": "maintenance_started" is sent when maintenance begins. Indicates disruption and includes the estimated finish time.  
+3. "event": "maintenance_finished" is sent when maintenance is complete. The system transitions back to normal operation.  
+
+In addition to event, the status field reflects the overall system state such as: live, maintenance, api_fallback, degraded_mode
+All timestamps are in epoch microseconds.
+
+> System status Sample
+
+
+```json
+
+//Subscribe
+{
+    "type": "system_status",
+    "payload": {
+        "channels": [
+            {
+                "name": "system_status"
+            }
+        ]
+    }
+}
+```
+
+```json
+// Maintenance Scheduled Response
+{
+    "type": "system_status",
+    "status": "live",
+    "event": "maintenance_scheduled",
+    "maintenance_start_time": 1765259125000000, // estimated maintenance start time in microseconds
+    "maintenance_announcement_time": 1764548092000000, // estimated maintenance announcement time in microseconds
+    "maintenance_finish_time": 1765259428000000, // estimated finish time
+    "timestamp": 1765239292
+}
+
+// Maintenance Started Response
+{
+    "type":"system_status",
+    "status": "maintenance",
+    "event":"maintenance_started",
+    "maintenance_start_time": 1765259301000000, // estimated maintenance start time in microseconds
+    "maintenance_announcement_time": 1764720892000000, // estimated maintenance announcement time in microseconds
+    "maintenance_finish_time": 1765259450000000, // estimated finish time in microseconds.
+    "timestamp": 1765259716,
+}
+
+// Maintenance Cancelled Response
+{
+    "type":"system_status",
+    "status": "api_fallback",
+    "event":"maintenance_cancelled",
+    "maintenance_start_time": 1765259325000000, // estimated maintenance start time in microseconds
+    "maintenance_announcement_time": 1764807292000000, // estimated maintenance announcement time in microseconds
+    "maintenance_finish_time": 1765259526000000, // estimated finish time in microseconds.
+    "timestamp": 1765259727,
+}
+
+// Maintenance Finished Response
+{
+    "type":"system_status",
+    "status": "degraded_mode",
+    "event":"maintenance_finished",
+    "maintenance_start_time": 1765259338000000, // estimated maintenance start time in microseconds
+    "maintenance_announcement_time": 1764634492000000, // estimated maintenance announcement time in microseconds
+    "maintenance_finish_time": 1765259575000000, // estimated finish time in microseconds.
+    "timestamp": 1765259744,
+}
+```
+
 # Private Channels
 
 Private channels require clients to authenticate.
