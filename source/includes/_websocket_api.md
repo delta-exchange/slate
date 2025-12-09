@@ -1264,7 +1264,7 @@ All timestamps are in epoch microseconds.
     "maintenance_start_time": 1765259125000000, // estimated maintenance start time in microseconds
     "maintenance_announcement_time": 1764548092000000, // estimated maintenance announcement time in microseconds
     "maintenance_finish_time": 1765259428000000, // estimated finish time
-    "timestamp": 1765239292
+    "timestamp": 1765239292000000
 }
 
 // Maintenance Started Response
@@ -1275,7 +1275,7 @@ All timestamps are in epoch microseconds.
     "maintenance_start_time": 1765259301000000, // estimated maintenance start time in microseconds
     "maintenance_announcement_time": 1764720892000000, // estimated maintenance announcement time in microseconds
     "maintenance_finish_time": 1765259450000000, // estimated finish time in microseconds.
-    "timestamp": 1765259716,
+    "timestamp": 1765259716000000
 }
 
 // Maintenance Cancelled Response
@@ -1286,7 +1286,7 @@ All timestamps are in epoch microseconds.
     "maintenance_start_time": 1765259325000000, // estimated maintenance start time in microseconds
     "maintenance_announcement_time": 1764807292000000, // estimated maintenance announcement time in microseconds
     "maintenance_finish_time": 1765259526000000, // estimated finish time in microseconds.
-    "timestamp": 1765259727,
+    "timestamp": 1765259727000000
 }
 
 // Maintenance Finished Response
@@ -1297,7 +1297,7 @@ All timestamps are in epoch microseconds.
     "maintenance_start_time": 1765259338000000, // estimated maintenance start time in microseconds
     "maintenance_announcement_time": 1764634492000000, // estimated maintenance announcement time in microseconds
     "maintenance_finish_time": 1765259575000000, // estimated finish time in microseconds.
-    "timestamp": 1765259744,
+    "timestamp": 1765259744000000
 }
 ```
 
