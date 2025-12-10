@@ -4,9 +4,9 @@ jobs:
     docker:
       - image: 'cimg/ruby:2.6.1'
     steps:
-#      - add_ssh_keys:
-#          fingerprints:
-#            - "SHA256:5EzkUxS18XZJC1Mm0J700zbeuRPv0yfgSWDPBgSUw2U kiran@ip-10-4-7-35" # added kiran keys
+     - add_ssh_keys:
+         fingerprints:
+           - "SHA256:5EzkUxS18XZJC1Mm0J700zbeuRPv0yfgSWDPBgSUw2U" # added kiran keys
             #- "SHA256:DamVOQKLp697/bKqJ7gm749JISeNDCOPv+c/ShJQDf0"
       - checkout
       - run:
