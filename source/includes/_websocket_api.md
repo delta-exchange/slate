@@ -1180,6 +1180,8 @@ You can read more about the single price auction [here](https://www.delta.exchan
 
 
 ## announcements
+This channel will be deprecated on 28 February 2026. Please use the system_status channel for all maintenance-related updates.
+
 This channel provides updates on system wide announcements like scheduled maintenance, maintenance started etc. No need to pass any symbols while subscribing to this channel. Below are types and examples of messages sent for more details:  
 1. "event": "maintenance_scheduled" is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Contains estimated start and finish time for maintenance.  
 2. "event": "maintenance_started" is sent when maintenance actually starts and markets are disrupted. Contains estimated finish time for maintenance.  
@@ -1229,12 +1231,41 @@ This channel provides updates on system wide announcements like scheduled mainte
 ```
 
 ## system_status
-This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation.No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:                                                     
-1. "event": "maintenance_scheduled" is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Includes estimated start and finish times.                                                     
-2. "event": "maintenance_started" is sent when maintenance begins. Indicates disruption and includes the estimated finish time.  
-3. "event": "maintenance_finished" is sent when maintenance is complete. The system transitions back to normal operation.  
+This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation. No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:
 
-In addition to event, the status field reflects the overall system state such as: live, maintenance, api_fallback, degraded_mode
+snapshot → This event is sent as soon as you subscribe to the system_status channel. The data in this event contains the current system status details.
+
+1. "event": "maintenance_scheduled" is sent when maintenance is scheduled, usually 6 to 24 hours before the actual maintenance. It includes the estimated start and finish times.
+
+2. "event": "maintenance_started" is sent when maintenance begins. It indicates service disruption and includes the estimated finish time. For unscheduled maintenance, this event may be sent directly without the prior maintenance_scheduled event.
+
+3. "event": "maintenance_finished" is sent when maintenance is complete. Usually, after this event, there is an auction period lasting around 5 to 10 minutes.
+
+4. "event": "maintenance_cancel" is sent when upcoming scheduled maintenance has been cancelled.
+
+Note: Maintenance start and finish times are approximate estimates. The actual start time is confirmed by the maintenance_started event, and the actual completion is confirmed by the maintenance_finished event.
+
+These values describe the current state of the entire system.
+
+1. "live": The system is operating normally. All services (REST APIs, WebSocket, backend processes) are functioning as expected.
+
+2. "maintenance": The system is currently under maintenance. Some features or services may be temporarily unavailable or disrupted.
+
+3. "api_fallback": Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. 
+
+4. "degraded_mode": Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system.
+
+Changing status to between these three: ["api_fallback", "degraded_mode", "live"] is done by sending message with 
+
+"event":  "app_status_update".
+
+Note: The "app_status_update" messages will still contain correct maintenance related timestamps.
+
+e.g. payload = %{type: "system_status", event: "app_status_update", status: "api_fallback", maintenance_announcement_time: time, maintenance_start_time: time, maintenance_finish_time: time, timestamp: current_time}
+
+Note: The "app_status_update" messages will still contain correct maintenance related timestamps.
+
+In addition to the event field, the status field reflects the overall system state, such as: live, maintenance, api_fallback, or degraded_mode.
 All timestamps are in epoch microseconds.
 
 > System status Sample
