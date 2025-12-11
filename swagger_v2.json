@@ -179,6 +179,12 @@
             "name": "page_size",
             "description": "size of a single page for paginated request, default: 100",
             "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "expiry",
+            "description": "Expiry date in YYYY-MM-DD format to filter products by expiry date.",
+            "type": "string"
           }
         ],
         "responses": {
