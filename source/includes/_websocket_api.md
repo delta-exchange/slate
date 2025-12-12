@@ -1259,8 +1259,6 @@ Changing status to between these three: ["api_fallback", "degraded_mode", "live"
 
 "event":  "app_status_update".
 
-Note: The "app_status_update" messages will still contain correct maintenance related timestamps.
-
 e.g. payload = %{type: "system_status", event: "app_status_update", status: "api_fallback", maintenance_announcement_time: time, maintenance_start_time: time, maintenance_finish_time: time, timestamp: current_time}
 
 Note: The "app_status_update" messages will still contain correct maintenance related timestamps.
