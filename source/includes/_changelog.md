@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.12.25
+1. Added a new WebSocket system_status channel which includes maintenance events such as maintenance_scheduled, maintenance_started, maintenance_finished, and maintenance_cancelled, along with real-time system status updates (live, api_fallback, degraded_mode) and an initial snapshot event providing the current system state.
+2. We will be deprecating the announcements channel on 28 February 2026. All maintenance-related updates will be migrated to and provided through the system_status channel.
+
 ## 08.10.25
 1. Added new websocket authentication method, {"type":"key-auth"}, which includes new formats of request and responses.  
 2. Previous websocket authentication method, {"type":"auth"}, is now marked as deprecated. This method will stop working after 31st December 2025, users are requested to migrate to the newer websocket authentication.
