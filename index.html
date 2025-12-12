@@ -272,6 +272,9 @@
               </ul>
           </li>
           <li>
+            <a href="#system-status" class="toc-h1 toc-link" data-title="System Status">System Status</a>
+          </li>
+          <li>
             <a href="#types" class="toc-h1 toc-link" data-title="Types">Types</a>
               <ul class="toc-list-h2">
                   <li>
@@ -895,6 +898,9 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#11-12-25" class="toc-h2 toc-link" data-title="11.12.25">11.12.25</a>
+                  </li>
+                  <li>
                     <a href="#08-10-25" class="toc-h2 toc-link" data-title="08.10.25">08.10.25</a>
                   </li>
                   <li>
@@ -1435,6 +1441,10 @@ Total quota used: 300 + 150 + 1000 + 500 = 1950 quota used. If this is greater t
 <h2 id='increasing-your-rate-limits'>Increasing your rate limits</h2>
 
 <p>If you are running up against our limits and believe that you have a legitimate need, please email us at <a href="mailto:support@delta.exchange">support@delta.exchange</a> to discuss increasing your rate limits.</p>
+
+<h1 id='system-status'>System Status</h1>
+
+<p>This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation. No symbols are required when subscribing to this channel. For more details, click on System Status to be redirected to the maintenance page (see <a href="/#system_status">System Status</a>).</p>
 
 <h1 id='types'>Types</h1><h2 id='timestamps'>Timestamps</h2>
 <p>Unless otherwise specified, all timestamps from API are returned in  <a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>  with microseconds. Make sure you can parse the following ISO 8601 format. Most modern languages and libraries will handle this without issues.</p>
@@ -17666,6 +17676,8 @@ Please note that if you subscribe to funding rate channel without specifying the
 
 <p>You can read more about the single price auction <a href="https://www.delta.exchange/blog/bootstrapping-liquidity-using-auctions/">here</a></p>
 <h2 id='announcements'>announcements</h2>
+<p>This channel will be deprecated on 28 February 2026. Please use the system_status channel for all maintenance-related updates.</p>
+
 <p>This channel provides updates on system wide announcements like scheduled maintenance, maintenance started etc. No need to pass any symbols while subscribing to this channel. Below are types and examples of messages sent for more details:<br>
 1. &quot;event&quot;: &quot;maintenance_scheduled&quot; is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Contains estimated start and finish time for maintenance.<br>
 2. &quot;event&quot;: &quot;maintenance_started&quot; is sent when maintenance actually starts and markets are disrupted. Contains estimated finish time for maintenance.<br>
@@ -17709,12 +17721,37 @@ Please note that if you subscribe to funding rate channel without specifying the
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1561634049751430</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='system_status'>system_status</h2>
-<p>This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation.No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:<br>
-1. &quot;event&quot;: &quot;maintenance_scheduled&quot; is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Includes estimated start and finish times.<br>
-2. &quot;event&quot;: &quot;maintenance_started&quot; is sent when maintenance begins. Indicates disruption and includes the estimated finish time.<br>
-3. &quot;event&quot;: &quot;maintenance_finished&quot; is sent when maintenance is complete. The system transitions back to normal operation.  </p>
+<p>This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation. No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:</p>
 
-<p>In addition to event, the status field reflects the overall system state such as: live, maintenance, api_fallback, degraded_mode
+<p>snapshot → This event is sent as soon as you subscribe to the system_status channel. The data in this event contains the current system status details.</p>
+
+<ol>
+<li><p>&quot;event&quot;: &quot;maintenance_scheduled&quot; is sent when maintenance is scheduled, usually 6 to 24 hours before the actual maintenance. It includes the estimated start and finish times.</p></li>
+<li><p>&quot;event&quot;: &quot;maintenance_started&quot; is sent when maintenance begins. It indicates service disruption and includes the estimated finish time. For unscheduled maintenance, this event may be sent directly without the prior maintenance_scheduled event.</p></li>
+<li><p>&quot;event&quot;: &quot;maintenance_finished&quot; is sent when maintenance is complete. Usually, after this event, there is an auction period lasting around 5 to 10 minutes.</p></li>
+<li><p>&quot;event&quot;: &quot;maintenance_cancelled&quot; is sent when upcoming scheduled maintenance has been cancelled.</p></li>
+</ol>
+
+<p>Note: Maintenance start and finish times are approximate estimates. The actual start time is confirmed by the maintenance_started event, and the actual completion is confirmed by the maintenance_finished event.</p>
+
+<p>These values describe the current state of the entire system.</p>
+
+<ol>
+<li><p>&quot;live&quot;: The system is operating normally. All services (REST APIs, WebSocket, backend processes) are functioning as expected.</p></li>
+<li><p>&quot;maintenance&quot;: The system is currently under maintenance. Some features or services may be temporarily unavailable or disrupted.</p></li>
+<li><p>&quot;api_fallback&quot;: Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as &quot;live&quot; mode, and check with our support team.</p></li>
+<li><p>&quot;degraded_mode&quot;: Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as &quot;live&quot; mode, and check with our support team.</p></li>
+</ol>
+
+<p>Changing status to between these three: [&quot;api_fallback&quot;, &quot;degraded_mode&quot;, &quot;live&quot;] is done by sending message with </p>
+
+<p>&quot;event&quot;:  &quot;app_status_update&quot;.</p>
+
+<p>e.g. payload = %{type: &quot;system_status&quot;, event: &quot;app_status_update&quot;, status: &quot;api_fallback&quot;, maintenance_announcement_time: time, maintenance_start_time: time, maintenance_finish_time: time, timestamp: current_time}</p>
+
+<p>Note: The &quot;app_status_update&quot; messages will still contain correct maintenance related timestamps.</p>
+
+<p>In addition to the event field, the status field reflects the overall system state, such as: live, maintenance, api_fallback, or degraded_mode.
 All timestamps are in epoch microseconds.</p>
 
 <blockquote>
@@ -18207,7 +18244,12 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='08-10-25'>08.10.25</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='11-12-25'>11.12.25</h2>
+<ol>
+<li>Added a new WebSocket system_status channel which includes maintenance events such as maintenance_scheduled, maintenance_started, maintenance_finished, and maintenance_cancelled, along with real-time system status updates (live, api_fallback, degraded_mode) and an initial snapshot event providing the current system state.</li>
+<li>We will be deprecating the announcements channel on 28 February 2026. All maintenance-related updates will be migrated to and provided through the system_status channel.</li>
+</ol>
+<h2 id='08-10-25'>08.10.25</h2>
 <ol>
 <li>Added new websocket authentication method, {&quot;type&quot;:&quot;key-auth&quot;}, which includes new formats of request and responses.<br></li>
 <li>Previous websocket authentication method, {&quot;type&quot;:&quot;auth&quot;}, is now marked as deprecated. This method will stop working after 31st December 2025, users are requested to migrate to the newer websocket authentication.</li>
