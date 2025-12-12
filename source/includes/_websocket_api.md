@@ -1251,9 +1251,9 @@ These values describe the current state of the entire system.
 
 2. "maintenance": The system is currently under maintenance. Some features or services may be temporarily unavailable or disrupted.
 
-3. "api_fallback": Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. 
+3. "api_fallback": Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as "live" mode, and check with our support team.
 
-4. "degraded_mode": Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system.
+4. "degraded_mode": Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as "live" mode, and check with our support team.
 
 Changing status to between these three: ["api_fallback", "degraded_mode", "live"] is done by sending message with 
 
