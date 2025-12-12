@@ -1241,7 +1241,7 @@ snapshot → This event is sent as soon as you subscribe to the system_status ch
 
 3. "event": "maintenance_finished" is sent when maintenance is complete. Usually, after this event, there is an auction period lasting around 5 to 10 minutes.
 
-4. "event": "maintenance_cancel" is sent when upcoming scheduled maintenance has been cancelled.
+4. "event": "maintenance_cancelled" is sent when upcoming scheduled maintenance has been cancelled.
 
 Note: Maintenance start and finish times are approximate estimates. The actual start time is confirmed by the maintenance_started event, and the actual completion is confirmed by the maintenance_finished event.
 
