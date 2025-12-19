@@ -17723,44 +17723,12 @@ Please note that if you subscribe to funding rate channel without specifying the
 </span></code></pre><h2 id='system_status'>system_status</h2>
 <p>This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation. No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:</p>
 
-<p>snapshot → This event is sent as soon as you subscribe to the system_status channel. The data in this event contains the current system status details.</p>
-
-<ol>
-<li><p>&quot;event&quot;: &quot;maintenance_scheduled&quot; is sent when maintenance is scheduled, usually 6 to 24 hours before the actual maintenance. It includes the estimated start and finish times.</p></li>
-<li><p>&quot;event&quot;: &quot;maintenance_started&quot; is sent when maintenance begins. It indicates service disruption and includes the estimated finish time. For unscheduled maintenance, this event may be sent directly without the prior maintenance_scheduled event.</p></li>
-<li><p>&quot;event&quot;: &quot;maintenance_finished&quot; is sent when maintenance is complete. Usually, after this event, there is an auction period lasting around 5 to 10 minutes.</p></li>
-<li><p>&quot;event&quot;: &quot;maintenance_cancelled&quot; is sent when upcoming scheduled maintenance has been cancelled.</p></li>
-</ol>
-
-<p>Note: Maintenance start and finish times are approximate estimates. The actual start time is confirmed by the maintenance_started event, and the actual completion is confirmed by the maintenance_finished event.</p>
-
-<p>These values describe the current state of the entire system.</p>
-
-<ol>
-<li><p>&quot;live&quot;: The system is operating normally. All services (REST APIs, WebSocket, backend processes) are functioning as expected.</p></li>
-<li><p>&quot;maintenance&quot;: The system is currently under maintenance. Some features or services may be temporarily unavailable or disrupted.</p></li>
-<li><p>&quot;api_fallback&quot;: Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as &quot;live&quot; mode, and check with our support team.</p></li>
-<li><p>&quot;degraded_mode&quot;: Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as &quot;live&quot; mode, and check with our support team.</p></li>
-</ol>
-
-<p>Changing status to between these three: [&quot;api_fallback&quot;, &quot;degraded_mode&quot;, &quot;live&quot;] is done by sending message with </p>
-
-<p>&quot;event&quot;:  &quot;app_status_update&quot;.</p>
-
-<p>e.g. payload = %{type: &quot;system_status&quot;, event: &quot;app_status_update&quot;, status: &quot;api_fallback&quot;, maintenance_announcement_time: time, maintenance_start_time: time, maintenance_finish_time: time, timestamp: current_time}</p>
-
-<p>Note: The &quot;app_status_update&quot; messages will still contain correct maintenance related timestamps.</p>
-
-<p>In addition to the event field, the status field reflects the overall system state, such as: live, maintenance, api_fallback, or degraded_mode.
-All timestamps are in epoch microseconds.</p>
-
 <blockquote>
 <p>System status Sample</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-</span><span class="err">//Subscribe</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
 </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"system_status"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
@@ -17794,7 +17762,7 @@ All timestamps are in epoch microseconds.</p>
 </span><span class="err">//</span><span class="w"> </span><span class="err">Maintenance</span><span class="w"> </span><span class="err">Cancelled</span><span class="w"> </span><span class="err">Response</span><span class="w">
 </span><span class="p">{</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"system_status"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api_fallback"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api_fallback"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">current</span><span class="w"> </span><span class="err">status</span><span class="w">
     </span><span class="s2">"event"</span><span class="p">:</span><span class="s2">"maintenance_cancelled"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_start_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1765259325000000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">maintenance</span><span class="w"> </span><span class="err">start</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">microseconds</span><span class="w">
     </span><span class="s2">"maintenance_announcement_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764807292000000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">maintenance</span><span class="w"> </span><span class="err">announcement</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">microseconds</span><span class="w">
@@ -17805,21 +17773,60 @@ All timestamps are in epoch microseconds.</p>
 </span><span class="err">//</span><span class="w"> </span><span class="err">Maintenance</span><span class="w"> </span><span class="err">Finished</span><span class="w"> </span><span class="err">Response</span><span class="w">
 </span><span class="p">{</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"system_status"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"degraded_mode"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"live"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"event"</span><span class="p">:</span><span class="s2">"maintenance_finished"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"maintenance_start_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1765259338000000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">maintenance</span><span class="w"> </span><span class="err">start</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">microseconds</span><span class="w">
     </span><span class="s2">"maintenance_announcement_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1764634492000000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">maintenance</span><span class="w"> </span><span class="err">announcement</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">microseconds</span><span class="w">
     </span><span class="s2">"maintenance_finish_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1765259575000000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">finish</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">microseconds.</span><span class="w">
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1765259744000000</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h1 id='private-channels-2'>Private Channels</h1>
+</span></code></pre>
+
+<p>snapshot → This event is sent as soon as you subscribe to the system_status channel. The data in this event contains the current system status details.</p>
+
+<ol>
+<li>&quot;event&quot;: &quot;maintenance_scheduled&quot; is sent when maintenance is scheduled, usually 6 to 24 hours before the actual maintenance. It includes the estimated start and finish times.<br></li>
+<li>&quot;event&quot;: &quot;maintenance_started&quot; is sent when maintenance begins. It indicates service disruption and includes the estimated finish time. For unscheduled maintenance, this event may be sent directly without the prior maintenance_scheduled event.<br></li>
+<li>&quot;event&quot;: &quot;maintenance_finished&quot; is sent when maintenance is complete. Usually, after this event, there is an auction period lasting around 5 to 10 minutes.<br></li>
+<li>&quot;event&quot;: &quot;maintenance_cancelled&quot; is sent when upcoming scheduled maintenance has been cancelled.</li>
+</ol>
+
+<p>Note: Maintenance start and finish times are approximate estimates. The actual start time is confirmed by the maintenance_started event, and the actual completion is confirmed by the maintenance_finished event.</p>
+
+<p>These values describe the current state of the entire system.</p>
+
+<p>The payload[&quot;status&quot;] describe the current state of the entire system. Below are the possible values:</p>
+
+<ol>
+<li>&quot;live&quot;: The system is operating normally. All services (REST APIs, WebSocket, backend processes) are functioning as expected.<br></li>
+<li>&quot;maintenance&quot;: The system is currently under maintenance. Some features or services may be temporarily unavailable or disrupted.<br></li>
+<li>&quot;api_fallback&quot;: Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as &quot;live&quot; mode, and check with our support team.<br></li>
+<li>&quot;degraded_mode&quot;: Our system might be facing some technical issues, but most core functions remain available. Mostly used by our internal system. You can treat this as &quot;live&quot; mode, and check with our support team.<br></li>
+</ol>
+
+<p>Changing status to between these three: [&quot;api_fallback&quot;, &quot;degraded_mode&quot;, &quot;live&quot;] is done by sending message with </p>
+
+<p>&quot;event&quot;:  &quot;app_status_update&quot;.</p>
+
+<p>e.g. payload = %{type: &quot;system_status&quot;, event: &quot;app_status_update&quot;, status: &quot;api_fallback&quot;, maintenance_announcement_time: time, maintenance_start_time: time, maintenance_finish_time: time, timestamp: current_time}</p>
+
+<p>Note: The &quot;app_status_update&quot; messages will still contain correct maintenance related timestamps.</p>
+
+<p>In addition to the event field, the status field reflects the overall system state, such as: live, maintenance, api_fallback, or degraded_mode.
+All timestamps are in epoch microseconds.</p>
+
+<h1 id='private-channels-2'>Private Channels</h1>
+
 <p>Private channels require clients to authenticate.</p>
+
 <h2 id='margins'>Margins</h2>
+
 <p>This channel provides updates on wallet balances. Updates are sent for a specific asset whenever there is a change in wallet balances and margins for that asset. </p>
 
 <blockquote>
 <p>Margins Sample</p>
 </blockquote>
+
 <pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
 </span><span class="p">{</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
