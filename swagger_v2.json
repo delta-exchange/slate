@@ -3762,16 +3762,6 @@
           "default": false,
           "example": false
         },
-        "cancel_orders_accepted": {
-          "type": "string",
-          "description": "if set, will cancel all existing orders for the product",
-          "enum": [
-            "true",
-            "false"
-          ],
-          "default": false,
-          "example": false
-        },
         "stop_price": {
           "type": "string",
           "description": "price to trigger stop order",
