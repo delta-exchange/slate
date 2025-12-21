@@ -3221,7 +3221,6 @@ curl -X PUT https://api.india.delta.exchange/v2/orders <span class="se">\</span>
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cancel_orders_accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -11560,7 +11559,6 @@ This operation does not require authentication.
   </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mmp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"post_only"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cancel_orders_accepted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"stop_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"trail_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -11630,13 +11628,6 @@ This operation does not require authentication.
 <td>Post only order</td>
 </tr>
 <tr>
-<td>cancel_orders_accepted</td>
-<td>string</td>
-<td>false</td>
-<td>none</td>
-<td>if set, will cancel all existing orders for the product</td>
-</tr>
-<tr>
 <td>stop_price</td>
 <td>string</td>
 <td>false</td>
@@ -11690,14 +11681,6 @@ This operation does not require authentication.
 </tr>
 <tr>
 <td>post_only</td>
-<td>false</td>
-</tr>
-<tr>
-<td>cancel_orders_accepted</td>
-<td>true</td>
-</tr>
-<tr>
-<td>cancel_orders_accepted</td>
 <td>false</td>
 </tr>
 </tbody></table>
