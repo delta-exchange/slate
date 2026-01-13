@@ -324,7 +324,7 @@
           {
             "in": "path",
             "name": "symbol",
-            "description": "The symbol of the product for which the ticker data is requested (e.g., BTCUSD, ETHUSD).",
+            "description": "The symbol(s) of the product, comma-separated. Maximum 10 symbols allowed. Example: (e.g., BTCUSD, ETHUSD).",
             "type": "string",
             "required": true,
             "example": "BTCUSD"
@@ -601,7 +601,7 @@
           {
             "in": "query",
             "name": "product_ids",
-            "description": "comma separated product ids, if not specified, all the orders will be returned",
+            "description": "Comma-separated product IDs. Maximum 10 IDs allowed. If not specified, all the orders will be returned",
             "type": "string",
             "example": "27,5"
           },
@@ -1441,7 +1441,7 @@
           {
             "in": "query",
             "name": "product_ids",
-            "description": "comma separated product ids",
+            "description": "Comma separated product IDs. Maximum 10 IDs allowed.",
             "type": "string"
           },
           {
@@ -1542,7 +1542,7 @@
           {
             "in": "query",
             "name": "product_ids",
-            "description": "comma separated product ids",
+            "description": "Comma separated product IDs. Maximum 10 IDs allowed.",
             "type": "string"
           },
           {
@@ -1683,7 +1683,7 @@
           {
             "in": "query",
             "name": "product_ids",
-            "description": "comma separated product ids. If not specified any parameters, all the open positions will be returned",
+            "description": "Comma-separated product IDs. Maximum 10 IDs allowed. If not specified, all the open positions will be returned",
             "type": "string"
           },
           {
