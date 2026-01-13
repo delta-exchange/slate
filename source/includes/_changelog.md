@@ -2,8 +2,7 @@
 
 ## 13.01.26
 1. Order History and Fills History APIs will no longer include the total field in pagination. The maximum page_size is now 25 higher values will return an error. These changes will go live on 16th January 2026 (tentative).
-2. Updated parameter descriptions for product_ids and ticker symbol to clarify comma-separated format with maximum 10 IDs/symbols. These changes will go live on 23rd January 2026 (tentative).
-
+2. Updated parameter descriptions for product_ids and ticker symbol to clarify comma-separated format with maximum 10 IDs/symbols. Affected APIs endpoints are /v2/tickers/{symbol}, /v2/orders, /v2/positions/margined, /v2/orders/history, and /v2/fills. These changes will go live on 23rd January 2026 (tentative).
 
 ## 11.12.25
 1. Added a new WebSocket system_status channel which includes maintenance events such as maintenance_scheduled, maintenance_started, maintenance_finished, and maintenance_cancelled, along with real-time system status updates (live, api_fallback, degraded_mode) and an initial snapshot event providing the current system state.
