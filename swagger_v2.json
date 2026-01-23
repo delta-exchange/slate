@@ -3034,6 +3034,21 @@
           "description": "Indicates whether only reduce-only orders are allowed.",
           "example": false
         },
+        "expiry_interval": {
+          "type": "number",
+          "description": "The expiry interval for the product.",
+          "example": 28800
+        },
+        "isolated_liq_penalty_factor": {
+          "type": "number",
+          "description": "The isolated liquidation penalty factor for the product.",
+          "example": 0.01
+        },
+        "rate_exchange_interval": {
+          "type": "number",
+          "description": "The rate exchange interval for the product.",
+          "example": 28800
+        },
         "tags": {
           "type": "array",
           "items": {
