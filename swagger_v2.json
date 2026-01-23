@@ -3036,17 +3036,17 @@
         },
         "expiry_interval": {
           "type": "number",
-          "description": "The expiry interval for the product.",
+          "description": "The time interval, in seconds, after which the product or contract expires or settles.",
           "example": 28800
         },
         "isolated_liq_penalty_factor": {
           "type": "number",
-          "description": "The isolated liquidation penalty factor for the product.",
+          "description": "The penalty factor applied when an isolated margin position is liquidated.",
           "example": 0.01
         },
         "rate_exchange_interval": {
           "type": "number",
-          "description": "The rate exchange interval for the product.",
+          "description": "The time interval, in seconds, at which funding rates are exchanged between long and short positions.",
           "example": 28800
         },
         "tags": {
