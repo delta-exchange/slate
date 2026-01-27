@@ -11,10 +11,12 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
         git \
-        nodejs \
-    && gem install bundler -v 2.4.22\
+        curl \
+    && curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && gem install bundler -v 2.4.22 \
     && bundle install \
-    && apt-get remove -y build-essential git \
+    && apt-get remove -y build-essential git curl \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
