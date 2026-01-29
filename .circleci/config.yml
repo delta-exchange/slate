@@ -2,7 +2,7 @@ version: 2.1
 jobs:  
   deploy:
     docker:
-      - image: 'cimg/ruby:2.7.6'
+      - image: 'cimg/ruby:4.0.1'
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -12,7 +12,7 @@ jobs:
       - run:
           name: apt install
           command: |
-            apt-get update \
+            sudo apt-get update \
                 && apt-get install -y --no-install-recommends \
                     build-essential \
                     git \
@@ -20,7 +20,7 @@ jobs:
                 && bundle install
       - run:
           name: install nodejs
-          command: curl -sL https://deb.nodesource.com/setup_18.x | bash - &&  apt -y install nodejs
+          command: curl -sL https://deb.nodesource.com/setup_18.x | bash - && sudo apt -y install nodejs
       - run:
           name: install npm
           command: node --version && npm --version
