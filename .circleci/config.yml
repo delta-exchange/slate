@@ -20,7 +20,7 @@ jobs:
                 && bundle install
       - run:
           name: install nodejs
-          command: curl -sL https://deb.nodesource.com/setup_14.x | bash - &&  apt -y install nodejs
+          command: curl -sL https://deb.nodesource.com/setup_18.x | bash - &&  apt -y install nodejs
       - run:
           name: install npm
           command: node --version && npm --version
