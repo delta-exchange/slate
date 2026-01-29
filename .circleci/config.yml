@@ -2,7 +2,7 @@ version: 2.1
 jobs:  
   deploy:
     docker:
-      - image: 'cimg/ruby:3.0.0'
+      - image: 'cimg/ruby:2.7.6'
     steps:
       - add_ssh_keys:
           fingerprints:
