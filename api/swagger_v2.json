@@ -3034,6 +3034,21 @@
           "description": "Indicates whether only reduce-only orders are allowed.",
           "example": false
         },
+        "expiry_interval": {
+          "type": "number",
+          "description": "The time interval, in seconds, after which the product or contract expires or settles.",
+          "example": 28800
+        },
+        "isolated_liq_penalty_factor": {
+          "type": "number",
+          "description": "The penalty factor applied when an isolated margin position is liquidated.",
+          "example": 0.01
+        },
+        "rate_exchange_interval": {
+          "type": "number",
+          "description": "The time interval, in seconds, at which funding rates are exchanged between long and short positions.",
+          "example": 28800
+        },
         "tags": {
           "type": "array",
           "items": {

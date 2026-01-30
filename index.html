@@ -1888,6 +1888,9 @@ curl -X GET https://api.india.delta.exchange/v2/products <span class="se">\</spa
       </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"funding_clamp_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
         </span><span class="s2">"only_reduce_only_orders_allowed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"expiry_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isolated_liq_penalty_factor"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"rate_exchange_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
         </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
           </span><span class="s2">"layer_1"</span><span class="w">
         </span><span class="p">]</span><span class="w">
@@ -2135,6 +2138,9 @@ curl -X GET https://api.india.delta.exchange/v2/products/<span class="o">{</span
     </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"funding_clamp_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
       </span><span class="s2">"only_reduce_only_orders_allowed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expiry_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isolated_liq_penalty_factor"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rate_exchange_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
       </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"layer_1"</span><span class="w">
       </span><span class="p">]</span><span class="w">
@@ -9264,6 +9270,9 @@ curl -X GET https://api.india.delta.exchange/v2/products/?states<span class="o">
     </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"funding_clamp_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
       </span><span class="s2">"only_reduce_only_orders_allowed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expiry_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isolated_liq_penalty_factor"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rate_exchange_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
       </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"layer_1"</span><span class="w">
       </span><span class="p">]</span><span class="w">
@@ -9954,6 +9963,9 @@ This operation does not require authentication.
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"funding_clamp_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
   </span><span class="s2">"only_reduce_only_orders_allowed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"expiry_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"isolated_liq_penalty_factor"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rate_exchange_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
   </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"layer_1"</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -9987,6 +9999,27 @@ This operation does not require authentication.
 <td>false</td>
 <td>none</td>
 <td>Indicates whether only reduce-only orders are allowed.</td>
+</tr>
+<tr>
+<td>expiry_interval</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>The time interval, in seconds, after which the product or contract expires or settles.</td>
+</tr>
+<tr>
+<td>isolated_liq_penalty_factor</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>The penalty factor applied when an isolated margin position is liquidated.</td>
+</tr>
+<tr>
+<td>rate_exchange_interval</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>The time interval, in seconds, at which funding rates are exchanged between long and short positions.</td>
 </tr>
 <tr>
 <td>tags</td>
@@ -10158,6 +10191,9 @@ This operation does not require authentication.
   </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"funding_clamp_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
     </span><span class="s2">"only_reduce_only_orders_allowed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expiry_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isolated_liq_penalty_factor"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rate_exchange_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
     </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
       </span><span class="s2">"layer_1"</span><span class="w">
     </span><span class="p">]</span><span class="w">
@@ -10604,6 +10640,9 @@ This operation does not require authentication.
     </span><span class="s2">"product_specs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"funding_clamp_value"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
       </span><span class="s2">"only_reduce_only_orders_allowed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expiry_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isolated_liq_penalty_factor"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rate_exchange_interval"</span><span class="p">:</span><span class="w"> </span><span class="mi">28800</span><span class="p">,</span><span class="w">
       </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="s2">"layer_1"</span><span class="w">
       </span><span class="p">]</span><span class="w">
