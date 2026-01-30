@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   deploy:
     docker:
-      - image: 'cimg/ruby:2.6.1-node' # Use the variant that already has Node.js installed
+      - image: 'cimg/ruby:2.6.10-node' # Use the variant that already has Node.js installed
     steps:
       - add_ssh_keys:
           fingerprints:
