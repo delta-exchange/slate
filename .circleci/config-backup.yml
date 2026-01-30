@@ -1,0 +1,48 @@
+version: 2.1
+jobs:  
+  deploy:
+    docker:
+      - image: 'cimg/ruby:2.6.1'
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:5EzkUxS18XZJC1Mm0J700zbeuRPv0yfgSWDPBgSUw2U" # added kiran keys
+            #- "SHA256:DamVOQKLp697/bKqJ7gm749JISeNDCOPv+c/ShJQDf0"
+      - checkout
+      - run:
+          name: apt install
+          command: |
+            sudo apt-get update \
+                && sudo apt-get install -y --no-install-recommends \
+                    build-essential \
+                    git \
+                && gem install bundler -v 2.4.22\
+                && bundle install
+      - run:
+          name: install nodejs
+          command: curl -sL https://deb.nodesource.com/setup_18.x | bash - && sudo apt -y install nodejs
+      - run:
+          name: install npm
+          command: node --version && npm --version
+      - run:
+          name: install widdershins
+          command: npm install -g widdershins
+      - run:
+          name: add permission
+          command: chmod +x deploy.sh
+      - run:
+          name: deploy slate
+          command: ./deploy.sh --gen-widdershins
+      - run:
+          name: deploy
+          command: ./deploy.sh
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - deploy:
+          name: deploy slate
+          filters:
+            branches:
+              only:
+                - master
