@@ -34,4 +34,4 @@ workflows:
           filters:
             branches:
               only:
-                - slate/nodejs-fix
+                - master
