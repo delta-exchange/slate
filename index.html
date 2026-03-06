@@ -898,6 +898,9 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#13-01-26" class="toc-h2 toc-link" data-title="13.01.26">13.01.26</a>
+                  </li>
+                  <li>
                     <a href="#11-12-25" class="toc-h2 toc-link" data-title="11.12.25">11.12.25</a>
                   </li>
                   <li>
@@ -2513,7 +2516,7 @@ curl -X GET https://api.india.delta.exchange/v2/tickers/<span class="o">{</span>
 <td>path</td>
 <td>string</td>
 <td>true</td>
-<td>The symbol of the product for which the ticker data is requested (e.g., BTCUSD, ETHUSD).</td>
+<td>The symbol(s) of the product, comma-separated. Maximum 10 symbols allowed. Example: (e.g., BTCUSD, ETHUSD).</td>
 </tr>
 </tbody></table>
 
@@ -3438,7 +3441,7 @@ curl -X GET https://api.india.delta.exchange/v2/orders <span class="se">\</span>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated product ids, if not specified, all the orders will be returned</td>
+<td>Comma-separated product IDs. Maximum 10 IDs allowed. If not specified, all the orders will be returned</td>
 </tr>
 <tr>
 <td>states</td>
@@ -5356,7 +5359,7 @@ curl -X GET https://api.india.delta.exchange/v2/positions/margined <span class="
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated product ids. If not specified any parameters, all the open positions will be returned</td>
+<td>Comma-separated product IDs. Maximum 10 IDs allowed. If not specified, all the open positions will be returned</td>
 </tr>
 <tr>
 <td>contract_types</td>
@@ -6074,7 +6077,7 @@ curl -X GET https://api.india.delta.exchange/v2/orders/history <span class="se">
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated product ids</td>
+<td>Comma separated product IDs. Maximum 10 IDs allowed.</td>
 </tr>
 <tr>
 <td>contract_types</td>
@@ -6336,7 +6339,7 @@ curl -X GET https://api.india.delta.exchange/v2/fills <span class="se">\</span>
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>comma separated product ids</td>
+<td>Comma separated product IDs. Maximum 10 IDs allowed.</td>
 </tr>
 <tr>
 <td>contract_types</td>
@@ -18280,7 +18283,12 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='11-12-25'>11.12.25</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='13-01-26'>13.01.26</h2>
+<ol>
+<li>Order History <code>GET /v2/orders/history</code> and Fills <code>GET /v2/fills</code> history APIs will no longer include the total field in pagination meta, these changes are now live. We are planning to change max page_size allowed for these API endpoints to be 50, higher values than 50 will return only 50 items. These changes will go live on 28th January 2026 (tentative).</li>
+<li>Updated parameter descriptions for product_ids and ticker symbol to clarify comma-separated format with maximum 10 Product_ids/symbols. Affected APIs endpoints are <code>GET /v2/tickers/{symbol}</code>, <code>GET /v2/orders</code>, <code>GET/v2/positions/margined</code>, <code>GET /v2/orders/history</code>, and <code>GET /v2/fills</code>. These changes will go live on 28th January 2026 (tentative). Passing more than 10 product_ids/symbols will return HTTP 4xx error. By default, if the product_ids parameter is not provided, these APIs returns data for all products.</li>
+</ol>
+<h2 id='11-12-25'>11.12.25</h2>
 <ol>
 <li>Added a new WebSocket system_status channel which includes maintenance events such as maintenance_scheduled, maintenance_started, maintenance_finished, and maintenance_cancelled, along with real-time system status updates (live, api_fallback, degraded_mode) and an initial snapshot event providing the current system state.</li>
 <li>We will be deprecating the announcements channel on 28 February 2026. All maintenance-related updates will be migrated to and provided through the system_status channel.</li>
