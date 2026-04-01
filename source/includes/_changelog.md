@@ -1,5 +1,10 @@
 # Changelog
 
+## 01.04.26
+1. We have migrated the `l1_orderbook` WebSocket channel to `ob_l1`. The new WebSocket public channel `ob_l1` provides Level 1 orderbook updates (best bid/ask) on the new public API WebSocket endpoint, supports subscribing by symbol, product category, or "all", and publishes data at a 100ms interval. The legacy `l1_orderbook` channel is planned to be deprecated and removed on 31st July 2026.
+2. We have migrated the `l2_orderbook` WebSocket channel to `ob_l2`. The new WebSocket public channel `ob_l2` provides complete Level 2 orderbook snapshots on the new public API WebSocket endpoint, supports up to 20 symbols per connection, and publishes data at a 1 sec interval. The legacy `l2_orderbook` channel is planned to be deprecated and removed on 31st July 2026.
+3. We have migrated the `l2_updates` WebSocket channel to `ob_updates`. The new WebSocket public channel `ob_updates` provides an initial orderbook snapshot followed by incremental updates on the new public API WebSocket endpoint, supports up to 100 symbols per connection, and publishes updates at a 100ms interval. The legacy `l2_updates` channel is planned to be deprecated and removed on 31st July 2026.
+
 ## 13.01.26
 1. Order History `GET /v2/orders/history` and Fills `GET /v2/fills` history APIs will no longer include the total field in pagination meta, these changes are now live. We are planning to change max page_size allowed for these API endpoints to be 50, higher values than 50 will return only 50 items. These changes will go live on 28th January 2026 (tentative).
 2. Updated parameter descriptions for product_ids and ticker symbol to clarify comma-separated format with maximum 10 Product_ids/symbols. Affected APIs endpoints are `GET /v2/tickers/{symbol}`, `GET /v2/orders`, `GET/v2/positions/margined`, `GET /v2/orders/history`, and `GET /v2/fills`. These changes will go live on 28th January 2026 (tentative). Passing more than 10 product_ids/symbols will return HTTP 4xx error. By default, if the product_ids parameter is not provided, these APIs returns data for all products.
