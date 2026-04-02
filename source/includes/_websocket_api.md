@@ -9,13 +9,13 @@ Websocket api can be used for the following use cases
 
 Websocket url for [Delta Exchange](https://www.delta.exchange)
 
-- **Production** - wss://socket.india.delta.exchange
-- **Testnet(Demo Account)** - wss://socket-ind.testnet.deltaex.org
-
-New Websocket API endpoint
-
-- **New Production** - wss://public-socket.india.delta.exchange
-- **New Testnet(Demo Account)** - wss://socket-ind-pub.testnet.deltaex.org
+<ul>
+<li><strong>Production private channel endpoint</strong> - wss://socket.india.delta.exchange</li>
+<li><strong>Production public channel endpoint</strong> - wss://public-socket.india.delta.exchange</li>
+<br>
+<li><strong>Testnet(Demo Account) private channel endpoint</strong> - wss://socket-ind.testnet.deltaex.org</li>
+<li><strong>Testnet(Demo Account) public channel endpoint</strong> - wss://socket-ind-pub.testnet.deltaex.org</li>
+</ul>
 
 There is a limit of 150 connections every 5 minutes per IP address. A connection attempt that goes beyond the limit will be disconnected with 429 HTTP status error. On receiving this error, wait for 5 to 10 minutes before making new connection requests.
 
@@ -681,9 +681,8 @@ Max interval (in case of same data): 5 secs
 
 This channel is available on the new public api websocket endpoint.
 
-**ob_l1** channel provides level1 orderbook updates. You need to send the list of symbols for which you would like to subscribe to L1 orderbook. You can also subscribe to 
-orderbook updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
-If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
+**ob_l1** channel provides best ask/bid or top level orderbook updates. You need to send the list of symbols for which you would like to subscribe to this channel. You can also subscribe to this channel for all symbols in an Option Chain. e.g. To subscribe to all Put and Call Options updates for BTC Options expiring on 31st March 2026, send symbol = "BTC-310326". ("ASSET-DDMMYY")
+
 Please note that if you subscribe to L1 channel without specifying the symbols list, you will not receive any data.  
 Publish interval: 100 millisecs  
 Max interval (in case of same data): 5 secs
@@ -699,7 +698,8 @@ Max interval (in case of same data): 5 secs
             {
                 "name": "ob_l1",
                 "symbols": [
-                    "ETHUSD"
+                    "ETHUSD",
+                    "BTC-310326"
                 ]
             }
         ]
@@ -781,9 +781,10 @@ Max interval (in case of same data): 10 secs
 
 This channel is available on the new public api websocket endpoint.
 
-**ob_l2** channel provides the complete level2 orderbook for the specified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. Unlike L1 orderbook channel, L2 orderbook channel does not accept product category names or "all" as valid symbols.
-Please note that if you subscribe to L2 channel without specifying the symbols list, you will not receive any data.  
-Publish interval: 1 sec  
+**ob_l2** channel provides the top 15 level of orderbook data for the specified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. Unlike ob_l1 channel, ob_l2 channel does not accept 'options expiry' as valid symbols. 
+Please note that if you subscribe to ob_l2 channel without specifying the symbols list, you will not receive any data.  
+To get full orderbook (All levels of orderbook) use [ob_updates](#ob_updates) channel  
+Publish interval: 500 millisecs  
 Max interval (in case of same data): 10 secs
 
 > ob_l2 Sample
@@ -810,27 +811,29 @@ Max interval (in case of same data): 10 secs
 {
     "a": [
         [
-            "68525.0",
-            "3313"
+            "68525.0",  // price
+            "3313" // size in contracts
         ],
         [
             "68525.5",
             "3009"
-        ]
+        ],...
+        // Top 15 levels
     ],
     "b": [
         [
-            "68524.0",
-            "2452"
+            "68524.0", // price
+            "2452" // size in contracts
         ],
         [
             "68523.5",
             "3000"
-        ]
+        ],...
+        // Top 15 levels
     ],
-    "lts": 1775038313132415,
-    "sy": "BTCUSD",
-    "ts": 1775038313632092,
+    "lts": 1775038313132415, // last orderbook updated timestamp
+    "sy": "BTCUSD", // symbol
+    "ts": 1775038313632092, // publish timestamp
     "type": "ob_l2"
 }
 ```
@@ -951,32 +954,26 @@ Publish interval: 100 millisecs
 
 // Initial snapshot response
 {
-    "a": [
-        [
-            "68585.5",
-            "7869"
-        ],
-        [
-            "68586.0",
-            "9626"
-        ]
-    ],
-    "b": [
-        [
-            "68568.5",
-            "18385"
-        ],
-        [
-            "68568.0",
-            "0"
-        ]
-    ],
-    "action": "update",
-    "cs": 779286211,
-    "seq": 9892932,
-    "sy": "BTCUSD",
-    "ts": 1775039007011379,
-    "type": "ob_updates"
+  "action":"snapshot",
+  "a":[["16919.0", "1087"], ["16919.5", "1193"], ["16920.0", "510"]], // asks
+  "b":[["16918.0", "602"], ["16917.5", "1792"], ["16917.0", "2039"]], // bids
+  "ts":1671140718980723,  // update timestamps
+  "seq":6199, // sequence_no
+  "sy":"BTCUSD", // symbol
+  "type":"ob_updates", // channel_name
+  "cs":2178756498 // checksum
+}
+
+// Incremental update response
+{
+  "action":"update",
+  "a":[["16919.0", "0"], ["16919.5", "710"]], // asks
+  "b":[["16918.5", "304"]], // bids
+  "seq":6200, // sequence_no
+  "sy":"BTCUSD", // symbol
+  "type":"ob_updates", // channel_name
+  "ts": 1671140769059031, // update timestamps
+  "cs":3409694612 // checksum
 }
 
 // Error response
@@ -990,11 +987,11 @@ Publish interval: 100 millisecs
 
 ### How to maintain orderbook locally using this channel:
 
-1) When you subscribe to this channel, the first message with "action"= "snapshot" resembles the complete l2_orderbook at this time. "asks" and "bids" are arrays of ["price", "size"]. (size is number of contracts at this price)
+1) When you subscribe to this channel, the first message with "action"= "snapshot" resembles the complete orderbook at this time. json_key "a" (asks) and json_key "b" (bids) are arrays of ["price", "size"]. (size is number of contracts at this price)
 
 2) After the initial snapshot, messages will be with "action" = "update", resembling the difference between current and previous orderbook state. "asks" and "bids" are arrays of ["price", "new size"]. "asks" are sorted in increasing order of price. "bids" are sorted in decreasing order of price. This is true for both "snapshot" and "update" messages.
 
-3) "sequence_no" field must be used to check if any messages were dropped. "sequence_no" must be +1 of the last message.  
+3) "seq" (sequence_no) field must be used to check if any messages were dropped. "sequence_no" must be +1 of the last message.  
 e.g. In the snapshot message it is 6199, and the update message has 6200. The next update message must have 6201. In case of sequence_no mismatch, resubscribe to the channel, and start from the beginning.
 
 4) If sequence_no is correct, edit the in-memory orderbook using the "update" message.  
