@@ -183,7 +183,7 @@
           {
             "in": "query",
             "name": "expiry",
-            "description": "Expiry date in YYYY-MM-DD format to filter products by expiry date.",
+            "description": "Expiry date in YYYY-MM-DD format to filter products by current & future expiry date.",
             "type": "string"
           }
         ],
@@ -381,7 +381,7 @@
           {
             "name": "expiry_date",
             "in": "query",
-            "description": "Expiry date of the contracts in `DD-MM-YYYY` format.",
+            "description": "Expiry date of the contracts in `DD-MM-YYYY` format to filter by current & future expiry date.",
             "type": "string",
             "example": "03-04-2025"
           }
