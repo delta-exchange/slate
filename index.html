@@ -831,10 +831,19 @@
                     <a href="#l1_orderbook" class="toc-h2 toc-link" data-title="l1_orderbook">l1_orderbook</a>
                   </li>
                   <li>
+                    <a href="#ob_l1" class="toc-h2 toc-link" data-title="ob_l1">ob_l1</a>
+                  </li>
+                  <li>
                     <a href="#l2_orderbook" class="toc-h2 toc-link" data-title="l2_orderbook">l2_orderbook</a>
                   </li>
                   <li>
+                    <a href="#ob_l2" class="toc-h2 toc-link" data-title="ob_l2">ob_l2</a>
+                  </li>
+                  <li>
                     <a href="#l2_updates" class="toc-h2 toc-link" data-title="l2_updates">l2_updates</a>
+                  </li>
+                  <li>
+                    <a href="#ob_updates" class="toc-h2 toc-link" data-title="ob_updates">ob_updates</a>
                   </li>
                   <li>
                     <a href="#all_trades" class="toc-h2 toc-link" data-title="all_trades">all_trades</a>
@@ -897,6 +906,9 @@
           <li>
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#01-04-26" class="toc-h2 toc-link" data-title="01.04.26">01.04.26</a>
+                  </li>
                   <li>
                     <a href="#13-01-26" class="toc-h2 toc-link" data-title="13.01.26">13.01.26</a>
                   </li>
@@ -1861,7 +1873,7 @@ curl -X GET https://api.india.delta.exchange/v2/products <span class="se">\</spa
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>Expiry date in YYYY-MM-DD format to filter products by expiry date.</td>
+<td>Expiry date in YYYY-MM-DD format to filter products by current &amp; future expiry date.</td>
 </tr>
 </tbody></table>
 
@@ -2673,7 +2685,7 @@ curl -X GET https://api.india.delta.exchange/v2/tickers?contract_types<span clas
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>Expiry date of the contracts in <code>DD-MM-YYYY</code> format.</td>
+<td>Expiry date of the contracts in <code>DD-MM-YYYY</code> format to filter by current &amp; future expiry date.</td>
 </tr>
 </tbody></table>
 
@@ -16652,8 +16664,11 @@ This operation does not require authentication.
 <p>Websocket url for <a href="https://www.delta.exchange">Delta Exchange</a></p>
 
 <ul>
-<li><strong>Production</strong> - wss://socket.india.delta.exchange</li>
-<li><strong>Testnet(Demo Account)</strong> - wss://socket-ind.testnet.deltaex.org</li>
+<li><strong>Production private channel endpoint</strong> - wss://socket.india.delta.exchange</li>
+<li><strong>Production public channel endpoint</strong> - wss://public-socket.india.delta.exchange</li>
+<br>
+<li><strong>Testnet(Demo Account) private channel endpoint</strong> - wss://socket-ind.testnet.deltaex.org</li>
+<li><strong>Testnet(Demo Account) public channel endpoint</strong> - wss://socket-ind-pub.testnet.deltaex.org</li>
 </ul>
 
 <p>There is a limit of 150 connections every 5 minutes per IP address. A connection attempt that goes beyond the limit will be disconnected with 429 HTTP status error. On receiving this error, wait for 5 to 10 minutes before making new connection requests.</p>
@@ -17131,6 +17146,8 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
     </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">1254631</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">volume</span><span class="p">,</span><span class="w"> </span><span class="err">defined</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">contract</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="err">size</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='l1_orderbook'>l1_orderbook</h2>
+<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#ob_l1">ob_l1</a>.</p>
+
 <p><strong>l1_orderbook</strong> channel provides level1 orderbook updates. You need to send the list of symbols for which you would like to subscribe to L1 orderbook. You can also subscribe to 
 orderbook updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
 If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
@@ -17262,7 +17279,49 @@ Max interval (in case of same data): 5 secs
 ```
 -->
 
-<h2 id='l2_orderbook'>l2_orderbook</h2>
+<h2 id='ob_l1'>ob_l1</h2>
+
+<p>This channel is available on the new public api websocket endpoint.</p>
+
+<p><strong>ob_l1</strong> channel provides best ask/bid or top level orderbook updates. You need to send the list of symbols for which you would like to subscribe to this channel. You can also subscribe to this channel for all symbols in an Option Chain. e.g. To subscribe to all Put and Call Options updates for BTC Options expiring on 31st March 2026, send symbol = &quot;BTC-310326&quot;. (&quot;ASSET-DDMMYY&quot;)</p>
+
+<p>Please note that if you subscribe to L1 channel without specifying the symbols list, you will not receive any data.<br>
+Publish interval: 100 millisecs<br>
+Max interval (in case of same data): 5 secs</p>
+
+<blockquote>
+<p>ob_l1 Sample</p>
+</blockquote>
+
+<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ob_l1"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"ETHUSD"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"BTC-310326"</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">ob_l</span><span class="mi">1</span><span class="w"> </span><span class="err">Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"ap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"68519.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"as"</span><span class="p">:</span><span class="w"> </span><span class="s2">"285"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"68518.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bs"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2452"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775037882675402</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"sy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775037882748105</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ob_l1"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='l2_orderbook'>l2_orderbook</h2>
+<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#ob_l2">ob_l2</a>.</p>
 
 <p><strong>l2_orderbook</strong> channel provides the complete level2 orderbook for the sepecified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. Unlike L1 orderbook channel, L2 orderbook channel does not accept product category names or &quot;all&quot; as valid symbols. 
 Please note that if you subscribe to L2 channel without specifying the symbols list, you will not receive any data.<br>
@@ -17272,7 +17331,6 @@ Max interval (in case of same data): 10 secs</p>
 <blockquote>
 <p>L2 Orderbook Sample</p>
 </blockquote>
-
 <pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
 </span><span class="p">{</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
@@ -17310,7 +17368,64 @@ Max interval (in case of same data): 10 secs</p>
   </span><span class="s2">"last_updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1671600133884000</span><span class="p">,</span><span class="w">
   </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1671600134033215</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='ob_l2'>ob_l2</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
+
+<p><strong>ob_l2</strong> channel provides the top 15 level of orderbook data for the specified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. Unlike ob_l1 channel, ob_l2 channel does not accept &#39;options expiry&#39; as valid symbols. 
+Please note that if you subscribe to ob_l2 channel without specifying the symbols list, you will not receive any data.<br>
+To get full orderbook (All levels of orderbook) use <a href="#ob_updates">ob_updates</a> channel<br>
+Publish interval: 500 millisecs<br>
+Max interval (in case of same data): 10 secs</p>
+
+<blockquote>
+<p>ob_l2 Sample</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ob_l2"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"ETHUSD"</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">ob_l</span><span class="mi">2</span><span class="w"> </span><span class="err">Response</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"a"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"68525.0"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">price</span><span class="w">
+            </span><span class="s2">"3313"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">contracts</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"68525.5"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"3009"</span><span class="w">
+        </span><span class="p">],</span><span class="err">...</span><span class="w">
+        </span><span class="err">//</span><span class="w"> </span><span class="err">Top</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="err">levels</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"b"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"68524.0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">price</span><span class="w">
+            </span><span class="s2">"2452"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">contracts</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"68523.5"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"3000"</span><span class="w">
+        </span><span class="p">],</span><span class="err">...</span><span class="w">
+        </span><span class="err">//</span><span class="w"> </span><span class="err">Top</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="err">levels</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"lts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775038313132415</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">last</span><span class="w"> </span><span class="err">orderbook</span><span class="w"> </span><span class="err">updated</span><span class="w"> </span><span class="err">timestamp</span><span class="w">
+    </span><span class="s2">"sy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">symbol</span><span class="w">
+    </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775038313632092</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">publish</span><span class="w"> </span><span class="err">timestamp</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ob_l2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='l2_updates'>l2_updates</h2>
+<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#ob_updates">ob_updates</a>.</p>
+
 <p><strong>l2_updates</strong> channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. l2_updates channel does not accept product category names or &quot;all&quot; as valid symbols. 
 Please note that if you subscribe to l2_updates channel without specifying the symbols list, you will not receive any data.<br>
 Publish interval: 100 millisecs<br>
@@ -17390,6 +17505,88 @@ asks = [[&quot;100.00&quot;, &quot;23&quot;], [&quot;100.05&quot;, &quot;34&quot
 bids = [[&quot;99.04&quot;, &quot;87&quot;], [&quot;98.65&quot;, &quot;102&quot;], [&quot;98.30&quot;, &quot;16&quot;]]<br>
 checksum_string = &quot;100.00:23,100.05:34|99.04:87,98.65:102,98.30:16&quot;<br>
 3) Calculate the CRC32 value (32-bit unsigned integer) of checksum_string. This should be equal to the checksum provided in the “update” message.</p>
+<h2 id='ob_updates'>ob_updates</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
+
+<p><strong>ob_updates</strong> channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. ob_updates channel does not accept product category names or &quot;all&quot; as valid symbols.
+Please note that if you subscribe to ob_updates channel without specifying the symbols list, you will not receive any data.<br>
+Publish interval: 100 millisecs<br>
+&quot;action&quot;=&quot;update&quot; messages wont be published till there is an orderbook change.</p>
+<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ob_updates"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"BTCUSD"</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">Initial</span><span class="w"> </span><span class="err">snapshot</span><span class="w"> </span><span class="err">response</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"snapshot"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"a"</span><span class="p">:[[</span><span class="s2">"16919.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1087"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16919.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1193"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16920.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"510"</span><span class="p">]],</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">asks</span><span class="w">
+  </span><span class="s2">"b"</span><span class="p">:[[</span><span class="s2">"16918.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"602"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16917.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1792"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16917.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2039"</span><span class="p">]],</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">bids</span><span class="w">
+  </span><span class="s2">"ts"</span><span class="p">:</span><span class="mi">1671140718980723</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">timestamps</span><span class="w">
+  </span><span class="s2">"seq"</span><span class="p">:</span><span class="mi">6199</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">sequence_no</span><span class="w">
+  </span><span class="s2">"sy"</span><span class="p">:</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">symbol</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"ob_updates"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">channel_name</span><span class="w">
+  </span><span class="s2">"cs"</span><span class="p">:</span><span class="mi">2178756498</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">checksum</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">Incremental</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">response</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"update"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"a"</span><span class="p">:[[</span><span class="s2">"16919.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16919.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"710"</span><span class="p">]],</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">asks</span><span class="w">
+  </span><span class="s2">"b"</span><span class="p">:[[</span><span class="s2">"16918.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"304"</span><span class="p">]],</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">bids</span><span class="w">
+  </span><span class="s2">"seq"</span><span class="p">:</span><span class="mi">6200</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">sequence_no</span><span class="w">
+  </span><span class="s2">"sy"</span><span class="p">:</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">symbol</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"ob_updates"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">channel_name</span><span class="w">
+  </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1671140769059031</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">timestamps</span><span class="w">
+  </span><span class="s2">"cs"</span><span class="p">:</span><span class="mi">3409694612</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">checksum</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="err">//</span><span class="w"> </span><span class="err">Error</span><span class="w"> </span><span class="err">response</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"error"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"ob_updates"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"msg"</span><span class="p">:</span><span class="s2">"Snapshot load failed. Verify if product is live and resubscribe after a few secs."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='how-to-maintain-orderbook-locally-using-this-channel-2'>How to maintain orderbook locally using this channel:</h3>
+<p>1) When you subscribe to this channel, the first message with &quot;action&quot;= &quot;snapshot&quot; resembles the complete orderbook at this time. json_key &quot;a&quot; (asks) and json_key &quot;b&quot; (bids) are arrays of [&quot;price&quot;, &quot;size&quot;]. (size is number of contracts at this price)</p>
+
+<p>2) After the initial snapshot, messages will be with &quot;action&quot; = &quot;update&quot;, resembling the difference between current and previous orderbook state. &quot;asks&quot; and &quot;bids&quot; are arrays of [&quot;price&quot;, &quot;new size&quot;]. &quot;asks&quot; are sorted in increasing order of price. &quot;bids&quot; are sorted in decreasing order of price. This is true for both &quot;snapshot&quot; and &quot;update&quot; messages.</p>
+
+<p>3) &quot;seq&quot; (sequence_no) field must be used to check if any messages were dropped. &quot;sequence_no&quot; must be +1 of the last message.<br>
+e.g. In the snapshot message it is 6199, and the update message has 6200. The next update message must have 6201. In case of sequence_no mismatch, resubscribe to the channel, and start from the beginning.</p>
+
+<p>4) If sequence_no is correct, edit the in-memory orderbook using the &quot;update&quot; message.<br>
+Case 1: price already exists, new size is 0 -&gt; Delete this price level.<br>
+Case 2: price already exists, new size isn&#39;t 0 -&gt; Replace the old size with new size.<br>
+Case 3: price doesn&#39;t exists -&gt; insert the price level.<br>
+e.g. for the shown snapshot and update messages to create the new orderbook: in the ask side, price level of &quot;16919.0&quot; will be deleted. Size at price level &quot;16919.5&quot; will be changed from &quot;1193&quot; to &quot;710&quot;. In the bids side there was no price level of &quot;16918.5&quot;, so add a new level of &quot;16918.5&quot; of size &quot;304&quot;. Other price levels from the snapshot will remain the same.</p>
+
+<p>5) If &quot;action&quot;:&quot;error&quot; message is received, resubscribe this symbol after a few seconds. Can occur in rare cases, e.g. Failed to send &quot;action&quot;:&quot;snapshot&quot; message after subscribing due to a race condition, instead an &quot;error&quot; message will be sent.</p>
+
+<p>Checksum: Using this, users can verify the accuracy of orderbook data created using ob_updates. checksum is the &quot;cs&quot; key in the message payload.<br>
+Steps to calculate checksum:<br>
+1) Edit the old in-memory orderbook with the &quot;update&quot; message received.<br>
+2) Create asks_string and bids_string as shown below. where priceN = price at Nth level, sizeN = size at Nth level. Asks are sorted in increasing order and bids in decreasing order by price.<br>
+asks_string = price0:size0,price1:size1,…,price9:size9<br>
+bids_string = price0:size0,price1:size1,…,price9:size9<br>
+checksum_string = asks_string + &quot;|&quot; + bids_string<br>
+Only consider the first 10 price levels on both sides. If orderbook as less than 10 levels, use only them.<br>
+e.g. If after applying the update, the new orderbook becomes -&gt;<br>
+asks = [[&quot;100.00&quot;, &quot;23&quot;], [&quot;100.05&quot;, &quot;34&quot;]]<br>
+bids = [[&quot;99.04&quot;, &quot;87&quot;], [&quot;98.65&quot;, &quot;102&quot;], [&quot;98.30&quot;, &quot;16&quot;]]<br>
+checksum_string = &quot;100.00:23,100.05:34|99.04:87,98.65:102,98.30:16&quot;<br>
+3) Calculate the CRC32 value (32-bit unsigned integer) of checksum_string. This should be equal to the checksum provided in the &quot;update&quot; message.</p>
 <h2 id='all_trades'>all_trades</h2>
 <p><strong>all_trades</strong> channel provides a real time feed of all trades (fills).
 You need to send the list of symbols for which you would like to subscribe to all trades channel. After subscribing to this channel, you get a snapshot of last 50 trades and then trade data in real time. You can also subscribe to
@@ -18283,7 +18480,13 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='13-01-26'>13.01.26</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='01-04-26'>01.04.26</h2>
+<ol>
+<li>We have migrated the <code>l1_orderbook</code> WebSocket channel to <code>ob_l1</code>. The new WebSocket public channel <code>ob_l1</code> provides Level 1 orderbook updates (best bid/ask) on the new public API WebSocket endpoint, supports subscribing by symbol, product category, or &quot;all&quot;, and publishes data at a 100ms interval. The legacy <code>l1_orderbook</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
+<li>We have migrated the <code>l2_orderbook</code> WebSocket channel to <code>ob_l2</code>. The new WebSocket public channel <code>ob_l2</code> provides complete Level 2 orderbook snapshots on the new public API WebSocket endpoint, supports up to 20 symbols per connection, and publishes data at a 1 sec interval. The legacy <code>l2_orderbook</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
+<li>We have migrated the <code>l2_updates</code> WebSocket channel to <code>ob_updates</code>. The new WebSocket public channel <code>ob_updates</code> provides an initial orderbook snapshot followed by incremental updates on the new public API WebSocket endpoint, supports up to 100 symbols per connection, and publishes updates at a 100ms interval. The legacy <code>l2_updates</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
+</ol>
+<h2 id='13-01-26'>13.01.26</h2>
 <ol>
 <li>Order History <code>GET /v2/orders/history</code> and Fills <code>GET /v2/fills</code> history APIs will no longer include the total field in pagination meta, these changes are now live. We are planning to change max page_size allowed for these API endpoints to be 50, higher values than 50 will return only 50 items. These changes will go live on 28th January 2026 (tentative).</li>
 <li>Updated parameter descriptions for product_ids and ticker symbol to clarify comma-separated format with maximum 10 Product_ids/symbols. Affected APIs endpoints are <code>GET /v2/tickers/{symbol}</code>, <code>GET /v2/orders</code>, <code>GET/v2/positions/margined</code>, <code>GET /v2/orders/history</code>, and <code>GET /v2/fills</code>. These changes will go live on 28th January 2026 (tentative). Passing more than 10 product_ids/symbols will return HTTP 4xx error. By default, if the product_ids parameter is not provided, these APIs returns data for all products.</li>
