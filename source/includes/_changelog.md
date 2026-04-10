@@ -1,5 +1,13 @@
 # Changelog
 
+## 10.04.26
+1. We have migrated the `v2/ticker` WebSocket channel to `ticker`. The new `ticker` channel provides the same 24-hour rolling price change data with an updated compact response format. The legacy `v2/ticker` channel is planned to be deprecated and removed on 31st July 2026.
+2. We have migrated the `all_trades` WebSocket channel to `trades`. The new `trades` channel provides the same real-time feed of all trades (fills). The legacy `all_trades` channel is planned to be deprecated and removed on 31st July 2026.
+3. We have migrated the `spot_price_old` WebSocket channel to `spot_price`. The new `spot_price` channel provides the same real-time spot price feed with an updated compact response format. The legacy `spot_price_old` channel is planned to be deprecated and removed on 31st July 2026.
+4. We have migrated the `funding_rate_old` WebSocket channel to `funding_rate`. The new `funding_rate` channel provides the same real-time funding rate feed for perpetual contracts with an updated compact response format. The legacy `funding_rate_old` channel is planned to be deprecated and removed on 31st July 2026.
+5. We have migrated the `mark_price_old` WebSocket channel to `mark_price`. The new `mark_price` channel provides the same real-time mark price feed with an updated compact response format. The legacy `mark_price_old` channel is planned to be deprecated and removed on 31st July 2026.
+6. We have migrated the `candlesticks_old` WebSocket channel to `candlesticks`. The new `candlesticks` channel provides the same OHLC candlestick data for traded and mark price candles across various resolutions with an updated compact response format. The legacy `candlesticks_old` channel is planned to be deprecated and removed on 31st July 2026.
+
 ## 01.04.26
 1. We have migrated the `l1_orderbook` WebSocket channel to `ob_l1`. The new WebSocket public channel `ob_l1` provides Level 1 orderbook updates (best bid/ask) on the new public API WebSocket endpoint, supports subscribing by symbol, product category, or "all", and publishes data at a 100ms interval. The legacy `l1_orderbook` channel is planned to be deprecated and removed on 31st July 2026.
 2. We have migrated the `l2_orderbook` WebSocket channel to `ob_l2`. The new WebSocket public channel `ob_l2` provides complete Level 2 orderbook snapshots on the new public API WebSocket endpoint, supports up to 20 symbols per connection, and publishes data at a 1 sec interval. The legacy `l2_orderbook` channel is planned to be deprecated and removed on 31st July 2026.

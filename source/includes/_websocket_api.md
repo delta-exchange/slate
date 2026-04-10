@@ -445,7 +445,9 @@ ws.send({
 
 ## v2 ticker
 
-The ticker channel provides **price change data** for the last **24 hrs** (rolling window).  
+We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [ticker](#ticker).
+
+**v2 ticker** channel provides **price change data** for the last **24 hrs** (rolling window).  
 It is published every **5 seconds**.
 
 To subscribe to the ticker channel, you need to send the list of **symbols** for which you would like to receive updates.
@@ -537,6 +539,120 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
     "volume": 1254631 // Total volume, defined as contract value * size
 }
 ```
+
+## ticker
+
+**ticker** channel provides **price change data** for the last **24 hrs** (rolling window).  
+It is published every **5 seconds**.
+
+To subscribe to the ticker channel, you need to send the list of **symbols** for which you would like to receive updates.
+
+You can also subscribe to ticker updates for a **category of products** by sending a list of [category names](/#schemaproductcategories).  
+For example, to receive updates for **put options** and **futures**, use the following format:  
+```
+{"symbols": ["put_options", "perpetual_futures"]}
+```
+
+If you would like to subscribe to options chain contracts, pass symbol as Asset-DDMMYY:  
+```
+{ "symbols": ["BTC-150426"] }
+```
+
+**Important:**  
+If you subscribe to the ticker channel without specifying a symbols list, you will **not** receive any data.
+
+> **Ticker Sample**
+
+```json
+// Subscribe to specific symbol
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "ticker",
+                "symbols": [
+                    "BTCUSD"
+                ]
+            }
+        ]
+    }
+}
+
+// Subscribe to all symbols
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "ticker",
+                "symbols": [
+                    "BTC-100426"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```json
+// Response
+{
+    "d": [
+        {
+            "g": [                  // Greeks (Options-related metrics, will be null for Futures and Spot products)
+                "0.01939861",       // delta: Rate of change of the option price with respect to the underlying asset's price
+                "0.00006382",       // gamma: Rate of change of delta with respect to the underlying asset's price
+                "0.00718630",       // rho: Rate of change of option price with respect to interest rate
+                "-81.48397021",     // theta: Rate of change of option price with respect to time (time decay)
+                "0.72486575"        // vega: Sensitivity of the option price to volatility changes
+            ],
+            "i": 27,                // product_id: The unique identifier for the product
+            "m": "72124.53970358",  // mark_price: The current mark price
+            "m24hc": "1.5902",      // mark_change_24h: Percentage change in mark price over the last 24 hours
+            "ohlc": [               // [open, high, low, close] prices for the last 24-hour period
+                71009.0,            // open
+                73135.5,            // high
+                70495.0,            // low
+                72123.5             // close
+            ],
+            "oi": [
+                "537395",           // oi_contracts: Open interest in contracts
+                "4457821.6900"      // oi_change_usd_6h: Change in open interest value in settling symbol
+            ],
+            "pb": [
+                "68495.16304969",   // price_band_lower: Lower price band limit
+                "75705.18021281"    // price_band_upper: Upper price band limit
+            ],
+            "q": [                  // Quotes
+                "72101",            // best_ask: The best ask price
+                "822",              // ask_size: The size of the ask
+                "72100",            // best_bid: The best bid price
+                "2123",             // bid_size: The size of the bid
+                null                // impact_mid_price: Mid price impact (null if not available)
+            ],
+            "qiv": [                // Implied volatility (Options only, null for Futures/Spot)
+                "0.25",             // ask_iv: Implied volatility for the ask price
+                "0.25",             // bid_iv: Implied volatility for the bid price
+                "-0.37846136"       // mark_iv: Mark volatility
+            ],
+            "s": "BTCUSD",          // symbol: The symbol of the contract
+            "to": [
+                1153493034.0710223, // turnover: Total turnover in the settling symbol
+                1153493034.0710223  // turnover_usd: Turnover value in USD
+            ]
+        }
+    ],
+    "sp": "72154.6",                // spot_price: Spot price at the time of the ticker
+    "sy": "BTCUSD",                 // symbol: The symbol of the contract
+    "ts": 1775801092453559,         // timestamp: The timestamp of the data (in microseconds)
+    "type": "ticker"
+}
+```
+
+
+
+
 
 ## l1_orderbook
 
@@ -1018,6 +1134,8 @@ checksum_string = "100.00:23,100.05:34|99.04:87,98.65:102,98.30:16"
 
 ## all_trades
 
+We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [trades](#trades).
+
 **all_trades** channel provides a real time feed of all trades (fills).
 You need to send the list of symbols for which you would like to subscribe to all trades channel. After subscribing to this channel, you get a snapshot of last 50 trades and then trade data in real time. You can also subscribe to
 all trades updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
@@ -1076,7 +1194,53 @@ Please note that if you subscribe to all_trades channel without specifying the s
 
 
 
-## mark_price
+## trades
+
+**trades** channel provides a real time feed of all trades (fills).
+You need to send the list of symbols for which you would like to subscribe to trades channel. You can also subscribe to
+trades updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "perpetual_futures"]}`.  
+You can subscribe to trades for an options chain by subcribing symbols as ASSET-DDMMYY. e.g. "BTC-150426"
+If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
+Please note that if you subscribe to trades channel without specifying the symbols list, you will not receive any data.
+
+> Trades Sample
+
+```json
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "trades",
+                "symbols": [
+                    "BTCUSD"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```json
+// Trades Response
+{
+    "p": "72141.5", // price
+    "r": "m", // buyer_role. "m" = maker, "t" = taker
+    "s": 1.0, // size in contracts
+    "sy": "BTCUSD", // symbol
+    "t": 1775800366578410, // time of the trade.
+    "ts": 1775800367003029, // publish from server timestamps
+    "type": "trades"
+}
+
+```
+
+
+
+## mark_price_old
+
+**Note:** We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [mark_price](#mark_price).
 
 **mark_price** channel provides mark price updates at a fixed interval. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a "MARK:" to subscribe for mark price.  
 You need to send the list of symbols for which you would like to subscribe to mark price channel. You can also subscribe to 
@@ -1129,8 +1293,50 @@ Publish interval: 2 secs.
 }
 ```
 
-## candlesticks
-This channel provides last ohlc candle for given time resolution. Traded price candles and Mark Price candles data can be received by sending appropriate symbol string. "product_symbol" gives traded_price candles, and "MARK:product_symbol" gives mark_price candles.  
+## mark_price
+
+**mark_price** channel provides mark price updates at a fixed interval. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a "MARK:" to subscribe for mark price.  
+You need to send the list of symbols for which you would like to subscribe to mark price channel. You can also subscribe to 
+mark price updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "perpetual_futures"]}`.  
+If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.  
+You can also subscribe to a Options chain, by passing 'Asset-Expiry', e.g. `{"symbols": ["BTC-310524"] }` will subscribe to all BTC Options expirying on 31st May 2024.  
+Please note that if you subscribe to mark price channel without specifying the symbols list, you will not receive any data.  
+Publish interval: 2 secs.
+
+> Mark Price Sample
+
+```json
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "mark_price",
+                "symbols": [
+                    "MARK:C-BTC-69500-150426"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```json
+// Mark Price Response
+{
+    "p": "2296.3486551", // mark price
+    "sy": "MARK:C-BTC-69500-100426", // symbol
+    "ts": 1775814170680883, // timestamp
+    "type": "mark_price"
+}
+```
+
+## candlesticks_old
+
+**Note:** We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [candlesticks](#candlesticks).
+
+**candlesticks_old** channel provides last ohlc candle for given time resolution. Traded price candles and Mark Price candles data can be received by sending appropriate symbol string. "product_symbol" gives traded_price candles, and "MARK:product_symbol" gives mark_price candles.  
 e.g. symbols: ["BTCUSD"] gives you Traded Price candlestick data for BTCUSD  
 symbols: ["MARK:C-BTC-75000-310325"] gives you Mark Price candlestick data for C-BTC-75000-310325
 
@@ -1177,7 +1383,57 @@ Sample feed response
 }
 ```
 
-## spot_price
+## candlesticks
+
+**candlesticks** channel provides last ohlc candle for given time resolution. Traded price candles and Mark Price candles data can be received by sending appropriate symbol string. "product_symbol" gives traded_price candles, and "MARK:product_symbol" gives mark_price candles.  
+e.g. symbols: ["BTCUSD"] gives you Traded Price candlestick data for BTCUSD  
+symbols: ["MARK:C-BTC-75000-310325"] gives you Mark Price candlestick data for C-BTC-75000-310325
+
+Subscribe to **candlestick_${resolution}** channel for updates. 
+
+List of supported resolutions
+["1m","3m","5m","15m","30m","1h","2h","4h","6h","12h","1d","1w"]
+ 
+You need to send the list of symbols for which you would like to subscribe to candlesticks channel. 
+You can also subscribe to candlesticks updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "perpetual_futures"]}`.
+Please note that if you subscribe to candlesticks channel without specifying the symbols list, you will not receive any data.
+
+>OHLC candles update sample
+
+```json
+//Sample Subscribe Request
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "candlestick_5m",        // "candlestick_" + resolution
+                "symbols": ["BTCUSD", "C-BTC-75000-271224"]
+            }
+        ]
+    }
+}
+
+
+
+Sample feed response
+
+{
+    "c": 71748.0, // close
+    "h": 71751.5, // high
+    "l": 71737.0, // low
+    "o": 71737.0, // open
+    "res": "1m",
+    "sy": "BTCUSD", // symbol
+    "ts": 1775814834503627, // timestamp
+    "type": "candlestick_1m",
+    "v": 2826.0 // volume not present in Mark Price candlestick
+}
+```
+
+## spot_price_old
+
+**Note:** We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [spot_price](#spot_price).
 
 **spot_price** channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: ***"all"***
 
@@ -1205,6 +1461,39 @@ Sample feed response
 {
     "symbol": ".DEBNBBTC",
     "price": "0.0014579",
+    "type": "spot_price"
+}
+```
+
+## spot_price
+
+**spot_price** channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: ***"all"***
+
+> Spot Price Sample
+
+```json
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "spot_price",
+                "symbols": [
+                    ".DEUSDTUSD"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```json
+// Spot Price Response
+{
+    "p": "1", // price
+    "sy": ".DEUSDTUSD", // symbol
+    "ts": 1775818505952018, // timestamp
     "type": "spot_price"
 }
 ```
@@ -1276,7 +1565,9 @@ This is the price used for settlement of options. Specifying symbols when subscr
 }
 ```
 
-## funding_rate
+## funding_rate_old
+
+**Note:** We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [funding_rate](#funding_rate).
 
 **funding_rate** channel provides a real time feed of funding rates for perpetual contracts.
 
@@ -1314,6 +1605,45 @@ Please note that if you subscribe to funding rate channel without specifying the
     "next_funding_realization": 1683734400000000, // %
     "predicted_funding_rate": 0.007221329334075148, // in us
     "timestamp": 1683711930547419   // in us
+}
+```
+
+## funding_rate
+
+**funding_rate** channel provides a real time feed of funding rates for perpetual contracts.
+
+You need to send the list of symbols for which you would like to subscribe to funding rate channel. You can also subscribe to funding rate updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "perpetual_futures"]}`.
+If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
+Please note that if you subscribe to funding rate channel without specifying the symbols list, you will not receive any data.
+
+> Funding Rate Sample
+
+```json
+//Subscribe
+{
+    "type": "subscribe",
+    "payload": {
+        "channels": [
+            {
+                "name": "funding_rate",
+                "symbols": [
+                    "BTCUSD"
+                ]
+            }
+        ]
+    }
+}
+```
+
+```json
+// Funding Rate Response
+{
+    "fi": 28800,
+    "fr": 0.010000000000000002, // funding_rate
+    "nfr": 1775836800000000, // next_funding_realization
+    "sy": "BTCUSD", // symbol
+    "ts": 1775817617666383, // timestamp
+    "type": "funding_rate"
 }
 ```
 
@@ -1438,6 +1768,9 @@ This channel provides updates on system wide announcements like scheduled mainte
 ```
 
 ## system_status
+
+**Note:** This channel is now available on the new [public channel websocket endpoint](#websocket-feed). It will be deprecated from the [private channel websocket endpoint](#websocket-feed) on 31st July 2026.
+
 This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation. No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:
 > System status Sample
 
