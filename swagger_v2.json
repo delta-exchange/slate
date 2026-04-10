@@ -4820,6 +4820,11 @@
           "description": "The lowest price reached during the trading session.",
           "example": 66300.25
         },
+        "ltp_change_24h": {
+          "type": "string",
+          "description": "The percentage change in the last traded price over the last 24 hours.",
+          "example": "0.7061"
+        },
         "mark_price": {
           "type": "string",
           "description": "The market price of the product, reflecting the most recent transaction.",
