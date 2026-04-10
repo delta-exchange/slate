@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.04.26
+1. We have migrated the `v2/ticker` WebSocket channel to `ticker`. The new `ticker` channel provides the same 24-hour rolling price change data with an updated compact response format. The legacy `v2/ticker` channel is planned to be deprecated and removed on 31st July 2026.
+2. We have migrated the `all_trades` WebSocket channel to `trades`. The new `trades` channel provides the same real-time feed of all trades (fills) including a snapshot of the last 50 trades on subscribe. The legacy `all_trades` channel is planned to be deprecated and removed on 31st July 2026.
+
 ## 01.04.26
 1. We have migrated the `l1_orderbook` WebSocket channel to `ob_l1`. The new WebSocket public channel `ob_l1` provides Level 1 orderbook updates (best bid/ask) on the new public API WebSocket endpoint, supports subscribing by symbol, product category, or "all", and publishes data at a 100ms interval. The legacy `l1_orderbook` channel is planned to be deprecated and removed on 31st July 2026.
 2. We have migrated the `l2_orderbook` WebSocket channel to `ob_l2`. The new WebSocket public channel `ob_l2` provides complete Level 2 orderbook snapshots on the new public API WebSocket endpoint, supports up to 20 symbols per connection, and publishes data at a 1 sec interval. The legacy `l2_orderbook` channel is planned to be deprecated and removed on 31st July 2026.
