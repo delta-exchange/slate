@@ -1242,7 +1242,7 @@ Please note that if you subscribe to trades channel without specifying the symbo
 
 **Note:** We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [mark_price](#mark_price).
 
-**mark_price** channel provides mark price updates at a fixed interval. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a "MARK:" to subscribe for mark price.  
+**mark_price_old** channel provides mark price updates at a fixed interval. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a "MARK:" to subscribe for mark price.  
 You need to send the list of symbols for which you would like to subscribe to mark price channel. You can also subscribe to 
 mark price updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.  
 If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.  
@@ -1435,7 +1435,7 @@ Sample feed response
 
 **Note:** We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [spot_price](#spot_price).
 
-**spot_price** channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: ***"all"***
+**spot_price_old** channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: ***"all"***
 
 > Spot Price Sample
 
@@ -1569,7 +1569,7 @@ This is the price used for settlement of options. Specifying symbols when subscr
 
 **Note:** We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [funding_rate](#funding_rate).
 
-**funding_rate** channel provides a real time feed of funding rates for perpetual contracts.
+**funding_rate_old** channel provides a real time feed of funding rates for perpetual contracts.
 
 You need to send the list of symbols for which you would like to subscribe to funding rate channel. You can also subscribe to funding rate updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
 If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
