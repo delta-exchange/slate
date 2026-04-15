@@ -1,5 +1,12 @@
 # Changelog
 
+## 15.04.26
+1. Introduced validation changes for `limit_price` parameter:
+   - Any value ≤ 0 will now be rejected
+   - If `limit_price` is not required, remove field from payload or send it as `null`
+
+Please update your integrations accordingly to avoid request failures.
+
 ## 10.04.26
 1. We have migrated the `v2/ticker` WebSocket channel to `ticker`. The new `ticker` channel provides the same 24-hour rolling price change data with an updated compact response format. The legacy `v2/ticker` channel is planned to be deprecated and removed on 31st July 2026.
 2. We have migrated the `all_trades` WebSocket channel to `trades`. The new `trades` channel provides the same real-time feed of all trades (fills). The legacy `all_trades` channel is planned to be deprecated and removed on 31st July 2026.
