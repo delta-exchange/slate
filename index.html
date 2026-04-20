@@ -825,70 +825,37 @@
             <a href="#public-channels-2" class="toc-h1 toc-link" data-title="Public Channels">Public Channels</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#v2-ticker" class="toc-h2 toc-link" data-title="v2 ticker">v2 ticker</a>
-                  </li>
-                  <li>
                     <a href="#ticker" class="toc-h2 toc-link" data-title="ticker">ticker</a>
-                  </li>
-                  <li>
-                    <a href="#l1_orderbook" class="toc-h2 toc-link" data-title="l1_orderbook">l1_orderbook</a>
                   </li>
                   <li>
                     <a href="#ob_l1" class="toc-h2 toc-link" data-title="ob_l1">ob_l1</a>
                   </li>
                   <li>
-                    <a href="#l2_orderbook" class="toc-h2 toc-link" data-title="l2_orderbook">l2_orderbook</a>
-                  </li>
-                  <li>
                     <a href="#ob_l2" class="toc-h2 toc-link" data-title="ob_l2">ob_l2</a>
-                  </li>
-                  <li>
-                    <a href="#l2_updates" class="toc-h2 toc-link" data-title="l2_updates">l2_updates</a>
                   </li>
                   <li>
                     <a href="#ob_updates" class="toc-h2 toc-link" data-title="ob_updates">ob_updates</a>
                   </li>
                   <li>
-                    <a href="#all_trades" class="toc-h2 toc-link" data-title="all_trades">all_trades</a>
-                  </li>
-                  <li>
                     <a href="#trades" class="toc-h2 toc-link" data-title="trades">trades</a>
-                  </li>
-                  <li>
-                    <a href="#mark_price_old" class="toc-h2 toc-link" data-title="mark_price_old">mark_price_old</a>
                   </li>
                   <li>
                     <a href="#mark_price" class="toc-h2 toc-link" data-title="mark_price">mark_price</a>
                   </li>
                   <li>
-                    <a href="#candlesticks_old" class="toc-h2 toc-link" data-title="candlesticks_old">candlesticks_old</a>
-                  </li>
-                  <li>
                     <a href="#candlesticks" class="toc-h2 toc-link" data-title="candlesticks">candlesticks</a>
-                  </li>
-                  <li>
-                    <a href="#spot_price_old" class="toc-h2 toc-link" data-title="spot_price_old">spot_price_old</a>
                   </li>
                   <li>
                     <a href="#spot_price" class="toc-h2 toc-link" data-title="spot_price">spot_price</a>
                   </li>
                   <li>
-                    <a href="#v2-spot_price" class="toc-h2 toc-link" data-title="v2/spot_price">v2/spot_price</a>
-                  </li>
-                  <li>
                     <a href="#spot_30mtwap_price" class="toc-h2 toc-link" data-title="spot_30mtwap_price">spot_30mtwap_price</a>
-                  </li>
-                  <li>
-                    <a href="#funding_rate_old" class="toc-h2 toc-link" data-title="funding_rate_old">funding_rate_old</a>
                   </li>
                   <li>
                     <a href="#funding_rate" class="toc-h2 toc-link" data-title="funding_rate">funding_rate</a>
                   </li>
                   <li>
                     <a href="#product_updates" class="toc-h2 toc-link" data-title="product_updates">product_updates</a>
-                  </li>
-                  <li>
-                    <a href="#announcements" class="toc-h2 toc-link" data-title="announcements">announcements</a>
                   </li>
                   <li>
                     <a href="#system_status" class="toc-h2 toc-link" data-title="system_status">system_status</a>
@@ -925,10 +892,10 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#10-04-26" class="toc-h2 toc-link" data-title="10.04.26">10.04.26</a>
+                    <a href="#17-04-26" class="toc-h2 toc-link" data-title="17.04.26">17.04.26</a>
                   </li>
                   <li>
-                    <a href="#01-04-26" class="toc-h2 toc-link" data-title="01.04.26">01.04.26</a>
+                    <a href="#15-04-26" class="toc-h2 toc-link" data-title="15.04.26">15.04.26</a>
                   </li>
                   <li>
                     <a href="#13-01-26" class="toc-h2 toc-link" data-title="13.01.26">13.01.26</a>
@@ -16688,7 +16655,7 @@ This operation does not require authentication.
 <p>Websocket api can be used for the following use cases</p>
 
 <ul>
-<li>Get real time feed of market data, this includes L2 orderbook and recent trades.</li>
+<li>Get real time feed of market data, _pricethis includes L2 orderbook and recent trades.</li>
 <li>Get price feeds - Mark prices of different contracts, price feed of underlying indexes etc.</li>
 <li>Get account specific notifications like fills, liquidations, <a href="https://www.delta.exchange/user-guide/docs/trading-guide/ADL/">ADL</a> and PnL updates.</li>
 <li>Get account specific updates on orders, positions and wallets.</li>
@@ -17089,113 +17056,15 @@ The python script(right panel) connects to the Delta Exchange WebSocket to recei
 <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">({</span>
     <span class="s">"type"</span><span class="p">:</span> <span class="s">"pong"</span>
 <span class="p">})</span>
-</code></pre><h1 id='public-channels-2'>Public Channels</h1><h2 id='v2-ticker'>v2 ticker</h2>
-<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#ticker">ticker</a>.</p>
+</code></pre><h1 id='public-channels-2'>Public Channels</h1><h2 id='ticker'>ticker</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
 
-<p><strong>v2 ticker</strong> channel provides <strong>price change data</strong> for the last <strong>24 hrs</strong> (rolling window).<br>
-It is published every <strong>5 seconds</strong>.</p>
-
-<p>To subscribe to the ticker channel, you need to send the list of <strong>symbols</strong> for which you would like to receive updates.</p>
-
-<p>You can also subscribe to ticker updates for a <strong>category of products</strong> by sending a list of <a href="/#schemaproductcategories">category names</a>.<br>
-For example, to receive updates for <strong>put options</strong> and <strong>futures</strong>, use the following format:<br>
-<code>
-{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}
-</code></p>
-
-<p>If you would like to subscribe to all listed contracts, pass:<br>
-<code>
-{ &quot;symbols&quot;: [&quot;all&quot;] }
-</code></p>
-
-<p><strong>Important:</strong><br>
-If you subscribe to the ticker channel without specifying a symbols list, you will <strong>not</strong> receive any data.</p>
-
-<blockquote>
-<p><strong>Ticker Sample</strong></p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Subscribe</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">specific</span><span class="w"> </span><span class="err">symbol</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2/ticker"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"BTCUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">//</span><span class="w"> </span><span class="err">Subscribe</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">symbols</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2/ticker"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"all"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00001347</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">beginning</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="mi">24</span><span class="err">-hour</span><span class="w"> </span><span class="err">period</span><span class="w">
-    </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00001327</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">end</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="mi">24</span><span class="err">-hour</span><span class="w"> </span><span class="err">period</span><span class="w">
-    </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00001359</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">highest</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">during</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="mi">24</span><span class="err">-hour</span><span class="w"> </span><span class="err">period</span><span class="w">
-    </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00001323</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">lowest</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">during</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="mi">24</span><span class="err">-hour</span><span class="w"> </span><span class="err">period</span><span class="w">
-    </span><span class="s2">"mark_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00001325"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">current</span><span class="w"> </span><span class="err">market</span><span class="w"> </span><span class="err">price</span><span class="w">
-    </span><span class="s2">"mark_change_24h"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.1202"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Percentage</span><span class="w"> </span><span class="err">change</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">market</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">over</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">last</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="err">hours</span><span class="w">
-    </span><span class="s2">"oi"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812.6100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Open</span><span class="w"> </span><span class="err">interest</span><span class="p">,</span><span class="w"> </span><span class="err">indicating</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">total</span><span class="w"> </span><span class="err">number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">outstanding</span><span class="w"> </span><span class="err">contracts</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">unique</span><span class="w"> </span><span class="err">identifier</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">product</span><span class="w">
-    </span><span class="s2">"quotes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"ask_iv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.25"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Implied</span><span class="w"> </span><span class="err">volatility</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">ask</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">(if</span><span class="w"> </span><span class="err">available)</span><span class="w">
-        </span><span class="s2">"ask_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"922"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">ask</span><span class="w"> </span><span class="err">(the</span><span class="w"> </span><span class="err">amount</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">sale)</span><span class="w">
-        </span><span class="s2">"best_ask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3171.5"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">best</span><span class="w"> </span><span class="err">ask</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">(the</span><span class="w"> </span><span class="err">lowest</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">which</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">asset</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">being</span><span class="w"> </span><span class="err">offered)</span><span class="w">
-        </span><span class="s2">"best_bid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3171.4"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">best</span><span class="w"> </span><span class="err">bid</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">(the</span><span class="w"> </span><span class="err">highest</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">buyer</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">willing</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">pay)</span><span class="w">
-        </span><span class="s2">"bid_iv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.25"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Implied</span><span class="w"> </span><span class="err">volatility</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">bid</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">(if</span><span class="w"> </span><span class="err">available)</span><span class="w">
-        </span><span class="s2">"bid_size"</span><span class="p">:</span><span class="w"> </span><span class="s2">"191"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">bid</span><span class="w"> </span><span class="err">(the</span><span class="w"> </span><span class="err">amount</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">buyer</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">willing</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">purchase)</span><span class="w">
-        </span><span class="s2">"impact_mid_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"61200"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Mid</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">impact</span><span class="p">,</span><span class="w"> </span><span class="err">if</span><span class="w"> </span><span class="err">available</span><span class="w"> </span><span class="err">(the</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">midpoint</span><span class="w"> </span><span class="err">between</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">best</span><span class="w"> </span><span class="err">bid</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">ask)</span><span class="w">
-        </span><span class="s2">"mark_iv"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.29418049"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Mark</span><span class="w"> </span><span class="err">volatility</span><span class="w"> </span><span class="err">(volatility</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">asset</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">mark</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">calculation)</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"greeks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Options-related</span><span class="w"> </span><span class="err">metrics</span><span class="p">,</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">Futures</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">Spot</span><span class="w"> </span><span class="err">products</span><span class="w">
-        </span><span class="s2">"delta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01939861"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Rate</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">change</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">option</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">respect</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">underlying</span><span class="w"> </span><span class="err">asset's</span><span class="w"> </span><span class="err">price</span><span class="w">
-        </span><span class="s2">"gamma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00006382"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Rate</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">change</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">delta</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">respect</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">underlying</span><span class="w"> </span><span class="err">asset's</span><span class="w"> </span><span class="err">price</span><span class="w">
-        </span><span class="s2">"rho"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00718630"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Rate</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">change</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">option</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">respect</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">interest</span><span class="w"> </span><span class="err">rate</span><span class="w">
-        </span><span class="s2">"spot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"63449.5"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">current</span><span class="w"> </span><span class="err">spot</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">underlying</span><span class="w"> </span><span class="err">asset</span><span class="w">
-        </span><span class="s2">"theta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-81.48397021"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Rate</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">change</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">option</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">respect</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">(time</span><span class="w"> </span><span class="err">decay)</span><span class="w">
-        </span><span class="s2">"vega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.72486575"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Sensitivity</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">option</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">volatility</span><span class="w"> </span><span class="err">changes</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1254631</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">contracts</span><span class="w"> </span><span class="err">traded</span><span class="w">
-    </span><span class="s2">"spot_price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.00001326"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Spot</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">ticker</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">symbol</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">contract</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1595242187705121</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">timestamp</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">(in</span><span class="w"> </span><span class="err">microseconds)</span><span class="w">
-    </span><span class="s2">"turnover"</span><span class="p">:</span><span class="w"> </span><span class="mf">16.805033569999996</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">total</span><span class="w"> </span><span class="err">turnover</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">settling</span><span class="w"> </span><span class="err">symbol</span><span class="w">
-    </span><span class="s2">"turnover_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">symbol</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">settling</span><span class="w">
-    </span><span class="s2">"turnover_usd"</span><span class="p">:</span><span class="w"> </span><span class="mf">154097.09108233</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">turnover</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">USD</span><span class="w">
-    </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mi">1254631</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">volume</span><span class="p">,</span><span class="w"> </span><span class="err">defined</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">contract</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">*</span><span class="w"> </span><span class="err">size</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='ticker'>ticker</h2>
 <p><strong>ticker</strong> channel provides <strong>price change data</strong> for the last <strong>24 hrs</strong> (rolling window).<br>
 It is published every <strong>5 seconds</strong>.</p>
 
 <p>To subscribe to the ticker channel, you need to send the list of <strong>symbols</strong> for which you would like to receive updates.</p>
 
-<p>You can also subscribe to ticker updates for a <strong>category of products</strong> by sending a list of <a href="/#schemaproductcategories">category names</a>.<br>
-For example, to receive updates for <strong>put options</strong> and <strong>futures</strong>, use the following format:<br>
-<code>
-{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;perpetual_futures&quot;]}
-</code></p>
-
-<p>If you would like to subscribe to options chain contracts, pass symbol as Asset-DDMMYY:<br>
-<code>
-{ &quot;symbols&quot;: [&quot;BTC-150426&quot;] }
-</code></p>
+<p>You need to send the list of symbols for which you would like to subscribe to this channel. You can also subscribe to this channel for all symbols in an Option Chain. e.g. To subscribe to all Put and Call Options updates for BTC Options expiring on 31st March 2026, send symbol = &quot;BTC-310326&quot;. (&quot;ASSET-DDMMYY&quot;) </p>
 
 <p><strong>Important:</strong><br>
 If you subscribe to the ticker channel without specifying a symbols list, you will <strong>not</strong> receive any data.</p>
@@ -17211,22 +17080,8 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
             </span><span class="p">{</span><span class="w">
                 </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticker"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"BTCUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">//</span><span class="w"> </span><span class="err">Subscribe</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">symbols</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticker"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"BTC-100426"</span><span class="w">
+                    </span><span class="s2">"XRPUSD"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"ETH-200426"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">For</span><span class="w"> </span><span class="err">all</span><span class="w"> </span><span class="err">ETH</span><span class="w"> </span><span class="err">options</span><span class="w"> </span><span class="err">expiring</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="mi">20</span><span class="err">th</span><span class="w"> </span><span class="err">April</span><span class="w"> </span><span class="mi">2026</span><span class="err">.</span><span class="w">
                 </span><span class="p">]</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">]</span><span class="w">
@@ -17283,45 +17138,6 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
     </span><span class="s2">"sy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">                 </span><span class="err">//</span><span class="w"> </span><span class="err">symbol</span><span class="p">:</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">symbol</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">contract</span><span class="w">
     </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775801092453559</span><span class="p">,</span><span class="w">         </span><span class="err">//</span><span class="w"> </span><span class="err">timestamp</span><span class="p">:</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">timestamp</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">data</span><span class="w"> </span><span class="err">(in</span><span class="w"> </span><span class="err">microseconds)</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticker"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='l1_orderbook'>l1_orderbook</h2>
-<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#ob_l1">ob_l1</a>.</p>
-
-<p><strong>l1_orderbook</strong> channel provides level1 orderbook updates. You need to send the list of symbols for which you would like to subscribe to L1 orderbook. You can also subscribe to 
-orderbook updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
-If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
-Please note that if you subscribe to L1 channel without specifying the symbols list, you will not receive any data.<br>
-Publish interval: 100 millisecs<br>
-Max interval (in case of same data): 5 secs</p>
-
-<blockquote>
-<p>L1 Orderbook Sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l1_orderbook"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"ETHUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">l</span><span class="mi">1</span><span class="w"> </span><span class="err">orderbook</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"ask_qty"</span><span class="p">:</span><span class="s2">"839"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"best_ask"</span><span class="p">:</span><span class="s2">"1211.3"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"best_bid"</span><span class="p">:</span><span class="s2">"1211.25"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bid_qty"</span><span class="p">:</span><span class="s2">"772"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_sequence_no"</span><span class="p">:</span><span class="mi">1671603257645135</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_updated_at"</span><span class="p">:</span><span class="mi">1671603257623000</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="mi">176</span><span class="p">,</span><span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"ETHUSD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1671603257645134</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"l1_orderbook"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -17459,54 +17275,6 @@ Max interval (in case of same data): 5 secs</p>
     </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775037882748105</span><span class="p">,</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ob_l1"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='l2_orderbook'>l2_orderbook</h2>
-<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#ob_l2">ob_l2</a>.</p>
-
-<p><strong>l2_orderbook</strong> channel provides the complete level2 orderbook for the sepecified list of symbols at a pre-determined frequency. The frequency of updates may vary for different symbols. You can only subscribe to upto 20 symbols on a single connection. Unlike L1 orderbook channel, L2 orderbook channel does not accept product category names or &quot;all&quot; as valid symbols. 
-Please note that if you subscribe to L2 channel without specifying the symbols list, you will not receive any data.<br>
-Publish interval: 1 sec<br>
-Max interval (in case of same data): 10 secs</p>
-
-<blockquote>
-<p>L2 Orderbook Sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l2_orderbook"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"ETHUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">l</span><span class="mi">2</span><span class="w"> </span><span class="err">orderbook</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"l2_orderbook"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"ETHUSD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">176</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"buy"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="s2">"101.5"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"size"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">              </span><span class="err">//</span><span class="w"> </span><span class="err">For</span><span class="w"> </span><span class="err">Futures</span><span class="w"> </span><span class="err">&amp;</span><span class="w"> </span><span class="err">Options</span><span class="p">:</span><span class="w"> </span><span class="err">number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">contracts</span><span class="w"> </span><span class="err">integer.</span><span class="w"> </span><span class="err">Spot</span><span class="w"> </span><span class="err">product</span><span class="p">:</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">token</span><span class="w"> </span><span class="err">quantity</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">string.</span><span class="w">
-        </span><span class="s2">"depth"</span><span class="p">:</span><span class="s2">"10"</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">total</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">best</span><span class="w"> </span><span class="err">bid</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"sell"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"limit_price"</span><span class="p">:</span><span class="s2">"102.0"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"size"</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"depth"</span><span class="p">:</span><span class="s2">"20"</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">total</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">from</span><span class="w"> </span><span class="err">best</span><span class="w"> </span><span class="err">ask</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-  </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"last_sequence_no"</span><span class="p">:</span><span class="w"> </span><span class="mi">6435634</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"last_updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1671600133884000</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1671600134033215</span><span class="p">,</span><span class="w">
-</span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='ob_l2'>ob_l2</h2>
 <p>This channel is available on the new public api websocket endpoint.</p>
 
@@ -17562,89 +17330,7 @@ Max interval (in case of same data): 10 secs</p>
     </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775038313632092</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">publish</span><span class="w"> </span><span class="err">timestamp</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ob_l2"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='l2_updates'>l2_updates</h2>
-<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#ob_updates">ob_updates</a>.</p>
-
-<p><strong>l2_updates</strong> channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. l2_updates channel does not accept product category names or &quot;all&quot; as valid symbols. 
-Please note that if you subscribe to l2_updates channel without specifying the symbols list, you will not receive any data.<br>
-Publish interval: 100 millisecs<br>
-&quot;action&quot;=&quot;update&quot; messages wont be published till there is an orderbook change.</p>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l2_updates"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"BTCUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">//</span><span class="w"> </span><span class="err">Initial</span><span class="w"> </span><span class="err">snapshot</span><span class="w"> </span><span class="err">response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"snapshot"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"asks"</span><span class="p">:[[</span><span class="s2">"16919.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1087"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16919.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1193"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16920.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"510"</span><span class="p">]],</span><span class="w">
-  </span><span class="s2">"bids"</span><span class="p">:[[</span><span class="s2">"16918.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"602"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16917.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1792"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16917.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"2039"</span><span class="p">]],</span><span class="w">
-  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1671140718980723</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"sequence_no"</span><span class="p">:</span><span class="mi">6199</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"l2_updates"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cs"</span><span class="p">:</span><span class="mi">2178756498</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">//</span><span class="w"> </span><span class="err">Incremental</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"update"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"asks"</span><span class="p">:[[</span><span class="s2">"16919.0"</span><span class="p">,</span><span class="w"> </span><span class="s2">"0"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"16919.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"710"</span><span class="p">]],</span><span class="w">
-  </span><span class="s2">"bids"</span><span class="p">:[[</span><span class="s2">"16918.5"</span><span class="p">,</span><span class="w"> </span><span class="s2">"304"</span><span class="p">]],</span><span class="w">
-  </span><span class="s2">"sequence_no"</span><span class="p">:</span><span class="mi">6200</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"l2_updates"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1671140769059031</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cs"</span><span class="p">:</span><span class="mi">3409694612</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">//</span><span class="w"> </span><span class="err">Error</span><span class="w"> </span><span class="err">response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"error"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"l2_updates"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"msg"</span><span class="p">:</span><span class="s2">"Snapshot load failed. Verify if product is live and resubscribe after a few secs."</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='how-to-maintain-orderbook-locally-using-this-channel'>How to maintain orderbook locally using this channel:</h3>
-<p>1) When you subscribe to this channel, the first message with &quot;action&quot;= &quot;snapshot&quot; resembles the complete l2_orderbook at this time. &quot;asks&quot; and &quot;bids&quot; are arrays of [&quot;price&quot;, &quot;size&quot;]. (size is number of contracts at this price)</p>
-
-<p>2) After the initial snapshot, messages will be with &quot;action&quot; = &quot;update&quot;, resembling the difference between current and previous orderbook state. &quot;asks&quot; and &quot;bids&quot; are arrays of [&quot;price&quot;, &quot;new size&quot;]. &quot;asks&quot; are sorted in increasing order of price. &quot;bids&quot; are sorted in decreasing order of price. This is true for both &quot;snapshot&quot; and &quot;update&quot; messages.</p>
-
-<p>3) &quot;sequence_no&quot; field must be used to check if any messages were dropped. &quot;sequence_no&quot; must be +1 of the last message.<br>
-e.g. In the snapshot message it is 6199, and the update message has 6200. The next update message must have 6201. In case of sequence_no mismatch, resubscribe to the channel, and start from the beginning.</p>
-
-<p>4) If sequence_no is correct, edit the in-memory orderbook using the &quot;update&quot; message.<br>
-Case 1: price already exists, new size is 0 -&gt; Delete this price level.<br>
-Case 2: price already exists, new size isn&#39;t 0 -&gt; Replace the old size with new size.<br>
-Case 3: price doesn’t exists -&gt; insert the price level.<br>
-e.g. for the shown snapshot and update messages to create the new orderbook: in the ask side, price level of &quot;16919.0&quot; will be deleted. Size at price level &quot;16919.5&quot; will be changed from &quot;1193&quot; to &quot;710&quot;. In the bids side there was no price level of &quot;16918.5&quot;, so add a new level of &quot;16918.5&quot; of size &quot;304&quot;. Other price levels from the snapshot will remain the same.</p>
-
-<p>5) If &quot;action&quot;:&quot;error&quot; message is received, resubscribe this symbol after a few seconds. Can occur in rare cases, e.g. Failed to send &quot;action&quot;:&quot;snapshot&quot; message after subscribing due to a race condition, instead an &quot;error&quot; message will be sent.</p>
-
-<p>Checksum: Using this, users can verify the accuracy of orderbook data created using l2_updates. checksum is the &quot;cs&quot; key in the message payload.<br>
-Steps to calculate checksum:<br>
-1) Edit the old in-memory orderbook with the &quot;update&quot; message received.<br>
-2) Create asks_string and bids_string as shown below. where priceN = price at Nth level, sizeN = size at Nth level. Asks are sorted in increasing order and bids in decreasing order by price.<br>
-asks_string = price0:size0,price1:size1,…,price9:size9<br>
-bids_string = price0:size0,price1:size1,…,price9:size9<br>
-checksum_string = asks_string + &quot;|&quot; + bids_string<br>
-Only consider the first 10 price levels on both sides. If orderbook as less than 10 levels, use only them.<br>
-e.g. If after applying the update, the new orderbook becomes -&gt;<br>
-asks = [[&quot;100.00&quot;, &quot;23&quot;], [&quot;100.05&quot;, &quot;34&quot;]]<br>
-bids = [[&quot;99.04&quot;, &quot;87&quot;], [&quot;98.65&quot;, &quot;102&quot;], [&quot;98.30&quot;, &quot;16&quot;]]<br>
-checksum_string = &quot;100.00:23,100.05:34|99.04:87,98.65:102,98.30:16&quot;<br>
-3) Calculate the CRC32 value (32-bit unsigned integer) of checksum_string. This should be equal to the checksum provided in the “update” message.</p>
-<h2 id='ob_updates'>ob_updates</h2>
+</span></code></pre><h2 id='ob_updates'>ob_updates</h2>
 <p>This channel is available on the new public api websocket endpoint.</p>
 
 <p><strong>ob_updates</strong> channel provides initial snapshot and then incremental orderbook data. The frequency of updates may vary for different symbols. You can only subscribe to upto 100 symbols on a single connection. ob_updates channel does not accept product category names or &quot;all&quot; as valid symbols.
@@ -17697,7 +17383,7 @@ Publish interval: 100 millisecs<br>
   </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"ob_updates"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"msg"</span><span class="p">:</span><span class="s2">"Snapshot load failed. Verify if product is live and resubscribe after a few secs."</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='how-to-maintain-orderbook-locally-using-this-channel-2'>How to maintain orderbook locally using this channel:</h3>
+</span></code></pre><h3 id='how-to-maintain-orderbook-locally-using-this-channel'>How to maintain orderbook locally using this channel:</h3>
 <p>1) When you subscribe to this channel, the first message with &quot;action&quot;= &quot;snapshot&quot; resembles the complete orderbook at this time. json_key &quot;a&quot; (asks) and json_key &quot;b&quot; (bids) are arrays of [&quot;price&quot;, &quot;size&quot;]. (size is number of contracts at this price)</p>
 
 <p>2) After the initial snapshot, messages will be with &quot;action&quot; = &quot;update&quot;, resembling the difference between current and previous orderbook state. &quot;asks&quot; and &quot;bids&quot; are arrays of [&quot;price&quot;, &quot;new size&quot;]. &quot;asks&quot; are sorted in increasing order of price. &quot;bids&quot; are sorted in decreasing order of price. This is true for both &quot;snapshot&quot; and &quot;update&quot; messages.</p>
@@ -17726,58 +17412,9 @@ asks = [[&quot;100.00&quot;, &quot;23&quot;], [&quot;100.05&quot;, &quot;34&quot
 bids = [[&quot;99.04&quot;, &quot;87&quot;], [&quot;98.65&quot;, &quot;102&quot;], [&quot;98.30&quot;, &quot;16&quot;]]<br>
 checksum_string = &quot;100.00:23,100.05:34|99.04:87,98.65:102,98.30:16&quot;<br>
 3) Calculate the CRC32 value (32-bit unsigned integer) of checksum_string. This should be equal to the checksum provided in the &quot;update&quot; message.</p>
-<h2 id='all_trades'>all_trades</h2>
-<p>We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#trades">trades</a>.</p>
+<h2 id='trades'>trades</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
 
-<p><strong>all_trades</strong> channel provides a real time feed of all trades (fills).
-You need to send the list of symbols for which you would like to subscribe to all trades channel. After subscribing to this channel, you get a snapshot of last 50 trades and then trade data in real time. You can also subscribe to
-all trades updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
-If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
-Please note that if you subscribe to all_trades channel without specifying the symbols list, you will not receive any data.</p>
-
-<blockquote>
-<p>All Trades Sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all_trades"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"BTCUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">Trades</span><span class="w"> </span><span class="err">Response</span><span class="w"> </span><span class="err">Snapshot</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all_trades_snapshot"</span><span class="p">,</span><span class="w">          </span><span class="err">//</span><span class="w"> </span><span class="s2">"type"</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="s2">"all_trades"</span><span class="w">
-    </span><span class="s2">"trades"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">                             </span><span class="err">//</span><span class="w"> </span><span class="err">Recent</span><span class="w"> </span><span class="err">trades</span><span class="w"> </span><span class="err">list</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"buyer_role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"maker"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"seller_role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"taker"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w">                     </span><span class="err">//</span><span class="w"> </span><span class="err">size</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">contracts</span><span class="w">
-            </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25816.5"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1686577411879974</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">trade.</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-         </span><span class="err">//</span><span class="w"> </span><span class="err">More</span><span class="w"> </span><span class="err">recent</span><span class="w"> </span><span class="err">trades.</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">All</span><span class="w"> </span><span class="err">Trades</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25816.5"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all_trades"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"buyer_role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"maker"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"seller_role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"taker"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1686577411879974</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='trades'>trades</h2>
 <p><strong>trades</strong> channel provides a real time feed of all trades (fills).
 You need to send the list of symbols for which you would like to subscribe to trades channel. You can also subscribe to
 trades updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;perpetual_futures&quot;]}</code>.<br>
@@ -17813,55 +17450,9 @@ Please note that if you subscribe to trades channel without specifying the symbo
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trades"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre><h2 id='mark_price_old'>mark_price_old</h2>
-<p><strong>Note:</strong> We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#mark_price">mark_price</a>.</p>
-
-<p><strong>mark_price</strong> channel provides mark price updates at a fixed interval. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a &quot;MARK:&quot; to subscribe for mark price.<br>
-You need to send the list of symbols for which you would like to subscribe to mark price channel. You can also subscribe to 
-mark price updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.<br>
-If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.<br>
-You can also subscribe to a Options chain, by passing &#39;Asset-Expiry&#39;, e.g. <code>{&quot;symbols&quot;: [&quot;BTC-310524&quot;] }</code> will subscribe to all BTC Options expirying on 31st May 2024.<br>
-Please note that if you subscribe to mark price channel without specifying the symbols list, you will not receive any data.<br>
-Publish interval: 2 secs.</p>
-
-<blockquote>
-<p>Mark Price Sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"MARK:C-BTC-13000-301222"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Mark</span><span class="w"> </span><span class="err">Price</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"ask_iv"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"ask_qty"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"best_ask"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"best_bid"</span><span class="p">:</span><span class="s2">"9532"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bid_iv"</span><span class="p">:</span><span class="s2">"5.000"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bid_qty"</span><span class="p">:</span><span class="s2">"896"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"delta"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"gamma"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"implied_volatility"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"price"</span><span class="p">:</span><span class="s2">"3910.088012"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"price_band"</span><span class="p">:{</span><span class="s2">"lower_limit"</span><span class="p">:</span><span class="s2">"3463.375340559572217228510815"</span><span class="p">,</span><span class="s2">"upper_limit"</span><span class="p">:</span><span class="s2">"4354.489445440427782771489185"</span><span class="p">},</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="mi">39687</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"rho"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="s2">"MARK:C-BTC-13000-301222"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="mi">1671867039712836</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"mark_price"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"vega"</span><span class="p">:</span><span class="s2">"0"</span><span class="w">
-</span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='mark_price'>mark_price</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
+
 <p><strong>mark_price</strong> channel provides mark price updates at a fixed interval. This is the price on which all open positions are marked for liquidation.Please note that the product symbol is prepended with a &quot;MARK:&quot; to subscribe for mark price.<br>
 You need to send the list of symbols for which you would like to subscribe to mark price channel. You can also subscribe to 
 mark price updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;perpetual_futures&quot;]}</code>.<br>
@@ -17894,55 +17485,9 @@ Publish interval: 2 secs.</p>
     </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775814170680883</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">timestamp</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mark_price"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='candlesticks_old'>candlesticks_old</h2>
-<p><strong>Note:</strong> We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#candlesticks">candlesticks</a>.</p>
-
-<p><strong>candlesticks_old</strong> channel provides last ohlc candle for given time resolution. Traded price candles and Mark Price candles data can be received by sending appropriate symbol string. &quot;product_symbol&quot; gives traded_price candles, and &quot;MARK:product_symbol&quot; gives mark_price candles.<br>
-e.g. symbols: [&quot;BTCUSD&quot;] gives you Traded Price candlestick data for BTCUSD<br>
-symbols: [&quot;MARK:C-BTC-75000-310325&quot;] gives you Mark Price candlestick data for C-BTC-75000-310325</p>
-
-<p>Subscribe to <strong>candlestick_${resolution}</strong> channel for updates. </p>
-
-<p>List of supported resolutions
-[&quot;1m&quot;,&quot;3m&quot;,&quot;5m&quot;,&quot;15m&quot;,&quot;30m&quot;,&quot;1h&quot;,&quot;2h&quot;,&quot;4h&quot;,&quot;6h&quot;,&quot;12h&quot;,&quot;1d&quot;,&quot;1w&quot;]</p>
-
-<p>You need to send the list of symbols for which you would like to subscribe to candlesticks channel. 
-You can also subscribe to candlesticks updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
-Please note that if you subscribe to candlesticks channel without specifying the symbols list, you will not receive any data.</p>
-
-<blockquote>
-<p>OHLC candles update sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Sample</span><span class="w"> </span><span class="err">Subscribe</span><span class="w"> </span><span class="err">Request</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"candlestick_5m"</span><span class="p">,</span><span class="w">        </span><span class="err">//</span><span class="w"> </span><span class="s2">"candlestick_"</span><span class="w"> </span><span class="err">+</span><span class="w"> </span><span class="err">resolution</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w"> </span><span class="s2">"C-BTC-75000-271224"</span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-
-
-</span><span class="err">Sample</span><span class="w"> </span><span class="err">feed</span><span class="w"> </span><span class="err">response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"candle_start_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1596015240000000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"close"</span><span class="p">:</span><span class="w"> </span><span class="mi">9223</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"high"</span><span class="p">:</span><span class="w"> </span><span class="mi">9228</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"low"</span><span class="p">:</span><span class="w"> </span><span class="mi">9220</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"open"</span><span class="p">:</span><span class="w"> </span><span class="mi">9221</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"resolution"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1m"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1596015289339699</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"candlestick_1m"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"volume"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="w">            </span><span class="err">//</span><span class="w"> </span><span class="err">volume</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">present</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">Mark</span><span class="w"> </span><span class="err">Price</span><span class="w"> </span><span class="err">candlestick</span><span class="w">
-</span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='candlesticks'>candlesticks</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
+
 <p><strong>candlesticks</strong> channel provides last ohlc candle for given time resolution. Traded price candles and Mark Price candles data can be received by sending appropriate symbol string. &quot;product_symbol&quot; gives traded_price candles, and &quot;MARK:product_symbol&quot; gives mark_price candles.<br>
 e.g. symbols: [&quot;BTCUSD&quot;] gives you Traded Price candlestick data for BTCUSD<br>
 symbols: [&quot;MARK:C-BTC-75000-310325&quot;] gives you Mark Price candlestick data for C-BTC-75000-310325</p>
@@ -17987,35 +17532,9 @@ Please note that if you subscribe to candlesticks channel without specifying the
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"candlestick_1m"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"v"</span><span class="p">:</span><span class="w"> </span><span class="mf">2826.0</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">volume</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">present</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">Mark</span><span class="w"> </span><span class="err">Price</span><span class="w"> </span><span class="err">candlestick</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='spot_price_old'>spot_price_old</h2>
-<p><strong>Note:</strong> We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#spot_price">spot_price</a>.</p>
-
-<p><strong>spot_price</strong> channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: <strong><em>&quot;all&quot;</em></strong></p>
-
-<blockquote>
-<p>Spot Price Sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_price"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">".DEBNBBTC"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Spot</span><span class="w"> </span><span class="err">Price</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEBNBBTC"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0014579"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_price"</span><span class="w">
-</span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='spot_price'>spot_price</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
+
 <p><strong>spot_price</strong> channel provides a real time feed of the underlying index prices. Specifying symbols when subscribing to spot_price is necessary to receive updates. No updates are sent for symbol: <strong><em>&quot;all&quot;</em></strong></p>
 
 <blockquote>
@@ -18041,33 +17560,6 @@ Please note that if you subscribe to candlesticks channel without specifying the
     </span><span class="s2">"sy"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEUSDTUSD"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">symbol</span><span class="w">
     </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1775818505952018</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">timestamp</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_price"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='v2-spot_price'>v2/spot_price</h2>
-<p><strong>v2/spot_price</strong> channel publishes data of underlying index prices at a fixed interval. Specifying symbols when subscribing to v2/spot_price is necessary to receive updates. No updates are sent for symbol: <strong><em>&quot;all&quot;</em></strong><br>
-Publish interval: 1 sec  </p>
-
-<blockquote>
-<p>v2/spot_price Subscribe</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2/spot_price"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">".DEETHUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"s"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEETHUSD"</span><span class="p">,</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="err">spot</span><span class="w"> </span><span class="err">index</span><span class="w"> </span><span class="err">symbol</span><span class="w">
-    </span><span class="s2">"p"</span><span class="p">:</span><span class="w"> </span><span class="mf">1349.3412141</span><span class="p">,</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="err">spot</span><span class="w"> </span><span class="err">price</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2/spot_price"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='spot_30mtwap_price'>spot_30mtwap_price</h2>
 <p><strong>spot_30mtwap_price</strong> channel provides a real time feed of the 30 min twap of underlying index prices. 
@@ -18097,44 +17589,9 @@ This is the price used for settlement of options. Specifying symbols when subscr
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot_30mtwap_price"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1561634049751430</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='funding_rate_old'>funding_rate_old</h2>
-<p><strong>Note:</strong> We will be deprecating/removing this channel on 31st July 2026. Please use the new channel <a href="#funding_rate">funding_rate</a>.</p>
-
-<p><strong>funding_rate</strong> channel provides a real time feed of funding rates for perpetual contracts.</p>
-
-<p>You need to send the list of symbols for which you would like to subscribe to funding rate channel. You can also subscribe to funding rate updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;futures&quot;]}</code>.
-If you would like to subscribe for all the listed contracts, pass: <code>{ &quot;symbols&quot;: [&quot;all&quot;] }</code>.
-Please note that if you subscribe to funding rate channel without specifying the symbols list, you will not receive any data.</p>
-
-<blockquote>
-<p>Funding Rate Sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"funding_rate"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"BTCUSD"</span><span class="w">
-                </span><span class="p">]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Funding</span><span class="w"> </span><span class="err">Rate</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTCUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"product_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">139</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"funding_rate"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"funding_rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.005701298078111892</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">%</span><span class="w">
-    </span><span class="s2">"funding_rate_8h"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.005701298078111892</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">%</span><span class="w">
-    </span><span class="s2">"next_funding_realization"</span><span class="p">:</span><span class="w"> </span><span class="mi">1683734400000000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">%</span><span class="w">
-    </span><span class="s2">"predicted_funding_rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.007221329334075148</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">us</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1683711930547419</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">us</span><span class="w">
-</span><span class="p">}</span><span class="w">
 </span></code></pre><h2 id='funding_rate'>funding_rate</h2>
+<p>This channel is available on the new public api websocket endpoint.</p>
+
 <p><strong>funding_rate</strong> channel provides a real time feed of funding rates for perpetual contracts.</p>
 
 <p>You need to send the list of symbols for which you would like to subscribe to funding rate channel. You can also subscribe to funding rate updates for category of products by sending <a href="/#schemaproductcategories">category-names</a>. For example: to receive updates for put options and futures, refer this: <code>{&quot;symbols&quot;: [&quot;put_options&quot;, &quot;perpetual_futures&quot;]}</code>.
@@ -18227,52 +17684,7 @@ Please note that if you subscribe to funding rate channel without specifying the
 <p>When auction finishes, markets enter into operational mode and trading continues as usual. </p>
 
 <p>You can read more about the single price auction <a href="https://www.delta.exchange/blog/bootstrapping-liquidity-using-auctions/">here</a></p>
-<h2 id='announcements'>announcements</h2>
-<p>This channel will be deprecated on 28 February 2026. Please use the system_status channel for all maintenance-related updates.</p>
-
-<p>This channel provides updates on system wide announcements like scheduled maintenance, maintenance started etc. No need to pass any symbols while subscribing to this channel. Below are types and examples of messages sent for more details:<br>
-1. &quot;event&quot;: &quot;maintenance_scheduled&quot; is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Contains estimated start and finish time for maintenance.<br>
-2. &quot;event&quot;: &quot;maintenance_started&quot; is sent when maintenance actually starts and markets are disrupted. Contains estimated finish time for maintenance.<br>
-3. &quot;event&quot;: &quot;maintenance_finished&quot; is sent when maintenance finishes and market is set in auction node for short duration; then trading is resumed.  </p>
-
-<blockquote>
-<p>Announcements Sample</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">//Subscribe</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscribe"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"announcements"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Maintenance</span><span class="w"> </span><span class="err">Scheduled</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"announcements"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"maintenance_scheduled"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"maintenance_start_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1742301546000000</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">maintenance</span><span class="w"> </span><span class="err">start</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">microseconds</span><span class="w">
-    </span><span class="s2">"maintenance_finish_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1742301647000000</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">finish</span><span class="w"> </span><span class="err">time</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">```json</span><span class="w">
-</span><span class="err">//</span><span class="w"> </span><span class="err">Maintenance</span><span class="w"> </span><span class="err">Started</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"announcements"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"event"</span><span class="p">:</span><span class="s2">"maintenance_started"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"maintenance_finish_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1561638049751430</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">estimated</span><span class="w"> </span><span class="err">finish</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">microseconds.</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1561634049751430</span><span class="p">,</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">//</span><span class="w"> </span><span class="err">Maintenance</span><span class="w"> </span><span class="err">Finished</span><span class="w"> </span><span class="err">Response</span><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">"announcements"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"event"</span><span class="p">:</span><span class="s2">"maintenance_finished"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1561634049751430</span><span class="p">,</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='system_status'>system_status</h2>
+<h2 id='system_status'>system_status</h2>
 <p><strong>Note:</strong> This channel is now available on the new <a href="#websocket-feed">public channel websocket endpoint</a>. It will be deprecated from the <a href="#websocket-feed">private channel websocket endpoint</a> on 31st July 2026.</p>
 
 <p>This is a public websocket channel that provides updates on system-wide status events such as scheduled maintenance, maintenance start and finish, degraded mode, and fallback operation. No symbols are required when subscribing to this channel. Below are the types of messages sent for more details:</p>
@@ -18805,21 +18217,55 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='10-04-26'>10.04.26</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='17-04-26'>17.04.26</h2>
 <ol>
-<li>We have migrated the <code>v2/ticker</code> WebSocket channel to <code>ticker</code>. The new <code>ticker</code> channel provides the same 24-hour rolling price change data with an updated compact response format. The legacy <code>v2/ticker</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
-<li>We have migrated the <code>all_trades</code> WebSocket channel to <code>trades</code>. The new <code>trades</code> channel provides the same real-time feed of all trades (fills). The legacy <code>all_trades</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
-<li>We have migrated the <code>spot_price_old</code> WebSocket channel to <code>spot_price</code>. The new <code>spot_price</code> channel provides the same real-time spot price feed with an updated compact response format. The legacy <code>spot_price_old</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
-<li>We have migrated the <code>funding_rate_old</code> WebSocket channel to <code>funding_rate</code>. The new <code>funding_rate</code> channel provides the same real-time funding rate feed for perpetual contracts with an updated compact response format. The legacy <code>funding_rate_old</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
-<li>We have migrated the <code>mark_price_old</code> WebSocket channel to <code>mark_price</code>. The new <code>mark_price</code> channel provides the same real-time mark price feed with an updated compact response format. The legacy <code>mark_price_old</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
-<li>We have migrated the <code>candlesticks_old</code> WebSocket channel to <code>candlesticks</code>. The new <code>candlesticks</code> channel provides the same OHLC candlestick data for traded and mark price candles across various resolutions with an updated compact response format. The legacy <code>candlesticks_old</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
+<li><p>The following WebSocket channels have been migrated to the <strong>new public WebSocket endpoint</strong> (<code>wss://public-socket.india.delta.exchange</code>). The new channels provide the same data with a more compact response format. The old channels on the <strong>legacy private endpoint</strong> (<code>wss://socket.india.delta.exchange</code>) will continue to work but are planned to be deprecated and removed on <strong>31st July 2026</strong> — please update your integrations before that date.
+The new channels are: <a href="#mark_price"><code>mark_price</code></a>, <a href="#candlesticks"><code>candlesticks</code></a>, <a href="#spot_price"><code>spot_price</code></a>, <a href="#funding_rate"><code>funding_rate</code></a>, <a href="#system_status"><code>system_status</code></a>.</p></li>
+<li><p>The following legacy WebSocket channels have been migrated to the <strong>new public WebSocket endpoint</strong> (<code>wss://public-socket.india.delta.exchange</code>). The old channels on the <strong>legacy private endpoint</strong> (<code>wss://socket.india.delta.exchange</code>) will continue to work but are planned to be deprecated and removed on <strong>31st July 2026</strong> — please update your integrations before that date.</p></li>
 </ol>
-<h2 id='01-04-26'>01.04.26</h2>
+
+<table><thead>
+<tr>
+<th>Removed Channel</th>
+<th>New Channel</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>l1_orderbook</code></td>
+<td><a href="#ob_l1"><code>ob_l1</code></a></td>
+</tr>
+<tr>
+<td><code>l2_orderbook</code></td>
+<td><a href="#ob_l2"><code>ob_l2</code></a></td>
+</tr>
+<tr>
+<td><code>l2_updates</code></td>
+<td><a href="#ob_updates"><code>ob_updates</code></a></td>
+</tr>
+<tr>
+<td><code>v2/ticker</code></td>
+<td><a href="#ticker"><code>ticker</code></a></td>
+</tr>
+<tr>
+<td><code>all_trades</code></td>
+<td><a href="#trades"><code>trades</code></a></td>
+</tr>
+<tr>
+<td><code>v2/spot_price</code></td>
+<td><a href="#spot_price"><code>spot_price</code></a></td>
+</tr>
+</tbody></table>
+<h2 id='15-04-26'>15.04.26</h2>
 <ol>
-<li>We have migrated the <code>l1_orderbook</code> WebSocket channel to <code>ob_l1</code>. The new WebSocket public channel <code>ob_l1</code> provides Level 1 orderbook updates (best bid/ask) on the new public API WebSocket endpoint, supports subscribing by symbol, product category, or &quot;all&quot;, and publishes data at a 100ms interval. The legacy <code>l1_orderbook</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
-<li>We have migrated the <code>l2_orderbook</code> WebSocket channel to <code>ob_l2</code>. The new WebSocket public channel <code>ob_l2</code> provides complete Level 2 orderbook snapshots on the new public API WebSocket endpoint, supports up to 20 symbols per connection, and publishes data at a 1 sec interval. The legacy <code>l2_orderbook</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
-<li>We have migrated the <code>l2_updates</code> WebSocket channel to <code>ob_updates</code>. The new WebSocket public channel <code>ob_updates</code> provides an initial orderbook snapshot followed by incremental updates on the new public API WebSocket endpoint, supports up to 100 symbols per connection, and publishes updates at a 100ms interval. The legacy <code>l2_updates</code> channel is planned to be deprecated and removed on 31st July 2026.</li>
+<li>Introduced validation changes for <code>limit_price</code> parameter:
+
+<ul>
+<li>Any value ≤ 0 will now be rejected</li>
+<li>If <code>limit_price</code> is not required, remove field from payload or send it as <code>null</code></li>
+</ul></li>
 </ol>
+
+<p>Please update your integrations accordingly to avoid request failures.</p>
 <h2 id='13-01-26'>13.01.26</h2>
 <ol>
 <li>Order History <code>GET /v2/orders/history</code> and Fills <code>GET /v2/fills</code> history APIs will no longer include the total field in pagination meta, these changes are now live. We are planning to change max page_size allowed for these API endpoints to be 50, higher values than 50 will return only 50 items. These changes will go live on 28th January 2026 (tentative).</li>
