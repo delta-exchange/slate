@@ -443,120 +443,15 @@ ws.send({
 
 # Public Channels
 
-## v2 ticker
-
-We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [ticker](#ticker).
-
-**v2 ticker** channel provides **price change data** for the last **24 hrs** (rolling window).  
-It is published every **5 seconds**.
-
-To subscribe to the ticker channel, you need to send the list of **symbols** for which you would like to receive updates.
-
-You can also subscribe to ticker updates for a **category of products** by sending a list of [category names](/#schemaproductcategories).  
-For example, to receive updates for **put options** and **futures**, use the following format:  
-```
-{"symbols": ["put_options", "futures"]}
-```
-
-If you would like to subscribe to all listed contracts, pass:  
-```
-{ "symbols": ["all"] }
-```
-
-**Important:**  
-If you subscribe to the ticker channel without specifying a symbols list, you will **not** receive any data.
-
-> **Ticker Sample**
-
-```json
-// Subscribe to specific symbol
-{
-    "type": "subscribe",
-    "payload": {
-        "channels": [
-            {
-                "name": "v2/ticker",
-                "symbols": [
-                    "BTCUSD"
-                ]
-            }
-        ]
-    }
-}
-
-// Subscribe to all symbols
-{
-    "type": "subscribe",
-    "payload": {
-        "channels": [
-            {
-                "name": "v2/ticker",
-                "symbols": [
-                    "all"
-                ]
-            }
-        ]
-    }
-}
-```
-
-```json
-// Response
-{
-    "open": 0.00001347, // The price at the beginning of the 24-hour period
-    "close": 0.00001327, // The price at the end of the 24-hour period
-    "high": 0.00001359, // The highest price during the 24-hour period
-    "low": 0.00001323, // The lowest price during the 24-hour period
-    "mark_price": "0.00001325", // The current market price
-    "mark_change_24h": "-0.1202", // Percentage change in market price over the last 24 hours
-    "oi": "812.6100", // Open interest, indicating the total number of outstanding contracts
-    "product_id": 27, // The unique identifier for the product
-    "quotes": {
-        "ask_iv": "0.25", // Implied volatility for the ask price (if available)
-        "ask_size": "922", // The size of the ask (the amount available for sale)
-        "best_ask": "3171.5", // The best ask price (the lowest price at which the asset is being offered)
-        "best_bid": "3171.4", // The best bid price (the highest price a buyer is willing to pay)
-        "bid_iv": "0.25", // Implied volatility for the bid price (if available)
-        "bid_size": "191", // The size of the bid (the amount a buyer is willing to purchase)
-        "impact_mid_price": "61200", // Mid price impact, if available (the price midpoint between the best bid and ask)
-        "mark_iv": "0.29418049" // Mark volatility (volatility of the asset used for mark price calculation)
-    },
-    "greeks": { // Options-related metrics, will be null for Futures and Spot products
-        "delta": "0.01939861", // Rate of change of the option price with respect to the underlying asset's price
-        "gamma": "0.00006382", // Rate of change of delta with respect to the underlying asset's price
-        "rho": "0.00718630", // Rate of change of option price with respect to interest rate
-        "spot": "63449.5", // The current spot price of the underlying asset
-        "theta": "-81.48397021", // Rate of change of option price with respect to time (time decay)
-        "vega": "0.72486575" // Sensitivity of the option price to volatility changes
-    },
-    "size": 1254631, // Number of contracts traded
-    "spot_price": "0.00001326", // Spot price at the time of the ticker
-    "symbol": "BTCUSD", // The symbol of the contract
-    "timestamp": 1595242187705121, // The timestamp of the data (in microseconds)
-    "turnover": 16.805033569999996, // The total turnover in the settling symbol
-    "turnover_symbol": "BTC", // The symbol used for settling
-    "turnover_usd": 154097.09108233, // The turnover value in USD
-    "volume": 1254631 // Total volume, defined as contract value * size
-}
-```
-
 ## ticker
+This channel is available on the new public api websocket endpoint.
 
 **ticker** channel provides **price change data** for the last **24 hrs** (rolling window).  
 It is published every **5 seconds**.
 
 To subscribe to the ticker channel, you need to send the list of **symbols** for which you would like to receive updates.
 
-You can also subscribe to ticker updates for a **category of products** by sending a list of [category names](/#schemaproductcategories).  
-For example, to receive updates for **put options** and **futures**, use the following format:  
-```
-{"symbols": ["put_options", "perpetual_futures"]}
-```
-
-If you would like to subscribe to options chain contracts, pass symbol as Asset-DDMMYY:  
-```
-{ "symbols": ["BTC-150426"] }
-```
+You need to send the list of symbols for which you would like to subscribe to this channel. You can also subscribe to this channel for all symbols in an Option Chain. e.g. To subscribe to all Put and Call Options updates for BTC Options expiring on 31st March 2026, send symbol = "BTC-310326". ("ASSET-DDMMYY") 
 
 **Important:**  
 If you subscribe to the ticker channel without specifying a symbols list, you will **not** receive any data.
@@ -572,22 +467,8 @@ If you subscribe to the ticker channel without specifying a symbols list, you wi
             {
                 "name": "ticker",
                 "symbols": [
-                    "BTCUSD"
-                ]
-            }
-        ]
-    }
-}
-
-// Subscribe to all symbols
-{
-    "type": "subscribe",
-    "payload": {
-        "channels": [
-            {
-                "name": "ticker",
-                "symbols": [
-                    "BTC-100426"
+                    "XRPUSD",
+                    "ETH-200426" // For all ETH options expiring on 20th April 2026.
                 ]
             }
         ]
@@ -943,69 +824,8 @@ bids = [["99.04", "87"], ["98.65", "102"], ["98.30", "16"]]
 checksum_string = "100.00:23,100.05:34|99.04:87,98.65:102,98.30:16"  
 3) Calculate the CRC32 value (32-bit unsigned integer) of checksum_string. This should be equal to the checksum provided in the "update" message.
 
-## all_trades
-
-We will be deprecating/removing this channel on 31st July 2026. Please use the new channel [trades](#trades).
-
-**all_trades** channel provides a real time feed of all trades (fills).
-You need to send the list of symbols for which you would like to subscribe to all trades channel. After subscribing to this channel, you get a snapshot of last 50 trades and then trade data in real time. You can also subscribe to
-all trades updates for category of products by sending [category-names](/#schemaproductcategories). For example: to receive updates for put options and futures, refer this: `{"symbols": ["put_options", "futures"]}`.
-If you would like to subscribe for all the listed contracts, pass: `{ "symbols": ["all"] }`.
-Please note that if you subscribe to all_trades channel without specifying the symbols list, you will not receive any data.
-
-> All Trades Sample
-
-```json
-//Subscribe
-{
-    "type": "subscribe",
-    "payload": {
-        "channels": [
-            {
-                "name": "all_trades",
-                "symbols": [
-                    "BTCUSD"
-                ]
-            }
-        ]
-    }
-}
-```
-
-```json
-// All Trades Response Snapshot
-{
-    "symbol": "BTCUSD",
-    "type": "all_trades_snapshot",          // "type" is not "all_trades"
-    "trades": [                             // Recent trades list
-        {
-            "buyer_role": "maker",
-            "seller_role": "taker",
-            "size": 53,                     // size in contracts
-            "price": "25816.5",
-            "timestamp": 1686577411879974   // time of the trade.
-        },
-         // More recent trades.
-    ]
-}
-```
-
-```json
-// All Trades Response
-{
-    "symbol": "BTCUSD",
-    "price": "25816.5",
-    "size": 100,
-    "type": "all_trades",
-    "buyer_role": "maker",
-    "seller_role": "taker",
-    "timestamp": 1686577411879974
-}
-```
-
-
-
 ## trades
+This channel is available on the new public api websocket endpoint.
 
 **trades** channel provides a real time feed of all trades (fills).
 You need to send the list of symbols for which you would like to subscribe to trades channel. You can also subscribe to
@@ -1171,39 +991,6 @@ This channel is available on the new public api websocket endpoint.
 }
 ```
 
-## v2/spot_price
-
-**v2/spot_price** channel publishes data of underlying index prices at a fixed interval. Specifying symbols when subscribing to v2/spot_price is necessary to receive updates. No updates are sent for symbol: ***"all"***  
-Publish interval: 1 sec  
-
-> v2/spot_price Subscribe
-
-```json
-//Subscribe
-{
-    "type": "subscribe",
-    "payload": {
-        "channels": [
-            {
-                "name": "v2/spot_price",
-                "symbols": [
-                    ".DEETHUSD"
-                ]
-            }
-        ]
-    }
-}
-```
-
-```json
-// Response
-{
-    "s": ".DEETHUSD",   # spot index symbol
-    "p": 1349.3412141,   # spot price
-    "type": "v2/spot_price"
-}
-```
-
 ## spot_30mtwap_price
 
 **spot_30mtwap_price** channel provides a real time feed of the 30 min twap of underlying index prices. 
@@ -1347,56 +1134,6 @@ When auction finishes, markets enter into operational mode and trading continues
 You can read more about the single price auction [here](https://www.delta.exchange/blog/bootstrapping-liquidity-using-auctions/)
 
 
-## announcements
-This channel will be deprecated on 28 February 2026. Please use the system_status channel for all maintenance-related updates.
-
-This channel provides updates on system wide announcements like scheduled maintenance, maintenance started etc. No need to pass any symbols while subscribing to this channel. Below are types and examples of messages sent for more details:  
-1. "event": "maintenance_scheduled" is sent when maintenance is scheduled. This is around 6 to 24 hours before the actual maintenance. Contains estimated start and finish time for maintenance.  
-2. "event": "maintenance_started" is sent when maintenance actually starts and markets are disrupted. Contains estimated finish time for maintenance.  
-3. "event": "maintenance_finished" is sent when maintenance finishes and market is set in auction node for short duration; then trading is resumed.  
-
-> Announcements Sample
-
-
-```json
-//Subscribe
-{
-    "type": "subscribe",
-    "payload": {
-        "channels": [
-            {
-                "name": "announcements"
-            }
-        ]
-    }
-}
-```
-
-```json
-// Maintenance Scheduled Response
-{
-    "type": "announcements",
-    "event": "maintenance_scheduled",
-    "maintenance_start_time": 1742301546000000,   // estimated maintenance start time in microseconds
-    "maintenance_finish_time": 1742301647000000   // estimated finish time
-}
-
-```json
-// Maintenance Started Response
-{
-    "type":"announcements",
-    "event":"maintenance_started",
-    "maintenance_finish_time": 1561638049751430, // estimated finish time in microseconds.
-    "timestamp": 1561634049751430,
-}
-
-// Maintenance Finished Response
-{
-    "type":"announcements",
-    "event":"maintenance_finished",
-    "timestamp": 1561634049751430,
-}
-```
 
 ## system_status
 
