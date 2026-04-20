@@ -1,17 +1,26 @@
 # Changelog
 
-## 10.04.26
-1. We have migrated the `v2/ticker` WebSocket channel to `ticker`. The new `ticker` channel provides the same 24-hour rolling price change data with an updated compact response format. The legacy `v2/ticker` channel is planned to be deprecated and removed on 31st July 2026.
-2. We have migrated the `all_trades` WebSocket channel to `trades`. The new `trades` channel provides the same real-time feed of all trades (fills). The legacy `all_trades` channel is planned to be deprecated and removed on 31st July 2026.
-3. We have migrated the `spot_price_old` WebSocket channel to `spot_price`. The new `spot_price` channel provides the same real-time spot price feed with an updated compact response format. The legacy `spot_price_old` channel is planned to be deprecated and removed on 31st July 2026.
-4. We have migrated the `funding_rate_old` WebSocket channel to `funding_rate`. The new `funding_rate` channel provides the same real-time funding rate feed for perpetual contracts with an updated compact response format. The legacy `funding_rate_old` channel is planned to be deprecated and removed on 31st July 2026.
-5. We have migrated the `mark_price_old` WebSocket channel to `mark_price`. The new `mark_price` channel provides the same real-time mark price feed with an updated compact response format. The legacy `mark_price_old` channel is planned to be deprecated and removed on 31st July 2026.
-6. We have migrated the `candlesticks_old` WebSocket channel to `candlesticks`. The new `candlesticks` channel provides the same OHLC candlestick data for traded and mark price candles across various resolutions with an updated compact response format. The legacy `candlesticks_old` channel is planned to be deprecated and removed on 31st July 2026.
+## 17.04.26
+1. The following WebSocket channels have been migrated to the **new public WebSocket endpoint** (`wss://public-socket.india.delta.exchange`). The new channels provide the same data with a more compact response format. The old channels on the **legacy private endpoint** (`wss://socket.india.delta.exchange`) will continue to work but are planned to be deprecated and removed on **31st July 2026** — please update your integrations before that date.
+The new channels are: [`mark_price`](#mark_price), [`candlesticks`](#candlesticks), [`spot_price`](#spot_price), [`funding_rate`](#funding_rate), [`system_status`](#system_status).
 
-## 01.04.26
-1. We have migrated the `l1_orderbook` WebSocket channel to `ob_l1`. The new WebSocket public channel `ob_l1` provides Level 1 orderbook updates (best bid/ask) on the new public API WebSocket endpoint, supports subscribing by symbol, product category, or "all", and publishes data at a 100ms interval. The legacy `l1_orderbook` channel is planned to be deprecated and removed on 31st July 2026.
-2. We have migrated the `l2_orderbook` WebSocket channel to `ob_l2`. The new WebSocket public channel `ob_l2` provides complete Level 2 orderbook snapshots on the new public API WebSocket endpoint, supports up to 20 symbols per connection, and publishes data at a 1 sec interval. The legacy `l2_orderbook` channel is planned to be deprecated and removed on 31st July 2026.
-3. We have migrated the `l2_updates` WebSocket channel to `ob_updates`. The new WebSocket public channel `ob_updates` provides an initial orderbook snapshot followed by incremental updates on the new public API WebSocket endpoint, supports up to 100 symbols per connection, and publishes updates at a 100ms interval. The legacy `l2_updates` channel is planned to be deprecated and removed on 31st July 2026.
+2. The following legacy WebSocket channels have been migrated to the **new public WebSocket endpoint** (`wss://public-socket.india.delta.exchange`). The old channels on the **legacy private endpoint** (`wss://socket.india.delta.exchange`) will continue to work but are planned to be deprecated and removed on **31st July 2026** — please update your integrations before that date.
+
+| Removed Channel | New Channel |
+|---|---|
+| `l1_orderbook` | [`ob_l1`](#ob_l1) |
+| `l2_orderbook` | [`ob_l2`](#ob_l2) |
+| `l2_updates` | [`ob_updates`](#ob_updates) |
+| `v2/ticker` | [`ticker`](#ticker) |
+| `all_trades` | [`trades`](#trades) |
+| `v2/spot_price` | [`spot_price`](#spot_price) |
+
+## 15.04.26
+1. Introduced validation changes for `limit_price` parameter:
+   - Any value ≤ 0 will now be rejected
+   - If `limit_price` is not required, remove field from payload or send it as `null`
+
+Please update your integrations accordingly to avoid request failures.
 
 ## 13.01.26
 1. Order History `GET /v2/orders/history` and Fills `GET /v2/fills` history APIs will no longer include the total field in pagination meta, these changes are now live. We are planning to change max page_size allowed for these API endpoints to be 50, higher values than 50 will return only 50 items. These changes will go live on 28th January 2026 (tentative).
