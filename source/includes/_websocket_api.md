@@ -4,7 +4,7 @@ Websocket api can be used for the following use cases
 
 - Get real time feed of market data, _pricethis includes L2 orderbook and recent trades.
 - Get price feeds - Mark prices of different contracts, price feed of underlying indexes etc.
-- Get account specific notifications like fills, liquidations, [ADL](https://www.delta.exchange/user-guide/docs/trading-guide/ADL/) and PnL updates.
+- Get account specific notifications like fills, liquidations, [ADL](https://guides.delta.exchange/delta-exchange-india-user-guide) and PnL updates.
 - Get account specific updates on orders, positions and wallets.
 
 Websocket url for [Delta Exchange](https://www.delta.exchange)
