@@ -35,4 +35,3 @@ workflows:
             branches:
               only:
                 - master
-                - fix/fix-user-guide-url-issue
