@@ -3686,14 +3686,6 @@
             "mmp4",
             "mmp5"
           ],
-          "x-enumDescriptions": {
-            "disabled": "Market maker protection is not applied to this order",
-            "mmp1": "Market maker protection group 1",
-            "mmp2": "Market maker protection group 2",
-            "mmp3": "Market maker protection group 3",
-            "mmp4": "Market maker protection group 4",
-            "mmp5": "Market maker protection group 5"
-          },
           "example": "disabled"
         },
         "post_only": {
@@ -3815,14 +3807,6 @@
             "mmp4",
             "mmp5"
           ],
-          "x-enumDescriptions": {
-            "disabled": "Market maker protection is not applied to this order",
-            "mmp1": "Market maker protection group 1",
-            "mmp2": "Market maker protection group 2",
-            "mmp3": "Market maker protection group 3",
-            "mmp4": "Market maker protection group 4",
-            "mmp5": "Market maker protection group 5"
-          },
           "example": "disabled"
         },
         "post_only": {
@@ -3927,14 +3911,6 @@
             "mmp4",
             "mmp5"
           ],
-          "x-enumDescriptions": {
-            "disabled": "Market maker protection is not applied to this order",
-            "mmp1": "Market maker protection group 1",
-            "mmp2": "Market maker protection group 2",
-            "mmp3": "Market maker protection group 3",
-            "mmp4": "Market maker protection group 4",
-            "mmp5": "Market maker protection group 5"
-          },
           "example": "disabled"
         },
         "post_only": {
@@ -3998,14 +3974,6 @@
             "mmp4",
             "mmp5"
           ],
-          "x-enumDescriptions": {
-            "disabled": "Market maker protection is not applied to this order",
-            "mmp1": "Market maker protection group 1",
-            "mmp2": "Market maker protection group 2",
-            "mmp3": "Market maker protection group 3",
-            "mmp4": "Market maker protection group 4",
-            "mmp5": "Market maker protection group 5"
-          },
           "example": "disabled"
         },
         "post_only": {
@@ -5301,14 +5269,7 @@
             "mmp3",
             "mmp4",
             "mmp5"
-          ],
-          "x-enumDescriptions": {
-            "mmp1": "Market maker protection group 1",
-            "mmp2": "Market maker protection group 2",
-            "mmp3": "Market maker protection group 3",
-            "mmp4": "Market maker protection group 4",
-            "mmp5": "Market maker protection group 5"
-          }
+          ]
         }
       }
     },
@@ -5329,14 +5290,7 @@
             "mmp3",
             "mmp4",
             "mmp5"
-          ],
-          "x-enumDescriptions": {
-            "mmp1": "Market maker protection group 1",
-            "mmp2": "Market maker protection group 2",
-            "mmp3": "Market maker protection group 3",
-            "mmp4": "Market maker protection group 4",
-            "mmp5": "Market maker protection group 5"
-          }
+          ]
         }
       }
     },
