@@ -55,8 +55,9 @@ REST API Endpoint URL for [Delta Exchange](https://www.delta.exchange)
 {{ for (var block of blocks) {
      for (var p of block.rows) {
        if (p.schema && p.schema.enum) {
+         var enumDescs = p.schema['x-enumDescriptions'] || {};
          for (var e of p.schema.enum) {
-           enums.push({name:p.name,value:e});
+           enums.push({name:p.name,value:e,description:enumDescs[e]||''});
          }
        }
      }
@@ -85,9 +86,9 @@ REST API Endpoint URL for [Delta Exchange](https://www.delta.exchange)
 {{? enums.length > 0 }}
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-{{~ enums :e}}|{{=e.name}}|{{=data.utils.toPrimitive(e.value)}}|
+|Property|Value|Description|
+|---|---|---|
+{{~ enums :e}}|{{=e.name}}|{{=data.utils.toPrimitive(e.value)}}|{{=e.description||''}}|
 {{~}}
 
 {{?}}
