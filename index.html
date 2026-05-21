@@ -892,6 +892,9 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#20-05-26" class="toc-h2 toc-link" data-title="20.05.26">20.05.26</a>
+                  </li>
+                  <li>
                     <a href="#17-04-26" class="toc-h2 toc-link" data-title="17.04.26">17.04.26</a>
                   </li>
                   <li>
@@ -1621,23 +1624,28 @@ curl -X GET https://api.india.delta.exchange/v2/assets <span class="se">\</span>
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>deposit_status</td>
 <td>enabled</td>
+<td>Deposits are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>disabled</td>
+<td>Deposits are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>enabled</td>
+<td>Withdrawals are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>disabled</td>
+<td>Withdrawals are currently not allowed for the asset</td>
 </tr>
 </tbody></table>
 
@@ -1744,19 +1752,23 @@ curl -X GET https://api.india.delta.exchange/v2/indices <span class="se">\</span
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>index_type</td>
 <td>spot_pair</td>
+<td>Index based on a spot trading pair</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>fixed_interest_rate</td>
+<td>Index based on a fixed interest rate</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>floating_interest_rate</td>
+<td>Index based on a floating interest rate</td>
 </tr>
 </tbody></table>
 
@@ -1986,67 +1998,83 @@ curl -X GET https://api.india.delta.exchange/v2/products <span class="se">\</spa
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>notional_type</td>
 <td>vanilla</td>
+<td>Contract is quoted, settled, and margined in the quote currency</td>
 </tr>
 <tr>
 <td>notional_type</td>
 <td>inverse</td>
+<td>Contract is quoted in the quote currency but settled and margined in the base currency</td>
 </tr>
 <tr>
 <td>state</td>
 <td>live</td>
+<td>Product is currently active and tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>expired</td>
+<td>Product has expired and is no longer tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>upcoming</td>
+<td>Product is scheduled to go live in the future</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>operational</td>
+<td>Trading is fully operational; orders can be placed and cancelled</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_cancel_only</td>
+<td>Trading is disrupted; only order cancellations are allowed</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_post_only</td>
+<td>Trading is disrupted; only post-only orders are accepted</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>enabled</td>
+<td>Deposits are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>disabled</td>
+<td>Deposits are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>enabled</td>
+<td>Withdrawals are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>disabled</td>
+<td>Withdrawals are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>spot_pair</td>
+<td>Index based on a spot trading pair</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>fixed_interest_rate</td>
+<td>Index based on a fixed interest rate</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>floating_interest_rate</td>
+<td>Index based on a floating interest rate</td>
 </tr>
 </tbody></table>
 
@@ -2235,67 +2263,83 @@ curl -X GET https://api.india.delta.exchange/v2/products/<span class="o">{</span
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>notional_type</td>
 <td>vanilla</td>
+<td>Contract is quoted, settled, and margined in the quote currency</td>
 </tr>
 <tr>
 <td>notional_type</td>
 <td>inverse</td>
+<td>Contract is quoted in the quote currency but settled and margined in the base currency</td>
 </tr>
 <tr>
 <td>state</td>
 <td>live</td>
+<td>Product is currently active and tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>expired</td>
+<td>Product has expired and is no longer tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>upcoming</td>
+<td>Product is scheduled to go live in the future</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>operational</td>
+<td>Trading is fully operational; orders can be placed and cancelled</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_cancel_only</td>
+<td>Trading is disrupted; only order cancellations are allowed</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_post_only</td>
+<td>Trading is disrupted; only post-only orders are accepted</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>enabled</td>
+<td>Deposits are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>disabled</td>
+<td>Deposits are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>enabled</td>
+<td>Withdrawals are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>disabled</td>
+<td>Withdrawals are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>spot_pair</td>
+<td>Index based on a spot trading pair</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>fixed_interest_rate</td>
+<td>Index based on a fixed interest rate</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>floating_interest_rate</td>
+<td>Index based on a floating interest rate</td>
 </tr>
 </tbody></table>
 
@@ -2927,51 +2971,63 @@ curl -X POST https://api.india.delta.exchange/v2/orders <span class="se">\</span
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -3124,51 +3180,63 @@ curl -X DELETE https://api.india.delta.exchange/v2/orders <span class="se">\</sp
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -3327,51 +3395,63 @@ curl -X PUT https://api.india.delta.exchange/v2/orders <span class="se">\</span>
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -3510,43 +3590,53 @@ curl -X GET https://api.india.delta.exchange/v2/orders <span class="se">\</span>
 <tr>
 <th>Parameter</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>contract_types</td>
 <td>futures</td>
+<td>Dated futures contracts with a fixed expiry</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>perpetual_futures</td>
+<td>Futures contracts with no expiry, funded via funding rate</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>call_options</td>
+<td>Call option contracts</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>put_options</td>
+<td>Put option contracts</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>market</td>
+<td>Market order executed at the best available price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>limit</td>
+<td>Limit order placed at a specified price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>stop_market</td>
+<td>Stop order that triggers a market order at the stop price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>stop_limit</td>
+<td>Stop order that triggers a limit order at the stop price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>all_stop</td>
+<td>All stop orders (stop_market and stop_limit)</td>
 </tr>
 </tbody></table>
 
@@ -3612,51 +3702,63 @@ curl -X GET https://api.india.delta.exchange/v2/orders <span class="se">\</span>
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -4215,51 +4317,63 @@ curl -X POST https://api.india.delta.exchange/v2/orders/batch <span class="se">\
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -4424,51 +4538,63 @@ curl -X PUT https://api.india.delta.exchange/v2/orders/batch <span class="se">\<
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -4628,51 +4754,63 @@ curl -X DELETE https://api.india.delta.exchange/v2/orders/batch <span class="se"
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -4805,51 +4943,63 @@ curl -X GET https://api.india.delta.exchange/v2/orders/<span class="o">{</span>o
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -4982,51 +5132,63 @@ curl -X GET https://api.india.delta.exchange/v2/orders/client_order_id/<span cla
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -5379,19 +5541,23 @@ curl -X GET https://api.india.delta.exchange/v2/positions/margined <span class="
 <tr>
 <th>Parameter</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>contract_types</td>
 <td>perpetual_futures</td>
+<td>Futures contracts with no expiry, funded via funding rate</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>call_options</td>
+<td>Call option contracts</td>
 </tr>
 <tr>
 <td>contract_types</td>
 <td>put_options</td>
+<td>Put option contracts</td>
 </tr>
 </tbody></table>
 
@@ -6139,27 +6305,33 @@ curl -X GET https://api.india.delta.exchange/v2/orders/history <span class="se">
 <tr>
 <th>Parameter</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>order_types</td>
 <td>market</td>
+<td>Market order executed at the best available price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>limit</td>
+<td>Limit order placed at a specified price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>stop_market</td>
+<td>Stop order that triggers a market order at the stop price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>stop_limit</td>
+<td>Stop order that triggers a limit order at the stop price</td>
 </tr>
 <tr>
 <td>order_types</td>
 <td>all_stop</td>
+<td>All stop orders (stop_market and stop_limit)</td>
 </tr>
 </tbody></table>
 
@@ -6225,51 +6397,63 @@ curl -X GET https://api.india.delta.exchange/v2/orders/history <span class="se">
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -6461,43 +6645,53 @@ curl -X GET https://api.india.delta.exchange/v2/fills <span class="se">\</span>
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>fill_type</td>
 <td>normal</td>
+<td>Regular fill from matching against the orderbook</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>adl</td>
+<td>Fill from auto-deleveraging to balance counterparty exposure</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>liquidation</td>
+<td>Fill resulting from forced liquidation of a position</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>settlement</td>
+<td>Fill generated at contract settlement or expiry</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>otc</td>
+<td>Off-exchange (over-the-counter) fill</td>
 </tr>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>role</td>
 <td>taker</td>
+<td>Fill where the user removed liquidity from the orderbook</td>
 </tr>
 <tr>
 <td>role</td>
 <td>maker</td>
+<td>Fill where the user added liquidity to the orderbook</td>
 </tr>
 </tbody></table>
 
@@ -6849,15 +7043,18 @@ curl -X GET https://api.india.delta.exchange/v2/trades/<span class="o">{</span>s
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Trade where the aggressor was a buyer</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Trade where the aggressor was a seller</td>
 </tr>
 </tbody></table>
 
@@ -7146,143 +7343,178 @@ curl -X GET https://api.india.delta.exchange/v2/wallet/transactions <span class=
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>transaction_type</td>
 <td>cashflow</td>
+<td>Generic cash credit or debit on the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>deposit</td>
+<td>Funds deposited into the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>withdrawal</td>
+<td>Funds withdrawn from the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>commission</td>
+<td>Trading commission charged on a fill</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>conversion</td>
+<td>Currency or asset conversion entry</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>funding</td>
+<td>Perpetual funding payment exchanged between long and short</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>settlement</td>
+<td>Wallet entry generated at contract settlement</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>liquidation_fee</td>
+<td>Fee charged when a position is liquidated</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>spot_trade</td>
+<td>Wallet entry from a spot trade</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>withdrawal_cancellation</td>
+<td>Reversal of a previously requested withdrawal</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>referral_bonus</td>
+<td>Bonus credited from the referral program</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>sub_account_transfer</td>
+<td>Transfer between a main account and a subaccount</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>commission_rebate</td>
+<td>Rebate paid back on previously charged commission</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>promo_credit</td>
+<td>Promotional credit added to the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits</td>
+<td>Trading credits granted to the user</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits_forfeited</td>
+<td>Trading credits forfeited (e.g. on expiry)</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits_paid</td>
+<td>Trading credits applied toward trading fees</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_fee_credits_paid_liquidation_fee</td>
+<td>Trading credits applied toward a liquidation fee</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits_reverted</td>
+<td>Reversal of previously applied trading credits</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>interest_credit</td>
+<td>Interest credited on the wallet balance</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>external_deposit</td>
+<td>Deposit from an external/off-exchange source</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>credit_line</td>
+<td>Credit line adjustment on the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_competition</td>
+<td>Wallet entry related to a trading competition</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_deposit</td>
+<td>Deposit into a managed fund</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_withdrawal</td>
+<td>Withdrawal from a managed fund</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_wallet_deposit</td>
+<td>Deposit into the fund wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_wallet_withdrawal</td>
+<td>Withdrawal from the fund wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_reward</td>
+<td>Reward credited from a managed fund</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trade_farming_reward</td>
+<td>Reward credited from the trade farming program</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>interest_credit</td>
+<td>Interest credited on the wallet balance</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>revert</td>
+<td>Reversal of a prior wallet transaction</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>raf_bonus</td>
+<td>Refer-a-friend bonus credited to the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fill_appropriation</td>
+<td>Adjustment from appropriation of a fill</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>incident_compensation</td>
+<td>Compensation credited due to an incident</td>
 </tr>
 </tbody></table>
 
@@ -9166,15 +9398,18 @@ curl -X GET https://api.india.delta.exchange/v2/heartbeat?user_id<span class="o"
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>action</td>
 <td>cancel_orders</td>
+<td>Cancel the user&#39;s open orders when the heartbeat goes unhealthy</td>
 </tr>
 <tr>
 <td>action</td>
 <td>spreads</td>
+<td>Widen quote spreads when the heartbeat goes unhealthy</td>
 </tr>
 </tbody></table>
 
@@ -9370,67 +9605,83 @@ curl -X GET https://api.india.delta.exchange/v2/products/?states<span class="o">
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>notional_type</td>
 <td>vanilla</td>
+<td>Contract is quoted, settled, and margined in the quote currency</td>
 </tr>
 <tr>
 <td>notional_type</td>
 <td>inverse</td>
+<td>Contract is quoted in the quote currency but settled and margined in the base currency</td>
 </tr>
 <tr>
 <td>state</td>
 <td>live</td>
+<td>Product is currently active and tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>expired</td>
+<td>Product has expired and is no longer tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>upcoming</td>
+<td>Product is scheduled to go live in the future</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>operational</td>
+<td>Trading is fully operational; orders can be placed and cancelled</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_cancel_only</td>
+<td>Trading is disrupted; only order cancellations are allowed</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_post_only</td>
+<td>Trading is disrupted; only post-only orders are accepted</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>enabled</td>
+<td>Deposits are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>disabled</td>
+<td>Deposits are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>enabled</td>
+<td>Withdrawals are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>disabled</td>
+<td>Withdrawals are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>spot_pair</td>
+<td>Index based on a spot trading pair</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>fixed_interest_rate</td>
+<td>Index based on a fixed interest rate</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>floating_interest_rate</td>
+<td>Index based on a floating interest rate</td>
 </tr>
 </tbody></table>
 
@@ -9533,51 +9784,63 @@ curl -X GET https://api.india.delta.exchange/v2/history/candles?resolution<span 
 <tr>
 <th>Parameter</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>resolution</td>
 <td>1m</td>
+<td>1-minute candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>3m</td>
+<td>3-minute candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>5m</td>
+<td>5-minute candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>15m</td>
+<td>15-minute candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>30m</td>
+<td>30-minute candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>1h</td>
+<td>1-hour candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>2h</td>
+<td>2-hour candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>4h</td>
+<td>4-hour candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>6h</td>
+<td>6-hour candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>1d</td>
+<td>1-day candles</td>
 </tr>
 <tr>
 <td>resolution</td>
 <td>1w</td>
+<td>1-week candles</td>
 </tr>
 </tbody></table>
 
@@ -9907,19 +10170,23 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>index_type</td>
 <td>spot_pair</td>
+<td>Index based on a spot trading pair</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>fixed_interest_rate</td>
+<td>Index based on a fixed interest rate</td>
 </tr>
 <tr>
 <td>index_type</td>
 <td>floating_interest_rate</td>
+<td>Index based on a floating interest rate</td>
 </tr>
 </tbody></table>
 
@@ -10122,23 +10389,28 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>deposit_status</td>
 <td>enabled</td>
+<td>Deposits are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>deposit_status</td>
 <td>disabled</td>
+<td>Deposits are currently not allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>enabled</td>
+<td>Withdrawals are currently allowed for the asset</td>
 </tr>
 <tr>
 <td>withdrawal_status</td>
 <td>disabled</td>
+<td>Withdrawals are currently not allowed for the asset</td>
 </tr>
 </tbody></table>
 
@@ -10517,39 +10789,48 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>notional_type</td>
 <td>vanilla</td>
+<td>Contract is quoted, settled, and margined in the quote currency</td>
 </tr>
 <tr>
 <td>notional_type</td>
 <td>inverse</td>
+<td>Contract is quoted in the quote currency but settled and margined in the base currency</td>
 </tr>
 <tr>
 <td>state</td>
 <td>live</td>
+<td>Product is currently active and tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>expired</td>
+<td>Product has expired and is no longer tradable</td>
 </tr>
 <tr>
 <td>state</td>
 <td>upcoming</td>
+<td>Product is scheduled to go live in the future</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>operational</td>
+<td>Trading is fully operational; orders can be placed and cancelled</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_cancel_only</td>
+<td>Trading is disrupted; only order cancellations are allowed</td>
 </tr>
 <tr>
 <td>trading_status</td>
 <td>disrupted_post_only</td>
+<td>Trading is disrupted; only post-only orders are accepted</td>
 </tr>
 </tbody></table>
 
@@ -10897,51 +11178,63 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>state</td>
 <td>open</td>
+<td>Order is active and resting in the orderbook</td>
 </tr>
 <tr>
 <td>state</td>
 <td>pending</td>
+<td>Order is waiting for its trigger condition to be met</td>
 </tr>
 <tr>
 <td>state</td>
 <td>closed</td>
+<td>Order has been fully filled</td>
 </tr>
 <tr>
 <td>state</td>
 <td>cancelled</td>
+<td>Order was cancelled before being fully filled</td>
 </tr>
 </tbody></table>
 
@@ -11195,111 +11488,138 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>stop_loss_order</td>
+<td>Order triggered when stop price is hit to limit losses</td>
 </tr>
 <tr>
 <td>stop_order_type</td>
 <td>take_profit_order</td>
+<td>Order triggered when take profit price is hit to lock in gains</td>
 </tr>
 <tr>
 <td>stop_trigger_method</td>
 <td>mark_price</td>
+<td>Order triggered against the mark price</td>
 </tr>
 <tr>
 <td>stop_trigger_method</td>
 <td>last_traded_price</td>
+<td>Order triggered against the last traded price</td>
 </tr>
 <tr>
 <td>stop_trigger_method</td>
 <td>spot_price</td>
+<td>Order triggered against the spot index price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>mark_price</td>
+<td>Bracket order triggered against the mark price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>last_traded_price</td>
+<td>Bracket order triggered against the last traded price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>spot_price</td>
+<td>Bracket order triggered against the spot index price</td>
 </tr>
 <tr>
 <td>time_in_force</td>
 <td>gtc</td>
+<td>Good-till-cancelled; order stays open until filled or cancelled</td>
 </tr>
 <tr>
 <td>time_in_force</td>
 <td>ioc</td>
+<td>Immediate-or-cancel; unfilled portion is cancelled immediately</td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>disabled</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp1</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp2</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp3</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp4</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp5</td>
+<td></td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>true</td>
+<td>Order is rejected if it would take liquidity from the orderbook</td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>false</td>
+<td>Order is allowed to take liquidity from the orderbook</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>true</td>
+<td>Order can only reduce or close an existing position</td>
 </tr>
 <tr>
 <td>reduce_only</td>
 <td>false</td>
+<td>Order can open or increase a position</td>
 </tr>
 <tr>
 <td>cancel_orders_accepted</td>
 <td>true</td>
+<td>User accepts that existing orders for this product may be cancelled to free margin</td>
 </tr>
 <tr>
 <td>cancel_orders_accepted</td>
 <td>false</td>
+<td>Existing orders should not be cancelled to free margin</td>
 </tr>
 </tbody></table>
 
@@ -11397,63 +11717,78 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Order placed at a specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Order executed at the best available market price</td>
 </tr>
 <tr>
 <td>time_in_force</td>
 <td>gtc</td>
+<td>Good-till-cancelled; order stays open until filled or cancelled</td>
 </tr>
 <tr>
 <td>time_in_force</td>
 <td>ioc</td>
+<td>Immediate-or-cancel; unfilled portion is cancelled immediately</td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>disabled</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp1</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp2</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp3</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp4</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp5</td>
+<td></td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>true</td>
+<td>Order is rejected if it would take liquidity from the orderbook</td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>false</td>
+<td>Order is allowed to take liquidity from the orderbook</td>
 </tr>
 </tbody></table>
 
@@ -11701,39 +12036,48 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>mmp</td>
 <td>disabled</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp1</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp2</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp3</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp4</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp5</td>
+<td></td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>true</td>
+<td>Order is rejected if it would take liquidity from the orderbook</td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>false</td>
+<td>Order is allowed to take liquidity from the orderbook</td>
 </tr>
 </tbody></table>
 
@@ -11807,39 +12151,48 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>mmp</td>
 <td>disabled</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp1</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp2</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp3</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp4</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp5</td>
+<td></td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>false</td>
+<td>Order is allowed to take liquidity from the orderbook</td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>true</td>
+<td>Order is rejected if it would take liquidity from the orderbook</td>
 </tr>
 </tbody></table>
 
@@ -12061,35 +12414,43 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Stop loss is placed as a limit order at the specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Stop loss is placed as a market order at the best available price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>limit_order</td>
+<td>Take profit is placed as a limit order at the specified limit price</td>
 </tr>
 <tr>
 <td>order_type</td>
 <td>market_order</td>
+<td>Take profit is placed as a market order at the best available price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>mark_price</td>
+<td>Bracket order triggered against the mark price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>last_traded_price</td>
+<td>Bracket order triggered against the last traded price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>spot_price</td>
+<td>Bracket order triggered against the spot index price</td>
 </tr>
 </tbody></table>
 
@@ -12195,19 +12556,23 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>mark_price</td>
+<td>Bracket order triggered against the mark price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>last_traded_price</td>
+<td>Bracket order triggered against the last traded price</td>
 </tr>
 <tr>
 <td>bracket_stop_trigger_method</td>
 <td>spot_price</td>
+<td>Bracket order triggered against the spot index price</td>
 </tr>
 </tbody></table>
 
@@ -12369,31 +12734,38 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>cancel_limit_orders</td>
 <td>true</td>
+<td>Include open limit orders in the cancellation</td>
 </tr>
 <tr>
 <td>cancel_limit_orders</td>
 <td>false</td>
+<td>Exclude open limit orders from the cancellation</td>
 </tr>
 <tr>
 <td>cancel_stop_orders</td>
 <td>true</td>
+<td>Include open stop orders in the cancellation</td>
 </tr>
 <tr>
 <td>cancel_stop_orders</td>
 <td>false</td>
+<td>Exclude open stop orders from the cancellation</td>
 </tr>
 <tr>
 <td>cancel_reduce_only_orders</td>
 <td>true</td>
+<td>Include open reduce-only orders in the cancellation</td>
 </tr>
 <tr>
 <td>cancel_reduce_only_orders</td>
 <td>false</td>
+<td>Exclude open reduce-only orders from the cancellation</td>
 </tr>
 </tbody></table>
 
@@ -12799,43 +13171,53 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>fill_type</td>
 <td>normal</td>
+<td>Regular fill from matching against the orderbook</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>adl</td>
+<td>Fill from auto-deleveraging to balance counterparty exposure</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>liquidation</td>
+<td>Fill resulting from forced liquidation of a position</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>settlement</td>
+<td>Fill generated at contract settlement or expiry</td>
 </tr>
 <tr>
 <td>fill_type</td>
 <td>otc</td>
+<td>Off-exchange (over-the-counter) fill</td>
 </tr>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Buy order on the product</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Sell order on the product</td>
 </tr>
 <tr>
 <td>role</td>
 <td>taker</td>
+<td>Fill where the user removed liquidity from the orderbook</td>
 </tr>
 <tr>
 <td>role</td>
 <td>maker</td>
+<td>Fill where the user added liquidity to the orderbook</td>
 </tr>
 </tbody></table>
 
@@ -13253,15 +13635,18 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>side</td>
 <td>buy</td>
+<td>Trade where the aggressor was a buyer</td>
 </tr>
 <tr>
 <td>side</td>
 <td>sell</td>
+<td>Trade where the aggressor was a seller</td>
 </tr>
 </tbody></table>
 
@@ -13766,143 +14151,178 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>transaction_type</td>
 <td>cashflow</td>
+<td>Generic cash credit or debit on the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>deposit</td>
+<td>Funds deposited into the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>withdrawal</td>
+<td>Funds withdrawn from the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>commission</td>
+<td>Trading commission charged on a fill</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>conversion</td>
+<td>Currency or asset conversion entry</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>funding</td>
+<td>Perpetual funding payment exchanged between long and short</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>settlement</td>
+<td>Wallet entry generated at contract settlement</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>liquidation_fee</td>
+<td>Fee charged when a position is liquidated</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>spot_trade</td>
+<td>Wallet entry from a spot trade</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>withdrawal_cancellation</td>
+<td>Reversal of a previously requested withdrawal</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>referral_bonus</td>
+<td>Bonus credited from the referral program</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>sub_account_transfer</td>
+<td>Transfer between a main account and a subaccount</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>commission_rebate</td>
+<td>Rebate paid back on previously charged commission</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>promo_credit</td>
+<td>Promotional credit added to the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits</td>
+<td>Trading credits granted to the user</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits_forfeited</td>
+<td>Trading credits forfeited (e.g. on expiry)</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits_paid</td>
+<td>Trading credits applied toward trading fees</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_fee_credits_paid_liquidation_fee</td>
+<td>Trading credits applied toward a liquidation fee</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_credits_reverted</td>
+<td>Reversal of previously applied trading credits</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>interest_credit</td>
+<td>Interest credited on the wallet balance</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>external_deposit</td>
+<td>Deposit from an external/off-exchange source</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>credit_line</td>
+<td>Credit line adjustment on the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trading_competition</td>
+<td>Wallet entry related to a trading competition</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_deposit</td>
+<td>Deposit into a managed fund</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_withdrawal</td>
+<td>Withdrawal from a managed fund</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_wallet_deposit</td>
+<td>Deposit into the fund wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_wallet_withdrawal</td>
+<td>Withdrawal from the fund wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fund_reward</td>
+<td>Reward credited from a managed fund</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>trade_farming_reward</td>
+<td>Reward credited from the trade farming program</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>interest_credit</td>
+<td>Interest credited on the wallet balance</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>revert</td>
+<td>Reversal of a prior wallet transaction</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>raf_bonus</td>
+<td>Refer-a-friend bonus credited to the wallet</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>fill_appropriation</td>
+<td>Adjustment from appropriation of a fill</td>
 </tr>
 <tr>
 <td>transaction_type</td>
 <td>incident_compensation</td>
+<td>Compensation credited due to an incident</td>
 </tr>
 </tbody></table>
 
@@ -14931,27 +15351,33 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>mmp</td>
 <td>mmp1</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp2</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp3</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp4</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp5</td>
+<td></td>
 </tr>
 </tbody></table>
 
@@ -15001,27 +15427,33 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>mmp</td>
 <td>mmp1</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp2</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp3</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp4</td>
+<td></td>
 </tr>
 <tr>
 <td>mmp</td>
 <td>mmp5</td>
+<td></td>
 </tr>
 </tbody></table>
 
@@ -15071,15 +15503,18 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>margin_mode</td>
 <td>isolated</td>
+<td>Margin is allocated per position; loss on one position cannot draw from others</td>
 </tr>
 <tr>
 <td>margin_mode</td>
 <td>portfolio</td>
+<td>Portfolio margin is shared across positions to net out risk</td>
 </tr>
 </tbody></table>
 
@@ -15740,19 +16175,23 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>impact</td>
 <td>low</td>
+<td>Low-impact heartbeat; missed beats trigger minimal protective action</td>
 </tr>
 <tr>
 <td>impact</td>
 <td>medium</td>
+<td>Medium-impact heartbeat; missed beats trigger standard protective action</td>
 </tr>
 <tr>
 <td>impact</td>
 <td>high</td>
+<td>High-impact heartbeat; missed beats trigger the strongest protective action</td>
 </tr>
 </tbody></table>
 
@@ -15810,15 +16249,18 @@ This operation does not require authentication.
 <tr>
 <th>Property</th>
 <th>Value</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>action</td>
 <td>cancel_orders</td>
+<td>Cancel the user&#39;s open orders when the heartbeat goes unhealthy</td>
 </tr>
 <tr>
 <td>action</td>
 <td>spreads</td>
+<td>Widen quote spreads when the heartbeat goes unhealthy</td>
 </tr>
 </tbody></table>
 
@@ -18217,7 +18659,11 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='17-04-26'>17.04.26</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='20-05-26'>20.05.26</h2>
+<ol>
+<li>Added a <strong>Description</strong> column to all &quot;Enumerated Values&quot; tables in the REST API docs, so each value now has a clear explanation of what it means. Covers values like <code>side</code>, <code>order_type</code>, <code>state</code>, <code>transaction_type</code>, <code>mmp</code>, <code>time_in_force</code>, <code>resolution</code>, and more. Updated across Products, Orders, Positions, TradeHistory, Trades, Wallet, Heartbeat Management, Historical OHLC Candles/Sparklines, and the Schemas section. This is a documentation update only — no API behaviour has changed.</li>
+</ol>
+<h2 id='17-04-26'>17.04.26</h2>
 <ol>
 <li><p>The following WebSocket channels have been migrated to the <strong>new public WebSocket endpoint</strong> (<code>wss://public-socket.india.delta.exchange</code>). The new channels provide the same data with a more compact response format. The old channels on the <strong>legacy private endpoint</strong> (<code>wss://socket.india.delta.exchange</code>) will continue to work but are planned to be deprecated and removed on <strong>31st July 2026</strong> — please update your integrations before that date.
 The new channels are: <a href="#mark_price"><code>mark_price</code></a>, <a href="#candlesticks"><code>candlesticks</code></a>, <a href="#spot_price"><code>spot_price</code></a>, <a href="#funding_rate"><code>funding_rate</code></a>, <a href="#system_status"><code>system_status</code></a>.</p></li>

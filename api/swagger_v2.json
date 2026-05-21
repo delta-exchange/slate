@@ -623,6 +623,12 @@
               "call_options",
               "put_options"
             ],
+            "x-enumDescriptions": {
+              "futures": "Dated futures contracts with a fixed expiry",
+              "perpetual_futures": "Futures contracts with no expiry, funded via funding rate",
+              "call_options": "Call option contracts",
+              "put_options": "Put option contracts"
+            },
             "example": "futures, perpetual_futures, call_options"
           },
           {
@@ -637,6 +643,13 @@
               "stop_limit",
               "all_stop"
             ],
+            "x-enumDescriptions": {
+              "market": "Market order executed at the best available price",
+              "limit": "Limit order placed at a specified price",
+              "stop_market": "Stop order that triggers a market order at the stop price",
+              "stop_limit": "Stop order that triggers a limit order at the stop price",
+              "all_stop": "All stop orders (stop_market and stop_limit)"
+            },
             "example": "market, limit, stop_limit"
           },
           {
@@ -1461,7 +1474,14 @@
               "stop_market",
               "stop_limit",
               "all_stop"
-            ]
+            ],
+            "x-enumDescriptions": {
+              "market": "Market order executed at the best available price",
+              "limit": "Limit order placed at a specified price",
+              "stop_market": "Stop order that triggers a market order at the stop price",
+              "stop_limit": "Stop order that triggers a limit order at the stop price",
+              "all_stop": "All stop orders (stop_market and stop_limit)"
+            }
           },
           {
             "in": "query",
@@ -1695,7 +1715,12 @@
               "perpetual_futures",
               "call_options",
               "put_options"
-            ]
+            ],
+            "x-enumDescriptions": {
+              "perpetual_futures": "Futures contracts with no expiry, funded via funding rate",
+              "call_options": "Call option contracts",
+              "put_options": "Put option contracts"
+            }
           }
         ],
         "responses": {
@@ -2440,6 +2465,19 @@
             "enum": [
               "1m","3m","5m","15m","30m","1h","2h","4h","6h","1d","1w"
             ],
+            "x-enumDescriptions": {
+              "1m": "1-minute candles",
+              "3m": "3-minute candles",
+              "5m": "5-minute candles",
+              "15m": "15-minute candles",
+              "30m": "30-minute candles",
+              "1h": "1-hour candles",
+              "2h": "2-hour candles",
+              "4h": "4-hour candles",
+              "6h": "6-hour candles",
+              "1d": "1-day candles",
+              "1w": "1-week candles"
+            },
             "required": true,
             "example": "5m"
           },
@@ -3010,6 +3048,11 @@
           "type": "string",
           "description": "Type of the index.",
           "enum": ["spot_pair", "fixed_interest_rate", "floating_interest_rate"],
+          "x-enumDescriptions": {
+            "spot_pair": "Index based on a spot trading pair",
+            "fixed_interest_rate": "Index based on a fixed interest rate",
+            "floating_interest_rate": "Index based on a floating interest rate"
+          },
           "example": "spot_pair"
         }
       },
@@ -3082,12 +3125,20 @@
         "deposit_status": {
           "type": "string",
           "enum": ["enabled", "disabled"],
+          "x-enumDescriptions": {
+            "enabled": "Deposits are currently allowed for the asset",
+            "disabled": "Deposits are currently not allowed for the asset"
+          },
           "description": "Indicates if deposits are enabled for the asset.",
           "example": "enabled"
         },
         "withdrawal_status": {
           "type": "string",
           "enum": ["enabled", "disabled"],
+          "x-enumDescriptions": {
+            "enabled": "Withdrawals are currently allowed for the asset",
+            "disabled": "Withdrawals are currently not allowed for the asset"
+          },
           "description": "Indicates if withdrawals are enabled for the asset.",
           "example": "enabled"
         },
@@ -3147,6 +3198,10 @@
         "notional_type": {
           "type": "string",
           "enum": ["vanilla", "inverse"],
+          "x-enumDescriptions": {
+            "vanilla": "Contract is quoted, settled, and margined in the quote currency",
+            "inverse": "Contract is quoted in the quote currency but settled and margined in the base currency"
+          },
           "description": "Type of notional calculation.",
           "example": "vanilla"
         },
@@ -3188,12 +3243,22 @@
         "state": {
           "type": "string",
           "enum": ["live", "expired", "upcoming"],
+          "x-enumDescriptions": {
+            "live": "Product is currently active and tradable",
+            "expired": "Product has expired and is no longer tradable",
+            "upcoming": "Product is scheduled to go live in the future"
+          },
           "description": "Current state of the product.",
           "example": "live"
         },
         "trading_status": {
           "type": "string",
           "enum": ["operational", "disrupted_cancel_only", "disrupted_post_only"],
+          "x-enumDescriptions": {
+            "operational": "Trading is fully operational; orders can be placed and cancelled",
+            "disrupted_cancel_only": "Trading is disrupted; only order cancellations are allowed",
+            "disrupted_post_only": "Trading is disrupted; only post-only orders are accepted"
+          },
           "description": "Trading status of the contract.",
           "example": "operational"
         },
@@ -3352,6 +3417,10 @@
             "buy",
             "sell"
           ],
+          "x-enumDescriptions": {
+            "buy": "Buy order on the product",
+            "sell": "Sell order on the product"
+          },
           "example": "buy"
         },
         "order_type": {
@@ -3361,6 +3430,10 @@
             "limit_order",
             "market_order"
           ],
+          "x-enumDescriptions": {
+            "limit_order": "Order placed at a specified limit price",
+            "market_order": "Order executed at the best available market price"
+          },
           "example": "limit_order"
         },
         "limit_price": {
@@ -3374,6 +3447,9 @@
           "enum": [
             "stop_loss_order"
           ],
+          "x-enumDescriptions": {
+            "stop_loss_order": "Order triggered when stop price is hit to limit losses"
+          },
           "example": "stop_loss_order"
         },
         "stop_price": {
@@ -3398,6 +3474,10 @@
             "false",
             "true"
           ],
+          "x-enumDescriptions": {
+            "false": "Order can open or increase a position",
+            "true": "Order can only reduce or close an existing position"
+          },
           "default": false,
           "example": false
         },
@@ -3415,6 +3495,12 @@
             "closed",
             "cancelled"
           ],
+          "x-enumDescriptions": {
+            "open": "Order is active and resting in the orderbook",
+            "pending": "Order is waiting for its trigger condition to be met",
+            "closed": "Order has been fully filled",
+            "cancelled": "Order was cancelled before being fully filled"
+          },
           "example": "open"
         },
         "created_at": {
@@ -3478,6 +3564,10 @@
             "buy",
             "sell"
           ],
+          "x-enumDescriptions": {
+            "buy": "Buy order on the product",
+            "sell": "Sell order on the product"
+          },
           "example": "buy"
         },
         "order_type": {
@@ -3487,6 +3577,10 @@
             "limit_order",
             "market_order"
           ],
+          "x-enumDescriptions": {
+            "limit_order": "Order placed at a specified limit price",
+            "market_order": "Order executed at the best available market price"
+          },
           "default": "market_order",
           "example": "limit_order"
         },
@@ -3497,6 +3591,10 @@
             "stop_loss_order",
             "take_profit_order"
           ],
+          "x-enumDescriptions": {
+            "stop_loss_order": "Order triggered when stop price is hit to limit losses",
+            "take_profit_order": "Order triggered when take profit price is hit to lock in gains"
+          },
           "example": "stop_loss_order"
         },
         "stop_price": {
@@ -3515,6 +3613,11 @@
           "enum": [
             "mark_price", "last_traded_price", "spot_price"
           ],
+          "x-enumDescriptions": {
+            "mark_price": "Order triggered against the mark price",
+            "last_traded_price": "Order triggered against the last traded price",
+            "spot_price": "Order triggered against the spot index price"
+          },
           "default": "mark_price",
           "example": "last_traded_price"
         },
@@ -3526,6 +3629,11 @@
             "last_traded_price",
             "spot_price"
           ],
+          "x-enumDescriptions": {
+            "mark_price": "Bracket order triggered against the mark price",
+            "last_traded_price": "Bracket order triggered against the last traded price",
+            "spot_price": "Bracket order triggered against the spot index price"
+          },
           "default": "mark_price",
           "example": "last_traded_price"
         },
@@ -3561,6 +3669,10 @@
             "gtc",
             "ioc"
           ],
+          "x-enumDescriptions": {
+            "gtc": "Good-till-cancelled; order stays open until filled or cancelled",
+            "ioc": "Immediate-or-cancel; unfilled portion is cancelled immediately"
+          },
           "example": "gtc"
         },
         "mmp": {
@@ -3583,6 +3695,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "Order is rejected if it would take liquidity from the orderbook",
+            "false": "Order is allowed to take liquidity from the orderbook"
+          },
           "default": false,
           "example": false
         },
@@ -3593,6 +3709,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "Order can only reduce or close an existing position",
+            "false": "Order can open or increase a position"
+          },
           "default": false,
           "example": false
         },
@@ -3608,6 +3728,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "User accepts that existing orders for this product may be cancelled to free margin",
+            "false": "Existing orders should not be cancelled to free margin"
+          },
           "default": false,
           "example": false
         }
@@ -3639,6 +3763,10 @@
             "buy",
             "sell"
           ],
+          "x-enumDescriptions": {
+            "buy": "Buy order on the product",
+            "sell": "Sell order on the product"
+          },
           "example": "buy"
         },
         "order_type": {
@@ -3648,6 +3776,10 @@
             "limit_order",
             "market_order"
           ],
+          "x-enumDescriptions": {
+            "limit_order": "Order placed at a specified limit price",
+            "market_order": "Order executed at the best available market price"
+          },
           "default": "market_order",
           "example": "limit_order"
         },
@@ -3658,6 +3790,10 @@
             "gtc",
             "ioc"
           ],
+          "x-enumDescriptions": {
+            "gtc": "Good-till-cancelled; order stays open until filled or cancelled",
+            "ioc": "Immediate-or-cancel; unfilled portion is cancelled immediately"
+          },
           "example": "gtc"
         },
         "mmp": {
@@ -3680,6 +3816,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "Order is rejected if it would take liquidity from the orderbook",
+            "false": "Order is allowed to take liquidity from the orderbook"
+          },
           "default": false,
           "example": false
         },
@@ -3780,6 +3920,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "Order is rejected if it would take liquidity from the orderbook",
+            "false": "Order is allowed to take liquidity from the orderbook"
+          },
           "default": false,
           "example": false
         },
@@ -3839,6 +3983,10 @@
             "false",
             "true"
           ],
+          "x-enumDescriptions": {
+            "false": "Order is allowed to take liquidity from the orderbook",
+            "true": "Order is rejected if it would take liquidity from the orderbook"
+          },
           "default": false,
           "example": false
         }
@@ -3898,6 +4046,10 @@
               "type": "string",
               "description": "Limit order(limit_price must be defined) or Market order",
               "enum": ["limit_order", "market_order"],
+              "x-enumDescriptions": {
+                "limit_order": "Stop loss is placed as a limit order at the specified limit price",
+                "market_order": "Stop loss is placed as a market order at the best available price"
+              },
               "default": "market_order",
               "example": "limit_order"
             },
@@ -3925,6 +4077,10 @@
               "type": "string",
               "description": "Limit order(limit_price must be defined) or Market order",
               "enum": ["limit_order", "market_order"],
+              "x-enumDescriptions": {
+                "limit_order": "Take profit is placed as a limit order at the specified limit price",
+                "market_order": "Take profit is placed as a market order at the best available price"
+              },
               "default": "market_order",
               "example": "limit_order"
             },
@@ -3948,6 +4104,11 @@
             "last_traded_price",
             "spot_price"
           ],
+          "x-enumDescriptions": {
+            "mark_price": "Bracket order triggered against the mark price",
+            "last_traded_price": "Bracket order triggered against the last traded price",
+            "spot_price": "Bracket order triggered against the spot index price"
+          },
           "default": "mark_price",
           "example": "last_traded_price"
         }
@@ -4011,6 +4172,11 @@
             "last_traded_price",
             "spot_price"
           ],
+          "x-enumDescriptions": {
+            "mark_price": "Bracket order triggered against the mark price",
+            "last_traded_price": "Bracket order triggered against the last traded price",
+            "spot_price": "Bracket order triggered against the spot index price"
+          },
           "default": "mark_price",
           "example": "last_traded_price"
         }
@@ -4074,6 +4240,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "Include open limit orders in the cancellation",
+            "false": "Exclude open limit orders from the cancellation"
+          },
           "example": false
         },
         "cancel_stop_orders": {
@@ -4083,6 +4253,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "Include open stop orders in the cancellation",
+            "false": "Exclude open stop orders from the cancellation"
+          },
           "example": false
         },
         "cancel_reduce_only_orders": {
@@ -4092,6 +4266,10 @@
             "true",
             "false"
           ],
+          "x-enumDescriptions": {
+            "true": "Include open reduce-only orders in the cancellation",
+            "false": "Exclude open reduce-only orders from the cancellation"
+          },
           "example": false
         }
       }
@@ -4195,14 +4373,25 @@
             "liquidation",
             "settlement",
             "otc"
-          ]
+          ],
+          "x-enumDescriptions": {
+            "normal": "Regular fill from matching against the orderbook",
+            "adl": "Fill from auto-deleveraging to balance counterparty exposure",
+            "liquidation": "Fill resulting from forced liquidation of a position",
+            "settlement": "Fill generated at contract settlement or expiry",
+            "otc": "Off-exchange (over-the-counter) fill"
+          }
         },
         "side": {
           "type": "string",
           "enum": [
             "buy",
             "sell"
-          ]
+          ],
+          "x-enumDescriptions": {
+            "buy": "Buy order on the product",
+            "sell": "Sell order on the product"
+          }
         },
         "price": {
           "type": "string",
@@ -4213,7 +4402,11 @@
           "enum": [
             "taker",
             "maker"
-          ]
+          ],
+          "x-enumDescriptions": {
+            "taker": "Fill where the user removed liquidity from the orderbook",
+            "maker": "Fill where the user added liquidity to the orderbook"
+          }
         },
         "commission": {
           "type": "string",
@@ -4398,7 +4591,11 @@
                 "enum": [
                   "buy",
                   "sell"
-                ]
+                ],
+                "x-enumDescriptions": {
+                  "buy": "Trade where the aggressor was a buyer",
+                  "sell": "Trade where the aggressor was a seller"
+                }
               },
               "size": {
                 "type": "integer"
@@ -4627,7 +4824,42 @@
             "raf_bonus",
             "fill_appropriation",
             "incident_compensation"
-          ]
+          ],
+          "x-enumDescriptions": {
+            "cashflow": "Generic cash credit or debit on the wallet",
+            "deposit": "Funds deposited into the wallet",
+            "withdrawal": "Funds withdrawn from the wallet",
+            "commission": "Trading commission charged on a fill",
+            "conversion": "Currency or asset conversion entry",
+            "funding": "Perpetual funding payment exchanged between long and short",
+            "settlement": "Wallet entry generated at contract settlement",
+            "liquidation_fee": "Fee charged when a position is liquidated",
+            "spot_trade": "Wallet entry from a spot trade",
+            "withdrawal_cancellation": "Reversal of a previously requested withdrawal",
+            "referral_bonus": "Bonus credited from the referral program",
+            "sub_account_transfer": "Transfer between a main account and a subaccount",
+            "commission_rebate": "Rebate paid back on previously charged commission",
+            "promo_credit": "Promotional credit added to the wallet",
+            "trading_credits": "Trading credits granted to the user",
+            "trading_credits_forfeited": "Trading credits forfeited (e.g. on expiry)",
+            "trading_credits_paid": "Trading credits applied toward trading fees",
+            "trading_fee_credits_paid_liquidation_fee": "Trading credits applied toward a liquidation fee",
+            "trading_credits_reverted": "Reversal of previously applied trading credits",
+            "interest_credit": "Interest credited on the wallet balance",
+            "external_deposit": "Deposit from an external/off-exchange source",
+            "credit_line": "Credit line adjustment on the wallet",
+            "trading_competition": "Wallet entry related to a trading competition",
+            "fund_deposit": "Deposit into a managed fund",
+            "fund_withdrawal": "Withdrawal from a managed fund",
+            "fund_wallet_deposit": "Deposit into the fund wallet",
+            "fund_wallet_withdrawal": "Withdrawal from the fund wallet",
+            "fund_reward": "Reward credited from a managed fund",
+            "trade_farming_reward": "Reward credited from the trade farming program",
+            "revert": "Reversal of a prior wallet transaction",
+            "raf_bonus": "Refer-a-friend bonus credited to the wallet",
+            "fill_appropriation": "Adjustment from appropriation of a fill",
+            "incident_compensation": "Compensation credited due to an incident"
+          }
         }
       }
     },
@@ -5070,6 +5302,10 @@
           "type": "string",
           "description": "The target margin mode: 'isolated' or 'portfolio'.",
           "enum": ["isolated", "portfolio"],
+          "x-enumDescriptions": {
+            "isolated": "Margin is allocated per position; loss on one position cannot draw from others",
+            "portfolio": "Portfolio margin is shared across positions to net out risk"
+          },
           "required": true,
           "example": "isolated"
         },
@@ -5343,6 +5579,11 @@
         "impact": {
           "type": "string",
           "enum": ["low", "medium", "high"],
+          "x-enumDescriptions": {
+            "low": "Low-impact heartbeat; missed beats trigger minimal protective action",
+            "medium": "Medium-impact heartbeat; missed beats trigger standard protective action",
+            "high": "High-impact heartbeat; missed beats trigger the strongest protective action"
+          },
           "description": "Impact level"
         },
         "contract_types": {
@@ -5383,6 +5624,10 @@
         "action": {
           "type": "string",
           "enum": ["cancel_orders", "spreads"],
+          "x-enumDescriptions": {
+            "cancel_orders": "Cancel the user's open orders when the heartbeat goes unhealthy",
+            "spreads": "Widen quote spreads when the heartbeat goes unhealthy"
+          },
           "description": "Action to take when heartbeat expires"
         },
         "unhealthy_count": {
