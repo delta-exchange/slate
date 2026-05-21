@@ -1,5 +1,8 @@
 # Changelog
 
+## 20.05.26
+1. Added a **Description** column to all "Enumerated Values" tables in the REST API docs, so each value now has a clear explanation of what it means. Covers values like `side`, `order_type`, `state`, `transaction_type`, `mmp`, `time_in_force`, `resolution`, and more. Updated across Products, Orders, Positions, TradeHistory, Trades, Wallet, Heartbeat Management, Historical OHLC Candles/Sparklines, and the Schemas section. This is a documentation update only — no API behaviour has changed.
+
 ## 17.04.26
 1. The following WebSocket channels have been migrated to the **new public WebSocket endpoint** (`wss://public-socket.india.delta.exchange`). The new channels provide the same data with a more compact response format. The old channels on the **legacy private endpoint** (`wss://socket.india.delta.exchange`) will continue to work but are planned to be deprecated and removed on **31st July 2026** — please update your integrations before that date.
 The new channels are: [`mark_price`](#mark_price), [`candlesticks`](#candlesticks), [`spot_price`](#spot_price), [`funding_rate`](#funding_rate), [`system_status`](#system_status).

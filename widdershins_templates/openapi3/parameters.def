@@ -15,14 +15,16 @@
 {{~ data.parameters :p}}
 
 {{? p.schema && p.schema.enum }}
+{{ var enumDescs = (p['x-enumDescriptions']) || (p.schema['x-enumDescriptions']) || {}; }}
 {{~ p.schema.enum :e}}
-{{ var entry = {}; entry.name = p.name; entry.value = e; data.enums.push(entry); }}
+{{ var entry = {}; entry.name = p.name; entry.value = e; entry.description = enumDescs[e] || ''; data.enums.push(entry); }}
 {{~}}
 {{?}}
 
 {{? p.schema && p.schema.items && p.schema.items.enum }}
+{{ var enumDescs = (p['x-enumDescriptions']) || (p.schema.items['x-enumDescriptions']) || (p.schema['x-enumDescriptions']) || {}; }}
 {{~ p.schema.items.enum :e}}
-{{ var entry = {}; entry.name = p.name; entry.value = e; data.enums.push(entry); }}
+{{ var entry = {}; entry.name = p.name; entry.value = e; entry.description = enumDescs[e] || ''; data.enums.push(entry); }}
 {{~}}
 {{?}}
 
@@ -31,8 +33,8 @@
 {{? data.enums && data.enums.length }}
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-{{~ data.enums :e}}|{{=e.name}}|{{=data.utils.toPrimitive(e.value)}}|
+|Parameter|Value|Description|
+|---|---|---|
+{{~ data.enums :e}}|{{=e.name}}|{{=data.utils.toPrimitive(e.value)}}|{{=e.description||''}}|
 {{~}}
 {{?}}
