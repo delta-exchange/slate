@@ -1665,8 +1665,7 @@ Keys -
 </dl>
 
 ## MMP Trigger
-Channel provides updates when MMP is triggered. Market maker protection is available to registered market makers by default. Others can reach out to support for getting access to MMP. More info [here](https://guides.delta.exchange/delta-exchange-india-user-guide).  
-
+Channel provides updates when MMP is triggered. Market maker protection is available to registered market makers by default.
 > MMP Trigger Sample
 
 ```json
