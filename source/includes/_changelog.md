@@ -1,5 +1,8 @@
 # Changelog
 
+## 03.06.26
+1. Updated `Update MMP config` and `MMP Trigger` descriptions by removing the note about reaching out to support for MMP access.
+
 ## 20.05.26
 1. Added a **Description** column to all "Enumerated Values" tables in the REST API docs, so each value now has a clear explanation of what it means. Covers values like `side`, `order_type`, `state`, `transaction_type`, `mmp`, `time_in_force`, `resolution`, and more. Updated across Products, Orders, Positions, TradeHistory, Trades, Wallet, Heartbeat Management, Historical OHLC Candles/Sparklines, and the Schemas section. This is a documentation update only — no API behaviour has changed.
 
