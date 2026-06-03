@@ -892,6 +892,9 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#03-06-26" class="toc-h2 toc-link" data-title="03.06.26">03.06.26</a>
+                  </li>
+                  <li>
                     <a href="#20-05-26" class="toc-h2 toc-link" data-title="20.05.26">20.05.26</a>
                   </li>
                   <li>
@@ -8055,7 +8058,7 @@ curl -X PUT https://api.india.delta.exchange/v2/users/update_mmp <span class="se
 
 <p><code>PUT /users/update_mmp</code></p>
 
-<p>Channel provides updates when MMP is triggered. Market maker protection is available to registered market makers by default. Others can reach out to support for getting access to MMP. More info <a href="https://guides.delta.exchange/delta-exchange-india-user-guide">here</a>.</p>
+<p>Channel provides updates when MMP is triggered. Market maker protection is available to registered market makers by default.</p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -18634,7 +18637,7 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 
 <h2 id='mmp-trigger'>MMP Trigger</h2>
 
-<p>Channel provides updates when MMP is triggered. Market maker protection is available to registered market makers by default. Others can reach out to support for getting access to MMP. More info <a href="https://guides.delta.exchange/delta-exchange-india-user-guide">here</a>.  </p>
+<p>Channel provides updates when MMP is triggered. Market maker protection is available to registered market makers by default.</p>
 
 <blockquote>
 <p>MMP Trigger Sample</p>
@@ -18659,7 +18662,11 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='20-05-26'>20.05.26</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='03-06-26'>03.06.26</h2>
+<ol>
+<li>Updated <code>Update MMP config</code> and <code>MMP Trigger</code> descriptions by removing the note about reaching out to support for MMP access.</li>
+</ol>
+<h2 id='20-05-26'>20.05.26</h2>
 <ol>
 <li>Added a <strong>Description</strong> column to all &quot;Enumerated Values&quot; tables in the REST API docs, so each value now has a clear explanation of what it means. Covers values like <code>side</code>, <code>order_type</code>, <code>state</code>, <code>transaction_type</code>, <code>mmp</code>, <code>time_in_force</code>, <code>resolution</code>, and more. Updated across Products, Orders, Positions, TradeHistory, Trades, Wallet, Heartbeat Management, Historical OHLC Candles/Sparklines, and the Schemas section. This is a documentation update only — no API behaviour has changed.</li>
 </ol>
