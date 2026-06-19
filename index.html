@@ -17091,7 +17091,32 @@ This operation does not require authentication.
 
 <h2 id='ccxt'>CCXT</h2>
 
-<p>CCXT is our authorized SDK provider and you may access our API through CCXT. </p>
+<p>CCXT is our authorized SDK provider and you may access our API through CCXT.</p>
+
+<p>When initializing the exchange, set the <code>urls</code> config to point to the Delta API base URL.</p>
+
+<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">ccxt</span>
+
+<span class="c"># Replace with your actual API keys</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="s">'API_KEY'</span>
+<span class="n">api_secret</span> <span class="o">=</span> <span class="s">'API_SECRET'</span>
+
+<span class="c"># Initialize exchange</span>
+<span class="n">exchange</span> <span class="o">=</span> <span class="n">ccxt</span><span class="o">.</span><span class="n">delta</span><span class="p">({</span>
+    <span class="s">'apiKey'</span><span class="p">:</span> <span class="n">api_key</span><span class="p">,</span>
+    <span class="s">'secret'</span><span class="p">:</span> <span class="n">api_secret</span><span class="p">,</span>
+    <span class="s">'enableRateLimit'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'urls'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">'api'</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">'public'</span><span class="p">:</span> <span class="s">'https://api.india.delta.exchange'</span><span class="p">,</span>
+            <span class="s">'private'</span><span class="p">:</span> <span class="s">'https://api.india.delta.exchange'</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c"># Load markets</span>
+<span class="n">exchange</span><span class="o">.</span><span class="n">load_markets</span><span class="p">()</span>
+</code></pre>
 
 <p>For more information, please visit <a href="https://ccxt.trade">ccxt website</a>.</p>
 
