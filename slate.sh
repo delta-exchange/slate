@@ -36,6 +36,10 @@ run_serve() {
 
 run_build() {
   bundle exec middleman build --clean --watcher-disable
+
+  # Generate combined markdown file for download
+  echo "Generating combined markdown documentation..."
+  ruby generate_combined_markdown.rb
 }
 
 parse_args() {
