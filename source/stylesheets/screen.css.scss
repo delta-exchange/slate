@@ -195,6 +195,50 @@ body {
       line-height: 1.7;
       text-decoration: none;
     }
+
+    .download-section {
+      padding: 0.5em $nav-padding;
+      margin: 0.5em 0;
+
+      .download-title {
+        font-size: 0.75em;
+        color: $nav-text;
+        opacity: 0.7;
+        margin-bottom: 0.5em;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .download-button {
+        display: flex;
+        align-items: center;
+        padding: 0.5em 0.75em;
+        margin: 0.35em 0;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        color: $nav-text;
+        font-size: 0.85em;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        .download-icon {
+          margin-right: 0.5em;
+          flex-shrink: 0;
+        }
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          border-color: rgba(255, 255, 255, 0.2);
+          text-decoration: none;
+          transform: translateY(-1px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
   }
 }
 

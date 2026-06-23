@@ -26,6 +26,10 @@ run_build() {
   mkdir build/api
   cp swagger.json build/api/
   cp swagger_v2.json build/api/
+
+  # Generate combined markdown file for download
+  echo "Generating combined markdown documentation..."
+  ruby generate_combined_markdown.rb
 }
 
 parse_args() {
