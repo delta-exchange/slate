@@ -21,7 +21,7 @@
 
       // Try to download the pre-generated file
       fetch(markdownUrl)
-        .then(response => {
+        .then(function(response) {
           if (response.ok) {
             return response.blob();
           } else {
@@ -29,10 +29,10 @@
             return generateMarkdownFromContent();
           }
         })
-        .then(blob => {
+        .then(function(blob) {
           downloadBlob(blob, 'delta-exchange-api-docs.md', 'text/markdown');
         })
-        .catch(error => {
+        .catch(function(error) {
           console.error('Error downloading markdown:', error);
           // Fallback to generating from content
           var blob = generateMarkdownFromContent();
@@ -152,7 +152,7 @@
 
       if (headers.length > 0) {
         tableText += '| ' + headers.join(' | ') + ' |\n';
-        tableText += '| ' + headers.map(() => '---').join(' | ') + ' |\n';
+        tableText += '| ' + headers.map(function() { return '---'; }).join(' | ') + ' |\n';
       }
 
       // Rows
