@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-06-23 12:36:51 UTC
+**Generated:** 2026-08-05 11:22:14 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -9839,7 +9839,7 @@ To unsubscribe from all private channels, just send a **'unauth'** message on th
 The python script(right panel) connects to the Delta Exchange WebSocket to receive real-time market data.
 
 - It opens a connection.
-- Subscribes to `v2/ticker`(tickers data) and `candlestick_1m`(1 minute ohlc candlesticks) channels. (**MARK:BTCUSD** - mark price ohlc in candlesticks channel)
+- Subscribes to `ticker`(tickers data) and `candlestick_1m`(1 minute ohlc candlesticks) channels. (**MARK:BTCUSD** - mark price ohlc in candlesticks channel)
 - When data arrives, it processes and prints it.
 - If an error occurs, it prints an error message.
 - If the connection closes, it notifies the user.
@@ -9861,7 +9861,7 @@ def on_close(ws, close_status_code, close_msg):
 def on_open(ws):
   print(f"Socket opened")
   # subscribe tickers of perpetual futures - BTCUSD & ETHUSD, call option C-BTC-95200-200225 and put option - P-BTC-95200-200225
-  subscribe(ws, "v2/ticker", ["BTCUSD", "ETHUSD", "C-BTC-95200-200225", "P-BTC-95200-200225"])
+  subscribe(ws, "ticker", ["BTCUSD", "ETHUSD", "C-BTC-95200-200225", "P-BTC-95200-200225"])
   # subscribe 1 minute ohlc candlestick of perpetual futures - MARK:BTCUSD(mark price) & ETHUSD(ltp), call option C-BTC-95200-200225(ltp) and put option - P-BTC-95200-200225(ltp).
   subscribe(ws, "candlestick_1m", ["MARK:BTCUSD", "ETHUSD", "C-BTC-95200-200225", "P-BTC-95200-200225"])
 

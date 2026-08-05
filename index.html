@@ -17363,7 +17363,7 @@ The python script(right panel) connects to the Delta Exchange WebSocket to recei
 
 <ul>
 <li>It opens a connection.</li>
-<li>Subscribes to <code>v2/ticker</code>(tickers data) and <code>candlestick_1m</code>(1 minute ohlc candlesticks) channels. (<strong>MARK:BTCUSD</strong> - mark price ohlc in candlesticks channel)</li>
+<li>Subscribes to <code>ticker</code>(tickers data) and <code>candlestick_1m</code>(1 minute ohlc candlesticks) channels. (<strong>MARK:BTCUSD</strong> - mark price ohlc in candlesticks channel)</li>
 <li>When data arrives, it processes and prints it.</li>
 <li>If an error occurs, it prints an error message.</li>
 <li>If the connection closes, it notifies the user.</li>
@@ -17384,7 +17384,7 @@ The python script(right panel) connects to the Delta Exchange WebSocket to recei
 <span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
   <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">"Socket opened"</span><span class="p">)</span>
   <span class="c"># subscribe tickers of perpetual futures - BTCUSD &amp; ETHUSD, call option C-BTC-95200-200225 and put option - P-BTC-95200-200225</span>
-  <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"v2/ticker"</span><span class="p">,</span> <span class="p">[</span><span class="s">"BTCUSD"</span><span class="p">,</span> <span class="s">"ETHUSD"</span><span class="p">,</span> <span class="s">"C-BTC-95200-200225"</span><span class="p">,</span> <span class="s">"P-BTC-95200-200225"</span><span class="p">])</span>
+  <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"ticker"</span><span class="p">,</span> <span class="p">[</span><span class="s">"BTCUSD"</span><span class="p">,</span> <span class="s">"ETHUSD"</span><span class="p">,</span> <span class="s">"C-BTC-95200-200225"</span><span class="p">,</span> <span class="s">"P-BTC-95200-200225"</span><span class="p">])</span>
   <span class="c"># subscribe 1 minute ohlc candlestick of perpetual futures - MARK:BTCUSD(mark price) &amp; ETHUSD(ltp), call option C-BTC-95200-200225(ltp) and put option - P-BTC-95200-200225(ltp).</span>
   <span class="n">subscribe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="s">"candlestick_1m"</span><span class="p">,</span> <span class="p">[</span><span class="s">"MARK:BTCUSD"</span><span class="p">,</span> <span class="s">"ETHUSD"</span><span class="p">,</span> <span class="s">"C-BTC-95200-200225"</span><span class="p">,</span> <span class="s">"P-BTC-95200-200225"</span><span class="p">])</span>
 
