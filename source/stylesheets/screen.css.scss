@@ -38,6 +38,115 @@ body {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// ANNOUNCEMENT BANNER
+////////////////////////////////////////////////////////////////////////////////
+// Fixed to the top of the viewport, over the nav sidebar and the content. Every
+// other fixed element in this file assumes the viewport starts at y=0, so each
+// one is offset by $banner-height below and reset again under .banner-hidden.
+
+html {
+  // so an anchor target lands below the banner instead of under it
+  scroll-padding-top: $banner-height + 10px;
+}
+
+body {
+  padding-top: $banner-height;
+  box-sizing: border-box; // keep the padding inside the existing height: 100%
+}
+
+// "new" pill. The label is CSS content, so heading ids, nav titles and the
+// search index stay clean. Shared by the banner and section headings; each
+// context supplies its own spacing.
+.tag-new::after {
+  content: "new";
+  background-color: $nav-active-bg;
+  color: $nav-active-text;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.announce-banner {
+  position: fixed;
+  z-index: 40; // over .toc-wrapper (30), under #nav-button (100)
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $banner-height;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 0 $main-padding;
+  background-color: $nav-bg;
+  border-bottom: 2px solid $nav-active-bg;
+  color: $nav-text;
+  font-size: 13px;
+
+  .tag-new::after {
+    margin-right: 10px;
+  }
+
+  .announce-text {
+    margin-right: 10px;
+  }
+
+  .announce-cta {
+    color: $nav-text;
+    font-weight: bold;
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  .announce-close {
+    margin-left: auto;
+    padding: 0 0 2px 10px;
+    border: 0;
+    background: none;
+    color: $nav-text;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $nav-text;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.banner-hidden {
+  scroll-padding-top: 10px;
+
+  body {
+    padding-top: 0;
+  }
+
+  .announce-banner {
+    display: none;
+  }
+
+  .toc-wrapper,
+  #nav-button {
+    top: 0;
+  }
+}
+
+@media (max-width: $phone-width) {
+  // keep the bar on one line so the offsets above stay correct
+  .announce-banner .announce-text {
+    display: none;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // TABLE OF CONTENTS
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -55,7 +164,7 @@ body {
   overflow-x: hidden;
   position: fixed;
   z-index: 30;
-  top: 0;
+  top: $banner-height;
   left: 0;
   bottom: 0;
   width: $nav-width;
@@ -270,7 +379,7 @@ body {
   padding: 0 1.5em 5em 0; // increase touch size area
   display: none;
   position: fixed;
-  top: 0;
+  top: $banner-height;
   left: 0;
   z-index: 100;
   color: #000;
@@ -425,6 +534,11 @@ body {
   div:first-child + h1 {
     border-top-width: 0;
     margin-top: 0;
+  }
+
+  .tag-new::after {
+    margin-left: 8px;
+    vertical-align: 2px;
   }
 
   h2 {

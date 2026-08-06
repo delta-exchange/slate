@@ -30,6 +30,15 @@ under the License.
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title><%= current_page.data.title || "API Documentation" %></title>
+    <script>
+      // Applied before paint so a dismissed banner never flashes: the JS bundle
+      // below loads in <head>, but its ready handler runs after the first paint.
+      try {
+        if (localStorage.getItem('slateBannerDismissed') === '1') {
+          document.documentElement.className += ' banner-hidden';
+        }
+      } catch (e) {}
+    </script>
     <%= favicon_tag 'images/favicon.svg' %>
     <style>
       <%= Rouge::Themes::MonokaiSublime.render(:scope => '.highlight') %>
@@ -44,6 +53,12 @@ under the License.
   </head>
 
   <body class="<%= page_classes %>" data-languages="<%=h language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>">
+    <div class="announce-banner" id="announce-banner">
+      <span class="tag-new"></span>
+      <span class="announce-text">Delta Exchange MCP Server &mdash; call API endpoints from your AI agents</span>
+      <a href="https://mcp.delta.exchange/docs" target="_blank" rel="noopener" class="announce-cta">Read more &rarr;</a>
+      <button type="button" class="announce-close" id="announce-close" aria-label="Dismiss announcement">&times;</button>
+    </div>
     <a href="#" id="nav-button">
       <span>
         NAV
