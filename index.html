@@ -6,6 +6,15 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Delta Exchange Api</title>
+    <script>
+      // Applied before paint so a dismissed banner never flashes: the JS bundle
+      // below loads in <head>, but its ready handler runs after the first paint.
+      try {
+        if (localStorage.getItem('slateBannerDismissed') === '1') {
+          document.documentElement.className += ' banner-hidden';
+        }
+      } catch (e) {}
+    </script>
     <link href="images/favicon.svg" rel="icon" type="image/svg" />
     <style>
       .highlight table td { padding: 5px; }
@@ -202,6 +211,12 @@
   </head>
 
   <body class="index" data-languages="[&quot;python&quot;,&quot;shell&quot;,&quot;ruby&quot;]">
+    <div class="announce-banner" id="announce-banner">
+      <span class="tag-new"></span>
+      <span class="announce-text">Delta Exchange MCP Server &mdash; call API endpoints from your AI agents</span>
+      <a href="https://mcp.delta.exchange/docs" target="_blank" rel="noopener" class="announce-cta">Read more &rarr;</a>
+      <button type="button" class="announce-close" id="announce-close" aria-label="Dismiss announcement">&times;</button>
+    </div>
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -290,6 +305,9 @@
           </li>
           <li>
             <a href="#response-formats" class="toc-h1 toc-link" data-title="Response Formats">Response Formats</a>
+          </li>
+          <li>
+            <a href="#mcp-server" class="toc-h1 toc-link" data-title="MCP Server">MCP Server<span class="tag-new"></span></a>
           </li>
           <li>
             <a href="#ApiSection" class="toc-h1 toc-link" data-title="Rest Api">Rest Api</a>
@@ -1520,7 +1538,65 @@ Total quota used: 300 + 150 + 1000 + 500 = 1950 quota used. If this is greater t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p><hr></p>
+<h1 id='mcp-server'>MCP Server<span class="tag-new"></span></h1><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Claude</span><span class="w"> </span><span class="err">Desktop</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">Claude</span><span class="w"> </span><span class="err">Code</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">Cursor</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">VS</span><span class="w"> </span><span class="err">Code</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"delta-exchange"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uvx"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"delta-exchange-mcp"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"DELTA_API_KEY"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_api_key"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DELTA_API_SECRET"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_api_secret"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>The Delta Exchange MCP server exposes this API to AI agents over the Model Context Protocol. It runs as a local stdio subprocess and turns agent tool calls into signed REST requests. An agent reads market data, checks an account and places orders without writing HTTP or signing code.</p>
+
+<p>Install and run it with <code>uvx delta-exchange-mcp</code>. Its tools fall into three tiers:</p>
+
+<table><thead>
+<tr>
+<th>Category</th>
+<th>API key</th>
+<th>Permissions</th>
+<th>What an agent can do</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Market data</td>
+<td>Not required</td>
+<td>—</td>
+<td>Read the product catalog, tickers, order-book depth, recent trades and OHLC candles. Pull option chains, spot indices, settlement prices, and funding-rate, mark-price and open-interest history.</td>
+</tr>
+<tr>
+<td>Account data</td>
+<td>Required</td>
+<td>Read permission</td>
+<td>Read open positions with size, entry and unrealized PnL. Read balances, the wallet ledger, active and past orders, own fills, leverage and account preferences. Export fills to CSV.</td>
+</tr>
+<tr>
+<td>Trading</td>
+<td>Required</td>
+<td>Trading permission + <code>DELTA_MCP_MODE=trade</code></td>
+<td>Place, edit and cancel single orders, batches of up to 50 on one contract, and take-profit/stop-loss brackets. Set leverage, adjust isolated margin, close all positions.</td>
+</tr>
+</tbody></table>
+
+<p>Every tool is a read-only <code>GET</code> by default. The trading tools register only when you set <code>DELTA_MCP_MODE=trade</code> and supply an API key with trading permissions.</p>
+
+<p>Once connected, ask the agent in plain language:</p>
+
+<ul>
+<li>&quot;What is my unrealized PnL on BTCUSD?&quot;</li>
+<li>&quot;Show the BTC option chain expiring this Friday.&quot;</li>
+<li>&quot;Cancel my open orders on ETHUSD.&quot; (trade mode only)</li>
+</ul>
+
+<p>For setup, the full tool reference and key permissions, see <a href="https://mcp.delta.exchange/docs">mcp.delta.exchange/docs</a>.</p>
+
+<hr>
 
 <p>title: Delta Exchange Api V2 v1.0.0
 language_tabs:
@@ -1537,7 +1613,7 @@ search: true
 highlight_theme: darkula
 headingLevel: 2</p>
 
-<p><hr></p>
+<hr>
 
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 
