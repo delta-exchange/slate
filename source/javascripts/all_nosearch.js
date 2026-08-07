@@ -2,6 +2,7 @@
 //= require ./app/_toc
 //= require ./app/_lang
 //= require ./app/_download
+//= require ./app/_banner
 
 $(function() {
   loadToc($('#toc'), '.toc-link', '.toc-list-h2', 10);
