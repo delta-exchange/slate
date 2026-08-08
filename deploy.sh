@@ -32,6 +32,20 @@ run_build() {
   ruby generate_combined_markdown.rb
 }
 
+# Widdershins writes a standalone Slate page, so its output starts with a YAML
+# front matter block. This file is included as a Middleman partial
+# (`<%= partial "includes/_rest_api" %>` in source/index.html.md.erb), and the
+# partial helper does not strip front matter, so the block renders as body text
+# between the previous section and the "Rest Api" heading. Remove it.
+strip_front_matter() {
+  ruby -e '
+    path = ARGV[0]
+    src  = File.read(path)
+    out  = src.sub(/\A---\r?\n.*?\r?\n---\r?\n\s*/m, "")
+    File.write(path, out) unless out == src
+  ' "$1"
+}
+
 parse_args() {
   # Set args from a local environment file.
   if [ -e ".env" ]; then
@@ -219,6 +233,7 @@ elif [[ $1 = --push-only ]]; then
   main "$@"
 elif [[ $1 = --gen-widdershins ]]; then
   widdershins --search true --language_tabs 'python:Python' 'shell:Shell' 'ruby:Ruby' --user_templates widdershins_templates/openapi3  --customApiKeyValue '****'  --summary swagger_v2.json -o source/includes/_rest_api.md
+  strip_front_matter source/includes/_rest_api.md
 else
   run_build
   main "$@"
