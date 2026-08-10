@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-08-07 07:11:01 UTC
+**Generated:** 2026-08-10 12:16:52 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -524,24 +524,6 @@ Once connected, ask the agent in plain language:
 - "Cancel my open orders on ETHUSD." (trade mode only)
 
 For setup, the full tool reference and key permissions, see [mcp.delta.exchange/docs](https://mcp.delta.exchange/docs).
-
----
-title: Delta Exchange Api V2 v1.0.0
-language_tabs:
-  - python: Python
-  - shell: Shell
-  - ruby: Ruby
-language_clients:
-  - python: ""
-  - shell: ""
-  - ruby: ""
-toc_footers: []
-includes: []
-search: true
-highlight_theme: darkula
-headingLevel: 2
-
----
 
 <h1 id="ApiSection" class="section-header">Rest Api</h1>
 This section documents the latest(v2) api for trading on Delta Exchange. The REST API has endpoints for account and order management as well as public market data.
