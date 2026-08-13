@@ -3054,6 +3054,56 @@
             "floating_interest_rate": "Index based on a floating interest rate"
           },
           "example": "spot_pair"
+        },
+        "config": {
+          "type": "object",
+          "description": "Composition config for the index.",
+          "properties": {
+            "price_alert_enabled": {
+              "type": "boolean"
+            },
+            "quoting_asset": {
+              "type": "string"
+            },
+            "service_id": {
+              "type": "integer"
+            },
+            "underlying_asset": {
+              "type": "string"
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the index."
+        },
+        "impact_size": {
+          "type": "string",
+          "description": "Impact size used for the index price computation."
+        },
+        "constituent_indices": {
+          "type": "object",
+          "description": "For composite indices, the expression and component indices used to compute this index.",
+          "properties": {
+            "expression": {
+              "type": "string"
+            },
+            "indices": {
+              "type": "object"
+            }
+          }
+        },
+        "health_interval": {
+          "type": "integer",
+          "description": "Interval, in seconds, at which the index health is checked."
+        },
+        "is_composite": {
+          "type": "boolean",
+          "description": "True if this index is derived from other indices via constituent_indices."
+        },
+        "price_method": {
+          "type": "string",
+          "description": "Method used to compute the index price."
         }
       },
       "description": "Details of an index used in trading, including its constituents and characteristics."
@@ -3099,9 +3149,54 @@
           },
           "description": "Tags associated with the product specifications.",
           "example": ["layer_1"]
+        },
+        "vol_expiry_time": {
+          "type": "number",
+          "description": "Time interval, in seconds, used in volatility calculation. Seen on both perpetual and options contracts.",
+          "example": 172800
+        },
+        "backup_vol_expiry_time": {
+          "type": "number",
+          "description": "Backup time interval, in seconds, used in volatility calculation when the primary window has insufficient data. Seen on options contracts.",
+          "example": 31536000
+        },
+        "max_deviation_from_external_vol": {
+          "type": "number",
+          "description": "Maximum allowed deviation of internal volatility from the external volatility reference. Seen on options contracts.",
+          "example": 0.75
+        },
+        "max_lower_deviation_from_external_vol": {
+          "type": "number",
+          "description": "Maximum allowed downward deviation of internal volatility from the external volatility reference. Seen on options contracts.",
+          "example": 0.75
+        },
+        "max_upper_deviation_from_external_vol": {
+          "type": "number",
+          "description": "Maximum allowed upward deviation of internal volatility from the external volatility reference. Seen on options contracts.",
+          "example": 0.5
+        },
+        "max_volatility": {
+          "type": "number",
+          "description": "Maximum volatility allowed in pricing. Seen on options contracts.",
+          "example": 3
+        },
+        "min_volatility": {
+          "type": "number",
+          "description": "Minimum volatility allowed in pricing. Seen on options contracts.",
+          "example": 0.1
+        },
+        "premium_commission_rate": {
+          "type": "number",
+          "description": "Commission rate applied on the option premium. Seen on options contracts.",
+          "example": 0.1
+        },
+        "vol_calculation_method": {
+          "type": "string",
+          "description": "Method used to calculate volatility. Seen on options contracts.",
+          "example": "orderbook"
         }
       },
-      "description": "Specifications related to the specific product or contract."
+      "description": "Specifications related to the specific product or contract. Which fields are present varies by contract_type - options contracts carry the volatility-related fields, perpetuals carry funding-related fields."
     },
     "Asset": {
       "type": "object",
@@ -3150,6 +3245,52 @@
         "min_withdrawal_amount": {
           "type": "string",
           "description": "Minimum allowable withdrawal amount for the asset.",
+          "example": "0.000000000000000000"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the asset.",
+          "example": "US Dollar"
+        },
+        "networks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "description": "Networks supported for depositing/withdrawing this asset. Shape not yet observed populated."
+        },
+        "interest_credit": {
+          "type": "boolean",
+          "description": "Whether interest is credited on balances of this asset.",
+          "example": false
+        },
+        "interest_slabs": {
+          "description": "Interest rate slabs for this asset. Shape unknown - null in every sample observed so far.",
+          "example": null
+        },
+        "kyc_deposit_limit": {
+          "type": "string",
+          "description": "Deposit limit for the asset before KYC is required.",
+          "example": "0.000000000000000000"
+        },
+        "kyc_withdrawal_limit": {
+          "type": "string",
+          "description": "Withdrawal limit for the asset before KYC is required.",
+          "example": "0.000000000000000000"
+        },
+        "minimum_precision": {
+          "type": "integer",
+          "description": "Minimum number of decimal places displayed for the asset.",
+          "example": 2
+        },
+        "sort_priority": {
+          "type": "integer",
+          "description": "Display sort order for the asset. Null when not set.",
+          "example": null
+        },
+        "variable_withdrawal_fee": {
+          "type": "string",
+          "description": "Variable withdrawal fee for the asset.",
           "example": "0.000000000000000000"
         }
       },
@@ -3347,6 +3488,95 @@
         "spot_index": {
           "$ref": "#/definitions/Index",
           "description": "Spot index used for the product."
+        },
+        "disruption_reason": {
+          "type": "string",
+          "description": "Reason trading was disrupted. Null when trading_status is operational.",
+          "example": null
+        },
+        "impact_notional": {
+          "type": "string",
+          "description": "Notional size of a typical trade used for mark price computation.",
+          "example": "10000"
+        },
+        "position_notional_limit": {
+          "type": "string",
+          "description": "Maximum notional position size allowed. Null when not applicable.",
+          "example": null
+        },
+        "auction_start_time": {
+          "type": "string",
+          "description": "Start timestamp of the settlement auction.",
+          "example": "2026-08-13T05:51:51Z"
+        },
+        "settlement_price": {
+          "type": "string",
+          "description": "Settlement price of the contract. Null before settlement.",
+          "example": null
+        },
+        "auction_finish_time": {
+          "type": "string",
+          "description": "Finish timestamp of the settlement auction. Null before the auction ends.",
+          "example": null
+        },
+        "strike_price": {
+          "type": "string",
+          "description": "Strike price for an options contract. Null for non-options contracts.",
+          "example": "63600"
+        },
+        "short_description": {
+          "type": "string",
+          "description": "Short form description of the product.",
+          "example": "BTC  Call"
+        },
+        "ui_config": {
+          "type": "object",
+          "description": "Display configuration used by trading UIs. Not part of the core contract terms.",
+          "properties": {
+            "default_trading_view_candle": {
+              "type": "string",
+              "example": "60"
+            },
+            "leverage_slider_values": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "price_clubbing_values": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "show_bracket_orders": {
+              "type": "boolean"
+            },
+            "sort_priority": {
+              "type": "integer"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "launch_time": {
+          "type": "string",
+          "description": "Timestamp the product was launched for trading.",
+          "example": "2020-04-20T08:37:05Z"
+        },
+        "insurance_fund_margin_contribution": {
+          "type": "string",
+          "description": "Contribution of this product's margin to the insurance fund.",
+          "example": "5"
+        },
+        "barrier_price": {
+          "type": "string",
+          "description": "Barrier price for a barrier options contract. Null for other contract types.",
+          "example": null
         }
       }
     },
@@ -3438,24 +3668,119 @@
         },
         "limit_price": {
           "type": "string",
-          "description": "Price level on which order must be triggered",
+          "description": "Price level on which order must be triggered. Null for market orders.",
           "example": "59000"
         },
         "stop_order_type": {
           "type": "string",
-          "description": "Stop order type - stop loss or take profit",
+          "description": "Stop order type - stop loss, take profit, or liquidation. Null when the order is not a stop order. liquidation_order is generated by the system when a position is force-closed and cannot be submitted in a create order request.",
           "enum": [
-            "stop_loss_order"
+            "stop_loss_order",
+            "take_profit_order",
+            "liquidation_order"
           ],
           "x-enumDescriptions": {
-            "stop_loss_order": "Order triggered when stop price is hit to limit losses"
+            "stop_loss_order": "Order triggered when stop price is hit to limit losses",
+            "take_profit_order": "Order triggered when take profit price is hit to lock in gains",
+            "liquidation_order": "Order automatically generated by the system to close a position during liquidation"
           },
           "example": "stop_loss_order"
         },
         "stop_price": {
           "type": "string",
-          "description": "Stop price level for the stop order",
+          "description": "Stop price level for the stop order. Null when the order is not a stop order.",
           "example": "55000"
+        },
+        "average_fill_price": {
+          "type": "string",
+          "description": "Average price at which the order has been filled. Null for unfilled orders.",
+          "example": "8999.00"
+        },
+        "bracket_order": {
+          "type": "boolean",
+          "description": "True if this is a bracket order, false otherwise.",
+          "example": false
+        },
+        "bracket_stop_loss_price": {
+          "type": "string",
+          "description": "Bracket order stop loss trigger price.",
+          "example": "56000"
+        },
+        "bracket_stop_loss_limit_price": {
+          "type": "string",
+          "description": "Bracket order stop loss limit price.",
+          "example": "57000"
+        },
+        "bracket_take_profit_price": {
+          "type": "string",
+          "description": "Take profit trigger price for bracket order.",
+          "example": "61000"
+        },
+        "bracket_take_profit_limit_price": {
+          "type": "string",
+          "description": "Bracket order take profit limit price.",
+          "example": "62000"
+        },
+        "bracket_trail_amount": {
+          "type": "string",
+          "description": "Trail amount for a trailing bracket stop order.",
+          "example": "50"
+        },
+        "trail_amount": {
+          "type": "string",
+          "description": "Trail amount for a trailing stop order. Null unless the order is a trailing stop order.",
+          "example": "50"
+        },
+        "cancellation_reason": {
+          "type": "string",
+          "description": "Reason the order was cancelled. Null unless state is cancelled.",
+          "example": "cancelled_by_user"
+        },
+        "mmp": {
+          "type": "string",
+          "description": "MMP level applied to the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5",
+          "enum": [
+            "disabled",
+            "mmp1",
+            "mmp2",
+            "mmp3",
+            "mmp4",
+            "mmp5"
+          ],
+          "example": "disabled"
+        },
+        "stop_trigger_method": {
+          "type": "string",
+          "description": "Stop order trigger method - mark_price/last_traded_price/spot_price",
+          "enum": [
+            "mark_price",
+            "last_traded_price",
+            "spot_price"
+          ],
+          "x-enumDescriptions": {
+            "mark_price": "Order triggered against the mark price",
+            "last_traded_price": "Order triggered against the last traded price",
+            "spot_price": "Order triggered against the spot index price"
+          },
+          "example": "last_traded_price"
+        },
+        "time_in_force": {
+          "type": "string",
+          "description": "GTC/IOC order type",
+          "enum": [
+            "gtc",
+            "ioc"
+          ],
+          "x-enumDescriptions": {
+            "gtc": "Good-till-cancelled; order stays open until filled or cancelled",
+            "ioc": "Immediate-or-cancel; unfilled portion is cancelled immediately"
+          },
+          "example": "gtc"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Updated at unix timestamp of the order in micro seconds.",
+          "example": "1725865012000000"
         },
         "paid_commission": {
           "type": "string",
@@ -3483,7 +3808,7 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "custom id provided by user when creating order (max 32 length)",
+          "description": "custom id provided by user when creating order (max 32 length). Null if no client_order_id was provided when creating the order.",
           "example": "my_signal_34521712"
         },
         "state": {
@@ -3586,7 +3911,7 @@
         },
         "stop_order_type": {
           "type": "string",
-          "description": "Stop order type - stop loss or take profit",
+          "description": "Stop order type - stop loss or take profit. liquidation_order is not accepted here; it is only ever generated by the system and returned in responses.",
           "enum": [
             "stop_loss_order",
             "take_profit_order"
@@ -4321,19 +4646,26 @@
           "type": "string"
         },
         "liquidation_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Null until the engine has priced the position."
         },
         "bankruptcy_price": {
-          "type": "string"
+          "type": "string",
+          "description": "Null until the engine has priced the position."
         },
         "adl_level": {
-          "type": "integer"
+          "type": "integer",
+          "description": "ADL ranking of the position. Null until the ranking has been computed."
         },
         "product_id": {
           "type": "integer"
         },
         "product_symbol": {
           "type": "string"
+        },
+        "product": {
+          "$ref": "#/definitions/Product",
+          "description": "Full details of the product for this position."
         },
         "commission": {
           "type": "string",
@@ -4346,6 +4678,51 @@
         "realized_funding": {
           "type": "string",
           "description": "Net realized funding since the position was opened"
+        },
+        "realized_cashflow": {
+          "type": "string",
+          "description": "Net realized cashflow since the position was opened",
+          "example": "-0.019078170000000000"
+        },
+        "realized_holding_cost": {
+          "type": "string",
+          "description": "Net realized holding cost since the position was opened",
+          "example": "0"
+        },
+        "unrealized_pnl": {
+          "type": "string",
+          "description": "Unrealized pnl on the open position, marked to the current mark price",
+          "example": "-0.03300000"
+        },
+        "unrealized_cashflow": {
+          "type": "string",
+          "description": "Unrealized cashflow on the open position, marked to the current mark price",
+          "example": "-0.03300000"
+        },
+        "mark_price": {
+          "type": "string",
+          "description": "Current mark price used to value the position",
+          "example": "63755.59251216"
+        },
+        "margin_mode": {
+          "type": "string",
+          "description": "Margin mode of the position - isolated/portfolio",
+          "example": "isolated"
+        },
+        "auto_topup": {
+          "type": "boolean",
+          "description": "True if auto add margin is enabled for this position",
+          "example": false
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Created at timestamp of the position",
+          "example": "2026-08-12T09:05:00.376898Z"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Updated at timestamp of the position",
+          "example": "2026-08-13T08:02:12.009909Z"
         }
       }
     },
@@ -4360,10 +4737,106 @@
       "description": "A fill object",
       "properties": {
         "id": {
-          "type": "integer"
+          "type": "string",
+          "description": "UUID string uniquely identifying the fill. Confirmed as a UUID for every fill_type: normal, liquidation, settlement, adl and otc.",
+          "example": "071b551365574d0aad99557931137dbd"
         },
         "size": {
-          "type": "integer"
+          "type": "string",
+          "description": "Fill size, sent as string.",
+          "example": "1"
+        },
+        "notional": {
+          "type": "string",
+          "description": "Notional value of the fill (price * size * contract value), sent as string.",
+          "example": "63.788"
+        },
+        "product": {
+          "type": "object",
+          "description": "Truncated details of the traded product. Not the full Product object - only the fields observed below.",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "symbol": {
+              "type": "string"
+            },
+            "contract_type": {
+              "type": "string",
+              "enum": [
+                "futures",
+                "perpetual_futures",
+                "call_options",
+                "put_options"
+              ]
+            },
+            "tick_size": {
+              "type": "string"
+            },
+            "contract_value": {
+              "type": "string"
+            },
+            "contract_unit_currency": {
+              "type": "string"
+            },
+            "notional_type": {
+              "type": "string",
+              "enum": [
+                "vanilla",
+                "inverse"
+              ]
+            },
+            "quoting_asset": {
+              "type": "object",
+              "properties": {
+                "symbol": {
+                  "type": "string"
+                },
+                "precision": {
+                  "type": "integer"
+                },
+                "minimum_precision": {
+                  "type": "integer"
+                }
+              }
+            },
+            "underlying_asset": {
+              "type": "object",
+              "properties": {
+                "symbol": {
+                  "type": "string"
+                },
+                "precision": {
+                  "type": "integer"
+                },
+                "minimum_precision": {
+                  "type": "integer"
+                }
+              }
+            },
+            "settling_asset": {
+              "type": "object",
+              "properties": {
+                "symbol": {
+                  "type": "string"
+                },
+                "precision": {
+                  "type": "integer"
+                },
+                "minimum_precision": {
+                  "type": "integer"
+                }
+              }
+            },
+            "spot_index": {
+              "type": "object",
+              "properties": {
+                "symbol": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         },
         "fill_type":{
           "type": "string",
@@ -4444,7 +4917,7 @@
     },
     "FillMetaData": {
       "type": "object",
-      "description": "Meta data inside fill",
+      "description": "Meta data inside fill. Which fields are present varies by fill_type, confirmed across all 5 values. normal and liquidation carry the full field set below, including ip/mark/spot/source and a fuller new_position. settlement only carries order_price/order_size/order_type/order_unfilled_size, the commission-related fields, and a minimal new_position (size, commission, sometimes margin) - no ip/mark/spot/source or liquidation-fee fields. adl carries the same fields as liquidation but source and ip are null, order_type is adl_order, new_position can be minimal (sometimes only size/realized_pnl/realized_cashflow), and it may carry a cut object. otc is the sparsest: only order_price/order_size/order_type, commission_deto(_in_settling_asset), effective_commission_rate, original_referrer_commission, trading_fee_credits_used, and sometimes cut - no new_position, no ip/mark/spot/source, no liquidation-fee fields.",
       "properties": {
         "commission_deto": {
           "type": "string"
@@ -4484,6 +4957,98 @@
         },
         "total_liquidation_fee_in_settling_asset": {
           "type": "string"
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP address the order that generated this fill was placed from."
+        },
+        "is_commission_on_notional": {
+          "type": "boolean",
+          "description": "True if commission is charged on notional value rather than a fixed rate."
+        },
+        "liquidation_fee_in_settling_asset": {
+          "type": "string",
+          "description": "Liquidation fee charged on this fill, in the settling asset."
+        },
+        "mark": {
+          "type": "string",
+          "description": "Mark price at the time of the fill."
+        },
+        "rack_commision": {
+          "type": "string",
+          "description": "Commission before any trading-credit offsets are applied."
+        },
+        "source": {
+          "type": "string",
+          "description": "Client/platform the order was placed from, e.g. desktop. System-generated fills (e.g. liquidation) show system. Null for adl fills."
+        },
+        "spot": {
+          "type": "string",
+          "description": "Spot index price at the time of the fill."
+        },
+        "cut": {
+          "type": "object",
+          "description": "Auto-deleveraging queue ranking info. Seen on the maker side of adl fills and on otc fills.",
+          "properties": {
+            "equity": {
+              "type": "number"
+            },
+            "api_trader": {
+              "type": "number"
+            }
+          }
+        },
+        "trading_fee_credits_used": {
+          "type": "string",
+          "description": "Trading fee credits applied toward this fill's commission. Seen on otc fills."
+        },
+        "original_referrer_commission": {
+          "type": "string",
+          "description": "Referrer commission before any adjustments. Seen on liquidation fills."
+        },
+        "new_position": {
+          "type": "object",
+          "description": "Snapshot of the position immediately after this fill was applied.",
+          "properties": {
+            "size": {
+              "type": "integer"
+            },
+            "margin": {
+              "type": "string"
+            },
+            "entry_price": {
+              "type": "string",
+              "description": "Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill."
+            },
+            "liquidation_price": {
+              "type": "string",
+              "description": "Null until the engine has priced the position."
+            },
+            "bankruptcy_price": {
+              "type": "string",
+              "description": "Null until the engine has priced the position."
+            },
+            "commission": {
+              "type": "string"
+            },
+            "total_commission_paid": {
+              "type": "string",
+              "description": "Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill."
+            },
+            "realized_pnl": {
+              "type": "string"
+            },
+            "realized_cashflow": {
+              "type": "string"
+            },
+            "realized_funding": {
+              "type": "string"
+            },
+            "last_fill_uuid": {
+              "type": "string",
+              "description": "Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill."
+            }
+          }
         }
       }
     },
