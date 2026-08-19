@@ -1,5 +1,8 @@
 # Changelog
 
+## 19.08.26
+1. **GET /v2/profile** will no longer be accessible using api keys from 19th August 2026. Requests to this endpoint will be rejected. Please update your integrations accordingly.
+
 ## 03.06.26
 1. Updated `Update MMP config` and `MMP Trigger` descriptions by removing the note about reaching out to support for MMP access.
 

@@ -2837,46 +2837,6 @@
         }
       }
     },
-    "/profile": {
-      "get": {
-        "tags": [
-          "Account"
-        ],
-        "summary": "Get user",
-        "description": "This api returns the user object.",
-        "operationId": "getUser",
-        "produces": [
-          "application/json"
-        ],
-        "security": [
-          {
-            "api-key": [],
-            "signature": [],
-            "timestamp": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User Object",
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/ApiSuccessResponse"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "result": {
-                      "$ref": "#/definitions/User"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
     "/users/margin_mode": {
       "put": {
         "tags": [
