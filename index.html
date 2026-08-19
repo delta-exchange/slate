@@ -497,9 +497,6 @@
                     <a href="#get-subaccounts" class="toc-h2 toc-link" data-title="Get subaccounts">Get subaccounts</a>
                   </li>
                   <li>
-                    <a href="#get-user" class="toc-h2 toc-link" data-title="Get user">Get user</a>
-                  </li>
-                  <li>
                     <a href="#change-margin-mode" class="toc-h2 toc-link" data-title="Change margin mode">Change margin mode</a>
                   </li>
                   <li>
@@ -909,6 +906,9 @@
           <li>
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#19-08-26" class="toc-h2 toc-link" data-title="19.08.26">19.08.26</a>
+                  </li>
                   <li>
                     <a href="#03-06-26" class="toc-h2 toc-link" data-title="03.06.26">03.06.26</a>
                   </li>
@@ -8752,106 +8752,6 @@ curl -X GET https://api.india.delta.exchange/v2/sub_accounts <span class="se">\<
 </tbody></table>
 
 <h3 id="get-subaccounts-responseschema">Response Schema</h3>
-
-<aside class="warning">
-To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
-</aside>
-
-<h2 id='get-user'>Get user</h2>
-
-<p><a id="opIdgetUser"></a></p>
-
-<blockquote>
-<p>Code samples</p>
-</blockquote>
-
-<pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
-  <span class="s">'api-key'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
-  <span class="s">'signature'</span><span class="p">:</span> <span class="s">'****'</span><span class="p">,</span>
-  <span class="s">'timestamp'</span><span class="p">:</span> <span class="s">'****'</span>
-<span class="p">}</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.india.delta.exchange/v2/profile'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
-
-<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
-
-<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.india.delta.exchange/v2/profile <span class="se">\</span>
-  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
-  -H <span class="s1">'api-key: ****'</span> <span class="se">\</span>
-  -H <span class="s1">'signature: ****'</span> <span class="se">\</span>
-  -H <span class="s1">'timestamp: ****'</span>
-
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
-<span class="nb">require</span> <span class="s1">'json'</span>
-
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
-  <span class="s1">'api-key'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
-  <span class="s1">'signature'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span><span class="p">,</span>
-  <span class="s1">'timestamp'</span> <span class="o">=&gt;</span> <span class="s1">'****'</span>
-<span class="p">}</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.india.delta.exchange/v2/profile'</span><span class="p">,</span>
-  <span class="ss">params: </span><span class="p">{</span>
-  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
-
-<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-</code></pre>
-
-<p><code>GET /profile</code></p>
-
-<p>This api returns the user object.</p>
-
-<blockquote>
-<p>Example responses</p>
-
-<p>200 Response</p>
-</blockquote>
-
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98765432"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rajtrader2342@gmail.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"account_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Main"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rajesh"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sharma"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"dob"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1985-08-25"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"India"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phone_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9876543210"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"margin_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isolated"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"pf_index_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">".DEXBTUSD"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"is_sub_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"is_kyc_done"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<h3 id="get-user-responses">Responses</h3>
-
-<table><thead>
-<tr>
-<th>Status</th>
-<th>Meaning</th>
-<th>Description</th>
-<th>Schema</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
-<td>User Object</td>
-<td>Inline</td>
-</tr>
-</tbody></table>
-
-<h3 id="get-user-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -18761,7 +18661,11 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='03-06-26'>03.06.26</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='19-08-26'>19.08.26</h2>
+<ol>
+<li><strong>GET /v2/profile</strong> will no longer be accessible using api keys from 19th August 2026. Requests to this endpoint will be rejected. Please update your integrations accordingly.</li>
+</ol>
+<h2 id='03-06-26'>03.06.26</h2>
 <ol>
 <li>Updated <code>Update MMP config</code> and <code>MMP Trigger</code> descriptions by removing the note about reaching out to support for MMP access.</li>
 </ol>

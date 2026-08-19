@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-08-10 12:16:52 UTC
+**Generated:** 2026-08-19 11:51:29 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -5439,98 +5439,6 @@ This api returns all the subaccounts belonging to the same parent/main user. Mak
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Subaccounts belonging to the same parent account.|Inline|
 
 <h3 id="get-subaccounts-responseschema">Response Schema</h3>
-
-<aside class="warning">
-To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
-</aside>
-
-## Get user
-
-<a id="opIdgetUser"></a>
-
-> Code samples
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'api-key': '****',
-  'signature': '****',
-  'timestamp': '****'
-}
-
-r = requests.get('https://api.india.delta.exchange/v2/profile', params={
-
-}, headers = headers)
-
-print r.json()
-
-```
-
-```shell
-# You can also use wget
-curl -X GET https://api.india.delta.exchange/v2/profile \
-  -H 'Accept: application/json' \
-  -H 'api-key: ****' \
-  -H 'signature: ****' \
-  -H 'timestamp: ****'
-
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => 'application/json',
-  'api-key' => '****',
-  'signature' => '****',
-  'timestamp' => '****'
-}
-
-result = RestClient.get 'https://api.india.delta.exchange/v2/profile',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-
-```
-
-`GET /profile`
-
-This api returns the user object.
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "success": true,
-  "result": {
-    "id": "98765432",
-    "email": "rajtrader2342@gmail.com",
-    "account_name": "Main",
-    "first_name": "Rajesh",
-    "last_name": "Sharma",
-    "dob": "1985-08-25",
-    "country": "India",
-    "phone_number": "9876543210",
-    "margin_mode": "isolated",
-    "pf_index_symbol": ".DEXBTUSD",
-    "is_sub_account": false,
-    "is_kyc_done": true
-  }
-}
-```
-
-<h3 id="get-user-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|User Object|Inline|
-
-<h3 id="get-user-responseschema">Response Schema</h3>
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -11299,6 +11207,9 @@ Channel provides updates when MMP is triggered. Market maker protection is avail
 }
 ```
 # Changelog
+
+## 19.08.26
+1. **GET /v2/profile** will no longer be accessible using api keys from 19th August 2026. Requests to this endpoint will be rejected. Please update your integrations accordingly.
 
 ## 03.06.26
 1. Updated `Update MMP config` and `MMP Trigger` descriptions by removing the note about reaching out to support for MMP access.
