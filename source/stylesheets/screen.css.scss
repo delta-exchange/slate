@@ -91,6 +91,10 @@ body {
 
   .announce-text {
     margin-right: 10px;
+    min-width: 0; // let flex shrink it
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .announce-cta {
@@ -140,9 +144,14 @@ body {
 }
 
 @media (max-width: $phone-width) {
-  // keep the bar on one line so the offsets above stay correct
-  .announce-banner .announce-text {
-    display: none;
+  // keep the bar on one line so the offsets above stay correct: drop the
+  // tagline, keep the product name
+  .announce-banner {
+    padding: 0 14px;
+
+    .announce-detail {
+      display: none;
+    }
   }
 }
 
