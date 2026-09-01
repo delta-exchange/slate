@@ -6143,7 +6143,7 @@ This operation does not require authentication.
 |paid_commission|string|false|none|Commission paid for filled order|
 |commission|string|false|none|Commission blocked for order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
-|client_order_id|string|false|none|client order id provided by the user while creating order. Null if no client_order_id was provided when creating the order.|
+|client_order_id|string|false|none|client order id provided by the user while creating order. Must be unique across all open orders of the user|
 |state|string|false|none|Order Status|
 |created_at|string|false|none|Created at unix timestamp of the order in micro seconds|
 |updated_at|string|false|none|Updated at unix timestamp of the order in micro seconds.|
@@ -6270,7 +6270,7 @@ This operation does not require authentication.
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|client order id to be set for the order, provided by the user. Must be unique across all open orders of the user (max 32 characters)|
 |cancel_orders_accepted|string|false|none|if set, will cancel all existing orders for the product|
 
 #### Enumerated Values
@@ -6332,7 +6332,7 @@ This operation does not require authentication.
 |time_in_force|string|false|none|GTC/IOC order type|
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|client order id to be set for the order, provided by the user. Must be unique across all open orders of the user (max 32 characters)|
 
 #### Enumerated Values
 
@@ -6686,7 +6686,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order|
 
 <h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
 
@@ -6708,7 +6708,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
-|client_order_id|string|false|none|client order id provided by the user while creating order|
+|client_order_id|string|false|none|client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order|
 |product_id|integer|false|none|product_id of the product in the order|
 
 <h2 id="tocScancelallfilterobject">CancelAllFilterObject</h2>

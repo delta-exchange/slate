@@ -5,7 +5,7 @@ When a rate limit is exceeded, a HTTP response status 429 Too Many Requests will
 
 We throttle unauthenticated api requests by IP address and authenticated requests by user ID. 
 
-Default Quota is 10000 for a fixed 5 minute window. Rate Limit quota resets to full every 5 mins.
+Default Quota is 20000 for a fixed 5 minute window. Rate Limit quota resets to full every 5 mins.
 
 ## API & product rate limits
 

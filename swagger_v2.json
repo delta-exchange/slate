@@ -3768,7 +3768,7 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "custom id provided by user when creating order (max 32 length). Null if no client_order_id was provided when creating the order.",
+          "description": "custom id provided by user when creating order. Must be unique across all open orders of the user (max 32 length)",
           "example": "my_signal_34521712"
         },
         "state": {
@@ -4003,7 +4003,7 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "custom id provided by user when creating order (max 32 length)",
+          "description": "custom id to be set for the order, provided by user. Must be unique across all open orders of the user (max 32 length)",
           "example": "my_signal_345212"
         },
         "cancel_orders_accepted": {
@@ -4110,7 +4110,7 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "custom id provided by user when creating order (max 32 length)",
+          "description": "custom id to be set for the order, provided by user. Must be unique across all open orders of the user (max 32 length)",
           "example": "my_signal_34521712"
         }
       }
@@ -4478,7 +4478,7 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "custom id provided by user when creating order (max 32 length)",
+          "description": "client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order (max 32 length)",
           "example": "my_signal_34521712"
         }
       }
@@ -4494,7 +4494,7 @@
         },
         "client_order_id": {
           "type": "string",
-          "description": "custom id provided by user when creating order (max 32 length)",
+          "description": "client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order (max 32 length)",
           "example": "my_signal_34521712"
         },
         "product_id": {
