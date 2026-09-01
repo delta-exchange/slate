@@ -907,6 +907,9 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#31-08-26" class="toc-h2 toc-link" data-title="31.08.26">31.08.26</a>
+                  </li>
+                  <li>
                     <a href="#19-08-26" class="toc-h2 toc-link" data-title="19.08.26">19.08.26</a>
                   </li>
                   <li>
@@ -11117,7 +11120,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>custom id provided by user when creating order (max 32 length)</td>
+<td>custom id provided by user when creating order. Must be unique across all open orders of the user (max 32 length)</td>
 </tr>
 <tr>
 <td>state</td>
@@ -11448,7 +11451,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>custom id provided by user when creating order (max 32 length)</td>
+<td>custom id to be set for the order, provided by user. Must be unique across all open orders of the user (max 32 length)</td>
 </tr>
 <tr>
 <td>cancel_orders_accepted</td>
@@ -11684,7 +11687,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>custom id provided by user when creating order (max 32 length)</td>
+<td>custom id to be set for the order, provided by user. Must be unique across all open orders of the user (max 32 length)</td>
 </tr>
 </tbody></table>
 
@@ -12589,7 +12592,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>custom id provided by user when creating order (max 32 length)</td>
+<td>client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order (max 32 length)</td>
 </tr>
 </tbody></table>
 
@@ -12630,7 +12633,7 @@ This operation does not require authentication.
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>custom id provided by user when creating order (max 32 length)</td>
+<td>client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order (max 32 length)</td>
 </tr>
 <tr>
 <td>product_id</td>
@@ -18661,7 +18664,11 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='19-08-26'>19.08.26</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='31-08-26'>31.08.26</h2>
+<ol>
+<li>Clarified <code>client_order_id</code> parameter description across the Orders API (place order, batch create/edit/cancel, and order schemas) to explicitly state that it must be unique across all open orders of the user. This is a documentation update only — no API behaviour has changed.</li>
+</ol>
+<h2 id='19-08-26'>19.08.26</h2>
 <ol>
 <li><strong>GET /v2/profile</strong> will no longer be accessible using api keys from 19th August 2026. Requests to this endpoint will be rejected. Please update your integrations accordingly.</li>
 </ol>

@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-08-26 07:53:17 UTC
+**Generated:** 2026-09-01 12:26:40 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -6846,7 +6846,7 @@ This operation does not require authentication.
 |paid_commission|string|false|none|Commission paid for filled order|
 |commission|string|false|none|Commission blocked for order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
-|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
+|client_order_id|string|false|none|custom id provided by user when creating order. Must be unique across all open orders of the user (max 32 length)|
 |state|string|false|none|Order Status|
 |created_at|string|false|none|Created at unix timestamp of the order in micro seconds|
 |product_id|integer|false|none|Product id of the ordered product|
@@ -6961,7 +6961,7 @@ This operation does not require authentication.
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
-|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
+|client_order_id|string|false|none|custom id to be set for the order, provided by user. Must be unique across all open orders of the user (max 32 length)|
 |cancel_orders_accepted|string|false|none|if set, will cancel all existing orders for the product|
 
 #### Enumerated Values
@@ -7026,7 +7026,7 @@ This operation does not require authentication.
 |time_in_force|string|false|none|GTC/IOC order type|
 |mmp|string|false|none|MMP level for the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
 |post_only|string|false|none|Post only order|
-|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
+|client_order_id|string|false|none|custom id to be set for the order, provided by user. Must be unique across all open orders of the user (max 32 length)|
 
 #### Enumerated Values
 
@@ -7377,7 +7377,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
-|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
+|client_order_id|string|false|none|client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order (max 32 length)|
 
 <h2 id="tocSdeleteorderrequest">DeleteOrderRequest</h2>
 
@@ -7399,7 +7399,7 @@ This operation does not require authentication.
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |id|integer|false|none|use bracket trail amount if you want a trailing stop order. Required if bracket stop price is empty|
-|client_order_id|string|false|none|custom id provided by user when creating order (max 32 length)|
+|client_order_id|string|false|none|client order id of the order to be cancelled. Since client order id is unique across all open orders of the user, it can be used to uniquely identify the order (max 32 length)|
 |product_id|integer|false|none|product_id of the product in the order|
 
 <h2 id="tocScancelallfilterobject">CancelAllFilterObject</h2>
@@ -11207,6 +11207,9 @@ Channel provides updates when MMP is triggered. Market maker protection is avail
 }
 ```
 # Changelog
+
+## 31.08.26
+1. Clarified `client_order_id` parameter description across the Orders API (place order, batch create/edit/cancel, and order schemas) to explicitly state that it must be unique across all open orders of the user. This is a documentation update only — no API behaviour has changed.
 
 ## 19.08.26
 1. **GET /v2/profile** will no longer be accessible using api keys from 19th August 2026. Requests to this endpoint will be rejected. Please update your integrations accordingly.
