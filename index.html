@@ -779,6 +779,9 @@
             <a href="#place-order-errors" class="toc-h1 toc-link" data-title="Place order errors">Place order errors</a>
           </li>
           <li>
+            <a href="#edit-order-errors" class="toc-h1 toc-link" data-title="Edit order errors">Edit order errors</a>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
           <li>
@@ -1442,7 +1445,7 @@ signature = generate_signature(api_secret, signature_data)
 
 <p>We throttle unauthenticated api requests by IP address and authenticated requests by user ID. </p>
 
-<p>Default Quota is 10000 for a fixed 5 minute window. Rate Limit quota resets to full every 5 mins.</p>
+<p>Default Quota is 20000 for a fixed 5 minute window. Rate Limit quota resets to full every 5 mins.</p>
 
 <h2 id='api-amp-product-rate-limits'>API &amp; product rate limits</h2><h3 id='rest-api'>REST API</h3>
 <p>Every REST endpoint has been assigned a weight. When you make an API call, the weight of that endpoint is deducted from your 5 min window quota. Exceeding the rate limit quota, results in 429 HTTP response status error. API endpoints related to reading public data are lighter in weight, whereas API endpoints related to writing private data (like placing an order) are heavier in weight. </p>
@@ -16976,8 +16979,24 @@ This operation does not require authentication.
 <td>Margin required to place order with selected leverage and quantity is insufficient.</td>
 </tr>
 <tr>
+<td>close_position_insufficient_margin</td>
+<td>Margin available is insufficient to close/reduce the position at the requested price and size.</td>
+</tr>
+<tr>
+<td>insufficient_commission</td>
+<td>Available balance is insufficient to cover the commission for this order.</td>
+</tr>
+<tr>
 <td>order_size_exceed_available</td>
 <td>The order book doesn&#39;t have sufficient liquidity, hence the order couldnt be filled (for ex - ioc orders).</td>
+</tr>
+<tr>
+<td>order_size_not_available_in_orderbook</td>
+<td>Requested order size isn&#39;t available in the orderbook at the given price.</td>
+</tr>
+<tr>
+<td>close_order_position_unavailable</td>
+<td>No open position is available to close against this order.</td>
 </tr>
 <tr>
 <td>risk_limits_breached</td>
@@ -17000,8 +17019,365 @@ This operation does not require authentication.
 <td>Self matching is not allowed during auction.</td>
 </tr>
 <tr>
+<td>overlapping_buy_sell_orders</td>
+<td>Order price overlaps with an existing resting order on the opposite side from the same account (self-trade).</td>
+</tr>
+<tr>
 <td>immediate_execution_post_only</td>
 <td>orders couldn&#39;t be placed as it includes post only orders which will be immediately executed.</td>
+</tr>
+<tr>
+<td>naked_short_restricted</td>
+<td>Order would create a naked short position beyond the allowed limit.</td>
+</tr>
+<tr>
+<td>portfolio_risk_limits_breached</td>
+<td>Order would breach the aggregate risk limit set for portfolio margin mode.</td>
+</tr>
+<tr>
+<td>liquidation_risk_limits_breached</td>
+<td>Only reduce-only orders are allowed while account liquidation risk is elevated.</td>
+</tr>
+<tr>
+<td>greeks_limits_breached</td>
+<td>Order would breach the delta/vega/gamma limits set on the options portfolio.</td>
+</tr>
+<tr>
+<td>no_position_for_reduce_only</td>
+<td>Reduce-only order was placed but there is no open position to reduce.</td>
+</tr>
+<tr>
+<td>no_position_left_for_reduce_only</td>
+<td>Reduce-only order couldn&#39;t be processed as no position is left to reduce.</td>
+</tr>
+<tr>
+<td>max_leverage_exceeded</td>
+<td>Requested leverage is higher than the maximum leverage allowed for this product.</td>
+</tr>
+<tr>
+<td>min_leverage_exceeded</td>
+<td>Requested leverage is lower than the minimum leverage allowed for this product.</td>
+</tr>
+<tr>
+<td>leverage_limit_exceeded</td>
+<td>Position and open order notional at the selected leverage exceeds the maximum notional allowed for that leverage bracket.</td>
+</tr>
+<tr>
+<td>order_already_filled</td>
+<td>Order has already been completely filled.</td>
+</tr>
+<tr>
+<td>less_than_order_min_size</td>
+<td>Order size is less than the minimum order size allowed for this product.</td>
+</tr>
+<tr>
+<td>order_max_size_exceeded</td>
+<td>Order size exceeds the maximum order size allowed for this product.</td>
+</tr>
+<tr>
+<td>reduce_only_orders_allowed_sell_side</td>
+<td>Only reduce-only sell orders are allowed for this product.</td>
+</tr>
+<tr>
+<td>reduce_only_orders_allowed</td>
+<td>Only reduce-only orders are allowed on this product/account currently.</td>
+</tr>
+<tr>
+<td>trading_blocked</td>
+<td>Trading is currently blocked for this product or account.</td>
+</tr>
+<tr>
+<td>kyc_pending</td>
+<td>KYC verification is not complete for this account.</td>
+</tr>
+<tr>
+<td>trading_credits_breached</td>
+<td>Order would breach the trading credits limit set on the account.</td>
+</tr>
+<tr>
+<td>derivatives_trading_blocked</td>
+<td>Derivatives trading is currently blocked for this account.</td>
+</tr>
+<tr>
+<td>spot_trading_blocked</td>
+<td>Spot trading is currently blocked for this account.</td>
+</tr>
+<tr>
+<td>spot_blocked_country</td>
+<td>Spot trading is not permitted from the account&#39;s registered country.</td>
+</tr>
+<tr>
+<td>account_risk_limits_breached</td>
+<td>Order would breach the account-level risk limit.</td>
+</tr>
+<tr>
+<td>position_under_liquidation</td>
+<td>Order couldn&#39;t be placed as the position is currently under liquidation.</td>
+</tr>
+<tr>
+<td>position_bracket_exist_or_invalid_data</td>
+<td>Bracket order couldn&#39;t be placed as a position already exists on this product, or the bracket data is invalid.</td>
+</tr>
+<tr>
+<td>no_open_position</td>
+<td>No open position exists for the requested action.</td>
+</tr>
+<tr>
+<td>stale_order</td>
+<td>Order was rejected as it is considered stale.</td>
+</tr>
+<tr>
+<td>limit_order_not_allowed_for_binary_options</td>
+<td>Limit orders are not supported for binary options products.</td>
+</tr>
+<tr>
+<td>stop_orders_not_allowed_for_binary_options</td>
+<td>Stop orders are not supported for binary options products.</td>
+</tr>
+<tr>
+<td>not_a_binary_options_product</td>
+<td>This action is only valid for binary options products.</td>
+</tr>
+<tr>
+<td>offset_by_reduce_only</td>
+<td>Order couldn&#39;t be placed at full size due to insufficient margin; the reduce-only/stop-loss/take-profit flag on the order was used to offset it instead of rejecting it outright.</td>
+</tr>
+<tr>
+<td>unsupported</td>
+<td>Market order couldn&#39;t be validated for price impact as orderbook data isn&#39;t available.</td>
+</tr>
+<tr>
+<td>no_orders</td>
+<td>Batch request was submitted with an empty order list.</td>
+</tr>
+<tr>
+<td>no_liquidity_for_market_order</td>
+<td>The orderbook doesn&#39;t have enough liquidity to fill the market order.</td>
+</tr>
+<tr>
+<td>family_position_limit_exceeded</td>
+<td>Combined position across family/linked accounts exceeds the allowed position size limit.</td>
+</tr>
+<tr>
+<td>trading_not_allowed_on_current_margin_mode</td>
+<td>This action isn&#39;t allowed in the account&#39;s current margin mode.</td>
+</tr>
+<tr>
+<td>max_orders_count_exceeded</td>
+<td>Number of open orders has exceeded the maximum allowed for this account.</td>
+</tr>
+<tr>
+<td>invalid_index_symbol</td>
+<td>The index symbol referenced in the portfolio margin basket order doesn&#39;t exist.</td>
+</tr>
+</tbody></table>
+
+<h1 id='edit-order-errors'>Edit order errors</h1>
+
+<p>This section lists various errors returned by the system while editing/amending an existing order. Editing an order re-runs the same risk checks as placing a new order, against the modified order (with the original order excluded from the book). The error format looks like this </p>
+
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w">        </span><span class="err">//</span><span class="w"> </span><span class="err">error</span><span class="w"> </span><span class="err">code</span><span class="w">
+    </span><span class="s2">"context"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Here is a list of error codes and their explanation</p>
+
+<table><thead>
+<tr>
+<th>error code</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>open_order_not_found</td>
+<td>The order being edited couldn&#39;t be found among open orders — it may already be filled or cancelled.</td>
+</tr>
+<tr>
+<td>insufficient_margin</td>
+<td>Margin required for the edited order with selected leverage and quantity is insufficient.</td>
+</tr>
+<tr>
+<td>close_position_insufficient_margin</td>
+<td>Margin available is insufficient to close/reduce the position at the edited price and size.</td>
+</tr>
+<tr>
+<td>insufficient_commission</td>
+<td>Available balance is insufficient to cover the commission for the edited order.</td>
+</tr>
+<tr>
+<td>order_size_exceed_available</td>
+<td>The order book doesn&#39;t have sufficient liquidity, hence the edited order couldnt be filled (for ex - ioc orders).</td>
+</tr>
+<tr>
+<td>order_size_not_available_in_orderbook</td>
+<td>Requested order size isn&#39;t available in the orderbook at the edited price.</td>
+</tr>
+<tr>
+<td>close_order_position_unavailable</td>
+<td>No open position is available to close against the edited order.</td>
+</tr>
+<tr>
+<td>risk_limits_breached</td>
+<td>Order couldn&#39;t be edited as it will breach allowed risk limits.</td>
+</tr>
+<tr>
+<td>invalid_contract</td>
+<td>The contract/product either doesn\&#39;t exist or has already expired.</td>
+</tr>
+<tr>
+<td>immediate_liquidation</td>
+<td>Edited order will cause immediate liquidation.</td>
+</tr>
+<tr>
+<td>out_of_bankruptcy</td>
+<td>Edited order price is out of position bankruptcy limits.</td>
+</tr>
+<tr>
+<td>self_matching_disrupted_post_only</td>
+<td>Self matching is not allowed during auction.</td>
+</tr>
+<tr>
+<td>overlapping_buy_sell_orders</td>
+<td>Edited order price overlaps with an existing resting order on the opposite side from the same account (self-trade).</td>
+</tr>
+<tr>
+<td>immediate_execution_post_only</td>
+<td>Order couldn&#39;t be edited as it is a post only order which would be immediately executed at the new price.</td>
+</tr>
+<tr>
+<td>naked_short_restricted</td>
+<td>Edited order would create a naked short position beyond the allowed limit.</td>
+</tr>
+<tr>
+<td>portfolio_risk_limits_breached</td>
+<td>Edited order would breach the aggregate risk limit set for portfolio margin mode.</td>
+</tr>
+<tr>
+<td>liquidation_risk_limits_breached</td>
+<td>Only reduce-only orders can be edited while account liquidation risk is elevated.</td>
+</tr>
+<tr>
+<td>greeks_limits_breached</td>
+<td>Edited order would breach the delta/vega/gamma limits set on the options portfolio.</td>
+</tr>
+<tr>
+<td>no_position_for_reduce_only</td>
+<td>Order is reduce-only but there is no open position to reduce.</td>
+</tr>
+<tr>
+<td>no_position_left_for_reduce_only</td>
+<td>Reduce-only order couldn&#39;t be processed as no position is left to reduce.</td>
+</tr>
+<tr>
+<td>max_leverage_exceeded</td>
+<td>Requested leverage is higher than the maximum leverage allowed for this product.</td>
+</tr>
+<tr>
+<td>min_leverage_exceeded</td>
+<td>Requested leverage is lower than the minimum leverage allowed for this product.</td>
+</tr>
+<tr>
+<td>leverage_limit_exceeded</td>
+<td>Position and open order notional at the selected leverage exceeds the maximum notional allowed for that leverage bracket.</td>
+</tr>
+<tr>
+<td>order_already_filled</td>
+<td>Order has already been completely filled and can no longer be edited.</td>
+</tr>
+<tr>
+<td>less_than_order_min_size</td>
+<td>Edited order size is less than the minimum order size allowed for this product.</td>
+</tr>
+<tr>
+<td>order_max_size_exceeded</td>
+<td>Edited order size exceeds the maximum order size allowed for this product.</td>
+</tr>
+<tr>
+<td>reduce_only_orders_allowed_sell_side</td>
+<td>Only reduce-only sell orders are allowed for this product.</td>
+</tr>
+<tr>
+<td>reduce_only_orders_allowed</td>
+<td>Only reduce-only orders are allowed on this product/account currently.</td>
+</tr>
+<tr>
+<td>trading_blocked</td>
+<td>Trading is currently blocked for this product or account.</td>
+</tr>
+<tr>
+<td>kyc_pending</td>
+<td>KYC verification is not complete for this account.</td>
+</tr>
+<tr>
+<td>trading_credits_breached</td>
+<td>Edited order would breach the trading credits limit set on the account.</td>
+</tr>
+<tr>
+<td>derivatives_trading_blocked</td>
+<td>Derivatives trading is currently blocked for this account.</td>
+</tr>
+<tr>
+<td>spot_trading_blocked</td>
+<td>Spot trading is currently blocked for this account.</td>
+</tr>
+<tr>
+<td>spot_blocked_country</td>
+<td>Spot trading is not permitted from the account&#39;s registered country.</td>
+</tr>
+<tr>
+<td>account_risk_limits_breached</td>
+<td>Edited order would breach the account-level risk limit.</td>
+</tr>
+<tr>
+<td>position_under_liquidation</td>
+<td>Order couldn&#39;t be edited as the position is currently under liquidation.</td>
+</tr>
+<tr>
+<td>position_bracket_exist_or_invalid_data</td>
+<td>Bracket order couldn&#39;t be edited as a position already exists on this product, or the bracket data is invalid.</td>
+</tr>
+<tr>
+<td>no_open_position</td>
+<td>No open position exists for the requested action.</td>
+</tr>
+<tr>
+<td>stale_order</td>
+<td>Order was rejected as it is considered stale.</td>
+</tr>
+<tr>
+<td>offset_by_reduce_only</td>
+<td>Order couldn&#39;t be edited to full size due to insufficient margin; the reduce-only/stop-loss/take-profit flag on the order was used to offset it instead of rejecting it outright.</td>
+</tr>
+<tr>
+<td>unsupported</td>
+<td>Edited market order couldn&#39;t be validated for price impact as orderbook data isn&#39;t available.</td>
+</tr>
+<tr>
+<td>no_orders</td>
+<td>Batch edit request was submitted with an empty order list.</td>
+</tr>
+<tr>
+<td>no_liquidity_for_market_order</td>
+<td>The orderbook doesn&#39;t have enough liquidity to fill the edited market order.</td>
+</tr>
+<tr>
+<td>family_position_limit_exceeded</td>
+<td>Combined position across family/linked accounts exceeds the allowed position size limit.</td>
+</tr>
+<tr>
+<td>trading_not_allowed_on_current_margin_mode</td>
+<td>This action isn&#39;t allowed in the account&#39;s current margin mode.</td>
+</tr>
+<tr>
+<td>max_orders_count_exceeded</td>
+<td>Number of open orders has exceeded the maximum allowed for this account.</td>
 </tr>
 </tbody></table>
 
