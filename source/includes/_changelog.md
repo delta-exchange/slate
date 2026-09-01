@@ -1,5 +1,8 @@
 # Changelog
 
+## 31.08.26
+1. Clarified `client_order_id` parameter description across the Orders API (place order, batch create/edit/cancel, and order schemas) to explicitly state that it must be unique across all open orders of the user. This is a documentation update only — no API behaviour has changed.
+
 ## 19.08.26
 1. **GET /v2/profile** will no longer be accessible using api keys from 19th August 2026. Requests to this endpoint will be rejected. Please update your integrations accordingly.
 
