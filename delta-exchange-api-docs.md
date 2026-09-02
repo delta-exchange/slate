@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-09-01 12:35:39 UTC
+**Generated:** 2026-09-02 05:14:42 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -599,7 +599,18 @@ p JSON.parse(result)
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     }
   ]
 }
@@ -697,7 +708,22 @@ Indices refer to spot price indices that Delta Exchange creates by combining spo
       "underlying_asset_id": 13,
       "quoting_asset_id": 14,
       "tick_size": "0.5",
-      "index_type": "spot_pair"
+      "index_type": "spot_pair",
+      "config": {
+        "price_alert_enabled": true,
+        "quoting_asset": "string",
+        "service_id": 0,
+        "underlying_asset": "string"
+      },
+      "description": "string",
+      "impact_size": "string",
+      "constituent_indices": {
+        "expression": "string",
+        "indices": {}
+      },
+      "health_interval": 0,
+      "is_composite": true,
+      "price_method": "string"
     }
   ]
 }
@@ -815,7 +841,16 @@ The endpoint provides details about all available trading products on the platfo
         "rate_exchange_interval": 28800,
         "tags": [
           "layer_1"
-        ]
+        ],
+        "vol_expiry_time": 172800,
+        "backup_vol_expiry_time": 31536000,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.1,
+        "vol_calculation_method": "orderbook"
       },
       "state": "live",
       "trading_status": "operational",
@@ -840,7 +875,18 @@ The endpoint provides details about all available trading products on the platfo
         "deposit_status": "enabled",
         "withdrawal_status": "enabled",
         "base_withdrawal_fee": "0.000000000000000000",
-        "min_withdrawal_amount": "0.000000000000000000"
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
       },
       "quoting_asset": {
         "id": 14,
@@ -849,7 +895,18 @@ The endpoint provides details about all available trading products on the platfo
         "deposit_status": "enabled",
         "withdrawal_status": "enabled",
         "base_withdrawal_fee": "0.000000000000000000",
-        "min_withdrawal_amount": "0.000000000000000000"
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
       },
       "settling_asset": {
         "id": 14,
@@ -858,7 +915,18 @@ The endpoint provides details about all available trading products on the platfo
         "deposit_status": "enabled",
         "withdrawal_status": "enabled",
         "base_withdrawal_fee": "0.000000000000000000",
-        "min_withdrawal_amount": "0.000000000000000000"
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
       },
       "spot_index": {
         "id": 14,
@@ -872,8 +940,48 @@ The endpoint provides details about all available trading products on the platfo
         "underlying_asset_id": 13,
         "quoting_asset_id": 14,
         "tick_size": "0.5",
-        "index_type": "spot_pair"
-      }
+        "index_type": "spot_pair",
+        "config": {
+          "price_alert_enabled": true,
+          "quoting_asset": "string",
+          "service_id": 0,
+          "underlying_asset": "string"
+        },
+        "description": "string",
+        "impact_size": "string",
+        "constituent_indices": {
+          "expression": "string",
+          "indices": {}
+        },
+        "health_interval": 0,
+        "is_composite": true,
+        "price_method": "string"
+      },
+      "disruption_reason": null,
+      "impact_notional": "10000",
+      "position_notional_limit": null,
+      "auction_start_time": "2026-08-13T05:51:51Z",
+      "settlement_price": null,
+      "auction_finish_time": null,
+      "strike_price": "63600",
+      "short_description": "BTC  Call",
+      "ui_config": {
+        "default_trading_view_candle": "60",
+        "leverage_slider_values": [
+          0
+        ],
+        "price_clubbing_values": [
+          0
+        ],
+        "show_bracket_orders": true,
+        "sort_priority": 0,
+        "tags": [
+          "string"
+        ]
+      },
+      "launch_time": "2020-04-20T08:37:05Z",
+      "insurance_fund_margin_contribution": "5",
+      "barrier_price": null
     }
   ]
 }
@@ -993,7 +1101,16 @@ The endpoint retrieves details of a specific product identified by its symbol (e
       "rate_exchange_interval": 28800,
       "tags": [
         "layer_1"
-      ]
+      ],
+      "vol_expiry_time": 172800,
+      "backup_vol_expiry_time": 31536000,
+      "max_deviation_from_external_vol": 0.75,
+      "max_lower_deviation_from_external_vol": 0.75,
+      "max_upper_deviation_from_external_vol": 0.5,
+      "max_volatility": 3,
+      "min_volatility": 0.1,
+      "premium_commission_rate": 0.1,
+      "vol_calculation_method": "orderbook"
     },
     "state": "live",
     "trading_status": "operational",
@@ -1018,7 +1135,18 @@ The endpoint retrieves details of a specific product identified by its symbol (e
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "quoting_asset": {
       "id": 14,
@@ -1027,7 +1155,18 @@ The endpoint retrieves details of a specific product identified by its symbol (e
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "settling_asset": {
       "id": 14,
@@ -1036,7 +1175,18 @@ The endpoint retrieves details of a specific product identified by its symbol (e
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "spot_index": {
       "id": 14,
@@ -1050,8 +1200,48 @@ The endpoint retrieves details of a specific product identified by its symbol (e
       "underlying_asset_id": 13,
       "quoting_asset_id": 14,
       "tick_size": "0.5",
-      "index_type": "spot_pair"
-    }
+      "index_type": "spot_pair",
+      "config": {
+        "price_alert_enabled": true,
+        "quoting_asset": "string",
+        "service_id": 0,
+        "underlying_asset": "string"
+      },
+      "description": "string",
+      "impact_size": "string",
+      "constituent_indices": {
+        "expression": "string",
+        "indices": {}
+      },
+      "health_interval": 0,
+      "is_composite": true,
+      "price_method": "string"
+    },
+    "disruption_reason": null,
+    "impact_notional": "10000",
+    "position_notional_limit": null,
+    "auction_start_time": "2026-08-13T05:51:51Z",
+    "settlement_price": null,
+    "auction_finish_time": null,
+    "strike_price": "63600",
+    "short_description": "BTC  Call",
+    "ui_config": {
+      "default_trading_view_candle": "60",
+      "leverage_slider_values": [
+        0
+      ],
+      "price_clubbing_values": [
+        0
+      ],
+      "show_bracket_orders": true,
+      "sort_priority": 0,
+      "tags": [
+        "string"
+      ]
+    },
+    "launch_time": "2020-04-20T08:37:05Z",
+    "insurance_fund_margin_contribution": "5",
+    "barrier_price": null
   }
 }
 ```
@@ -1567,6 +1757,19 @@ p JSON.parse(result)
     "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
     "stop_price": "55000",
+    "average_fill_price": "8999.00",
+    "bracket_order": false,
+    "bracket_stop_loss_price": "56000",
+    "bracket_stop_loss_limit_price": "57000",
+    "bracket_take_profit_price": "61000",
+    "bracket_take_profit_limit_price": "62000",
+    "bracket_trail_amount": "50",
+    "trail_amount": "50",
+    "cancellation_reason": "cancelled_by_user",
+    "mmp": "disabled",
+    "stop_trigger_method": "last_traded_price",
+    "time_in_force": "gtc",
+    "updated_at": "1725865012000000",
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
@@ -1597,6 +1800,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -1698,6 +1914,19 @@ p JSON.parse(result)
     "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
     "stop_price": "55000",
+    "average_fill_price": "8999.00",
+    "bracket_order": false,
+    "bracket_stop_loss_price": "56000",
+    "bracket_stop_loss_limit_price": "57000",
+    "bracket_take_profit_price": "61000",
+    "bracket_take_profit_limit_price": "62000",
+    "bracket_trail_amount": "50",
+    "trail_amount": "50",
+    "cancellation_reason": "cancelled_by_user",
+    "mmp": "disabled",
+    "stop_trigger_method": "last_traded_price",
+    "time_in_force": "gtc",
+    "updated_at": "1725865012000000",
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
@@ -1728,6 +1957,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -1835,6 +2077,19 @@ p JSON.parse(result)
     "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
     "stop_price": "55000",
+    "average_fill_price": "8999.00",
+    "bracket_order": false,
+    "bracket_stop_loss_price": "56000",
+    "bracket_stop_loss_limit_price": "57000",
+    "bracket_take_profit_price": "61000",
+    "bracket_take_profit_limit_price": "62000",
+    "bracket_trail_amount": "50",
+    "trail_amount": "50",
+    "cancellation_reason": "cancelled_by_user",
+    "mmp": "disabled",
+    "stop_trigger_method": "last_traded_price",
+    "time_in_force": "gtc",
+    "updated_at": "1725865012000000",
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
@@ -1865,6 +2120,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -1976,6 +2244,19 @@ p JSON.parse(result)
       "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
       "stop_price": "55000",
+      "average_fill_price": "8999.00",
+      "bracket_order": false,
+      "bracket_stop_loss_price": "56000",
+      "bracket_stop_loss_limit_price": "57000",
+      "bracket_take_profit_price": "61000",
+      "bracket_take_profit_limit_price": "62000",
+      "bracket_trail_amount": "50",
+      "trail_amount": "50",
+      "cancellation_reason": "cancelled_by_user",
+      "mmp": "disabled",
+      "stop_trigger_method": "last_traded_price",
+      "time_in_force": "gtc",
+      "updated_at": "1725865012000000",
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
@@ -2010,6 +2291,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -2432,6 +2726,19 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
       "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
       "stop_price": "55000",
+      "average_fill_price": "8999.00",
+      "bracket_order": false,
+      "bracket_stop_loss_price": "56000",
+      "bracket_stop_loss_limit_price": "57000",
+      "bracket_take_profit_price": "61000",
+      "bracket_take_profit_limit_price": "62000",
+      "bracket_trail_amount": "50",
+      "trail_amount": "50",
+      "cancellation_reason": "cancelled_by_user",
+      "mmp": "disabled",
+      "stop_trigger_method": "last_traded_price",
+      "time_in_force": "gtc",
+      "updated_at": "1725865012000000",
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
@@ -2463,6 +2770,19 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -2575,6 +2895,19 @@ Orders to be edited in a batch. Rate limits apply.
       "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
       "stop_price": "55000",
+      "average_fill_price": "8999.00",
+      "bracket_order": false,
+      "bracket_stop_loss_price": "56000",
+      "bracket_stop_loss_limit_price": "57000",
+      "bracket_take_profit_price": "61000",
+      "bracket_take_profit_limit_price": "62000",
+      "bracket_trail_amount": "50",
+      "trail_amount": "50",
+      "cancellation_reason": "cancelled_by_user",
+      "mmp": "disabled",
+      "stop_trigger_method": "last_traded_price",
+      "time_in_force": "gtc",
+      "updated_at": "1725865012000000",
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
@@ -2606,6 +2939,19 @@ Orders to be edited in a batch. Rate limits apply.
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -2713,6 +3059,19 @@ p JSON.parse(result)
       "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
       "stop_price": "55000",
+      "average_fill_price": "8999.00",
+      "bracket_order": false,
+      "bracket_stop_loss_price": "56000",
+      "bracket_stop_loss_limit_price": "57000",
+      "bracket_take_profit_price": "61000",
+      "bracket_take_profit_limit_price": "62000",
+      "bracket_trail_amount": "50",
+      "trail_amount": "50",
+      "cancellation_reason": "cancelled_by_user",
+      "mmp": "disabled",
+      "stop_trigger_method": "last_traded_price",
+      "time_in_force": "gtc",
+      "updated_at": "1725865012000000",
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
@@ -2744,6 +3103,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -2832,6 +3204,19 @@ p JSON.parse(result)
     "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
     "stop_price": "55000",
+    "average_fill_price": "8999.00",
+    "bracket_order": false,
+    "bracket_stop_loss_price": "56000",
+    "bracket_stop_loss_limit_price": "57000",
+    "bracket_take_profit_price": "61000",
+    "bracket_take_profit_limit_price": "62000",
+    "bracket_trail_amount": "50",
+    "trail_amount": "50",
+    "cancellation_reason": "cancelled_by_user",
+    "mmp": "disabled",
+    "stop_trigger_method": "last_traded_price",
+    "time_in_force": "gtc",
+    "updated_at": "1725865012000000",
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
@@ -2861,6 +3246,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -2949,6 +3347,19 @@ p JSON.parse(result)
     "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
     "stop_price": "55000",
+    "average_fill_price": "8999.00",
+    "bracket_order": false,
+    "bracket_stop_loss_price": "56000",
+    "bracket_stop_loss_limit_price": "57000",
+    "bracket_take_profit_price": "61000",
+    "bracket_take_profit_limit_price": "62000",
+    "bracket_trail_amount": "50",
+    "trail_amount": "50",
+    "cancellation_reason": "cancelled_by_user",
+    "mmp": "disabled",
+    "stop_trigger_method": "last_traded_price",
+    "time_in_force": "gtc",
+    "updated_at": "1725865012000000",
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
@@ -2978,6 +3389,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -3271,9 +3695,182 @@ Change in position may take upto 10secs to reflect. Use 'GET /position' for real
       "adl_level": 0,
       "product_id": 0,
       "product_symbol": "string",
+      "product": {
+        "id": 27,
+        "symbol": "BTCUSD",
+        "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
+        "created_at": "2023-12-18T13:10:39Z",
+        "updated_at": "2024-11-15T02:47:50Z",
+        "settlement_time": null,
+        "notional_type": "vanilla",
+        "impact_size": 10000,
+        "initial_margin": "0.5",
+        "maintenance_margin": "0.25",
+        "contract_value": "0.001",
+        "contract_unit_currency": "BTC",
+        "tick_size": "0.5",
+        "product_specs": {
+          "funding_clamp_value": 0.05,
+          "only_reduce_only_orders_allowed": false,
+          "expiry_interval": 28800,
+          "isolated_liq_penalty_factor": 0.01,
+          "rate_exchange_interval": 28800,
+          "tags": [
+            "layer_1"
+          ],
+          "vol_expiry_time": 172800,
+          "backup_vol_expiry_time": 31536000,
+          "max_deviation_from_external_vol": 0.75,
+          "max_lower_deviation_from_external_vol": 0.75,
+          "max_upper_deviation_from_external_vol": 0.5,
+          "max_volatility": 3,
+          "min_volatility": 0.1,
+          "premium_commission_rate": 0.1,
+          "vol_calculation_method": "orderbook"
+        },
+        "state": "live",
+        "trading_status": "operational",
+        "max_leverage_notional": "100000",
+        "default_leverage": "200",
+        "initial_margin_scaling_factor": "0.0000025",
+        "maintenance_margin_scaling_factor": "0.00000125",
+        "taker_commission_rate": "0.0005",
+        "maker_commission_rate": "0.0002",
+        "liquidation_penalty_factor": "0.5",
+        "contract_type": "perpetual_futures",
+        "position_size_limit": 229167,
+        "basis_factor_max_limit": "10.95",
+        "is_quanto": false,
+        "funding_method": "mark_price",
+        "annualized_funding": "10.95",
+        "price_band": "2.5",
+        "underlying_asset": {
+          "id": 14,
+          "symbol": "USD",
+          "precision": 8,
+          "deposit_status": "enabled",
+          "withdrawal_status": "enabled",
+          "base_withdrawal_fee": "0.000000000000000000",
+          "min_withdrawal_amount": "0.000000000000000000",
+          "name": "US Dollar",
+          "networks": [
+            {}
+          ],
+          "interest_credit": false,
+          "interest_slabs": null,
+          "kyc_deposit_limit": "0.000000000000000000",
+          "kyc_withdrawal_limit": "0.000000000000000000",
+          "minimum_precision": 2,
+          "sort_priority": null,
+          "variable_withdrawal_fee": "0.000000000000000000"
+        },
+        "quoting_asset": {
+          "id": 14,
+          "symbol": "USD",
+          "precision": 8,
+          "deposit_status": "enabled",
+          "withdrawal_status": "enabled",
+          "base_withdrawal_fee": "0.000000000000000000",
+          "min_withdrawal_amount": "0.000000000000000000",
+          "name": "US Dollar",
+          "networks": [
+            {}
+          ],
+          "interest_credit": false,
+          "interest_slabs": null,
+          "kyc_deposit_limit": "0.000000000000000000",
+          "kyc_withdrawal_limit": "0.000000000000000000",
+          "minimum_precision": 2,
+          "sort_priority": null,
+          "variable_withdrawal_fee": "0.000000000000000000"
+        },
+        "settling_asset": {
+          "id": 14,
+          "symbol": "USD",
+          "precision": 8,
+          "deposit_status": "enabled",
+          "withdrawal_status": "enabled",
+          "base_withdrawal_fee": "0.000000000000000000",
+          "min_withdrawal_amount": "0.000000000000000000",
+          "name": "US Dollar",
+          "networks": [
+            {}
+          ],
+          "interest_credit": false,
+          "interest_slabs": null,
+          "kyc_deposit_limit": "0.000000000000000000",
+          "kyc_withdrawal_limit": "0.000000000000000000",
+          "minimum_precision": 2,
+          "sort_priority": null,
+          "variable_withdrawal_fee": "0.000000000000000000"
+        },
+        "spot_index": {
+          "id": 14,
+          "symbol": ".DEXBTUSD",
+          "constituent_exchanges": [
+            {
+              "name": "ExchangeA",
+              "weight": 0.25
+            }
+          ],
+          "underlying_asset_id": 13,
+          "quoting_asset_id": 14,
+          "tick_size": "0.5",
+          "index_type": "spot_pair",
+          "config": {
+            "price_alert_enabled": true,
+            "quoting_asset": "string",
+            "service_id": 0,
+            "underlying_asset": "string"
+          },
+          "description": "string",
+          "impact_size": "string",
+          "constituent_indices": {
+            "expression": "string",
+            "indices": {}
+          },
+          "health_interval": 0,
+          "is_composite": true,
+          "price_method": "string"
+        },
+        "disruption_reason": null,
+        "impact_notional": "10000",
+        "position_notional_limit": null,
+        "auction_start_time": "2026-08-13T05:51:51Z",
+        "settlement_price": null,
+        "auction_finish_time": null,
+        "strike_price": "63600",
+        "short_description": "BTC  Call",
+        "ui_config": {
+          "default_trading_view_candle": "60",
+          "leverage_slider_values": [
+            0
+          ],
+          "price_clubbing_values": [
+            0
+          ],
+          "show_bracket_orders": true,
+          "sort_priority": 0,
+          "tags": [
+            "string"
+          ]
+        },
+        "launch_time": "2020-04-20T08:37:05Z",
+        "insurance_fund_margin_contribution": "5",
+        "barrier_price": null
+      },
       "commission": "string",
       "realized_pnl": "string",
-      "realized_funding": "string"
+      "realized_funding": "string",
+      "realized_cashflow": "-0.019078170000000000",
+      "realized_holding_cost": "0",
+      "unrealized_pnl": "-0.03300000",
+      "unrealized_cashflow": "-0.03300000",
+      "mark_price": "63755.59251216",
+      "margin_mode": "isolated",
+      "auto_topup": false,
+      "created_at": "2026-08-12T09:05:00.376898Z",
+      "updated_at": "2026-08-13T08:02:12.009909Z"
     }
   ]
 }
@@ -3286,6 +3883,26 @@ Change in position may take upto 10secs to reflect. Use 'GET /position' for real
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|List of all [open positions](#tocSposition)|Inline|
 
 <h3 id="get-margined-positions-responseschema">Response Schema</h3>
+
+#### Enumerated Values
+
+|Property|Value|Description|
+|---|---|---|
+|notional_type|vanilla|Contract is quoted, settled, and margined in the quote currency|
+|notional_type|inverse|Contract is quoted in the quote currency but settled and margined in the base currency|
+|state|live|Product is currently active and tradable|
+|state|expired|Product has expired and is no longer tradable|
+|state|upcoming|Product is scheduled to go live in the future|
+|trading_status|operational|Trading is fully operational; orders can be placed and cancelled|
+|trading_status|disrupted_cancel_only|Trading is disrupted; only order cancellations are allowed|
+|trading_status|disrupted_post_only|Trading is disrupted; only post-only orders are accepted|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -3474,9 +4091,182 @@ Changes position auto topup flag. Positions automatically inherits auto topup fl
     "adl_level": 0,
     "product_id": 0,
     "product_symbol": "string",
+    "product": {
+      "id": 27,
+      "symbol": "BTCUSD",
+      "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
+      "created_at": "2023-12-18T13:10:39Z",
+      "updated_at": "2024-11-15T02:47:50Z",
+      "settlement_time": null,
+      "notional_type": "vanilla",
+      "impact_size": 10000,
+      "initial_margin": "0.5",
+      "maintenance_margin": "0.25",
+      "contract_value": "0.001",
+      "contract_unit_currency": "BTC",
+      "tick_size": "0.5",
+      "product_specs": {
+        "funding_clamp_value": 0.05,
+        "only_reduce_only_orders_allowed": false,
+        "expiry_interval": 28800,
+        "isolated_liq_penalty_factor": 0.01,
+        "rate_exchange_interval": 28800,
+        "tags": [
+          "layer_1"
+        ],
+        "vol_expiry_time": 172800,
+        "backup_vol_expiry_time": 31536000,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.1,
+        "vol_calculation_method": "orderbook"
+      },
+      "state": "live",
+      "trading_status": "operational",
+      "max_leverage_notional": "100000",
+      "default_leverage": "200",
+      "initial_margin_scaling_factor": "0.0000025",
+      "maintenance_margin_scaling_factor": "0.00000125",
+      "taker_commission_rate": "0.0005",
+      "maker_commission_rate": "0.0002",
+      "liquidation_penalty_factor": "0.5",
+      "contract_type": "perpetual_futures",
+      "position_size_limit": 229167,
+      "basis_factor_max_limit": "10.95",
+      "is_quanto": false,
+      "funding_method": "mark_price",
+      "annualized_funding": "10.95",
+      "price_band": "2.5",
+      "underlying_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "quoting_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "settling_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "spot_index": {
+        "id": 14,
+        "symbol": ".DEXBTUSD",
+        "constituent_exchanges": [
+          {
+            "name": "ExchangeA",
+            "weight": 0.25
+          }
+        ],
+        "underlying_asset_id": 13,
+        "quoting_asset_id": 14,
+        "tick_size": "0.5",
+        "index_type": "spot_pair",
+        "config": {
+          "price_alert_enabled": true,
+          "quoting_asset": "string",
+          "service_id": 0,
+          "underlying_asset": "string"
+        },
+        "description": "string",
+        "impact_size": "string",
+        "constituent_indices": {
+          "expression": "string",
+          "indices": {}
+        },
+        "health_interval": 0,
+        "is_composite": true,
+        "price_method": "string"
+      },
+      "disruption_reason": null,
+      "impact_notional": "10000",
+      "position_notional_limit": null,
+      "auction_start_time": "2026-08-13T05:51:51Z",
+      "settlement_price": null,
+      "auction_finish_time": null,
+      "strike_price": "63600",
+      "short_description": "BTC  Call",
+      "ui_config": {
+        "default_trading_view_candle": "60",
+        "leverage_slider_values": [
+          0
+        ],
+        "price_clubbing_values": [
+          0
+        ],
+        "show_bracket_orders": true,
+        "sort_priority": 0,
+        "tags": [
+          "string"
+        ]
+      },
+      "launch_time": "2020-04-20T08:37:05Z",
+      "insurance_fund_margin_contribution": "5",
+      "barrier_price": null
+    },
     "commission": "string",
     "realized_pnl": "string",
-    "realized_funding": "string"
+    "realized_funding": "string",
+    "realized_cashflow": "-0.019078170000000000",
+    "realized_holding_cost": "0",
+    "unrealized_pnl": "-0.03300000",
+    "unrealized_cashflow": "-0.03300000",
+    "mark_price": "63755.59251216",
+    "margin_mode": "isolated",
+    "auto_topup": false,
+    "created_at": "2026-08-12T09:05:00.376898Z",
+    "updated_at": "2026-08-13T08:02:12.009909Z"
   }
 }
 ```
@@ -3489,6 +4279,26 @@ Changes position auto topup flag. Positions automatically inherits auto topup fl
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns error if position margin could not be changed|[ApiErrorResponse](#schemaapierrorresponse)|
 
 <h3 id="auto-topup-responseschema">Response Schema</h3>
+
+#### Enumerated Values
+
+|Property|Value|Description|
+|---|---|---|
+|notional_type|vanilla|Contract is quoted, settled, and margined in the quote currency|
+|notional_type|inverse|Contract is quoted in the quote currency but settled and margined in the base currency|
+|state|live|Product is currently active and tradable|
+|state|expired|Product has expired and is no longer tradable|
+|state|upcoming|Product is scheduled to go live in the future|
+|trading_status|operational|Trading is fully operational; orders can be placed and cancelled|
+|trading_status|disrupted_cancel_only|Trading is disrupted; only order cancellations are allowed|
+|trading_status|disrupted_post_only|Trading is disrupted; only post-only orders are accepted|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -3585,9 +4395,182 @@ p JSON.parse(result)
     "adl_level": 0,
     "product_id": 0,
     "product_symbol": "string",
+    "product": {
+      "id": 27,
+      "symbol": "BTCUSD",
+      "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
+      "created_at": "2023-12-18T13:10:39Z",
+      "updated_at": "2024-11-15T02:47:50Z",
+      "settlement_time": null,
+      "notional_type": "vanilla",
+      "impact_size": 10000,
+      "initial_margin": "0.5",
+      "maintenance_margin": "0.25",
+      "contract_value": "0.001",
+      "contract_unit_currency": "BTC",
+      "tick_size": "0.5",
+      "product_specs": {
+        "funding_clamp_value": 0.05,
+        "only_reduce_only_orders_allowed": false,
+        "expiry_interval": 28800,
+        "isolated_liq_penalty_factor": 0.01,
+        "rate_exchange_interval": 28800,
+        "tags": [
+          "layer_1"
+        ],
+        "vol_expiry_time": 172800,
+        "backup_vol_expiry_time": 31536000,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.1,
+        "vol_calculation_method": "orderbook"
+      },
+      "state": "live",
+      "trading_status": "operational",
+      "max_leverage_notional": "100000",
+      "default_leverage": "200",
+      "initial_margin_scaling_factor": "0.0000025",
+      "maintenance_margin_scaling_factor": "0.00000125",
+      "taker_commission_rate": "0.0005",
+      "maker_commission_rate": "0.0002",
+      "liquidation_penalty_factor": "0.5",
+      "contract_type": "perpetual_futures",
+      "position_size_limit": 229167,
+      "basis_factor_max_limit": "10.95",
+      "is_quanto": false,
+      "funding_method": "mark_price",
+      "annualized_funding": "10.95",
+      "price_band": "2.5",
+      "underlying_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "quoting_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "settling_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "spot_index": {
+        "id": 14,
+        "symbol": ".DEXBTUSD",
+        "constituent_exchanges": [
+          {
+            "name": "ExchangeA",
+            "weight": 0.25
+          }
+        ],
+        "underlying_asset_id": 13,
+        "quoting_asset_id": 14,
+        "tick_size": "0.5",
+        "index_type": "spot_pair",
+        "config": {
+          "price_alert_enabled": true,
+          "quoting_asset": "string",
+          "service_id": 0,
+          "underlying_asset": "string"
+        },
+        "description": "string",
+        "impact_size": "string",
+        "constituent_indices": {
+          "expression": "string",
+          "indices": {}
+        },
+        "health_interval": 0,
+        "is_composite": true,
+        "price_method": "string"
+      },
+      "disruption_reason": null,
+      "impact_notional": "10000",
+      "position_notional_limit": null,
+      "auction_start_time": "2026-08-13T05:51:51Z",
+      "settlement_price": null,
+      "auction_finish_time": null,
+      "strike_price": "63600",
+      "short_description": "BTC  Call",
+      "ui_config": {
+        "default_trading_view_candle": "60",
+        "leverage_slider_values": [
+          0
+        ],
+        "price_clubbing_values": [
+          0
+        ],
+        "show_bracket_orders": true,
+        "sort_priority": 0,
+        "tags": [
+          "string"
+        ]
+      },
+      "launch_time": "2020-04-20T08:37:05Z",
+      "insurance_fund_margin_contribution": "5",
+      "barrier_price": null
+    },
     "commission": "string",
     "realized_pnl": "string",
-    "realized_funding": "string"
+    "realized_funding": "string",
+    "realized_cashflow": "-0.019078170000000000",
+    "realized_holding_cost": "0",
+    "unrealized_pnl": "-0.03300000",
+    "unrealized_cashflow": "-0.03300000",
+    "mark_price": "63755.59251216",
+    "margin_mode": "isolated",
+    "auto_topup": false,
+    "created_at": "2026-08-12T09:05:00.376898Z",
+    "updated_at": "2026-08-13T08:02:12.009909Z"
   }
 }
 ```
@@ -3600,6 +4583,26 @@ p JSON.parse(result)
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns error if position margin could not be changed|[ApiErrorResponse](#schemaapierrorresponse)|
 
 <h3 id="add/remove-position-margin-responseschema">Response Schema</h3>
+
+#### Enumerated Values
+
+|Property|Value|Description|
+|---|---|---|
+|notional_type|vanilla|Contract is quoted, settled, and margined in the quote currency|
+|notional_type|inverse|Contract is quoted in the quote currency but settled and margined in the base currency|
+|state|live|Product is currently active and tradable|
+|state|expired|Product has expired and is no longer tradable|
+|state|upcoming|Product is scheduled to go live in the future|
+|trading_status|operational|Trading is fully operational; orders can be placed and cancelled|
+|trading_status|disrupted_cancel_only|Trading is disrupted; only order cancellations are allowed|
+|trading_status|disrupted_post_only|Trading is disrupted; only post-only orders are accepted|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -3801,6 +4804,19 @@ p JSON.parse(result)
       "limit_price": "59000",
       "stop_order_type": "stop_loss_order",
       "stop_price": "55000",
+      "average_fill_price": "8999.00",
+      "bracket_order": false,
+      "bracket_stop_loss_price": "56000",
+      "bracket_stop_loss_limit_price": "57000",
+      "bracket_take_profit_price": "61000",
+      "bracket_take_profit_limit_price": "62000",
+      "bracket_trail_amount": "50",
+      "trail_amount": "50",
+      "cancellation_reason": "cancelled_by_user",
+      "mmp": "disabled",
+      "stop_trigger_method": "last_traded_price",
+      "time_in_force": "gtc",
+      "updated_at": "1725865012000000",
       "paid_commission": "0.5432",
       "commission": "0.5432",
       "reduce_only": false,
@@ -3835,6 +4851,19 @@ p JSON.parse(result)
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -3921,8 +4950,36 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": 0,
-      "size": 0,
+      "id": "071b551365574d0aad99557931137dbd",
+      "size": "1",
+      "notional": "63.788",
+      "product": {
+        "id": 0,
+        "symbol": "string",
+        "contract_type": "futures",
+        "tick_size": "string",
+        "contract_value": "string",
+        "contract_unit_currency": "string",
+        "notional_type": "vanilla",
+        "quoting_asset": {
+          "symbol": "string",
+          "precision": 0,
+          "minimum_precision": 0
+        },
+        "underlying_asset": {
+          "symbol": "string",
+          "precision": 0,
+          "minimum_precision": 0
+        },
+        "settling_asset": {
+          "symbol": "string",
+          "precision": 0,
+          "minimum_precision": 0
+        },
+        "spot_index": {
+          "symbol": "string"
+        }
+      },
       "fill_type": "normal",
       "side": "buy",
       "price": "string",
@@ -3947,7 +5004,33 @@ p JSON.parse(result)
         "tfc_used_for_commission": "string",
         "tfc_used_for_liquidation_fee": "string",
         "total_commission_in_settling_asset": "string",
-        "total_liquidation_fee_in_settling_asset": "string"
+        "total_liquidation_fee_in_settling_asset": "string",
+        "ip": "string",
+        "is_commission_on_notional": true,
+        "liquidation_fee_in_settling_asset": "string",
+        "mark": "string",
+        "rack_commision": "string",
+        "source": "string",
+        "spot": "string",
+        "cut": {
+          "equity": 0,
+          "api_trader": 0
+        },
+        "trading_fee_credits_used": "string",
+        "original_referrer_commission": "string",
+        "new_position": {
+          "size": 0,
+          "margin": "string",
+          "entry_price": "string",
+          "liquidation_price": "string",
+          "bankruptcy_price": "string",
+          "commission": "string",
+          "total_commission_paid": "string",
+          "realized_pnl": "string",
+          "realized_cashflow": "string",
+          "realized_funding": "string",
+          "last_fill_uuid": "string"
+        }
       }
     }
   ],
@@ -3970,6 +5053,12 @@ p JSON.parse(result)
 
 |Property|Value|Description|
 |---|---|---|
+|contract_type|futures||
+|contract_type|perpetual_futures||
+|contract_type|call_options||
+|contract_type|put_options||
+|notional_type|vanilla||
+|notional_type|inverse||
 |fill_type|normal|Regular fill from matching against the orderbook|
 |fill_type|adl|Fill from auto-deleveraging to balance counterparty exposure|
 |fill_type|liquidation|Fill resulting from forced liquidation of a position|
@@ -6025,7 +7114,16 @@ p JSON.parse(result)
       "rate_exchange_interval": 28800,
       "tags": [
         "layer_1"
-      ]
+      ],
+      "vol_expiry_time": 172800,
+      "backup_vol_expiry_time": 31536000,
+      "max_deviation_from_external_vol": 0.75,
+      "max_lower_deviation_from_external_vol": 0.75,
+      "max_upper_deviation_from_external_vol": 0.5,
+      "max_volatility": 3,
+      "min_volatility": 0.1,
+      "premium_commission_rate": 0.1,
+      "vol_calculation_method": "orderbook"
     },
     "state": "live",
     "trading_status": "operational",
@@ -6050,7 +7148,18 @@ p JSON.parse(result)
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "quoting_asset": {
       "id": 14,
@@ -6059,7 +7168,18 @@ p JSON.parse(result)
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "settling_asset": {
       "id": 14,
@@ -6068,7 +7188,18 @@ p JSON.parse(result)
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "spot_index": {
       "id": 14,
@@ -6082,8 +7213,48 @@ p JSON.parse(result)
       "underlying_asset_id": 13,
       "quoting_asset_id": 14,
       "tick_size": "0.5",
-      "index_type": "spot_pair"
-    }
+      "index_type": "spot_pair",
+      "config": {
+        "price_alert_enabled": true,
+        "quoting_asset": "string",
+        "service_id": 0,
+        "underlying_asset": "string"
+      },
+      "description": "string",
+      "impact_size": "string",
+      "constituent_indices": {
+        "expression": "string",
+        "indices": {}
+      },
+      "health_interval": 0,
+      "is_composite": true,
+      "price_method": "string"
+    },
+    "disruption_reason": null,
+    "impact_notional": "10000",
+    "position_notional_limit": null,
+    "auction_start_time": "2026-08-13T05:51:51Z",
+    "settlement_price": null,
+    "auction_finish_time": null,
+    "strike_price": "63600",
+    "short_description": "BTC  Call",
+    "ui_config": {
+      "default_trading_view_candle": "60",
+      "leverage_slider_values": [
+        0
+      ],
+      "price_clubbing_values": [
+        0
+      ],
+      "show_bracket_orders": true,
+      "sort_priority": 0,
+      "tags": [
+        "string"
+      ]
+    },
+    "launch_time": "2020-04-20T08:37:05Z",
+    "insurance_fund_margin_contribution": "5",
+    "barrier_price": null
   }
 }
 ```
@@ -6377,7 +7548,22 @@ This operation does not require authentication.
   "underlying_asset_id": 13,
   "quoting_asset_id": 14,
   "tick_size": "0.5",
-  "index_type": "spot_pair"
+  "index_type": "spot_pair",
+  "config": {
+    "price_alert_enabled": true,
+    "quoting_asset": "string",
+    "service_id": 0,
+    "underlying_asset": "string"
+  },
+  "description": "string",
+  "impact_size": "string",
+  "constituent_indices": {
+    "expression": "string",
+    "indices": {}
+  },
+  "health_interval": 0,
+  "is_composite": true,
+  "price_method": "string"
 }
 
 ```
@@ -6397,6 +7583,19 @@ This operation does not require authentication.
 |quoting_asset_id|integer|false|none|ID of the quoting asset for the index.|
 |tick_size|string|false|none|Precision of the spot price in decimal format.|
 |index_type|string|false|none|Type of the index.|
+|config|object|false|none|Composition config for the index.|
+|» price_alert_enabled|boolean|false|none|none|
+|» quoting_asset|string|false|none|none|
+|» service_id|integer|false|none|none|
+|» underlying_asset|string|false|none|none|
+|description|string|false|none|Description of the index.|
+|impact_size|string|false|none|Impact size used for the index price computation.|
+|constituent_indices|object|false|none|For composite indices, the expression and component indices used to compute this index.|
+|» expression|string|false|none|none|
+|» indices|object|false|none|none|
+|health_interval|integer|false|none|Interval, in seconds, at which the index health is checked.|
+|is_composite|boolean|false|none|True if this index is derived from other indices via constituent_indices.|
+|price_method|string|false|none|Method used to compute the index price.|
 
 #### Enumerated Values
 
@@ -6424,7 +7623,22 @@ This operation does not require authentication.
     "underlying_asset_id": 13,
     "quoting_asset_id": 14,
     "tick_size": "0.5",
-    "index_type": "spot_pair"
+    "index_type": "spot_pair",
+    "config": {
+      "price_alert_enabled": true,
+      "quoting_asset": "string",
+      "service_id": 0,
+      "underlying_asset": "string"
+    },
+    "description": "string",
+    "impact_size": "string",
+    "constituent_indices": {
+      "expression": "string",
+      "indices": {}
+    },
+    "health_interval": 0,
+    "is_composite": true,
+    "price_method": "string"
   }
 ]
 
@@ -6449,12 +7663,21 @@ This operation does not require authentication.
   "rate_exchange_interval": 28800,
   "tags": [
     "layer_1"
-  ]
+  ],
+  "vol_expiry_time": 172800,
+  "backup_vol_expiry_time": 31536000,
+  "max_deviation_from_external_vol": 0.75,
+  "max_lower_deviation_from_external_vol": 0.75,
+  "max_upper_deviation_from_external_vol": 0.5,
+  "max_volatility": 3,
+  "min_volatility": 0.1,
+  "premium_commission_rate": 0.1,
+  "vol_calculation_method": "orderbook"
 }
 
 ```
 
-*Specifications related to the specific product or contract.*
+*Specifications related to the specific product or contract. Which fields are present varies by contract_type - options contracts carry the volatility-related fields, perpetuals carry funding-related fields.*
 
 ### Properties
 
@@ -6466,6 +7689,15 @@ This operation does not require authentication.
 |isolated_liq_penalty_factor|number|false|none|The penalty factor applied when an isolated margin position is liquidated.|
 |rate_exchange_interval|number|false|none|The time interval, in seconds, at which funding rates are exchanged between long and short positions.|
 |tags|[string]|false|none|Tags associated with the product specifications.|
+|vol_expiry_time|number|false|none|Time interval, in seconds, used in volatility calculation. Seen on both perpetual and options contracts.|
+|backup_vol_expiry_time|number|false|none|Backup time interval, in seconds, used in volatility calculation when the primary window has insufficient data. Seen on options contracts.|
+|max_deviation_from_external_vol|number|false|none|Maximum allowed deviation of internal volatility from the external volatility reference. Seen on options contracts.|
+|max_lower_deviation_from_external_vol|number|false|none|Maximum allowed downward deviation of internal volatility from the external volatility reference. Seen on options contracts.|
+|max_upper_deviation_from_external_vol|number|false|none|Maximum allowed upward deviation of internal volatility from the external volatility reference. Seen on options contracts.|
+|max_volatility|number|false|none|Maximum volatility allowed in pricing. Seen on options contracts.|
+|min_volatility|number|false|none|Minimum volatility allowed in pricing. Seen on options contracts.|
+|premium_commission_rate|number|false|none|Commission rate applied on the option premium. Seen on options contracts.|
+|vol_calculation_method|string|false|none|Method used to calculate volatility. Seen on options contracts.|
 
 <h2 id="tocSasset">Asset</h2>
 
@@ -6479,7 +7711,18 @@ This operation does not require authentication.
   "deposit_status": "enabled",
   "withdrawal_status": "enabled",
   "base_withdrawal_fee": "0.000000000000000000",
-  "min_withdrawal_amount": "0.000000000000000000"
+  "min_withdrawal_amount": "0.000000000000000000",
+  "name": "US Dollar",
+  "networks": [
+    {}
+  ],
+  "interest_credit": false,
+  "interest_slabs": null,
+  "kyc_deposit_limit": "0.000000000000000000",
+  "kyc_withdrawal_limit": "0.000000000000000000",
+  "minimum_precision": 2,
+  "sort_priority": null,
+  "variable_withdrawal_fee": "0.000000000000000000"
 }
 
 ```
@@ -6497,6 +7740,15 @@ This operation does not require authentication.
 |withdrawal_status|string|false|none|Indicates if withdrawals are enabled for the asset.|
 |base_withdrawal_fee|string|false|none|Fixed withdrawal fee for the asset.|
 |min_withdrawal_amount|string|false|none|Minimum allowable withdrawal amount for the asset.|
+|name|string|false|none|Full name of the asset.|
+|networks|[object]|false|none|Networks supported for depositing/withdrawing this asset. Shape not yet observed populated.|
+|interest_credit|boolean|false|none|Whether interest is credited on balances of this asset.|
+|interest_slabs|any|false|none|Interest rate slabs for this asset. Shape unknown - null in every sample observed so far.|
+|kyc_deposit_limit|string|false|none|Deposit limit for the asset before KYC is required.|
+|kyc_withdrawal_limit|string|false|none|Withdrawal limit for the asset before KYC is required.|
+|minimum_precision|integer|false|none|Minimum number of decimal places displayed for the asset.|
+|sort_priority|integer|false|none|Display sort order for the asset. Null when not set.|
+|variable_withdrawal_fee|string|false|none|Variable withdrawal fee for the asset.|
 
 #### Enumerated Values
 
@@ -6520,7 +7772,18 @@ This operation does not require authentication.
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
     "base_withdrawal_fee": "0.000000000000000000",
-    "min_withdrawal_amount": "0.000000000000000000"
+    "min_withdrawal_amount": "0.000000000000000000",
+    "name": "US Dollar",
+    "networks": [
+      {}
+    ],
+    "interest_credit": false,
+    "interest_slabs": null,
+    "kyc_deposit_limit": "0.000000000000000000",
+    "kyc_withdrawal_limit": "0.000000000000000000",
+    "minimum_precision": 2,
+    "sort_priority": null,
+    "variable_withdrawal_fee": "0.000000000000000000"
   }
 ]
 
@@ -6559,7 +7822,16 @@ This operation does not require authentication.
     "rate_exchange_interval": 28800,
     "tags": [
       "layer_1"
-    ]
+    ],
+    "vol_expiry_time": 172800,
+    "backup_vol_expiry_time": 31536000,
+    "max_deviation_from_external_vol": 0.75,
+    "max_lower_deviation_from_external_vol": 0.75,
+    "max_upper_deviation_from_external_vol": 0.5,
+    "max_volatility": 3,
+    "min_volatility": 0.1,
+    "premium_commission_rate": 0.1,
+    "vol_calculation_method": "orderbook"
   },
   "state": "live",
   "trading_status": "operational",
@@ -6584,7 +7856,18 @@ This operation does not require authentication.
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
     "base_withdrawal_fee": "0.000000000000000000",
-    "min_withdrawal_amount": "0.000000000000000000"
+    "min_withdrawal_amount": "0.000000000000000000",
+    "name": "US Dollar",
+    "networks": [
+      {}
+    ],
+    "interest_credit": false,
+    "interest_slabs": null,
+    "kyc_deposit_limit": "0.000000000000000000",
+    "kyc_withdrawal_limit": "0.000000000000000000",
+    "minimum_precision": 2,
+    "sort_priority": null,
+    "variable_withdrawal_fee": "0.000000000000000000"
   },
   "quoting_asset": {
     "id": 14,
@@ -6593,7 +7876,18 @@ This operation does not require authentication.
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
     "base_withdrawal_fee": "0.000000000000000000",
-    "min_withdrawal_amount": "0.000000000000000000"
+    "min_withdrawal_amount": "0.000000000000000000",
+    "name": "US Dollar",
+    "networks": [
+      {}
+    ],
+    "interest_credit": false,
+    "interest_slabs": null,
+    "kyc_deposit_limit": "0.000000000000000000",
+    "kyc_withdrawal_limit": "0.000000000000000000",
+    "minimum_precision": 2,
+    "sort_priority": null,
+    "variable_withdrawal_fee": "0.000000000000000000"
   },
   "settling_asset": {
     "id": 14,
@@ -6602,7 +7896,18 @@ This operation does not require authentication.
     "deposit_status": "enabled",
     "withdrawal_status": "enabled",
     "base_withdrawal_fee": "0.000000000000000000",
-    "min_withdrawal_amount": "0.000000000000000000"
+    "min_withdrawal_amount": "0.000000000000000000",
+    "name": "US Dollar",
+    "networks": [
+      {}
+    ],
+    "interest_credit": false,
+    "interest_slabs": null,
+    "kyc_deposit_limit": "0.000000000000000000",
+    "kyc_withdrawal_limit": "0.000000000000000000",
+    "minimum_precision": 2,
+    "sort_priority": null,
+    "variable_withdrawal_fee": "0.000000000000000000"
   },
   "spot_index": {
     "id": 14,
@@ -6616,8 +7921,48 @@ This operation does not require authentication.
     "underlying_asset_id": 13,
     "quoting_asset_id": 14,
     "tick_size": "0.5",
-    "index_type": "spot_pair"
-  }
+    "index_type": "spot_pair",
+    "config": {
+      "price_alert_enabled": true,
+      "quoting_asset": "string",
+      "service_id": 0,
+      "underlying_asset": "string"
+    },
+    "description": "string",
+    "impact_size": "string",
+    "constituent_indices": {
+      "expression": "string",
+      "indices": {}
+    },
+    "health_interval": 0,
+    "is_composite": true,
+    "price_method": "string"
+  },
+  "disruption_reason": null,
+  "impact_notional": "10000",
+  "position_notional_limit": null,
+  "auction_start_time": "2026-08-13T05:51:51Z",
+  "settlement_price": null,
+  "auction_finish_time": null,
+  "strike_price": "63600",
+  "short_description": "BTC  Call",
+  "ui_config": {
+    "default_trading_view_candle": "60",
+    "leverage_slider_values": [
+      0
+    ],
+    "price_clubbing_values": [
+      0
+    ],
+    "show_bracket_orders": true,
+    "sort_priority": 0,
+    "tags": [
+      "string"
+    ]
+  },
+  "launch_time": "2020-04-20T08:37:05Z",
+  "insurance_fund_margin_contribution": "5",
+  "barrier_price": null
 }
 
 ```
@@ -6639,7 +7984,7 @@ This operation does not require authentication.
 |contract_value|string|false|none|Notional value of the contract (spot price x contract amount).|
 |contract_unit_currency|string|false|none|Unit of the contract (underlying asset or settling asset).|
 |tick_size|string|false|none|Minimum price interval between two successive prices.|
-|product_specs|[ProductSpecs](#schemaproductspecs)|false|none|Specifications related to the specific product or contract.|
+|product_specs|[ProductSpecs](#schemaproductspecs)|false|none|Specifications related to the specific product or contract. Which fields are present varies by contract_type - options contracts carry the volatility-related fields, perpetuals carry funding-related fields.|
 |state|string|false|none|Current state of the product.|
 |trading_status|string|false|none|Trading status of the contract.|
 |max_leverage_notional|string|false|none|Maximum notional position size at the highest leverage.|
@@ -6660,6 +8005,24 @@ This operation does not require authentication.
 |quoting_asset|[Asset](#schemaasset)|false|none|Details of the asset used in the product or contract.|
 |settling_asset|[Asset](#schemaasset)|false|none|Details of the asset used in the product or contract.|
 |spot_index|[Index](#schemaindex)|false|none|Details of an index used in trading, including its constituents and characteristics.|
+|disruption_reason|string|false|none|Reason trading was disrupted. Null when trading_status is operational.|
+|impact_notional|string|false|none|Notional size of a typical trade used for mark price computation.|
+|position_notional_limit|string|false|none|Maximum notional position size allowed. Null when not applicable.|
+|auction_start_time|string|false|none|Start timestamp of the settlement auction.|
+|settlement_price|string|false|none|Settlement price of the contract. Null before settlement.|
+|auction_finish_time|string|false|none|Finish timestamp of the settlement auction. Null before the auction ends.|
+|strike_price|string|false|none|Strike price for an options contract. Null for non-options contracts.|
+|short_description|string|false|none|Short form description of the product.|
+|ui_config|object|false|none|Display configuration used by trading UIs. Not part of the core contract terms.|
+|» default_trading_view_candle|string|false|none|none|
+|» leverage_slider_values|[number]|false|none|none|
+|» price_clubbing_values|[number]|false|none|none|
+|» show_bracket_orders|boolean|false|none|none|
+|» sort_priority|integer|false|none|none|
+|» tags|[string]|false|none|none|
+|launch_time|string|false|none|Timestamp the product was launched for trading.|
+|insurance_fund_margin_contribution|string|false|none|Contribution of this product's margin to the insurance fund.|
+|barrier_price|string|false|none|Barrier price for a barrier options contract. Null for other contract types.|
 
 #### Enumerated Values
 
@@ -6731,7 +8094,16 @@ This operation does not require authentication.
       "rate_exchange_interval": 28800,
       "tags": [
         "layer_1"
-      ]
+      ],
+      "vol_expiry_time": 172800,
+      "backup_vol_expiry_time": 31536000,
+      "max_deviation_from_external_vol": 0.75,
+      "max_lower_deviation_from_external_vol": 0.75,
+      "max_upper_deviation_from_external_vol": 0.5,
+      "max_volatility": 3,
+      "min_volatility": 0.1,
+      "premium_commission_rate": 0.1,
+      "vol_calculation_method": "orderbook"
     },
     "state": "live",
     "trading_status": "operational",
@@ -6756,7 +8128,18 @@ This operation does not require authentication.
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "quoting_asset": {
       "id": 14,
@@ -6765,7 +8148,18 @@ This operation does not require authentication.
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "settling_asset": {
       "id": 14,
@@ -6774,7 +8168,18 @@ This operation does not require authentication.
       "deposit_status": "enabled",
       "withdrawal_status": "enabled",
       "base_withdrawal_fee": "0.000000000000000000",
-      "min_withdrawal_amount": "0.000000000000000000"
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
     },
     "spot_index": {
       "id": 14,
@@ -6788,8 +8193,48 @@ This operation does not require authentication.
       "underlying_asset_id": 13,
       "quoting_asset_id": 14,
       "tick_size": "0.5",
-      "index_type": "spot_pair"
-    }
+      "index_type": "spot_pair",
+      "config": {
+        "price_alert_enabled": true,
+        "quoting_asset": "string",
+        "service_id": 0,
+        "underlying_asset": "string"
+      },
+      "description": "string",
+      "impact_size": "string",
+      "constituent_indices": {
+        "expression": "string",
+        "indices": {}
+      },
+      "health_interval": 0,
+      "is_composite": true,
+      "price_method": "string"
+    },
+    "disruption_reason": null,
+    "impact_notional": "10000",
+    "position_notional_limit": null,
+    "auction_start_time": "2026-08-13T05:51:51Z",
+    "settlement_price": null,
+    "auction_finish_time": null,
+    "strike_price": "63600",
+    "short_description": "BTC  Call",
+    "ui_config": {
+      "default_trading_view_candle": "60",
+      "leverage_slider_values": [
+        0
+      ],
+      "price_clubbing_values": [
+        0
+      ],
+      "show_bracket_orders": true,
+      "sort_priority": 0,
+      "tags": [
+        "string"
+      ]
+    },
+    "launch_time": "2020-04-20T08:37:05Z",
+    "insurance_fund_margin_contribution": "5",
+    "barrier_price": null
   }
 ]
 
@@ -6816,6 +8261,19 @@ This operation does not require authentication.
   "limit_price": "59000",
   "stop_order_type": "stop_loss_order",
   "stop_price": "55000",
+  "average_fill_price": "8999.00",
+  "bracket_order": false,
+  "bracket_stop_loss_price": "56000",
+  "bracket_stop_loss_limit_price": "57000",
+  "bracket_take_profit_price": "61000",
+  "bracket_take_profit_limit_price": "62000",
+  "bracket_trail_amount": "50",
+  "trail_amount": "50",
+  "cancellation_reason": "cancelled_by_user",
+  "mmp": "disabled",
+  "stop_trigger_method": "last_traded_price",
+  "time_in_force": "gtc",
+  "updated_at": "1725865012000000",
   "paid_commission": "0.5432",
   "commission": "0.5432",
   "reduce_only": false,
@@ -6840,9 +8298,22 @@ This operation does not require authentication.
 |unfilled_size|integer|false|none|Order size which is not filled yet|
 |side|string|false|none|Side for which to place order|
 |order_type|string|false|none|Order type - limit_order/market_order|
-|limit_price|string|false|none|Price level on which order must be triggered|
-|stop_order_type|string|false|none|Stop order type - stop loss or take profit|
-|stop_price|string|false|none|Stop price level for the stop order|
+|limit_price|string|false|none|Price level on which order must be triggered. Null for market orders.|
+|stop_order_type|string|false|none|Stop order type - stop loss, take profit, or liquidation. Null when the order is not a stop order. liquidation_order is generated by the system when a position is force-closed and cannot be submitted in a create order request.|
+|stop_price|string|false|none|Stop price level for the stop order. Null when the order is not a stop order.|
+|average_fill_price|string|false|none|Average price at which the order has been filled. Null for unfilled orders.|
+|bracket_order|boolean|false|none|True if this is a bracket order, false otherwise.|
+|bracket_stop_loss_price|string|false|none|Bracket order stop loss trigger price.|
+|bracket_stop_loss_limit_price|string|false|none|Bracket order stop loss limit price.|
+|bracket_take_profit_price|string|false|none|Take profit trigger price for bracket order.|
+|bracket_take_profit_limit_price|string|false|none|Bracket order take profit limit price.|
+|bracket_trail_amount|string|false|none|Trail amount for a trailing bracket stop order.|
+|trail_amount|string|false|none|Trail amount for a trailing stop order. Null unless the order is a trailing stop order.|
+|cancellation_reason|string|false|none|Reason the order was cancelled. Null unless state is cancelled.|
+|mmp|string|false|none|MMP level applied to the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
+|stop_trigger_method|string|false|none|Stop order trigger method - mark_price/last_traded_price/spot_price|
+|time_in_force|string|false|none|GTC/IOC order type|
+|updated_at|string|false|none|Updated at unix timestamp of the order in micro seconds.|
 |paid_commission|string|false|none|Commission paid for filled order|
 |commission|string|false|none|Commission blocked for order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
@@ -6861,6 +8332,19 @@ This operation does not require authentication.
 |order_type|limit_order|Order placed at a specified limit price|
 |order_type|market_order|Order executed at the best available market price|
 |stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
 |reduce_only|false|Order can open or increase a position|
 |reduce_only|true|Order can only reduce or close an existing position|
 |state|open|Order is active and resting in the orderbook|
@@ -6884,6 +8368,19 @@ This operation does not require authentication.
     "limit_price": "59000",
     "stop_order_type": "stop_loss_order",
     "stop_price": "55000",
+    "average_fill_price": "8999.00",
+    "bracket_order": false,
+    "bracket_stop_loss_price": "56000",
+    "bracket_stop_loss_limit_price": "57000",
+    "bracket_take_profit_price": "61000",
+    "bracket_take_profit_limit_price": "62000",
+    "bracket_trail_amount": "50",
+    "trail_amount": "50",
+    "cancellation_reason": "cancelled_by_user",
+    "mmp": "disabled",
+    "stop_trigger_method": "last_traded_price",
+    "time_in_force": "gtc",
+    "updated_at": "1725865012000000",
     "paid_commission": "0.5432",
     "commission": "0.5432",
     "reduce_only": false,
@@ -6947,7 +8444,7 @@ This operation does not require authentication.
 |size|integer|true|none|Order size|
 |side|string|true|none|Buy order or Sell order|
 |order_type|string|true|none|Limit order(limit_price must be defined) or Market order|
-|stop_order_type|string|false|none|Stop order type - stop loss or take profit|
+|stop_order_type|string|false|none|Stop order type - stop loss or take profit. liquidation_order is not accepted here; it is only ever generated by the system and returned in responses.|
 |stop_price|string|false|none|Stop loss price level if the order is stop order|
 |trail_amount|string|false|none|Use trail amount if you want a trailing stop order. Required if stop price is empty.|
 |stop_trigger_method|string|false|none|Stop order trigger method - mark_price/last_traded_price/spot_price|
@@ -7493,9 +8990,182 @@ This operation does not require authentication.
   "adl_level": 0,
   "product_id": 0,
   "product_symbol": "string",
+  "product": {
+    "id": 27,
+    "symbol": "BTCUSD",
+    "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
+    "created_at": "2023-12-18T13:10:39Z",
+    "updated_at": "2024-11-15T02:47:50Z",
+    "settlement_time": null,
+    "notional_type": "vanilla",
+    "impact_size": 10000,
+    "initial_margin": "0.5",
+    "maintenance_margin": "0.25",
+    "contract_value": "0.001",
+    "contract_unit_currency": "BTC",
+    "tick_size": "0.5",
+    "product_specs": {
+      "funding_clamp_value": 0.05,
+      "only_reduce_only_orders_allowed": false,
+      "expiry_interval": 28800,
+      "isolated_liq_penalty_factor": 0.01,
+      "rate_exchange_interval": 28800,
+      "tags": [
+        "layer_1"
+      ],
+      "vol_expiry_time": 172800,
+      "backup_vol_expiry_time": 31536000,
+      "max_deviation_from_external_vol": 0.75,
+      "max_lower_deviation_from_external_vol": 0.75,
+      "max_upper_deviation_from_external_vol": 0.5,
+      "max_volatility": 3,
+      "min_volatility": 0.1,
+      "premium_commission_rate": 0.1,
+      "vol_calculation_method": "orderbook"
+    },
+    "state": "live",
+    "trading_status": "operational",
+    "max_leverage_notional": "100000",
+    "default_leverage": "200",
+    "initial_margin_scaling_factor": "0.0000025",
+    "maintenance_margin_scaling_factor": "0.00000125",
+    "taker_commission_rate": "0.0005",
+    "maker_commission_rate": "0.0002",
+    "liquidation_penalty_factor": "0.5",
+    "contract_type": "perpetual_futures",
+    "position_size_limit": 229167,
+    "basis_factor_max_limit": "10.95",
+    "is_quanto": false,
+    "funding_method": "mark_price",
+    "annualized_funding": "10.95",
+    "price_band": "2.5",
+    "underlying_asset": {
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
+      "deposit_status": "enabled",
+      "withdrawal_status": "enabled",
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
+    },
+    "quoting_asset": {
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
+      "deposit_status": "enabled",
+      "withdrawal_status": "enabled",
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
+    },
+    "settling_asset": {
+      "id": 14,
+      "symbol": "USD",
+      "precision": 8,
+      "deposit_status": "enabled",
+      "withdrawal_status": "enabled",
+      "base_withdrawal_fee": "0.000000000000000000",
+      "min_withdrawal_amount": "0.000000000000000000",
+      "name": "US Dollar",
+      "networks": [
+        {}
+      ],
+      "interest_credit": false,
+      "interest_slabs": null,
+      "kyc_deposit_limit": "0.000000000000000000",
+      "kyc_withdrawal_limit": "0.000000000000000000",
+      "minimum_precision": 2,
+      "sort_priority": null,
+      "variable_withdrawal_fee": "0.000000000000000000"
+    },
+    "spot_index": {
+      "id": 14,
+      "symbol": ".DEXBTUSD",
+      "constituent_exchanges": [
+        {
+          "name": "ExchangeA",
+          "weight": 0.25
+        }
+      ],
+      "underlying_asset_id": 13,
+      "quoting_asset_id": 14,
+      "tick_size": "0.5",
+      "index_type": "spot_pair",
+      "config": {
+        "price_alert_enabled": true,
+        "quoting_asset": "string",
+        "service_id": 0,
+        "underlying_asset": "string"
+      },
+      "description": "string",
+      "impact_size": "string",
+      "constituent_indices": {
+        "expression": "string",
+        "indices": {}
+      },
+      "health_interval": 0,
+      "is_composite": true,
+      "price_method": "string"
+    },
+    "disruption_reason": null,
+    "impact_notional": "10000",
+    "position_notional_limit": null,
+    "auction_start_time": "2026-08-13T05:51:51Z",
+    "settlement_price": null,
+    "auction_finish_time": null,
+    "strike_price": "63600",
+    "short_description": "BTC  Call",
+    "ui_config": {
+      "default_trading_view_candle": "60",
+      "leverage_slider_values": [
+        0
+      ],
+      "price_clubbing_values": [
+        0
+      ],
+      "show_bracket_orders": true,
+      "sort_priority": 0,
+      "tags": [
+        "string"
+      ]
+    },
+    "launch_time": "2020-04-20T08:37:05Z",
+    "insurance_fund_margin_contribution": "5",
+    "barrier_price": null
+  },
   "commission": "string",
   "realized_pnl": "string",
-  "realized_funding": "string"
+  "realized_funding": "string",
+  "realized_cashflow": "-0.019078170000000000",
+  "realized_holding_cost": "0",
+  "unrealized_pnl": "-0.03300000",
+  "unrealized_cashflow": "-0.03300000",
+  "mark_price": "63755.59251216",
+  "margin_mode": "isolated",
+  "auto_topup": false,
+  "created_at": "2026-08-12T09:05:00.376898Z",
+  "updated_at": "2026-08-13T08:02:12.009909Z"
 }
 
 ```
@@ -7510,14 +9180,24 @@ This operation does not require authentication.
 |size|integer|false|none|Position size, negative for short and positive for long|
 |entry_price|string|false|none|none|
 |margin|string|false|none|none|
-|liquidation_price|string|false|none|none|
-|bankruptcy_price|string|false|none|none|
-|adl_level|integer|false|none|none|
+|liquidation_price|string|false|none|Null until the engine has priced the position.|
+|bankruptcy_price|string|false|none|Null until the engine has priced the position.|
+|adl_level|integer|false|none|ADL ranking of the position. Null until the ranking has been computed.|
 |product_id|integer|false|none|none|
 |product_symbol|string|false|none|none|
+|product|[Product](#schemaproduct)|false|none|none|
 |commission|string|false|none|commissions blocked in the position|
 |realized_pnl|string|false|none|Net realized pnl since the position was opened|
 |realized_funding|string|false|none|Net realized funding since the position was opened|
+|realized_cashflow|string|false|none|Net realized cashflow since the position was opened|
+|realized_holding_cost|string|false|none|Net realized holding cost since the position was opened|
+|unrealized_pnl|string|false|none|Unrealized pnl on the open position, marked to the current mark price|
+|unrealized_cashflow|string|false|none|Unrealized cashflow on the open position, marked to the current mark price|
+|mark_price|string|false|none|Current mark price used to value the position|
+|margin_mode|string|false|none|Margin mode of the position - isolated/portfolio|
+|auto_topup|boolean|false|none|True if auto add margin is enabled for this position|
+|created_at|string|false|none|Created at timestamp of the position|
+|updated_at|string|false|none|Updated at timestamp of the position|
 
 <h2 id="tocSarrayofpositions">ArrayOfPositions</h2>
 
@@ -7535,9 +9215,182 @@ This operation does not require authentication.
     "adl_level": 0,
     "product_id": 0,
     "product_symbol": "string",
+    "product": {
+      "id": 27,
+      "symbol": "BTCUSD",
+      "description": "Bitcoin Perpetual futures, quoted, settled & margined in USD",
+      "created_at": "2023-12-18T13:10:39Z",
+      "updated_at": "2024-11-15T02:47:50Z",
+      "settlement_time": null,
+      "notional_type": "vanilla",
+      "impact_size": 10000,
+      "initial_margin": "0.5",
+      "maintenance_margin": "0.25",
+      "contract_value": "0.001",
+      "contract_unit_currency": "BTC",
+      "tick_size": "0.5",
+      "product_specs": {
+        "funding_clamp_value": 0.05,
+        "only_reduce_only_orders_allowed": false,
+        "expiry_interval": 28800,
+        "isolated_liq_penalty_factor": 0.01,
+        "rate_exchange_interval": 28800,
+        "tags": [
+          "layer_1"
+        ],
+        "vol_expiry_time": 172800,
+        "backup_vol_expiry_time": 31536000,
+        "max_deviation_from_external_vol": 0.75,
+        "max_lower_deviation_from_external_vol": 0.75,
+        "max_upper_deviation_from_external_vol": 0.5,
+        "max_volatility": 3,
+        "min_volatility": 0.1,
+        "premium_commission_rate": 0.1,
+        "vol_calculation_method": "orderbook"
+      },
+      "state": "live",
+      "trading_status": "operational",
+      "max_leverage_notional": "100000",
+      "default_leverage": "200",
+      "initial_margin_scaling_factor": "0.0000025",
+      "maintenance_margin_scaling_factor": "0.00000125",
+      "taker_commission_rate": "0.0005",
+      "maker_commission_rate": "0.0002",
+      "liquidation_penalty_factor": "0.5",
+      "contract_type": "perpetual_futures",
+      "position_size_limit": 229167,
+      "basis_factor_max_limit": "10.95",
+      "is_quanto": false,
+      "funding_method": "mark_price",
+      "annualized_funding": "10.95",
+      "price_band": "2.5",
+      "underlying_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "quoting_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "settling_asset": {
+        "id": 14,
+        "symbol": "USD",
+        "precision": 8,
+        "deposit_status": "enabled",
+        "withdrawal_status": "enabled",
+        "base_withdrawal_fee": "0.000000000000000000",
+        "min_withdrawal_amount": "0.000000000000000000",
+        "name": "US Dollar",
+        "networks": [
+          {}
+        ],
+        "interest_credit": false,
+        "interest_slabs": null,
+        "kyc_deposit_limit": "0.000000000000000000",
+        "kyc_withdrawal_limit": "0.000000000000000000",
+        "minimum_precision": 2,
+        "sort_priority": null,
+        "variable_withdrawal_fee": "0.000000000000000000"
+      },
+      "spot_index": {
+        "id": 14,
+        "symbol": ".DEXBTUSD",
+        "constituent_exchanges": [
+          {
+            "name": "ExchangeA",
+            "weight": 0.25
+          }
+        ],
+        "underlying_asset_id": 13,
+        "quoting_asset_id": 14,
+        "tick_size": "0.5",
+        "index_type": "spot_pair",
+        "config": {
+          "price_alert_enabled": true,
+          "quoting_asset": "string",
+          "service_id": 0,
+          "underlying_asset": "string"
+        },
+        "description": "string",
+        "impact_size": "string",
+        "constituent_indices": {
+          "expression": "string",
+          "indices": {}
+        },
+        "health_interval": 0,
+        "is_composite": true,
+        "price_method": "string"
+      },
+      "disruption_reason": null,
+      "impact_notional": "10000",
+      "position_notional_limit": null,
+      "auction_start_time": "2026-08-13T05:51:51Z",
+      "settlement_price": null,
+      "auction_finish_time": null,
+      "strike_price": "63600",
+      "short_description": "BTC  Call",
+      "ui_config": {
+        "default_trading_view_candle": "60",
+        "leverage_slider_values": [
+          0
+        ],
+        "price_clubbing_values": [
+          0
+        ],
+        "show_bracket_orders": true,
+        "sort_priority": 0,
+        "tags": [
+          "string"
+        ]
+      },
+      "launch_time": "2020-04-20T08:37:05Z",
+      "insurance_fund_margin_contribution": "5",
+      "barrier_price": null
+    },
     "commission": "string",
     "realized_pnl": "string",
-    "realized_funding": "string"
+    "realized_funding": "string",
+    "realized_cashflow": "-0.019078170000000000",
+    "realized_holding_cost": "0",
+    "unrealized_pnl": "-0.03300000",
+    "unrealized_cashflow": "-0.03300000",
+    "mark_price": "63755.59251216",
+    "margin_mode": "isolated",
+    "auto_topup": false,
+    "created_at": "2026-08-12T09:05:00.376898Z",
+    "updated_at": "2026-08-13T08:02:12.009909Z"
   }
 ]
 
@@ -7555,8 +9408,36 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "size": 0,
+  "id": "071b551365574d0aad99557931137dbd",
+  "size": "1",
+  "notional": "63.788",
+  "product": {
+    "id": 0,
+    "symbol": "string",
+    "contract_type": "futures",
+    "tick_size": "string",
+    "contract_value": "string",
+    "contract_unit_currency": "string",
+    "notional_type": "vanilla",
+    "quoting_asset": {
+      "symbol": "string",
+      "precision": 0,
+      "minimum_precision": 0
+    },
+    "underlying_asset": {
+      "symbol": "string",
+      "precision": 0,
+      "minimum_precision": 0
+    },
+    "settling_asset": {
+      "symbol": "string",
+      "precision": 0,
+      "minimum_precision": 0
+    },
+    "spot_index": {
+      "symbol": "string"
+    }
+  },
   "fill_type": "normal",
   "side": "buy",
   "price": "string",
@@ -7581,7 +9462,33 @@ This operation does not require authentication.
     "tfc_used_for_commission": "string",
     "tfc_used_for_liquidation_fee": "string",
     "total_commission_in_settling_asset": "string",
-    "total_liquidation_fee_in_settling_asset": "string"
+    "total_liquidation_fee_in_settling_asset": "string",
+    "ip": "string",
+    "is_commission_on_notional": true,
+    "liquidation_fee_in_settling_asset": "string",
+    "mark": "string",
+    "rack_commision": "string",
+    "source": "string",
+    "spot": "string",
+    "cut": {
+      "equity": 0,
+      "api_trader": 0
+    },
+    "trading_fee_credits_used": "string",
+    "original_referrer_commission": "string",
+    "new_position": {
+      "size": 0,
+      "margin": "string",
+      "entry_price": "string",
+      "liquidation_price": "string",
+      "bankruptcy_price": "string",
+      "commission": "string",
+      "total_commission_paid": "string",
+      "realized_pnl": "string",
+      "realized_cashflow": "string",
+      "realized_funding": "string",
+      "last_fill_uuid": "string"
+    }
   }
 }
 
@@ -7593,8 +9500,31 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|none|
-|size|integer|false|none|none|
+|id|string|false|none|UUID string uniquely identifying the fill. Confirmed as a UUID for every fill_type: normal, liquidation, settlement, adl and otc.|
+|size|string|false|none|Fill size, sent as string.|
+|notional|string|false|none|Notional value of the fill (price * size * contract value), sent as string.|
+|product|object|false|none|Truncated details of the traded product. Not the full Product object - only the fields observed below.|
+|» id|integer|false|none|none|
+|» symbol|string|false|none|none|
+|» contract_type|string|false|none|none|
+|» tick_size|string|false|none|none|
+|» contract_value|string|false|none|none|
+|» contract_unit_currency|string|false|none|none|
+|» notional_type|string|false|none|none|
+|» quoting_asset|object|false|none|none|
+|»» symbol|string|false|none|none|
+|»» precision|integer|false|none|none|
+|»» minimum_precision|integer|false|none|none|
+|» underlying_asset|object|false|none|none|
+|»» symbol|string|false|none|none|
+|»» precision|integer|false|none|none|
+|»» minimum_precision|integer|false|none|none|
+|» settling_asset|object|false|none|none|
+|»» symbol|string|false|none|none|
+|»» precision|integer|false|none|none|
+|»» minimum_precision|integer|false|none|none|
+|» spot_index|object|false|none|none|
+|»» symbol|string|false|none|none|
 |fill_type|string|false|none|none|
 |side|string|false|none|none|
 |price|string|false|none|Price at which the fill happened, BigDecimal sent as string|
@@ -7606,12 +9536,18 @@ This operation does not require authentication.
 |order_id|string|false|none|Will be order_id(Integer) in most cases. Will be UUID string of order when fill_type is settlement|
 |settling_asset_id|integer|false|none|none|
 |settling_asset_symbol|string|false|none|none|
-|meta_data|[FillMetaData](#schemafillmetadata)|false|none|Meta data inside fill|
+|meta_data|[FillMetaData](#schemafillmetadata)|false|none|Meta data inside fill. Which fields are present varies by fill_type, confirmed across all 5 values. normal and liquidation carry the full field set below, including ip/mark/spot/source and a fuller new_position. settlement only carries order_price/order_size/order_type/order_unfilled_size, the commission-related fields, and a minimal new_position (size, commission, sometimes margin) - no ip/mark/spot/source or liquidation-fee fields. adl carries the same fields as liquidation but source and ip are null, order_type is adl_order, new_position can be minimal (sometimes only size/realized_pnl/realized_cashflow), and it may carry a cut object. otc is the sparsest: only order_price/order_size/order_type, commission_deto(_in_settling_asset), effective_commission_rate, original_referrer_commission, trading_fee_credits_used, and sometimes cut - no new_position, no ip/mark/spot/source, no liquidation-fee fields.|
 
 #### Enumerated Values
 
 |Property|Value|Description|
 |---|---|---|
+|contract_type|futures||
+|contract_type|perpetual_futures||
+|contract_type|call_options||
+|contract_type|put_options||
+|notional_type|vanilla||
+|notional_type|inverse||
 |fill_type|normal|Regular fill from matching against the orderbook|
 |fill_type|adl|Fill from auto-deleveraging to balance counterparty exposure|
 |fill_type|liquidation|Fill resulting from forced liquidation of a position|
@@ -7629,8 +9565,36 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": 0,
-    "size": 0,
+    "id": "071b551365574d0aad99557931137dbd",
+    "size": "1",
+    "notional": "63.788",
+    "product": {
+      "id": 0,
+      "symbol": "string",
+      "contract_type": "futures",
+      "tick_size": "string",
+      "contract_value": "string",
+      "contract_unit_currency": "string",
+      "notional_type": "vanilla",
+      "quoting_asset": {
+        "symbol": "string",
+        "precision": 0,
+        "minimum_precision": 0
+      },
+      "underlying_asset": {
+        "symbol": "string",
+        "precision": 0,
+        "minimum_precision": 0
+      },
+      "settling_asset": {
+        "symbol": "string",
+        "precision": 0,
+        "minimum_precision": 0
+      },
+      "spot_index": {
+        "symbol": "string"
+      }
+    },
     "fill_type": "normal",
     "side": "buy",
     "price": "string",
@@ -7655,7 +9619,33 @@ This operation does not require authentication.
       "tfc_used_for_commission": "string",
       "tfc_used_for_liquidation_fee": "string",
       "total_commission_in_settling_asset": "string",
-      "total_liquidation_fee_in_settling_asset": "string"
+      "total_liquidation_fee_in_settling_asset": "string",
+      "ip": "string",
+      "is_commission_on_notional": true,
+      "liquidation_fee_in_settling_asset": "string",
+      "mark": "string",
+      "rack_commision": "string",
+      "source": "string",
+      "spot": "string",
+      "cut": {
+        "equity": 0,
+        "api_trader": 0
+      },
+      "trading_fee_credits_used": "string",
+      "original_referrer_commission": "string",
+      "new_position": {
+        "size": 0,
+        "margin": "string",
+        "entry_price": "string",
+        "liquidation_price": "string",
+        "bankruptcy_price": "string",
+        "commission": "string",
+        "total_commission_paid": "string",
+        "realized_pnl": "string",
+        "realized_cashflow": "string",
+        "realized_funding": "string",
+        "last_fill_uuid": "string"
+      }
     }
   }
 ]
@@ -7686,12 +9676,38 @@ This operation does not require authentication.
   "tfc_used_for_commission": "string",
   "tfc_used_for_liquidation_fee": "string",
   "total_commission_in_settling_asset": "string",
-  "total_liquidation_fee_in_settling_asset": "string"
+  "total_liquidation_fee_in_settling_asset": "string",
+  "ip": "string",
+  "is_commission_on_notional": true,
+  "liquidation_fee_in_settling_asset": "string",
+  "mark": "string",
+  "rack_commision": "string",
+  "source": "string",
+  "spot": "string",
+  "cut": {
+    "equity": 0,
+    "api_trader": 0
+  },
+  "trading_fee_credits_used": "string",
+  "original_referrer_commission": "string",
+  "new_position": {
+    "size": 0,
+    "margin": "string",
+    "entry_price": "string",
+    "liquidation_price": "string",
+    "bankruptcy_price": "string",
+    "commission": "string",
+    "total_commission_paid": "string",
+    "realized_pnl": "string",
+    "realized_cashflow": "string",
+    "realized_funding": "string",
+    "last_fill_uuid": "string"
+  }
 }
 
 ```
 
-*Meta data inside fill*
+*Meta data inside fill. Which fields are present varies by fill_type, confirmed across all 5 values. normal and liquidation carry the full field set below, including ip/mark/spot/source and a fuller new_position. settlement only carries order_price/order_size/order_type/order_unfilled_size, the commission-related fields, and a minimal new_position (size, commission, sometimes margin) - no ip/mark/spot/source or liquidation-fee fields. adl carries the same fields as liquidation but source and ip are null, order_type is adl_order, new_position can be minimal (sometimes only size/realized_pnl/realized_cashflow), and it may carry a cut object. otc is the sparsest: only order_price/order_size/order_type, commission_deto(_in_settling_asset), effective_commission_rate, original_referrer_commission, trading_fee_credits_used, and sometimes cut - no new_position, no ip/mark/spot/source, no liquidation-fee fields.*
 
 ### Properties
 
@@ -7710,6 +9726,30 @@ This operation does not require authentication.
 |tfc_used_for_liquidation_fee|string|false|none|none|
 |total_commission_in_settling_asset|string|false|none|none|
 |total_liquidation_fee_in_settling_asset|string|false|none|none|
+|ip|string|false|none|IP address the order that generated this fill was placed from.|
+|is_commission_on_notional|boolean|false|none|True if commission is charged on notional value rather than a fixed rate.|
+|liquidation_fee_in_settling_asset|string|false|none|Liquidation fee charged on this fill, in the settling asset.|
+|mark|string|false|none|Mark price at the time of the fill.|
+|rack_commision|string|false|none|Commission before any trading-credit offsets are applied.|
+|source|string|false|none|Client/platform the order was placed from, e.g. desktop. System-generated fills (e.g. liquidation) show system. Null for adl fills.|
+|spot|string|false|none|Spot index price at the time of the fill.|
+|cut|object|false|none|Auto-deleveraging queue ranking info. Seen on the maker side of adl fills and on otc fills.|
+|» equity|number|false|none|none|
+|» api_trader|number|false|none|none|
+|trading_fee_credits_used|string|false|none|Trading fee credits applied toward this fill's commission. Seen on otc fills.|
+|original_referrer_commission|string|false|none|Referrer commission before any adjustments. Seen on liquidation fills.|
+|new_position|object|false|none|Snapshot of the position immediately after this fill was applied.|
+|» size|integer|false|none|none|
+|» margin|string|false|none|none|
+|» entry_price|string|false|none|Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill.|
+|» liquidation_price|string|false|none|Null until the engine has priced the position.|
+|» bankruptcy_price|string|false|none|Null until the engine has priced the position.|
+|» commission|string|false|none|none|
+|» total_commission_paid|string|false|none|Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill.|
+|» realized_pnl|string|false|none|none|
+|» realized_cashflow|string|false|none|none|
+|» realized_funding|string|false|none|none|
+|» last_fill_uuid|string|false|none|Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill.|
 
 <h2 id="tocSorderleverage">OrderLeverage</h2>
 
