@@ -42,9 +42,14 @@
         }
       });
     };
+    var currentScrollOffset = function() {
+      var $banner = $('.announce-banner');
+      return ($banner.length ? $banner.outerHeight() : 0) + scrollOffset;
+    };
 
     var refreshToc = function() {
-      var currentTop = $(document).scrollTop() + scrollOffset;
+      var effectiveOffset = currentScrollOffset();
+      var currentTop = $(document).scrollTop() + effectiveOffset;
 
       if (currentTop + windowHeight >= pageHeight) {
         // at bottom of page, so just select last header by making currentTop very large
@@ -61,7 +66,7 @@
       }
 
       // Catch the initial load case
-      if (currentTop == scrollOffset && !loaded) {
+      if (currentTop == effectiveOffset && !loaded) {
         best = window.location.hash;
         loaded = true;
       }
