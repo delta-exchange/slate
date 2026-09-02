@@ -88,12 +88,12 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|deposit_status|enabled|
-|deposit_status|disabled|
-|withdrawal_status|enabled|
-|withdrawal_status|disabled|
+|Property|Value|Description|
+|---|---|---|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
 
 <aside class="success">
 This operation does not require authentication.
@@ -186,11 +186,11 @@ Indices refer to spot price indices that Delta Exchange creates by combining spo
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|index_type|spot_pair|
-|index_type|fixed_interest_rate|
-|index_type|floating_interest_rate|
+|Property|Value|Description|
+|---|---|---|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <aside class="success">
 This operation does not require authentication.
@@ -358,23 +358,23 @@ The endpoint provides details about all available trading products on the platfo
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|notional_type|vanilla|
-|notional_type|inverse|
-|state|live|
-|state|expired|
-|state|upcoming|
-|trading_status|operational|
-|trading_status|disrupted_cancel_only|
-|trading_status|disrupted_post_only|
-|deposit_status|enabled|
-|deposit_status|disabled|
-|withdrawal_status|enabled|
-|withdrawal_status|disabled|
-|index_type|spot_pair|
-|index_type|fixed_interest_rate|
-|index_type|floating_interest_rate|
+|Property|Value|Description|
+|---|---|---|
+|notional_type|vanilla|Contract is quoted, settled, and margined in the quote currency|
+|notional_type|inverse|Contract is quoted in the quote currency but settled and margined in the base currency|
+|state|live|Product is currently active and tradable|
+|state|expired|Product has expired and is no longer tradable|
+|state|upcoming|Product is scheduled to go live in the future|
+|trading_status|operational|Trading is fully operational; orders can be placed and cancelled|
+|trading_status|disrupted_cancel_only|Trading is disrupted; only order cancellations are allowed|
+|trading_status|disrupted_post_only|Trading is disrupted; only post-only orders are accepted|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <aside class="success">
 This operation does not require authentication.
@@ -532,23 +532,23 @@ The endpoint retrieves details of a specific product identified by its symbol (e
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|notional_type|vanilla|
-|notional_type|inverse|
-|state|live|
-|state|expired|
-|state|upcoming|
-|trading_status|operational|
-|trading_status|disrupted_cancel_only|
-|trading_status|disrupted_post_only|
-|deposit_status|enabled|
-|deposit_status|disabled|
-|withdrawal_status|enabled|
-|withdrawal_status|disabled|
-|index_type|spot_pair|
-|index_type|fixed_interest_rate|
-|index_type|floating_interest_rate|
+|Property|Value|Description|
+|---|---|---|
+|notional_type|vanilla|Contract is quoted, settled, and margined in the quote currency|
+|notional_type|inverse|Contract is quoted in the quote currency but settled and margined in the base currency|
+|state|live|Product is currently active and tradable|
+|state|expired|Product has expired and is no longer tradable|
+|state|upcoming|Product is scheduled to go live in the future|
+|trading_status|operational|Trading is fully operational; orders can be placed and cancelled|
+|trading_status|disrupted_cancel_only|Trading is disrupted; only order cancellations are allowed|
+|trading_status|disrupted_post_only|Trading is disrupted; only post-only orders are accepted|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <aside class="success">
 This operation does not require authentication.
@@ -925,19 +925,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -1056,19 +1058,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -1194,19 +1198,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -1282,17 +1288,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|contract_types|futures|
-|contract_types|perpetual_futures|
-|contract_types|call_options|
-|contract_types|put_options|
-|order_types|market|
-|order_types|limit|
-|order_types|stop_market|
-|order_types|stop_limit|
-|order_types|all_stop|
+|Parameter|Value|Description|
+|---|---|---|
+|contract_types|futures|Dated futures contracts with a fixed expiry|
+
+|Parameter|Value|Description|
+|---|---|---|
+|contract_types|futures|Dated futures contracts with a fixed expiry|
+|contract_types|perpetual_futures|Futures contracts with no expiry, funded via funding rate|
+|contract_types|call_options|Call option contracts|
+|contract_types|put_options|Put option contracts|
+|order_types|market|Market order executed at the best available price|
+|order_types|limit|Limit order placed at a specified price|
+|order_types|stop_market|Stop order that triggers a market order at the stop price|
+|order_types|stop_limit|Stop order that triggers a limit order at the stop price|
+|order_types|all_stop|All stop orders (stop_market and stop_limit)|
 
 > Example responses
 
@@ -1339,19 +1349,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -1792,19 +1804,21 @@ Orders in a batch should belong to the same contract. Max allowed size limit in 
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -1935,19 +1949,21 @@ Orders to be edited in a batch. Rate limits apply.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -2073,19 +2089,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -2190,19 +2208,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -2307,19 +2327,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -2582,11 +2604,15 @@ Change in position may take upto 10secs to reflect. Use 'GET /position' for real
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|contract_types|perpetual_futures|
-|contract_types|call_options|
-|contract_types|put_options|
+|Parameter|Value|Description|
+|---|---|---|
+|contract_types|perpetual_futures|Futures contracts with no expiry, funded via funding rate|
+
+|Parameter|Value|Description|
+|---|---|---|
+|contract_types|perpetual_futures|Futures contracts with no expiry, funded via funding rate|
+|contract_types|call_options|Call option contracts|
+|contract_types|put_options|Put option contracts|
 
 > Example responses
 
@@ -3110,13 +3136,17 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|order_types|market|
-|order_types|limit|
-|order_types|stop_market|
-|order_types|stop_limit|
-|order_types|all_stop|
+|Parameter|Value|Description|
+|---|---|---|
+|order_types|market|Market order executed at the best available price|
+
+|Parameter|Value|Description|
+|---|---|---|
+|order_types|market|Market order executed at the best available price|
+|order_types|limit|Limit order placed at a specified price|
+|order_types|stop_market|Stop order that triggers a market order at the stop price|
+|order_types|stop_limit|Stop order that triggers a limit order at the stop price|
+|order_types|all_stop|All stop orders (stop_market and stop_limit)|
 
 > Example responses
 
@@ -3163,19 +3193,21 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -3256,7 +3288,7 @@ p JSON.parse(result)
   "success": true,
   "result": [
     {
-      "id": 0,
+      "id": "071b551365574d0aad99557931137dbd",
       "size": 0,
       "fill_type": "normal",
       "side": "buy",
@@ -3303,17 +3335,17 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|fill_type|normal|
-|fill_type|adl|
-|fill_type|liquidation|
-|fill_type|settlement|
-|fill_type|otc|
-|side|buy|
-|side|sell|
-|role|taker|
-|role|maker|
+|Property|Value|Description|
+|---|---|---|
+|fill_type|normal|Regular fill from matching against the orderbook|
+|fill_type|adl|Fill from auto-deleveraging to balance counterparty exposure|
+|fill_type|liquidation|Fill resulting from forced liquidation of a position|
+|fill_type|settlement|Fill generated at contract settlement or expiry|
+|fill_type|otc|Off-exchange (over-the-counter) fill|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|role|taker|Fill where the user removed liquidity from the orderbook|
+|role|maker|Fill where the user added liquidity to the orderbook|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -3570,10 +3602,10 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
 
 <aside class="success">
 This operation does not require authentication.
@@ -3790,42 +3822,42 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|transaction_type|cashflow|
-|transaction_type|deposit|
-|transaction_type|withdrawal|
-|transaction_type|commission|
-|transaction_type|conversion|
-|transaction_type|funding|
-|transaction_type|settlement|
-|transaction_type|liquidation_fee|
-|transaction_type|spot_trade|
-|transaction_type|withdrawal_cancellation|
-|transaction_type|referral_bonus|
-|transaction_type|sub_account_transfer|
-|transaction_type|commission_rebate|
-|transaction_type|promo_credit|
-|transaction_type|trading_credits|
-|transaction_type|trading_credits_forfeited|
-|transaction_type|trading_credits_paid|
-|transaction_type|trading_fee_credits_paid_liquidation_fee|
-|transaction_type|trading_credits_reverted|
-|transaction_type|interest_credit|
-|transaction_type|external_deposit|
-|transaction_type|credit_line|
-|transaction_type|trading_competition|
-|transaction_type|fund_deposit|
-|transaction_type|fund_withdrawal|
-|transaction_type|fund_wallet_deposit|
-|transaction_type|fund_wallet_withdrawal|
-|transaction_type|fund_reward|
-|transaction_type|trade_farming_reward|
-|transaction_type|interest_credit|
-|transaction_type|revert|
-|transaction_type|raf_bonus|
-|transaction_type|fill_appropriation|
-|transaction_type|incident_compensation|
+|Property|Value|Description|
+|---|---|---|
+|transaction_type|cashflow|Generic cash credit or debit on the wallet|
+|transaction_type|deposit|Funds deposited into the wallet|
+|transaction_type|withdrawal|Funds withdrawn from the wallet|
+|transaction_type|commission|Trading commission charged on a fill|
+|transaction_type|conversion|Currency or asset conversion entry|
+|transaction_type|funding|Perpetual funding payment exchanged between long and short|
+|transaction_type|settlement|Wallet entry generated at contract settlement|
+|transaction_type|liquidation_fee|Fee charged when a position is liquidated|
+|transaction_type|spot_trade|Wallet entry from a spot trade|
+|transaction_type|withdrawal_cancellation|Reversal of a previously requested withdrawal|
+|transaction_type|referral_bonus|Bonus credited from the referral program|
+|transaction_type|sub_account_transfer|Transfer between a main account and a subaccount|
+|transaction_type|commission_rebate|Rebate paid back on previously charged commission|
+|transaction_type|promo_credit|Promotional credit added to the wallet|
+|transaction_type|trading_credits|Trading credits granted to the user|
+|transaction_type|trading_credits_forfeited|Trading credits forfeited (e.g. on expiry)|
+|transaction_type|trading_credits_paid|Trading credits applied toward trading fees|
+|transaction_type|trading_fee_credits_paid_liquidation_fee|Trading credits applied toward a liquidation fee|
+|transaction_type|trading_credits_reverted|Reversal of previously applied trading credits|
+|transaction_type|interest_credit||
+|transaction_type|external_deposit||
+|transaction_type|credit_line||
+|transaction_type|trading_competition||
+|transaction_type|fund_deposit||
+|transaction_type|fund_withdrawal||
+|transaction_type|fund_wallet_deposit||
+|transaction_type|fund_wallet_withdrawal||
+|transaction_type|fund_reward||
+|transaction_type|trade_farming_reward||
+|transaction_type|interest_credit||
+|transaction_type|revert||
+|transaction_type|raf_bonus||
+|transaction_type|fill_appropriation||
+|transaction_type|incident_compensation||
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -4526,10 +4558,10 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|cancel_after_enabled|false|
-|cancel_after_enabled|true|
+|Property|Value|Description|
+|---|---|---|
+|cancel_after_enabled|false||
+|cancel_after_enabled|true||
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
@@ -5242,23 +5274,23 @@ p JSON.parse(result)
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|notional_type|vanilla|
-|notional_type|inverse|
-|state|live|
-|state|expired|
-|state|upcoming|
-|trading_status|operational|
-|trading_status|disrupted_cancel_only|
-|trading_status|disrupted_post_only|
-|deposit_status|enabled|
-|deposit_status|disabled|
-|withdrawal_status|enabled|
-|withdrawal_status|disabled|
-|index_type|spot_pair|
-|index_type|fixed_interest_rate|
-|index_type|floating_interest_rate|
+|Property|Value|Description|
+|---|---|---|
+|notional_type|vanilla|Contract is quoted, settled, and margined in the quote currency|
+|notional_type|inverse|Contract is quoted in the quote currency but settled and margined in the base currency|
+|state|live|Product is currently active and tradable|
+|state|expired|Product has expired and is no longer tradable|
+|state|upcoming|Product is scheduled to go live in the future|
+|trading_status|operational|Trading is fully operational; orders can be placed and cancelled|
+|trading_status|disrupted_cancel_only|Trading is disrupted; only order cancellations are allowed|
+|trading_status|disrupted_post_only|Trading is disrupted; only post-only orders are accepted|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <aside class="success">
 This operation does not require authentication.
@@ -5328,19 +5360,23 @@ It returns historical Open-High-Low-Close(ohlc) candles data of the symbol as pe
 
 #### Enumerated Values
 
-|Parameter|Value|
-|---|---|
-|resolution|1m|
-|resolution|3m|
-|resolution|5m|
-|resolution|15m|
-|resolution|30m|
-|resolution|1h|
-|resolution|2h|
-|resolution|4h|
-|resolution|6h|
-|resolution|1d|
-|resolution|1w|
+|Parameter|Value|Description|
+|---|---|---|
+|resolution|1m|1-minute candles|
+
+|Parameter|Value|Description|
+|---|---|---|
+|resolution|1m|1-minute candles|
+|resolution|3m|3-minute candles|
+|resolution|5m|5-minute candles|
+|resolution|15m|15-minute candles|
+|resolution|30m|30-minute candles|
+|resolution|1h|1-hour candles|
+|resolution|2h|2-hour candles|
+|resolution|4h|4-hour candles|
+|resolution|6h|6-hour candles|
+|resolution|1d|1-day candles|
+|resolution|1w|1-week candles|
 
 > Example responses
 
@@ -5521,7 +5557,25 @@ This operation does not require authentication.
   "underlying_asset_id": 13,
   "quoting_asset_id": 14,
   "tick_size": "0.5",
-  "index_type": "spot_pair"
+  "index_type": "spot_pair",
+  "config": {
+    "price_alert_enabled": true,
+    "quoting_asset": "USD",
+    "service_id": 1,
+    "underlying_asset": "BTC"
+  },
+  "description": "",
+  "impact_size": "1.000000000000000000",
+  "constituent_indices": {
+    "expression": "${e1} * ${e2}",
+    "indices": {
+      "e1": ".DEXBTUSDT",
+      "e2": ".DEUSDTUSD"
+    }
+  },
+  "health_interval": 300,
+  "is_composite": true,
+  "price_method": "orderbook"
 }
 
 ```
@@ -5541,14 +5595,27 @@ This operation does not require authentication.
 |quoting_asset_id|integer|false|none|ID of the quoting asset for the index.|
 |tick_size|string|false|none|Precision of the spot price in decimal format.|
 |index_type|string|false|none|Type of the index.|
+|config|object|false|none|Composition config for the index.|
+|» price_alert_enabled|boolean|false|none|none|
+|» quoting_asset|string|false|none|none|
+|» service_id|integer|false|none|none|
+|» underlying_asset|string|false|none|none|
+|description|string|false|none|Description of the index.|
+|impact_size|string|false|none|Impact size used for the index price computation.|
+|constituent_indices|object|false|none|For composite indices, the expression and component indices used to compute this index.|
+|» expression|string|false|none|none|
+|» indices|object|false|none|none|
+|health_interval|integer|false|none|Interval, in seconds, at which the index health is checked.|
+|is_composite|boolean|false|none|True if this index is derived from other indices via constituent_indices.|
+|price_method|string|false|none|Method used to compute the index price.|
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|index_type|spot_pair|
-|index_type|fixed_interest_rate|
-|index_type|floating_interest_rate|
+|Property|Value|Description|
+|---|---|---|
+|index_type|spot_pair|Index based on a spot trading pair|
+|index_type|fixed_interest_rate|Index based on a fixed interest rate|
+|index_type|floating_interest_rate|Index based on a floating interest rate|
 
 <h2 id="tocSarrayofindices">ArrayOfIndices</h2>
 
@@ -5590,12 +5657,21 @@ This operation does not require authentication.
   "only_reduce_only_orders_allowed": false,
   "tags": [
     "layer_1"
-  ]
+  ],
+  "vol_expiry_time": 172800,
+  "backup_vol_expiry_time": 31536000,
+  "max_deviation_from_external_vol": 0.75,
+  "max_lower_deviation_from_external_vol": 0.75,
+  "max_upper_deviation_from_external_vol": 0.5,
+  "max_volatility": 3,
+  "min_volatility": 0.1,
+  "premium_commission_rate": 0.1,
+  "vol_calculation_method": "orderbook"
 }
 
 ```
 
-*Specifications related to the specific product or contract.*
+*Specifications related to the specific product or contract. Which fields are present varies by contract_type - options contracts carry the volatility-related fields, perpetuals carry funding-related fields.*
 
 ### Properties
 
@@ -5604,6 +5680,15 @@ This operation does not require authentication.
 |funding_clamp_value|number|false|none|The maximum allowable funding rate clamp value.|
 |only_reduce_only_orders_allowed|boolean|false|none|Indicates whether only reduce-only orders are allowed.|
 |tags|[string]|false|none|Tags associated with the product specifications.|
+|vol_expiry_time|number|false|none|Time interval, in seconds, used in volatility calculation. Seen on both perpetual and options contracts.|
+|backup_vol_expiry_time|number|false|none|Backup time interval, in seconds, used in volatility calculation when the primary window has insufficient data. Seen on options contracts.|
+|max_deviation_from_external_vol|number|false|none|Maximum allowed deviation of internal volatility from the external volatility reference. Seen on options contracts.|
+|max_lower_deviation_from_external_vol|number|false|none|Maximum allowed downward deviation of internal volatility from the external volatility reference. Seen on options contracts.|
+|max_upper_deviation_from_external_vol|number|false|none|Maximum allowed upward deviation of internal volatility from the external volatility reference. Seen on options contracts.|
+|max_volatility|number|false|none|Maximum volatility allowed in pricing. Seen on options contracts.|
+|min_volatility|number|false|none|Minimum volatility allowed in pricing. Seen on options contracts.|
+|premium_commission_rate|number|false|none|Commission rate applied on the option premium. Seen on options contracts.|
+|vol_calculation_method|string|false|none|Method used to calculate volatility. Seen on options contracts.|
 
 <h2 id="tocSasset">Asset</h2>
 
@@ -5617,7 +5702,16 @@ This operation does not require authentication.
   "deposit_status": "enabled",
   "withdrawal_status": "enabled",
   "base_withdrawal_fee": "0.000000000000000000",
-  "min_withdrawal_amount": "0.000000000000000000"
+  "min_withdrawal_amount": "0.000000000000000000",
+  "name": "US Dollar",
+  "networks": [],
+  "interest_credit": false,
+  "interest_slabs": null,
+  "kyc_deposit_limit": "0.000000000000000000",
+  "kyc_withdrawal_limit": "0.000000000000000000",
+  "minimum_precision": 2,
+  "sort_priority": null,
+  "variable_withdrawal_fee": "0.000000000000000000"
 }
 
 ```
@@ -5635,15 +5729,24 @@ This operation does not require authentication.
 |withdrawal_status|string|false|none|Indicates if withdrawals are enabled for the asset.|
 |base_withdrawal_fee|string|false|none|Fixed withdrawal fee for the asset.|
 |min_withdrawal_amount|string|false|none|Minimum allowable withdrawal amount for the asset.|
+|name|string|false|none|Full name of the asset.|
+|networks|[object]|false|none|Networks supported for depositing/withdrawing this asset. Shape not yet observed populated.|
+|interest_credit|boolean|false|none|Whether interest is credited on balances of this asset.|
+|interest_slabs|any|false|none|Interest rate slabs for this asset. Shape unknown - null in every sample observed so far.|
+|kyc_deposit_limit|string|false|none|Deposit limit for the asset before KYC is required.|
+|kyc_withdrawal_limit|string|false|none|Withdrawal limit for the asset before KYC is required.|
+|minimum_precision|integer|false|none|Minimum number of decimal places displayed for the asset.|
+|sort_priority|integer|false|none|Display sort order for the asset. Null when not set.|
+|variable_withdrawal_fee|string|false|none|Variable withdrawal fee for the asset.|
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|deposit_status|enabled|
-|deposit_status|disabled|
-|withdrawal_status|enabled|
-|withdrawal_status|disabled|
+|Property|Value|Description|
+|---|---|---|
+|deposit_status|enabled|Deposits are currently allowed for the asset|
+|deposit_status|disabled|Deposits are currently not allowed for the asset|
+|withdrawal_status|enabled|Withdrawals are currently allowed for the asset|
+|withdrawal_status|disabled|Withdrawals are currently not allowed for the asset|
 
 <h2 id="tocSarrayofassets">ArrayOfAssets</h2>
 
@@ -5752,7 +5855,26 @@ This operation does not require authentication.
     "quoting_asset_id": 14,
     "tick_size": "0.5",
     "index_type": "spot_pair"
-  }
+  },
+  "disruption_reason": null,
+  "impact_notional": "10000",
+  "position_notional_limit": null,
+  "auction_start_time": "2026-08-13T05:51:51Z",
+  "settlement_price": null,
+  "auction_finish_time": null,
+  "strike_price": "63600",
+  "short_description": "BTC  Call",
+  "ui_config": {
+    "default_trading_view_candle": "60",
+    "leverage_slider_values": [1, 2, 5, 10, 25, 50, 100, 200],
+    "price_clubbing_values": [0.01, 0.1, 0.5, 1, 2.5],
+    "show_bracket_orders": false,
+    "sort_priority": 2,
+    "tags": ["New"]
+  },
+  "launch_time": "2020-04-20T08:37:05Z",
+  "insurance_fund_margin_contribution": "5",
+  "barrier_price": null
 }
 
 ```
@@ -5795,19 +5917,37 @@ This operation does not require authentication.
 |quoting_asset|[Asset](#schemaasset)|false|none|Details of the asset used in the product or contract.|
 |settling_asset|[Asset](#schemaasset)|false|none|Details of the asset used in the product or contract.|
 |spot_index|[Index](#schemaindex)|false|none|Details of an index used in trading, including its constituents and characteristics.|
+|disruption_reason|string|false|none|Reason trading was disrupted. Null when trading_status is operational.|
+|impact_notional|string|false|none|Notional size of a typical trade used for mark price computation.|
+|position_notional_limit|string|false|none|Maximum notional position size allowed. Null when not applicable.|
+|auction_start_time|string|false|none|Start timestamp of the settlement auction.|
+|settlement_price|string|false|none|Settlement price of the contract. Null before settlement.|
+|auction_finish_time|string|false|none|Finish timestamp of the settlement auction. Null before the auction ends.|
+|strike_price|string|false|none|Strike price for an options contract. Null for non-options contracts.|
+|short_description|string|false|none|Short form description of the product.|
+|ui_config|object|false|none|Display configuration used by trading UIs. Not part of the core contract terms.|
+|» default_trading_view_candle|string|false|none|none|
+|» leverage_slider_values|[number]|false|none|none|
+|» price_clubbing_values|[number]|false|none|none|
+|» show_bracket_orders|boolean|false|none|none|
+|» sort_priority|integer|false|none|none|
+|» tags|[string]|false|none|none|
+|launch_time|string|false|none|Timestamp the product was launched for trading.|
+|insurance_fund_margin_contribution|string|false|none|Contribution of this product's margin to the insurance fund.|
+|barrier_price|string|false|none|Barrier price for a barrier options contract. Null for other contract types.|
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|notional_type|vanilla|
-|notional_type|inverse|
-|state|live|
-|state|expired|
-|state|upcoming|
-|trading_status|operational|
-|trading_status|disrupted_cancel_only|
-|trading_status|disrupted_post_only|
+|Property|Value|Description|
+|---|---|---|
+|notional_type|vanilla|Contract is quoted, settled, and margined in the quote currency|
+|notional_type|inverse|Contract is quoted in the quote currency but settled and margined in the base currency|
+|state|live|Product is currently active and tradable|
+|state|expired|Product has expired and is no longer tradable|
+|state|upcoming|Product is scheduled to go live in the future|
+|trading_status|operational|Trading is fully operational; orders can be placed and cancelled|
+|trading_status|disrupted_cancel_only|Trading is disrupted; only order cancellations are allowed|
+|trading_status|disrupted_post_only|Trading is disrupted; only post-only orders are accepted|
 
 <h2 id="tocSproductcategories">ProductCategories</h2>
 
@@ -5948,12 +6088,25 @@ This operation does not require authentication.
   "limit_price": "59000",
   "stop_order_type": "stop_loss_order",
   "stop_price": "55000",
+  "average_fill_price": "8999.00",
+  "bracket_order": false,
+  "bracket_stop_loss_price": "56000",
+  "bracket_stop_loss_limit_price": "57000",
+  "bracket_take_profit_price": "61000",
+  "bracket_take_profit_limit_price": "62000",
+  "bracket_trail_amount": "50",
+  "trail_amount": "50",
+  "cancellation_reason": "cancelled_by_user",
+  "mmp": "disabled",
+  "stop_trigger_method": "last_traded_price",
+  "time_in_force": "gtc",
   "paid_commission": "0.5432",
   "commission": "0.5432",
   "reduce_only": false,
   "client_order_id": "34521712",
   "state": "open",
   "created_at": "1725865012000000",
+  "updated_at": "1725865012000000",
   "product_id": 27,
   "product_symbol": "BTCUSD"
 }
@@ -5972,33 +6125,59 @@ This operation does not require authentication.
 |unfilled_size|integer|false|none|Order size which is not filled yet|
 |side|string|false|none|Side for which to place order|
 |order_type|string|false|none|Order type - limit_order/market_order|
-|limit_price|string|false|none|Price level on which order must be triggered|
-|stop_order_type|string|false|none|Stop order type - stop loss or take profit|
-|stop_price|string|false|none|Stop price level for the stop order|
+|limit_price|string|false|none|Price level on which order must be triggered. Null for market orders.|
+|stop_order_type|string|false|none|Stop order type - stop loss, take profit, or liquidation. Null when the order is not a stop order. liquidation_order is generated by the system when a position is force-closed and cannot be submitted in a create order request.|
+|stop_price|string|false|none|Stop price level for the stop order. Null when the order is not a stop order.|
+|average_fill_price|string|false|none|Average price at which the order has been filled. Null for unfilled orders.|
+|bracket_order|boolean|false|none|True if this is a bracket order, false otherwise.|
+|bracket_stop_loss_price|string|false|none|Bracket order stop loss trigger price.|
+|bracket_stop_loss_limit_price|string|false|none|Bracket order stop loss limit price.|
+|bracket_take_profit_price|string|false|none|Take profit trigger price for bracket order.|
+|bracket_take_profit_limit_price|string|false|none|Bracket order take profit limit price.|
+|bracket_trail_amount|string|false|none|Trail amount for a trailing bracket stop order.|
+|trail_amount|string|false|none|Trail amount for a trailing stop order. Null unless the order is a trailing stop order.|
+|cancellation_reason|string|false|none|Reason the order was cancelled. Null unless state is cancelled.|
+|mmp|string|false|none|MMP level applied to the order - disabled/mmp1/mmp2/mmp3/mmp4/mmp5|
+|stop_trigger_method|string|false|none|Stop order trigger method - mark_price/last_traded_price/spot_price|
+|time_in_force|string|false|none|GTC/IOC order type|
 |paid_commission|string|false|none|Commission paid for filled order|
 |commission|string|false|none|Commission blocked for order|
 |reduce_only|string|false|none|if set, will only close positions. New orders will not be placed|
 |client_order_id|string|false|none|client order id provided by the user while creating order. Must be unique across all open orders of the user|
 |state|string|false|none|Order Status|
 |created_at|string|false|none|Created at unix timestamp of the order in micro seconds|
+|updated_at|string|false|none|Updated at unix timestamp of the order in micro seconds.|
 |product_id|integer|false|none|Product id of the ordered product|
 |product_symbol|string|false|none|Product symbol of the ordered product|
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|reduce_only|false|
-|reduce_only|true|
-|state|open|
-|state|pending|
-|state|closed|
-|state|cancelled|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_order_type|liquidation_order|Order automatically generated by the system to close a position during liquidation|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
+|reduce_only|false|Order can open or increase a position|
+|reduce_only|true|Order can only reduce or close an existing position|
+|state|open|Order is active and resting in the orderbook|
+|state|pending|Order is waiting for its trigger condition to be met|
+|state|closed|Order has been fully filled|
+|state|cancelled|Order was cancelled before being fully filled|
 
 <h2 id="tocSarrayoforders">ArrayOfOrders</h2>
 
@@ -6078,7 +6257,7 @@ This operation does not require authentication.
 |size|integer|true|none|Order size|
 |side|string|true|none|Buy order or Sell order|
 |order_type|string|true|none|Limit order(limit_price must be defined) or Market order|
-|stop_order_type|string|false|none|Stop order type - stop loss or take profit|
+|stop_order_type|string|false|none|Stop order type - stop loss or take profit. liquidation_order is not accepted here; it is only ever generated by the system and returned in responses.|
 |stop_price|string|false|none|Stop loss price level if the order is stop order|
 |trail_amount|string|false|none|Use trail amount if you want a trailing stop order. Required if stop price is empty.|
 |stop_trigger_method|string|false|none|Stop order trigger method - mark_price/last_traded_price/spot_price|
@@ -6096,31 +6275,31 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|stop_order_type|stop_loss_order|
-|stop_order_type|take_profit_order|
-|stop_trigger_method|mark_price|
-|stop_trigger_method|last_traded_price|
-|stop_trigger_method|spot_price|
-|time_in_force|gtc|
-|time_in_force|ioc|
-|mmp|disabled|
-|mmp|mmp1|
-|mmp|mmp2|
-|mmp|mmp3|
-|mmp|mmp4|
-|mmp|mmp5|
-|post_only|true|
-|post_only|false|
-|reduce_only|true|
-|reduce_only|false|
-|cancel_orders_accepted|true|
-|cancel_orders_accepted|false|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|stop_order_type|stop_loss_order|Order triggered when stop price is hit to limit losses|
+|stop_order_type|take_profit_order|Order triggered when take profit price is hit to lock in gains|
+|stop_trigger_method|mark_price|Order triggered against the mark price|
+|stop_trigger_method|last_traded_price|Order triggered against the last traded price|
+|stop_trigger_method|spot_price|Order triggered against the spot index price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|post_only|true||
+|post_only|false||
+|reduce_only|true|Order can only reduce or close an existing position|
+|reduce_only|false|Order can open or increase a position|
+|cancel_orders_accepted|true||
+|cancel_orders_accepted|false||
 
 <h2 id="tocSbatchcreateorder">BatchCreateOrder</h2>
 
@@ -6157,22 +6336,22 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
-|order_type|limit_order|
-|order_type|market_order|
-|time_in_force|gtc|
-|time_in_force|ioc|
-|mmp|disabled|
-|mmp|mmp1|
-|mmp|mmp2|
-|mmp|mmp3|
-|mmp|mmp4|
-|mmp|mmp5|
-|post_only|true|
-|post_only|false|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|time_in_force|gtc|Good-till-cancelled; order stays open until filled or cancelled|
+|time_in_force|ioc|Immediate-or-cancel; unfilled portion is cancelled immediately|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|post_only|true|Order is rejected if it would take liquidity from the orderbook|
+|post_only|false|Order is allowed to take liquidity from the orderbook|
 
 <h2 id="tocSbatchcreateordersrequest">BatchCreateOrdersRequest</h2>
 
@@ -6296,18 +6475,18 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|mmp|disabled|
-|mmp|mmp1|
-|mmp|mmp2|
-|mmp|mmp3|
-|mmp|mmp4|
-|mmp|mmp5|
-|post_only|true|
-|post_only|false|
-|cancel_orders_accepted|true|
-|cancel_orders_accepted|false|
+|Property|Value|Description|
+|---|---|---|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|post_only|true|Order is rejected if it would take liquidity from the orderbook|
+|post_only|false|Order is allowed to take liquidity from the orderbook|
+|cancel_orders_accepted|true|User accepts that existing orders for this product may be cancelled to free margin|
+|cancel_orders_accepted|false|Existing orders should not be cancelled to free margin|
 
 <h2 id="tocSbatcheditorder">BatchEditOrder</h2>
 
@@ -6338,16 +6517,16 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|mmp|disabled|
-|mmp|mmp1|
-|mmp|mmp2|
-|mmp|mmp3|
-|mmp|mmp4|
-|mmp|mmp5|
-|post_only|false|
-|post_only|true|
+|Property|Value|Description|
+|---|---|---|
+|mmp|disabled||
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
+|post_only|false|Order is allowed to take liquidity from the orderbook|
+|post_only|true|Order is rejected if it would take liquidity from the orderbook|
 
 <h2 id="tocSbatcheditordersrequest">BatchEditOrdersRequest</h2>
 
@@ -6435,15 +6614,15 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|order_type|limit_order|
-|order_type|market_order|
-|order_type|limit_order|
-|order_type|market_order|
-|bracket_stop_trigger_method|mark_price|
-|bracket_stop_trigger_method|last_traded_price|
-|bracket_stop_trigger_method|spot_price|
+|Property|Value|Description|
+|---|---|---|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|order_type|limit_order|Order placed at a specified limit price|
+|order_type|market_order|Order executed at the best available market price|
+|bracket_stop_trigger_method|mark_price|Bracket order triggered against the mark price|
+|bracket_stop_trigger_method|last_traded_price|Bracket order triggered against the last traded price|
+|bracket_stop_trigger_method|spot_price|Bracket order triggered against the spot index price|
 
 <h2 id="tocSeditbracketorderrequest">EditBracketOrderRequest</h2>
 
@@ -6482,11 +6661,11 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|bracket_stop_trigger_method|mark_price|
-|bracket_stop_trigger_method|last_traded_price|
-|bracket_stop_trigger_method|spot_price|
+|Property|Value|Description|
+|---|---|---|
+|bracket_stop_trigger_method|mark_price|Bracket order triggered against the mark price|
+|bracket_stop_trigger_method|last_traded_price|Bracket order triggered against the last traded price|
+|bracket_stop_trigger_method|spot_price|Bracket order triggered against the spot index price|
 
 <h2 id="tocSbatchdeleteorder">BatchDeleteOrder</h2>
 
@@ -6561,14 +6740,14 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|cancel_limit_orders|true|
-|cancel_limit_orders|false|
-|cancel_stop_orders|true|
-|cancel_stop_orders|false|
-|cancel_reduce_only_orders|true|
-|cancel_reduce_only_orders|false|
+|Property|Value|Description|
+|---|---|---|
+|cancel_limit_orders|true|Include open limit orders in the cancellation|
+|cancel_limit_orders|false|Exclude open limit orders from the cancellation|
+|cancel_stop_orders|true|Include open stop orders in the cancellation|
+|cancel_stop_orders|false|Exclude open stop orders from the cancellation|
+|cancel_reduce_only_orders|true|Include open reduce-only orders in the cancellation|
+|cancel_reduce_only_orders|false|Exclude open reduce-only orders from the cancellation|
 
 <h2 id="tocSbatchdeleteordersrequest">BatchDeleteOrdersRequest</h2>
 
@@ -6623,9 +6802,19 @@ This operation does not require authentication.
   "adl_level": 0,
   "product_id": 0,
   "product_symbol": "string",
+  "product": {},
   "commission": "string",
   "realized_pnl": "string",
-  "realized_funding": "string"
+  "realized_funding": "string",
+  "realized_cashflow": "-0.019078170000000000",
+  "realized_holding_cost": "0",
+  "unrealized_pnl": "-0.03300000",
+  "unrealized_cashflow": "-0.03300000",
+  "mark_price": "63755.59251216",
+  "margin_mode": "isolated",
+  "auto_topup": false,
+  "created_at": "2026-08-12T09:05:00.376898Z",
+  "updated_at": "2026-08-13T08:02:12.009909Z"
 }
 
 ```
@@ -6640,9 +6829,19 @@ This operation does not require authentication.
 |size|integer|false|none|Position size, negative for short and positive for long|
 |entry_price|string|false|none|none|
 |margin|string|false|none|none|
-|liquidation_price|string|false|none|none|
-|bankruptcy_price|string|false|none|none|
-|adl_level|integer|false|none|none|
+|liquidation_price|string|false|none|Null until the engine has priced the position.|
+|bankruptcy_price|string|false|none|Null until the engine has priced the position.|
+|adl_level|integer|false|none|ADL ranking of the position. Null until the ranking has been computed.|
+|product|[Product](#schemaproduct)|false|none|Full details of the product for this position.|
+|realized_cashflow|string|false|none|Net realized cashflow since the position was opened|
+|realized_holding_cost|string|false|none|Net realized holding cost since the position was opened|
+|unrealized_pnl|string|false|none|Unrealized pnl on the open position, marked to the current mark price|
+|unrealized_cashflow|string|false|none|Unrealized cashflow on the open position, marked to the current mark price|
+|mark_price|string|false|none|Current mark price used to value the position|
+|margin_mode|string|false|none|Margin mode of the position - isolated/portfolio|
+|auto_topup|boolean|false|none|True if auto add margin is enabled for this position|
+|created_at|string|false|none|Created at timestamp of the position|
+|updated_at|string|false|none|Updated at timestamp of the position|
 |product_id|integer|false|none|none|
 |product_symbol|string|false|none|none|
 |commission|string|false|none|commissions blocked in the position|
@@ -6685,8 +6884,36 @@ This operation does not require authentication.
 
 ```json
 {
-  "id": 0,
-  "size": 0,
+  "id": "071b551365574d0aad99557931137dbd",
+  "size": "1",
+  "notional": "63.788",
+  "product": {
+    "id": 84,
+    "symbol": "BTCUSD",
+    "contract_type": "perpetual_futures",
+    "tick_size": "0.1",
+    "contract_value": "0.001",
+    "contract_unit_currency": "BTC",
+    "notional_type": "vanilla",
+    "quoting_asset": {
+      "symbol": "USD",
+      "precision": 8,
+      "minimum_precision": 2
+    },
+    "underlying_asset": {
+      "symbol": "BTC",
+      "precision": 8,
+      "minimum_precision": 4
+    },
+    "settling_asset": {
+      "symbol": "USD",
+      "precision": 8,
+      "minimum_precision": 2
+    },
+    "spot_index": {
+      "symbol": ".DEXBTUSD"
+    }
+  },
   "fill_type": "normal",
   "side": "buy",
   "price": "string",
@@ -6723,8 +6950,10 @@ This operation does not require authentication.
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|integer|false|none|none|
-|size|integer|false|none|none|
+|id|string|false|none|UUID string uniquely identifying the fill. Confirmed as a UUID for every fill_type: normal, liquidation, settlement, adl and otc.|
+|size|string|false|none|Fill size, sent as string.|
+|notional|string|false|none|Notional value of the fill (price * size * contract value), sent as string.|
+|product|object|false|none|Truncated details of the traded product. Not the full Product object - only the fields observed below.|
 |fill_type|string|false|none|none|
 |side|string|false|none|none|
 |price|string|false|none|Price at which the fill happened, BigDecimal sent as string|
@@ -6740,17 +6969,17 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|fill_type|normal|
-|fill_type|adl|
-|fill_type|liquidation|
-|fill_type|settlement|
-|fill_type|otc|
-|side|buy|
-|side|sell|
-|role|taker|
-|role|maker|
+|Property|Value|Description|
+|---|---|---|
+|fill_type|normal|Regular fill from matching against the orderbook|
+|fill_type|adl|Fill from auto-deleveraging to balance counterparty exposure|
+|fill_type|liquidation|Fill resulting from forced liquidation of a position|
+|fill_type|settlement|Fill generated at contract settlement or expiry|
+|fill_type|otc|Off-exchange (over-the-counter) fill|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
+|role|taker|Fill where the user removed liquidity from the orderbook|
+|role|maker|Fill where the user added liquidity to the orderbook|
 
 <h2 id="tocSarrayoffills">ArrayOfFills</h2>
 
@@ -6759,7 +6988,7 @@ This operation does not require authentication.
 ```json
 [
   {
-    "id": 0,
+    "id": "071b551365574d0aad99557931137dbd",
     "size": 0,
     "fill_type": "normal",
     "side": "buy",
@@ -6816,12 +7045,33 @@ This operation does not require authentication.
   "tfc_used_for_commission": "string",
   "tfc_used_for_liquidation_fee": "string",
   "total_commission_in_settling_asset": "string",
-  "total_liquidation_fee_in_settling_asset": "string"
+  "total_liquidation_fee_in_settling_asset": "string",
+  "ip": "49.47.130.106",
+  "is_commission_on_notional": true,
+  "liquidation_fee_in_settling_asset": "0",
+  "mark": "63788.22128876",
+  "rack_commision": "0.03763492",
+  "source": "desktop",
+  "spot": "63806.9",
+  "original_referrer_commission": "0.000000000000000000",
+  "new_position": {
+    "size": 1,
+    "margin": "6.37880000",
+    "entry_price": "63788.00000000",
+    "liquidation_price": "57568.67000000",
+    "bankruptcy_price": "57409.20000000",
+    "commission": "0.03763505056036840000000000000",
+    "total_commission_paid": "0.03387143",
+    "realized_pnl": "-0.194500000000000000",
+    "realized_cashflow": "-0.000000000000000000",
+    "realized_funding": "-0.000000000000000000",
+    "last_fill_uuid": "cfa097e943b94fd18aa5a13481f7c7b7"
+  }
 }
 
 ```
 
-*Meta data inside fill*
+*Meta data inside fill. Which fields are present varies by fill_type, confirmed across all 5 values. normal and liquidation carry the full field set below, including ip/mark/spot/source and a fuller new_position. settlement only carries order_price/order_size/order_type/order_unfilled_size, the commission-related fields, and a minimal new_position (size, commission, sometimes margin) - no ip/mark/spot/source or liquidation-fee fields. adl carries the same fields as liquidation but source and ip are null, order_type is adl_order, new_position can be minimal (sometimes only size/realized_pnl/realized_cashflow), and it may carry a cut object. otc is the sparsest: only order_price/order_size/order_type, commission_deto(_in_settling_asset), effective_commission_rate, original_referrer_commission, trading_fee_credits_used, and sometimes cut - no new_position, no ip/mark/spot/source, no liquidation-fee fields.*
 
 ### Properties
 
@@ -6840,6 +7090,30 @@ This operation does not require authentication.
 |tfc_used_for_liquidation_fee|string|false|none|none|
 |total_commission_in_settling_asset|string|false|none|none|
 |total_liquidation_fee_in_settling_asset|string|false|none|none|
+|ip|string|false|none|IP address the order that generated this fill was placed from.|
+|is_commission_on_notional|boolean|false|none|True if commission is charged on notional value rather than a fixed rate.|
+|liquidation_fee_in_settling_asset|string|false|none|Liquidation fee charged on this fill, in the settling asset.|
+|mark|string|false|none|Mark price at the time of the fill.|
+|rack_commision|string|false|none|Commission before any trading-credit offsets are applied.|
+|source|string|false|none|Client/platform the order was placed from, e.g. desktop. System-generated fills (e.g. liquidation) show system. Null for adl fills.|
+|spot|string|false|none|Spot index price at the time of the fill.|
+|cut|object|false|none|Auto-deleveraging queue ranking info. Seen on the maker side of adl fills and on otc fills.|
+|» equity|number|false|none|none|
+|» api_trader|number|false|none|none|
+|trading_fee_credits_used|string|false|none|Trading fee credits applied toward this fill's commission. Seen on otc fills.|
+|original_referrer_commission|string|false|none|Referrer commission before any adjustments. Seen on liquidation fills.|
+|new_position|object|false|none|Snapshot of the position immediately after this fill was applied.|
+|» size|integer|false|none|none|
+|» margin|string|false|none|none|
+|» entry_price|string|false|none|Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill.|
+|» liquidation_price|string|false|none|Null until the engine has priced the position.|
+|» bankruptcy_price|string|false|none|Null until the engine has priced the position.|
+|» commission|string|false|none|none|
+|» total_commission_paid|string|false|none|Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill.|
+|» realized_pnl|string|false|none|none|
+|» realized_cashflow|string|false|none|none|
+|» realized_funding|string|false|none|none|
+|» last_fill_uuid|string|false|none|Present when the resulting position size is non-zero. Absent (not just null) when the position was closed flat by this fill.|
 
 <h2 id="tocSorderleverage">OrderLeverage</h2>
 
@@ -6939,10 +7213,10 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|side|buy|
-|side|sell|
+|Property|Value|Description|
+|---|---|---|
+|side|buy|Buy order on the product|
+|side|sell|Sell order on the product|
 
 <h2 id="tocSwallet">Wallet</h2>
 
@@ -7181,42 +7455,42 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|transaction_type|cashflow|
-|transaction_type|deposit|
-|transaction_type|withdrawal|
-|transaction_type|commission|
-|transaction_type|conversion|
-|transaction_type|funding|
-|transaction_type|settlement|
-|transaction_type|liquidation_fee|
-|transaction_type|spot_trade|
-|transaction_type|withdrawal_cancellation|
-|transaction_type|referral_bonus|
-|transaction_type|sub_account_transfer|
-|transaction_type|commission_rebate|
-|transaction_type|promo_credit|
-|transaction_type|trading_credits|
-|transaction_type|trading_credits_forfeited|
-|transaction_type|trading_credits_paid|
-|transaction_type|trading_fee_credits_paid_liquidation_fee|
-|transaction_type|trading_credits_reverted|
-|transaction_type|interest_credit|
-|transaction_type|external_deposit|
-|transaction_type|credit_line|
-|transaction_type|trading_competition|
-|transaction_type|fund_deposit|
-|transaction_type|fund_withdrawal|
-|transaction_type|fund_wallet_deposit|
-|transaction_type|fund_wallet_withdrawal|
-|transaction_type|fund_reward|
-|transaction_type|trade_farming_reward|
-|transaction_type|interest_credit|
-|transaction_type|revert|
-|transaction_type|raf_bonus|
-|transaction_type|fill_appropriation|
-|transaction_type|incident_compensation|
+|Property|Value|Description|
+|---|---|---|
+|transaction_type|cashflow|Generic cash credit or debit on the wallet|
+|transaction_type|deposit|Funds deposited into the wallet|
+|transaction_type|withdrawal|Funds withdrawn from the wallet|
+|transaction_type|commission|Trading commission charged on a fill|
+|transaction_type|conversion|Currency or asset conversion entry|
+|transaction_type|funding|Perpetual funding payment exchanged between long and short|
+|transaction_type|settlement|Wallet entry generated at contract settlement|
+|transaction_type|liquidation_fee|Fee charged when a position is liquidated|
+|transaction_type|spot_trade|Wallet entry from a spot trade|
+|transaction_type|withdrawal_cancellation|Reversal of a previously requested withdrawal|
+|transaction_type|referral_bonus|Bonus credited from the referral program|
+|transaction_type|sub_account_transfer|Transfer between a main account and a subaccount|
+|transaction_type|commission_rebate|Rebate paid back on previously charged commission|
+|transaction_type|promo_credit|Promotional credit added to the wallet|
+|transaction_type|trading_credits|Trading credits granted to the user|
+|transaction_type|trading_credits_forfeited|Trading credits forfeited (e.g. on expiry)|
+|transaction_type|trading_credits_paid|Trading credits applied toward trading fees|
+|transaction_type|trading_fee_credits_paid_liquidation_fee|Trading credits applied toward a liquidation fee|
+|transaction_type|trading_credits_reverted|Reversal of previously applied trading credits|
+|transaction_type|interest_credit||
+|transaction_type|external_deposit||
+|transaction_type|credit_line||
+|transaction_type|trading_competition||
+|transaction_type|fund_deposit||
+|transaction_type|fund_withdrawal||
+|transaction_type|fund_wallet_deposit||
+|transaction_type|fund_wallet_withdrawal||
+|transaction_type|fund_reward||
+|transaction_type|trade_farming_reward||
+|transaction_type|interest_credit||
+|transaction_type|revert||
+|transaction_type|raf_bonus||
+|transaction_type|fill_appropriation||
+|transaction_type|incident_compensation||
 
 <h2 id="tocStransaction">Transaction</h2>
 
@@ -7706,13 +7980,13 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|mmp|mmp1|
-|mmp|mmp2|
-|mmp|mmp3|
-|mmp|mmp4|
-|mmp|mmp5|
+|Property|Value|Description|
+|---|---|---|
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
 
 <h2 id="tocSmmpresetrequest">MMPResetRequest</h2>
 
@@ -7737,13 +8011,13 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|mmp|mmp1|
-|mmp|mmp2|
-|mmp|mmp3|
-|mmp|mmp4|
-|mmp|mmp5|
+|Property|Value|Description|
+|---|---|---|
+|mmp|mmp1||
+|mmp|mmp2||
+|mmp|mmp3||
+|mmp|mmp4||
+|mmp|mmp5||
 
 <h2 id="tocSchangemarginmoderequest">ChangeMarginModeRequest</h2>
 
@@ -7768,10 +8042,10 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|margin_mode|isolated|
-|margin_mode|portfolio|
+|Property|Value|Description|
+|---|---|---|
+|margin_mode|isolated|Margin is allocated per position; loss on one position cannot draw from others|
+|margin_mode|portfolio|Portfolio margin is shared across positions to net out risk|
 
 <h2 id="tocSuserpreference">UserPreference</h2>
 
@@ -7944,10 +8218,10 @@ This operation does not require authentication.
 
 #### Enumerated Values
 
-|Property|Value|
-|---|---|
-|cancel_after_enabled|false|
-|cancel_after_enabled|true| -->
+|Property|Value|Description|
+|---|---|---|
+|cancel_after_enabled|false||
+|cancel_after_enabled|true|| -->
 
 <h2 id="tocSuser">User</h2>
 
