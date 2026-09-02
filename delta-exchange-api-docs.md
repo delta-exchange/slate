@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-09-02 05:14:42 UTC
+**Generated:** 2026-09-02 11:09:33 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
