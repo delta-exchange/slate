@@ -13,4 +13,4 @@ Spot uses the same REST endpoints, WebSocket channels, and authentication as the
 
 New markets are added over time. Fetch the current list from `/v2/products`:
 
-<code>curl -X GET "https://api.india.delta.exchange/v2/products?contract_types=spot&states=live" \<br>&nbsp;&nbsp;-H "Accept: application/json"</code>
+`curl -X GET "https://api.india.delta.exchange/v2/products?contract_types=spot&states=live" -H "Accept: application/json"`
