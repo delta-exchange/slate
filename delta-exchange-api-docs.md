@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-09-02 11:09:33 UTC
+**Generated:** 2026-09-08 09:32:47 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -486,6 +486,23 @@ To ensure that you are effectively using the api, we encourage you to go through
   }
 }
 ```
+
+# Spot Trading
+
+Delta Exchange also offers Spot markets, where supported cryptocurrencies are traded directly against INR.
+
+Spot uses the same REST endpoints, WebSocket channels, and authentication as the rest of the API. There are no separate Spot endpoints and no additional auth requirements — to trade Spot, point an existing call at a Spot product.
+
+| Asset | Symbol |
+| --- | --- |
+| Bitcoin | `BTC_INR` |
+| Ethereum | `ETH_INR` |
+| Solana | `SOL_INR` |
+| XRP | `XRP_INR` |
+
+New markets are added over time. Fetch the current list from `/v2/products`:
+
+`curl -X GET "https://api.india.delta.exchange/v2/products?contract_types=spot&states=live" -H "Accept: application/json"`
 
 # MCP Server<span class="tag-new"></span>
 

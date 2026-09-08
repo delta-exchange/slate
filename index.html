@@ -307,6 +307,9 @@
             <a href="#response-formats" class="toc-h1 toc-link" data-title="Response Formats">Response Formats</a>
           </li>
           <li>
+            <a href="#spot-trading" class="toc-h1 toc-link" data-title="Spot Trading">Spot Trading</a>
+          </li>
+          <li>
             <a href="#mcp-server" class="toc-h1 toc-link" data-title="MCP Server">MCP Server<span class="tag-new"></span></a>
           </li>
           <li>
@@ -1543,6 +1546,40 @@ Total quota used: 300 + 150 + 1000 + 500 = 1950 quota used. If this is greater t
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+
+<h1 id='spot-trading'>Spot Trading</h1>
+
+<p>Delta Exchange also offers Spot markets, where supported cryptocurrencies are traded directly against INR.</p>
+
+<p>Spot uses the same REST endpoints, WebSocket channels, and authentication as the rest of the API. There are no separate Spot endpoints and no additional auth requirements — to trade Spot, point an existing call at a Spot product.</p>
+
+<table><thead>
+<tr>
+<th>Asset</th>
+<th>Symbol</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Bitcoin</td>
+<td><code>BTC_INR</code></td>
+</tr>
+<tr>
+<td>Ethereum</td>
+<td><code>ETH_INR</code></td>
+</tr>
+<tr>
+<td>Solana</td>
+<td><code>SOL_INR</code></td>
+</tr>
+<tr>
+<td>XRP</td>
+<td><code>XRP_INR</code></td>
+</tr>
+</tbody></table>
+
+<p>New markets are added over time. Fetch the current list from <code>/v2/products</code>:</p>
+
+<p><code>curl -X GET &quot;https://api.india.delta.exchange/v2/products?contract_types=spot&amp;states=live&quot; -H &quot;Accept: application/json&quot;</code></p>
 
 <h1 id='mcp-server'>MCP Server<span class="tag-new"></span></h1><pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">Claude</span><span class="w"> </span><span class="err">Desktop</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">Claude</span><span class="w"> </span><span class="err">Code</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">Cursor</span><span class="w"> </span><span class="err">/</span><span class="w"> </span><span class="err">VS</span><span class="w"> </span><span class="err">Code</span><span class="w">
 </span><span class="p">{</span><span class="w">
