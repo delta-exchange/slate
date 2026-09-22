@@ -3067,18 +3067,10 @@ Cancels open orders and closes open positions across products for the user. If o
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns back success response. `result.skipped_products` lists any requested products that were not closed/cancelled because they are halted or in auction; it is an empty array when every product was processed normally.|Inline|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns back success response; lists any skipped, disrupted products|Inline|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns error if not able to close all positions|[ApiErrorResponse](#schemaapierrorresponse)|
 
 <h3 id="close-all-positions--responseschema">Response Schema</h3>
-
-`result.skipped_products[].reason` values:
-
-|Reason|Meaning|
-|---|---|
-|market_disrupted_cancel_only_mode|Product is halted (cancel-only mode)|
-|market_disrupted_post_only_mode|Product is in auction (post-only mode)|
-|market_disrupted|Product is disrupted for another reason|
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.

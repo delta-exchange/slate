@@ -1993,7 +1993,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns back success response. `result.skipped_products` lists any requested products that were not closed/cancelled because they are halted or in auction — this array is empty when every product was processed normally.",
+            "description": "Returns back success response; lists any skipped, disrupted products",
             "schema": {
               "allOf": [
                 {
