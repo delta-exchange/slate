@@ -8,6 +8,120 @@ REST API Endpoint URL for [Delta Exchange](https://www.delta.exchange)
  - **Production** - https://api.india.delta.exchange
  - **Testnet(Demo Account)** - https://cdn-ind.testnet.deltaex.org
 
+<h1 id="delta-exchange-api-v2-settings">Settings</h1>
+
+Get Exchange Settings
+
+## Get exchange settings
+
+<a id="opIdgetSettings"></a>
+
+> Code samples
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+r = requests.get('https://api.india.delta.exchange/v2/settings', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```shell
+# You can also use wget
+curl -X GET https://api.india.delta.exchange/v2/settings \
+  -H 'Accept: application/json'
+
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+result = RestClient.get 'https://api.india.delta.exchange/v2/settings',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+
+```
+
+`GET /settings`
+
+Returns exchange-wide settings such as allowed margin modes, enabled wallets, KYC deposit/withdrawal limits, fiat conversion rate, and maintenance status. Useful for checking `under_maintenance` / `app_status` before sending requests, and for reading `server_time`.
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "success": true,
+  "result": {
+    "allowed_margin_modes": ["isolated", "portfolio", "cross"],
+    "enabled_wallets": ["USD", "REF_USD", "INR", "BTC", "ETH", "SOL", "XRP"],
+    "deto_msp": "0",
+    "deto_liquidity_mining_daily_reward": "0",
+    "deto_staking_daily_reward": "0.00",
+    "trade_farming_daily_reward": "1000",
+    "fiat_to_usd": {
+      "precision": 2,
+      "asset_to_fiat_value": 85
+    },
+    "fiat_withdrawal_fee": {
+      "base_withdrawal_fee": "0",
+      "variable_withdrawal_fee": "0"
+    },
+    "signal_trading_automation": ["tradingview"],
+    "default_favourite_contracts": [],
+    "kyc_deposit_limit": "20",
+    "kyc_withdrawal_limit": "10000",
+    "portfolio_margin_params": {
+      "portfolio_enabled_contracts": ["futures", "perpetual_futures", "call_options", "put_options", "move_options"],
+      "portfolio_enable_balance_threshold": 0,
+      "enabled_portfolios": {
+        ".DEXBTUSD": {
+          "underlying_asset": "BTC",
+          "settling_asset": "USD",
+          "perp_product_id": 27
+        }
+      }
+    },
+    "app_status": "live",
+    "under_maintenance": "false",
+    "maintenance_mode": "",
+    "maintenance_type": "scheduled",
+    "maintenance_start_time": "",
+    "maintenance_finish_time": "",
+    "maintenance_announcement_time": "",
+    "last_updated_time": 1790745480805212,
+    "server_time": 1790745520477787,
+    "tnc_updated_date_time": 1782800340000
+  }
+}
+```
+
+`portfolio_margin_params.enabled_portfolios` carries one entry per portfolio-margin-enabled index, each with its own risk parameters (margin floors, price shock percentages etc.); only the identifying fields are shown above for brevity.
+
+<h3 id="get-settings-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Exchange settings|Inline|
+
+<aside class="success">
+This operation does not require authentication.
+</aside>
+
 <h1 id="delta-exchange-api-v2-assets">Assets</h1>
 
 Get Asset List
