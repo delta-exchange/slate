@@ -1159,13 +1159,34 @@ It is important to note that the BTCUSD Index price doesn&#39;t follow this conv
 
 <p>Api endpoints that place orders or fetch account related information needs to authenticated using api key and api secret.</p>
 
-<h2 id='common-errors'>Common Errors</h2><h3 id='signatureexpired-error'>SignatureExpired Error</h3>
+<h2 id='common-errors'>Common Errors</h2><h3 id='invalid-api-key-error'>Invalid Api Key Error</h3>
+<ul>
+<li><code>{ &quot;success&quot;: false, &quot;error&quot;: { &quot;code&quot;: &quot;invalid_api_key&quot; } }</code></li>
+</ul>
+
+<p><strong>Explanation:</strong>  The API key in your request doesn&#39;t exist or is invalid. The most common cause is a <strong>deleted or regenerated key</strong> that is still being used by your client. This also happens when a key from the wrong environment is used (e.g. a testnet key sent to prod).</p>
+<h3 id='troubleshooting'>🔧 Troubleshooting</h3>
+<p><strong>1. Check API Key Validity</strong></p>
+
+<ul>
+<li>Log into Delta Exchange and confirm the key still exists and is active. Regenerating a key deletes the old one, so any client still using the old key will get this error.</li>
+<li>Check for any typos in the key too.</li>
+</ul>
+
+<p><strong>2. Verify the Correct Environment</strong></p>
+
+<ul>
+<li>API keys created at <a href="https://www.delta.exchange">Delta India</a> account must be used only with production apis.(prod api - <a href="https://api.india.delta.exchange">https://api.india.delta.exchange</a>)</li>
+<li>API keys created at <a href="https://demo.delta.exchange">Demo</a> account must be used only with testnet apis.(testnet api - <a href="https://cdn-ind.testnet.deltaex.org">https://cdn-ind.testnet.deltaex.org</a>)</li>
+<li>Please note that the api url <a href="https://api.delta.exchange">https://api.delta.exchange</a> belongs to Delta Global and it can not used here. </li>
+</ul>
+<h3 id='signatureexpired-error'>SignatureExpired Error</h3>
 <ul>
 <li><code>{ &quot;error&quot;: &quot;SignatureExpired&quot;, &quot;message&quot;: &quot;your signature has expired&quot; }</code></li>
 </ul>
 
 <p><strong>Explanation:</strong>  This error occurs when the timestamp used to generate your API request signature is more than <strong>5 seconds</strong> old by the time it reaches Delta Exchange servers. The platform enforces this time window to prevent replay attacks. You can check server time and request time in the api error response too.</p>
-<h3 id='troubleshooting'>🔧 Troubleshooting</h3>
+<h3 id='troubleshooting-2'>🔧 Troubleshooting</h3>
 <p><strong>1. Sync Your System Clock</strong></p>
 
 <ul>
@@ -1197,28 +1218,7 @@ It is important to note that the BTCUSD Index price doesn&#39;t follow this conv
 timestamp = str(int(time.time()))
 signature_data = method + timestamp + path + query_string + payload
 signature = generate_signature(api_secret, signature_data)
-</code></pre><h3 id='invalidapikey-error'>InvalidApiKey Error</h3>
-<ul>
-<li><code>{ &quot;error&quot;: &quot;InvalidApiKey&quot;, &quot;message&quot;: &quot;Api Key not found&quot; }</code></li>
-</ul>
-
-<p><strong>Explanation:</strong>  The API key in your request doesn&#39;t exist or is invalid. This can happen due to using keys from the wrong environment or deleted keys. </p>
-<h3 id='troubleshooting-2'>🔧 Troubleshooting</h3>
-<p><strong>1. Verify the Correct Environment</strong></p>
-
-<ul>
-<li>API keys created at <a href="https://www.delta.exchange">Delta India</a> account must be used only with production apis.(prod api - <a href="https://api.india.delta.exchange">https://api.india.delta.exchange</a>)</li>
-<li>API keys created at <a href="https://demo.delta.exchange">Demo</a> account must be used only with testnet apis.(testnet api - <a href="https://cdn-ind.testnet.deltaex.org">https://cdn-ind.testnet.deltaex.org</a>)</li>
-<li>Please not that the api url <a href="https://api.delta.exchange">https://api.delta.exchange</a> belongs to Delta Global and it can not used here. </li>
-</ul>
-
-<p><strong>2. Check API Key Validity</strong></p>
-
-<ul>
-<li>Log into Delta Exchange and confirm the key exists and is active.<br></li>
-<li>Check for any typos in the key too.</li>
-</ul>
-<h3 id='unauthorizedapiaccess-error'>UnauthorizedApiAccess Error</h3>
+</code></pre><h3 id='unauthorizedapiaccess-error'>UnauthorizedApiAccess Error</h3>
 <ul>
 <li><code>{ &quot;error&quot;: &quot;UnauthorizedApiAccess&quot;, &quot;message&quot;: &quot;Api Key not authorised to access this endpoint&quot; }</code></li>
 </ul>

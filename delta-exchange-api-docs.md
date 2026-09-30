@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-09-08 09:32:47 UTC
+**Generated:** 2026-09-30 11:51:18 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -115,6 +115,25 @@ Api endpoints that place orders or fetch account related information needs to au
 
 ## Common Errors
 
+### Invalid Api Key Error
+
+* ```{ "success": false, "error": { "code": "invalid_api_key" } }```
+
+**Explanation:**  The API key in your request doesn't exist or is invalid. The most common cause is a **deleted or regenerated key** that is still being used by your client. This also happens when a key from the wrong environment is used (e.g. a testnet key sent to prod).
+
+### 🔧 Troubleshooting
+
+**1. Check API Key Validity**
+
+- Log into Delta Exchange and confirm the key still exists and is active. Regenerating a key deletes the old one, so any client still using the old key will get this error.
+- Check for any typos in the key too.
+
+**2. Verify the Correct Environment**
+
+- API keys created at [Delta India](https://www.delta.exchange) account must be used only with production apis.(prod api - [https://api.india.delta.exchange](https://api.india.delta.exchange))
+- API keys created at [Demo](https://demo.delta.exchange) account must be used only with testnet apis.(testnet api - [https://cdn-ind.testnet.deltaex.org](https://cdn-ind.testnet.deltaex.org))
+- Please note that the api url [https://api.delta.exchange](https://api.delta.exchange) belongs to Delta Global and it can not used here. 
+
 ### SignatureExpired Error
 
 * ```{ "error": "SignatureExpired", "message": "your signature has expired" }```
@@ -148,26 +167,6 @@ timestamp = str(int(time.time()))
 signature_data = method + timestamp + path + query_string + payload
 signature = generate_signature(api_secret, signature_data)
 ```
-
-### InvalidApiKey Error
-
-* ```{ "error": "InvalidApiKey", "message": "Api Key not found" }```
-
-**Explanation:**  The API key in your request doesn't exist or is invalid. This can happen due to using keys from the wrong environment or deleted keys. 
-
-### 🔧 Troubleshooting
-
-**1. Verify the Correct Environment**
-
-- API keys created at [Delta India](https://www.delta.exchange) account must be used only with production apis.(prod api - [https://api.india.delta.exchange](https://api.india.delta.exchange))
-- API keys created at [Demo](https://demo.delta.exchange) account must be used only with testnet apis.(testnet api - [https://cdn-ind.testnet.deltaex.org](https://cdn-ind.testnet.deltaex.org))
-- Please not that the api url [https://api.delta.exchange](https://api.delta.exchange) belongs to Delta Global and it can not used here. 
-
-**2. Check API Key Validity**
-
-- Log into Delta Exchange and confirm the key exists and is active.  
-- Check for any typos in the key too.
-
 
 ### UnauthorizedApiAccess Error
 
