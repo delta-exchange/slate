@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-09-30 11:51:18 UTC
+**Generated:** 2026-10-05 12:30:21 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -4681,6 +4681,8 @@ p JSON.parse(result)
 
 `POST /positions/close_all`
 
+Cancels open orders and closes open positions across products for the user. If one or more of the requested products are currently halted (cancel-only mode) or in auction (post-only mode), those products are skipped — their orders/positions are left untouched — while every other, operational product is still closed/cancelled normally. The skipped products, and the reason they were skipped, are listed in `result.skipped_products`.
+
 > Body parameter
 
 ```json
@@ -4706,7 +4708,16 @@ p JSON.parse(result)
 
 ```json
 {
-  "success": true
+  "success": true,
+  "result": {
+    "skipped_products": [
+      {
+        "product_id": 0,
+        "product_symbol": "string",
+        "reason": "market_disrupted_cancel_only_mode"
+      }
+    ]
+  }
 }
 ```
 
@@ -4714,8 +4725,18 @@ p JSON.parse(result)
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|returns back success response|[ApiSuccessResponse](#schemaapisuccessresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Returns back success response; lists any skipped, disrupted products|Inline|
 |400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Returns error if not able to close all positions|[ApiErrorResponse](#schemaapierrorresponse)|
+
+<h3 id="close-all-positions--responseschema">Response Schema</h3>
+
+#### Enumerated Values
+
+|Property|Value|Description|
+|---|---|---|
+|reason|market_disrupted_cancel_only_mode||
+|reason|market_disrupted_post_only_mode||
+|reason|market_disrupted||
 
 <aside class="warning">
 To perform this operation, you must be sign the request using your api key and secret. See Authentication section for more details.
