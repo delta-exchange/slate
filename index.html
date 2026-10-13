@@ -815,9 +815,6 @@
                   <li>
                     <a href="#current-method" class="toc-h2 toc-link" data-title="Current method">Current method</a>
                   </li>
-                  <li>
-                    <a href="#old-method" class="toc-h2 toc-link" data-title="Old method">Old method</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -21329,18 +21326,6 @@ All authentication responses will be json containing following keys:<br>
 <li><p>Some internal server error:<br>
 <code>{&quot;type&quot;:&quot;key-auth&quot;, &quot;success&quot;:false, &quot;status_code&quot;:500, &quot;status&quot;:&quot;internal_server_error&quot;, &quot;message&quot;: &quot;Internal Server Error. Code: 1001&quot;</code></p></li>
 </ol>
-<h2 id='old-method'>Old method</h2>
-<p>Note: This method of authentication will stop working from 31st December 2025.</p>
-
-<p>Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, <a href="/#trading-notitifications">adl</a> and pnl updates.</p>
-
-<p>To authenticate, you need to send a signed request of type <strong>&#39;auth&#39;</strong> on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.</p>
-
-<p>The payload for the signed request will be <strong><em>&#39;GET&#39; + timestamp + &#39;/live&#39;</em></strong></p>
-
-<p>To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. </p>
-
-<p>To unsubscribe from all private channels, just send a <strong>&#39;unauth&#39;</strong> message on the socket. This will automatically unsubscribe the connection from all authenticated channels.</p>
 <h1 id='sample-python-code'>Sample Python Code</h1><h2 id='public-channels'>Public Channels</h2>
 <p><strong>Summary:</strong> 
 The python script(right panel) connects to the Delta Exchange WebSocket to receive real-time market data.</p>

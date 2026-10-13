@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-10-05 12:30:21 UTC
+**Generated:** 2026-10-13 12:05:36 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -11927,21 +11927,6 @@ Error responses:
 
 6. Some internal server error:  
 `{"type":"key-auth", "success":false, "status_code":500, "status":"internal_server_error", "message": "Internal Server Error. Code: 1001"`
-
-
-## Old method
-
-Note: This method of authentication will stop working from 31st December 2025.
-
-Authentication allows clients to receives private messages, like trading notifications. Examples of the trading notifications are: fills, liquidations, [adl](/#trading-notitifications) and pnl updates.
-
-To authenticate, you need to send a signed request of type **'auth'** on your socket connection. Check the authentication section above for more details on how to sign a request using api key and secret.
-
-The payload for the signed request will be ***'GET' + timestamp + '/live'***
-
-To subscribe to private channels, the client needs to first send an auth event, providing api-key, and signature. 
-
-To unsubscribe from all private channels, just send a **'unauth'** message on the socket. This will automatically unsubscribe the connection from all authenticated channels.
 
 
 # Sample Python Code
