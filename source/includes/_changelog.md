@@ -1,5 +1,21 @@
 # Changelog
 
+## 14.10.26
+1. Final deprecation notice of old websocket endpoint’s l1_orderbook, l2_orderbook, l2_update channels. These will be fully deprecated on 31th Oct 2026. These channels were already marked to be deprecated on 31st July 2026. If you are still using these channels, please migrate to our new ob_l1, ob_l2 and ob_updates channel on the new websocket endpoint.
+
+2. Final deprecation notice of older auth method for websocket. This will be fully deprecated on 31th Oct 2026. Older method was already marked to be deprecated on 31st December 2025, if you are still using it, please checkout the [current websocket auth](#current-method).
+
+3. Important Update: Discontinuation of .DE_USDT (e.g. “.DEETHUSDT”) Spot Index Data. Please be advised that support for the .DE_USDT index data series will permanently cease on 18 October 2026.
+
+All Perpetual Futures and Options on our platform utilize .DE_USD as their underlying spot index (for example, the ETHUSD perpetual contract references “.DEETHUSD”). While we historically co-published .DE_USDT variations (such as “.DEETHUSDT”), this data stream will be turned off.
+This change impacts:
+
+- Websocket [`spot_price`](#spot_price)
+- Websocket [`candlesticks`](#candlesticks)
+- REST `GET /history/candles` ([Get historical OHLC candles](#get-historical-ohlc-candles))
+
+To avoid any disruption to your trading systems or API integrations, please update your applications to reference the standard .DE_USD spot index data immediately.
+
 ## 31.08.26
 1. Clarified `client_order_id` parameter description across the Orders API (place order, batch create/edit/cancel, and order schemas) to explicitly state that it must be unique across all open orders of the user. This is a documentation update only — no API behaviour has changed.
 
