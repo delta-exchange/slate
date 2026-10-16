@@ -1954,7 +1954,7 @@
         ],
         "operationId": "closeAllPosition",
         "summary": "Close all positions ",
-        "description": "Cancels open orders and closes open positions across products for the user. If one or more of the requested products are currently halted (cancel-only mode) or in auction (post-only mode), those products are skipped — their orders/positions are left untouched — while every other, operational product is still closed/cancelled normally. The skipped products, and the reason they were skipped, are listed in `result.skipped_products`.",
+        "description": "Closes open positions for all healthy/live/tradeable products for the user. If one or more of the requested products are currently halted (disrupted_cancel_only) or in auction (disrupted_post_only), those products are skipped — their positions are left untouched — while every other, operational product is still closed normally. The skipped products, and the reason they were skipped, are listed in `result.skipped_products`.",
         "produces": [
           "application/json"
         ],
