@@ -1,5 +1,12 @@
 # Changelog
 
+## 16.10.26
+1. Updated the description of REST `POST /positions/close_all` ([Close all positions](#close-all-positions)). It now closes open positions for all healthy/live/tradeable products and does not cancel open orders. Products that are halted (`disrupted_cancel_only`) or in auction (`disrupted_post_only`) are skipped and listed in `result.skipped_products`.
+
+2. Changed the allowed values of `impact` in REST `POST /heartbeat/create` ([Create Heartbeat](#create-heartbeat)) from `low`, `medium`, `high` to `contracts` and `products`. `contracts` applies the heartbeat to all products matching the given `contract_types` and `underlying_assets`, while `products` applies it only to the specific products listed in `product_symbols`.
+
+3. In the `config` array of REST `POST /heartbeat/create` ([Create Heartbeat](#create-heartbeat)), removed the `tag` field and added a new integer field `value`, which is required when `action` is `spreads`.
+
 ## 14.10.26
 1. Final deprecation notice of old websocket endpoint’s l1_orderbook, l2_orderbook, l2_update channels. These will be fully deprecated on 31th Oct 2026. These channels were already marked to be deprecated on 31st July 2026. If you are still using these channels, please migrate to our new ob_l1, ob_l2 and ob_updates channel on the new websocket endpoint.
 

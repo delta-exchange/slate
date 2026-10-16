@@ -6142,11 +6142,10 @@
         },
         "impact": {
           "type": "string",
-          "enum": ["low", "medium", "high"],
+          "enum": ["contracts", "products"],
           "x-enumDescriptions": {
-            "low": "Low-impact heartbeat; missed beats trigger minimal protective action",
-            "medium": "Medium-impact heartbeat; missed beats trigger standard protective action",
-            "high": "High-impact heartbeat; missed beats trigger the strongest protective action"
+            "contracts": "Heartbeat applies to all products matching the given `contract_types` and `underlying_assets`",
+            "products": "Heartbeat applies only to the specific products listed in `product_symbols`"
           },
           "description": "Impact level"
         },
@@ -6171,6 +6170,10 @@
             "type": "string"
           }
         },
+        "default_ttl": {
+          "type": "integer",
+          "description": "Default TTL in milliseconds, applied after a system restart until the next heartbeat acknowledgment."
+        },
         "config": {
           "type": "array",
           "description": "Array of action configurations",
@@ -6179,7 +6182,7 @@
           }
         }
       },
-      "required": ["heartbeat_id", "impact", "config"]
+      "required": ["heartbeat_id", "impact", "default_ttl", "config"]
     },
     "HeartbeatConfig": {
       "type": "object",
@@ -6198,9 +6201,9 @@
           "type": "integer",
           "description": "Number of unhealthy heartbeats before action"
         },
-        "tag": {
-          "type": "string",
-          "description": "Tag for the action (e.g., 'mmp')"
+        "value": {
+          "type": "integer",
+          "description": "Required field when action is spreads"
         }
       },
       "required": ["action", "unhealthy_count"]
