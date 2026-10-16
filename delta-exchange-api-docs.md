@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-10-13 12:05:36 UTC
+**Generated:** 2026-10-16 13:56:30 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -4681,7 +4681,7 @@ p JSON.parse(result)
 
 `POST /positions/close_all`
 
-Cancels open orders and closes open positions across products for the user. If one or more of the requested products are currently halted (cancel-only mode) or in auction (post-only mode), those products are skipped — their orders/positions are left untouched — while every other, operational product is still closed/cancelled normally. The skipped products, and the reason they were skipped, are listed in `result.skipped_products`.
+Closes open positions for all healthy/live/tradeable products for the user. If one or more of the requested products are currently halted (disrupted_cancel_only) or in auction (disrupted_post_only), those products are skipped — their positions are left untouched — while every other, operational product is still closed normally. The skipped products, and the reason they were skipped, are listed in `result.skipped_products`.
 
 > Body parameter
 
@@ -6799,7 +6799,7 @@ p JSON.parse(result)
 ```json
 {
   "heartbeat_id": "string",
-  "impact": "low",
+  "impact": "contracts",
   "contract_types": [
     "string"
   ],
@@ -6809,11 +6809,12 @@ p JSON.parse(result)
   "product_symbols": [
     "string"
   ],
+  "default_ttl": 0,
   "config": [
     {
       "action": "cancel_orders",
       "unhealthy_count": 0,
-      "tag": "string"
+      "value": 0
     }
   ]
 }
@@ -7037,7 +7038,7 @@ p JSON.parse(result)
         {
           "action": "cancel_orders",
           "unhealthy_count": 0,
-          "tag": "string"
+          "value": 0
         }
       ],
       "status": "string",
@@ -10921,7 +10922,7 @@ This operation does not require authentication.
 ```json
 {
   "heartbeat_id": "string",
-  "impact": "low",
+  "impact": "contracts",
   "contract_types": [
     "string"
   ],
@@ -10931,11 +10932,12 @@ This operation does not require authentication.
   "product_symbols": [
     "string"
   ],
+  "default_ttl": 0,
   "config": [
     {
       "action": "cancel_orders",
       "unhealthy_count": 0,
-      "tag": "string"
+      "value": 0
     }
   ]
 }
@@ -10953,15 +10955,15 @@ This operation does not require authentication.
 |contract_types|[string]|false|none|Array of contract types to monitor|
 |underlying_assets|[string]|false|none|Array of underlying assets to monitor|
 |product_symbols|[string]|false|none|Array of specific product symbols to monitor|
+|default_ttl|integer|true|none|Default TTL in milliseconds, applied after a system restart until the next heartbeat acknowledgment.|
 |config|[[HeartbeatConfig](#schemaheartbeatconfig)]|true|none|Array of action configurations|
 
 #### Enumerated Values
 
 |Property|Value|Description|
 |---|---|---|
-|impact|low|Low-impact heartbeat; missed beats trigger minimal protective action|
-|impact|medium|Medium-impact heartbeat; missed beats trigger standard protective action|
-|impact|high|High-impact heartbeat; missed beats trigger the strongest protective action|
+|impact|contracts|Heartbeat applies to all products matching the given `contract_types` and `underlying_assets`|
+|impact|products|Heartbeat applies only to the specific products listed in `product_symbols`|
 
 <h2 id="tocSheartbeatconfig">HeartbeatConfig</h2>
 
@@ -10971,7 +10973,7 @@ This operation does not require authentication.
 {
   "action": "cancel_orders",
   "unhealthy_count": 0,
-  "tag": "string"
+  "value": 0
 }
 
 ```
@@ -10984,7 +10986,7 @@ This operation does not require authentication.
 |---|---|---|---|---|
 |action|string|true|none|Action to take when heartbeat expires|
 |unhealthy_count|integer|true|none|Number of unhealthy heartbeats before action|
-|tag|string|false|none|Tag for the action (e.g., 'mmp')|
+|value|integer|false|none|Required field when action is spreads|
 
 #### Enumerated Values
 
@@ -11078,7 +11080,7 @@ This operation does not require authentication.
       {
         "action": "cancel_orders",
         "unhealthy_count": 0,
-        "tag": "string"
+        "value": 0
       }
     ],
     "status": "string",
@@ -11116,7 +11118,7 @@ This operation does not require authentication.
     {
       "action": "cancel_orders",
       "unhealthy_count": 0,
-      "tag": "string"
+      "value": 0
     }
   ],
   "status": "string",
@@ -13377,6 +13379,29 @@ Channel provides updates when MMP is triggered. Market maker protection is avail
 }
 ```
 # Changelog
+
+## 16.10.26
+1. Updated the description of REST `POST /positions/close_all` ([Close all positions](#close-all-positions)). It now closes open positions for all healthy/live/tradeable products and does not cancel open orders. Products that are halted (`disrupted_cancel_only`) or in auction (`disrupted_post_only`) are skipped and listed in `result.skipped_products`.
+
+2. Changed the allowed values of `impact` in REST `POST /heartbeat/create` ([Create Heartbeat](#create-heartbeat)) from `low`, `medium`, `high` to `contracts` and `products`. `contracts` applies the heartbeat to all products matching the given `contract_types` and `underlying_assets`, while `products` applies it only to the specific products listed in `product_symbols`.
+
+3. In the `config` array of REST `POST /heartbeat/create` ([Create Heartbeat](#create-heartbeat)), removed the `tag` field and added a new integer field `value`, which is required when `action` is `spreads`.
+
+## 14.10.26
+1. Final deprecation notice of old websocket endpoint’s l1_orderbook, l2_orderbook, l2_update channels. These will be fully deprecated on 31th Oct 2026. These channels were already marked to be deprecated on 31st July 2026. If you are still using these channels, please migrate to our new ob_l1, ob_l2 and ob_updates channel on the new websocket endpoint.
+
+2. Final deprecation notice of older auth method for websocket. This will be fully deprecated on 31th Oct 2026. Older method was already marked to be deprecated on 31st December 2025, if you are still using it, please checkout the [current websocket auth](#current-method).
+
+3. Important Update: Discontinuation of .DE_USDT (e.g. “.DEETHUSDT”) Spot Index Data. Please be advised that support for the .DE_USDT index data series will permanently cease on 18 October 2026.
+
+All Perpetual Futures and Options on our platform utilize .DE_USD as their underlying spot index (for example, the ETHUSD perpetual contract references “.DEETHUSD”). While we historically co-published .DE_USDT variations (such as “.DEETHUSDT”), this data stream will be turned off.
+This change impacts:
+
+- Websocket [`spot_price`](#spot_price)
+- Websocket [`candlesticks`](#candlesticks)
+- REST `GET /history/candles` ([Get historical OHLC candles](#get-historical-ohlc-candles))
+
+To avoid any disruption to your trading systems or API integrations, please update your applications to reference the standard .DE_USD spot index data immediately.
 
 ## 31.08.26
 1. Clarified `client_order_id` parameter description across the Orders API (place order, batch create/edit/cancel, and order schemas) to explicitly state that it must be unique across all open orders of the user. This is a documentation update only — no API behaviour has changed.

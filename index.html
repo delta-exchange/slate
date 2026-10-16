@@ -910,6 +910,12 @@
             <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#16-10-26" class="toc-h2 toc-link" data-title="16.10.26">16.10.26</a>
+                  </li>
+                  <li>
+                    <a href="#14-10-26" class="toc-h2 toc-link" data-title="14.10.26">14.10.26</a>
+                  </li>
+                  <li>
                     <a href="#31-08-26" class="toc-h2 toc-link" data-title="31.08.26">31.08.26</a>
                   </li>
                   <li>
@@ -7872,7 +7878,7 @@ curl -X POST https://api.india.delta.exchange/v2/positions/close_all <span class
 
 <p><code>POST /positions/close_all</code></p>
 
-<p>Cancels open orders and closes open positions across products for the user. If one or more of the requested products are currently halted (cancel-only mode) or in auction (post-only mode), those products are skipped — their orders/positions are left untouched — while every other, operational product is still closed/cancelled normally. The skipped products, and the reason they were skipped, are listed in <code>result.skipped_products</code>.</p>
+<p>Closes open positions for all healthy/live/tradeable products for the user. If one or more of the requested products are currently halted (disrupted_cancel_only) or in auction (disrupted_post_only), those products are skipped — their positions are left untouched — while every other, operational product is still closed normally. The skipped products, and the reason they were skipped, are listed in <code>result.skipped_products</code>.</p>
 
 <blockquote>
 <p>Body parameter</p>
@@ -10928,7 +10934,7 @@ curl -X POST https://api.india.delta.exchange/v2/heartbeat/create <span class="s
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"low"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contracts"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">],</span><span class="w">
@@ -10938,11 +10944,12 @@ curl -X POST https://api.india.delta.exchange/v2/heartbeat/create <span class="s
   </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"default_ttl"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -11242,7 +11249,7 @@ curl -X GET https://api.india.delta.exchange/v2/heartbeat?user_id<span class="o"
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
           </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+          </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -19719,7 +19726,7 @@ This operation does not require authentication.
 
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"heartbeat_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"low"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contracts"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"contract_types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">],</span><span class="w">
@@ -19729,11 +19736,12 @@ This operation does not require authentication.
   </span><span class="s2">"product_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="s2">"string"</span><span class="w">
   </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"default_ttl"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -19789,6 +19797,13 @@ This operation does not require authentication.
 <td>Array of specific product symbols to monitor</td>
 </tr>
 <tr>
+<td>default_ttl</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>Default TTL in milliseconds, applied after a system restart until the next heartbeat acknowledgment.</td>
+</tr>
+<tr>
 <td>config</td>
 <td>[<a href="#schemaheartbeatconfig">HeartbeatConfig</a>]</td>
 <td>true</td>
@@ -19808,18 +19823,13 @@ This operation does not require authentication.
 </thead><tbody>
 <tr>
 <td>impact</td>
-<td>low</td>
-<td>Low-impact heartbeat; missed beats trigger minimal protective action</td>
+<td>contracts</td>
+<td>Heartbeat applies to all products matching the given <code>contract_types</code> and <code>underlying_assets</code></td>
 </tr>
 <tr>
 <td>impact</td>
-<td>medium</td>
-<td>Medium-impact heartbeat; missed beats trigger standard protective action</td>
-</tr>
-<tr>
-<td>impact</td>
-<td>high</td>
-<td>High-impact heartbeat; missed beats trigger the strongest protective action</td>
+<td>products</td>
+<td>Heartbeat applies only to the specific products listed in <code>product_symbols</code></td>
 </tr>
 </tbody></table>
 
@@ -19830,7 +19840,7 @@ This operation does not require authentication.
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+  </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -19863,11 +19873,11 @@ This operation does not require authentication.
 <td>Number of unhealthy heartbeats before action</td>
 </tr>
 <tr>
-<td>tag</td>
-<td>string</td>
+<td>value</td>
+<td>integer</td>
 <td>false</td>
 <td>none</td>
-<td>Tag for the action (e.g., &#39;mmp&#39;)</td>
+<td>Required field when action is spreads</td>
 </tr>
 </tbody></table>
 
@@ -20033,7 +20043,7 @@ This operation does not require authentication.
       </span><span class="p">{</span><span class="w">
         </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+        </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -20080,7 +20090,7 @@ This operation does not require authentication.
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancel_orders"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"unhealthy_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
@@ -22673,7 +22683,30 @@ Please note that if you subscribe to v2/user_trades channel without specifying t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h1 id='changelog'>Changelog</h1><h2 id='31-08-26'>31.08.26</h2>
+<h1 id='changelog'>Changelog</h1><h2 id='16-10-26'>16.10.26</h2>
+<ol>
+<li><p>Updated the description of REST <code>POST /positions/close_all</code> (<a href="#close-all-positions">Close all positions</a>). It now closes open positions for all healthy/live/tradeable products and does not cancel open orders. Products that are halted (<code>disrupted_cancel_only</code>) or in auction (<code>disrupted_post_only</code>) are skipped and listed in <code>result.skipped_products</code>.</p></li>
+<li><p>Changed the allowed values of <code>impact</code> in REST <code>POST /heartbeat/create</code> (<a href="#create-heartbeat">Create Heartbeat</a>) from <code>low</code>, <code>medium</code>, <code>high</code> to <code>contracts</code> and <code>products</code>. <code>contracts</code> applies the heartbeat to all products matching the given <code>contract_types</code> and <code>underlying_assets</code>, while <code>products</code> applies it only to the specific products listed in <code>product_symbols</code>.</p></li>
+<li><p>In the <code>config</code> array of REST <code>POST /heartbeat/create</code> (<a href="#create-heartbeat">Create Heartbeat</a>), removed the <code>tag</code> field and added a new integer field <code>value</code>, which is required when <code>action</code> is <code>spreads</code>.</p></li>
+</ol>
+<h2 id='14-10-26'>14.10.26</h2>
+<ol>
+<li><p>Final deprecation notice of old websocket endpoint’s l1_orderbook, l2_orderbook, l2_update channels. These will be fully deprecated on 31th Oct 2026. These channels were already marked to be deprecated on 31st July 2026. If you are still using these channels, please migrate to our new ob_l1, ob_l2 and ob_updates channel on the new websocket endpoint.</p></li>
+<li><p>Final deprecation notice of older auth method for websocket. This will be fully deprecated on 31th Oct 2026. Older method was already marked to be deprecated on 31st December 2025, if you are still using it, please checkout the <a href="#current-method">current websocket auth</a>.</p></li>
+<li><p>Important Update: Discontinuation of .DE_USDT (e.g. “.DEETHUSDT”) Spot Index Data. Please be advised that support for the .DE_USDT index data series will permanently cease on 18 October 2026.</p></li>
+</ol>
+
+<p>All Perpetual Futures and Options on our platform utilize .DE_USD as their underlying spot index (for example, the ETHUSD perpetual contract references “.DEETHUSD”). While we historically co-published .DE_USDT variations (such as “.DEETHUSDT”), this data stream will be turned off.
+This change impacts:</p>
+
+<ul>
+<li>Websocket <a href="#spot_price"><code>spot_price</code></a></li>
+<li>Websocket <a href="#candlesticks"><code>candlesticks</code></a></li>
+<li>REST <code>GET /history/candles</code> (<a href="#get-historical-ohlc-candles">Get historical OHLC candles</a>)</li>
+</ul>
+
+<p>To avoid any disruption to your trading systems or API integrations, please update your applications to reference the standard .DE_USD spot index data immediately.</p>
+<h2 id='31-08-26'>31.08.26</h2>
 <ol>
 <li>Clarified <code>client_order_id</code> parameter description across the Orders API (place order, batch create/edit/cancel, and order schemas) to explicitly state that it must be unique across all open orders of the user. This is a documentation update only — no API behaviour has changed.</li>
 </ol>
