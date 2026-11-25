@@ -44,6 +44,7 @@ less_than_order_min_size | Order size is less than the minimum order size allowe
 order_max_size_exceeded | Order size exceeds the maximum order size allowed for this product.
 reduce_only_orders_allowed_sell_side | Only reduce-only sell orders are allowed for this product.
 reduce_only_orders_allowed | Only reduce-only orders are allowed on this product/account currently.
+only_reduce_only_orders_allowed | Contract is in reduce-only mode, so the order would open a new position or increase the existing one (for ex - you are long 10: buy 1 is rejected, sell 5 is allowed).
 trading_blocked | Trading is currently blocked for this product or account.
 kyc_pending | KYC verification is not complete for this account.
 trading_credits_breached | Order would breach the trading credits limit set on the account.
