@@ -159,6 +159,8 @@ You can create a new API key from here :
 
 To create an API key with Trading permissions, whitelisted IP(s) must be provided. API requests using this API key will only succeed, if made from a machine with an IP address that was whitelisted. Multiple IPs can be whitelisted for a single API key. IP values can take IPv4 and IPv6. Whitelisted IPs can be changed and updated from the same page.
 
+Only IP addresses located in India can be whitelisted. This applies to both Trading and Read-only keys. Institutional accounts can whitelist non-Indian IPs after confirming, on the API key page, that these IPs serve Indian users only.
+
 Common issues:  
 1. Your machine is using IPv6 instead of IPv4 or vice-versa. Disable the one that isn’t whitelisted from your network settings or whitelist both.  
 2. Your ISP may automatically change the IP address at your home, office about once a week. Update your whitelisted IP in such case.  
