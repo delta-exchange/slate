@@ -250,9 +250,6 @@
                   <li>
                     <a href="#pagination" class="toc-h2 toc-link" data-title="Pagination">Pagination</a>
                   </li>
-                  <li>
-                    <a href="#data-centers" class="toc-h2 toc-link" data-title="Data Centers">Data Centers</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -779,6 +776,17 @@
               </ul>
           </li>
           <li>
+            <a href="#tradingview-webhook-order-integration" class="toc-h1 toc-link" data-title="TradingView Webhook Order Integration">TradingView Webhook Order Integration</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#required-fields" class="toc-h2 toc-link" data-title="Required Fields">Required Fields</a>
+                  </li>
+                  <li>
+                    <a href="#how-to-fix" class="toc-h2 toc-link" data-title="How to Fix">How to Fix</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#place-order-errors" class="toc-h1 toc-link" data-title="Place order errors">Place order errors</a>
           </li>
           <li>
@@ -1155,8 +1163,6 @@ It is important to note that the BTCUSD Index price doesn&#39;t follow this conv
 <p>https://api.india.delta.exchange/v2/products?page_size=30</p>
 
 <p>https://api.india.delta.exchange/v2/products?page_size=30&amp;after=after_cursor_from_last_request</p>
-<h2 id='data-centers'>Data Centers</h2>
-<p>Delta Exchange data centers are in <strong>AWS Tokyo</strong></p>
 
 <h1 id='authentication'>Authentication</h1>
 
@@ -1328,6 +1334,8 @@ signature = generate_signature(api_secret, signature_data)
 <a href="https://www.delta.exchange/app/account/manageapikeys">https://www.delta.exchange/app/account/manageapikeys</a></p>
 
 <p>To create an API key with Trading permissions, whitelisted IP(s) must be provided. API requests using this API key will only succeed, if made from a machine with an IP address that was whitelisted. Multiple IPs can be whitelisted for a single API key. IP values can take IPv4 and IPv6. Whitelisted IPs can be changed and updated from the same page.</p>
+
+<p>Only IP addresses located in India can be whitelisted. This applies to both Trading and Read-only keys. Institutional accounts can whitelist non-Indian IPs after confirming, on the API key page, that these IPs serve Indian users only.</p>
 
 <p>Common issues:<br>
 1. Your machine is using IPv6 instead of IPv4 or vice-versa. Disable the one that isn’t whitelisted from your network settings or whitelist both.<br>
@@ -20608,8 +20616,55 @@ This operation does not require authentication.
 <li><strong>Backup Systems</strong>: Consider implementing backup heartbeat mechanisms for critical trading systems </li>
 </ol>
 
+<h1 id='tradingview-webhook-order-integration'>TradingView Webhook Order Integration</h1>
+<p>If a trade request sent via a TradingView webhook is rejected, you receive a <strong>TradingView Webhook Order Failed</strong> notification. This happens when the webhook request is not in the format Delta Exchange India expects, so the order is not processed.</p>
+<h2 id='required-fields'>Required Fields</h2>
+<p>Delta Exchange India requires <strong>all</strong> of the following fields to be present and valid in the webhook request:</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>The trading pair, e.g. <code>BTCUSD.P</code>, <code>ETHUSD.P</code></td>
+</tr>
+<tr>
+<td>side</td>
+<td>The trade direction. Must be either <code>buy</code> or <code>sell</code></td>
+</tr>
+<tr>
+<td>qty</td>
+<td>The order quantity. Must be a whole number, such as <code>1</code>, <code>10</code> or <code>100</code></td>
+</tr>
+</tbody></table>
+<h2 id='how-to-fix'>How to Fix</h2>
+<ol>
+<li>Ensure the selected instrument is from <strong>Delta Exchange India (DELTAIN)</strong>.</li>
+<li>In TradingView, go to <strong>Symbol Search</strong>, apply the <strong>Crypto</strong> filter, select <strong>Delta Exchange India</strong>, and choose your instrument (e.g. <code>BTCUSD.P</code>).</li>
+<li>Verify the order quantity is a whole number in <strong>Strategy Properties</strong>.</li>
+<li>Set the <code>side</code> parameter as <code>&quot;side&quot;: &quot;{{strategy.order.action}}&quot;</code>, and ensure your strategy generates valid <code>buy</code> and <code>sell</code> signals.</li>
+<li>Format your webhook message like this:</li>
+</ol>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ticker}}"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{strategy.order.action}}"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"qty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{strategy.order.contracts}}"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"trigger_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{timenow}}"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"strategy_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"your_strategy_id"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<aside class="notice">
+Replace <code>your_strategy_id</code> with the identifier of your own strategy. The <code>{{...}}</code> placeholders are filled in by TradingView when the alert fires.
+</aside>
+
 <h1 id='place-order-errors'>Place order errors</h1>
+
 <p>This section lists various errors returned by the system while placing order. The error format looks like this </p>
+
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">

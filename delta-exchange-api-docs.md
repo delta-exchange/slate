@@ -1,6 +1,6 @@
 # Delta Exchange API Documentation
 
-**Generated:** 2026-11-25 05:50:34 UTC
+**Generated:** 2026-11-26 14:44:11 UTC
 
 This is a combined markdown file containing all Delta Exchange API documentation.
 It includes REST API, WebSocket API, authentication, error codes, and more.
@@ -105,8 +105,6 @@ https://api.india.delta.exchange/v2/products?page_size=30
 
 https://api.india.delta.exchange/v2/products?page_size=30&after=after_cursor_from_last_request
 
-## Data Centers 
-Delta Exchange data centers are in **AWS Tokyo**
 # Authentication
 
 Api endpoints that place orders or fetch account related information needs to authenticated using api key and api secret.
@@ -267,6 +265,8 @@ You can create a new API key from here :
 [https://www.delta.exchange/app/account/manageapikeys](https://www.delta.exchange/app/account/manageapikeys)
 
 To create an API key with Trading permissions, whitelisted IP(s) must be provided. API requests using this API key will only succeed, if made from a machine with an IP address that was whitelisted. Multiple IPs can be whitelisted for a single API key. IP values can take IPv4 and IPv6. Whitelisted IPs can be changed and updated from the same page.
+
+Only IP addresses located in India can be whitelisted. This applies to both Trading and Read-only keys. Institutional accounts can whitelist non-Indian IPs after confirming, on the API key page, that these IPs serve Indian users only.
 
 Common issues:  
 1. Your machine is using IPv6 instead of IPv4 or vice-versa. Disable the one that isn’t whitelisted from your network settings or whitelist both.  
@@ -11506,6 +11506,42 @@ deadman.startHeartbeatLoop();
 2. **Network Security**: Use HTTPS for all API communications
 3. **Monitoring**: Implement proper monitoring and alerting for heartbeat failures
 4. **Backup Systems**: Consider implementing backup heartbeat mechanisms for critical trading systems 
+# TradingView Webhook Order Integration
+
+If a trade request sent via a TradingView webhook is rejected, you receive a **TradingView Webhook Order Failed** notification. This happens when the webhook request is not in the format Delta Exchange India expects, so the order is not processed.
+
+## Required Fields
+
+Delta Exchange India requires **all** of the following fields to be present and valid in the webhook request:
+
+Field | Description
+--|--
+symbol | The trading pair, e.g. `BTCUSD.P`, `ETHUSD.P`
+side | The trade direction. Must be either `buy` or `sell`
+qty | The order quantity. Must be a whole number, such as `1`, `10` or `100`
+
+## How to Fix
+
+1. Ensure the selected instrument is from **Delta Exchange India (DELTAIN)**.
+2. In TradingView, go to **Symbol Search**, apply the **Crypto** filter, select **Delta Exchange India**, and choose your instrument (e.g. `BTCUSD.P`).
+3. Verify the order quantity is a whole number in **Strategy Properties**.
+4. Set the `side` parameter as `"side": "{{strategy.order.action}}"`, and ensure your strategy generates valid `buy` and `sell` signals.
+5. Format your webhook message like this:
+
+```json
+{
+  "symbol": "{{ticker}}",
+  "side": "{{strategy.order.action}}",
+  "qty": "{{strategy.order.contracts}}",
+  "trigger_time": "{{timenow}}",
+  "strategy_id": "your_strategy_id"
+}
+```
+
+<aside class="notice">
+Replace <code>your_strategy_id</code> with the identifier of your own strategy. The <code>{{...}}</code> placeholders are filled in by TradingView when the alert fires.
+</aside>
+
 # Place order errors
 This section lists various errors returned by the system while placing order. The error format looks like this 
 
